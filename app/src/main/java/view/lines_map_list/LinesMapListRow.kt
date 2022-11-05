@@ -13,6 +13,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.runtime.*
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -27,14 +28,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import model.DTO.Line
-import model.DTO.ProgrammedMessages
-import model.DTO.Service
-import model.DTO.Services
+import model.DTO.*
 import model.preferences_data_store.StoreFavoriteLines
 
 @Composable
-fun LinesMapListRow(rowLine: Line, navController: NavController) {
+fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Line>>, navController: NavController) {
     val servicesAreLoaded = remember {
         mutableStateOf(false)
     }
@@ -182,6 +180,8 @@ fun LinesMapListRow(rowLine: Line, navController: NavController) {
                 DropdownMenuItem(onClick = {
                     scope.launch {
                         dataStore.removeFromFavorites(rowLine.id.toString())
+                        linesByGroup.clear()
+                        linesByGroup.addAll(Lines.getLinesByGroup(context))
                         println("Removed from favorites")
                     }
                     menuShown.value = false
@@ -205,6 +205,8 @@ fun LinesMapListRow(rowLine: Line, navController: NavController) {
                 DropdownMenuItem(onClick = {
                     scope.launch {
                         dataStore.saveFavoriteLine(rowLine.id.toString())
+                        linesByGroup.clear()
+                        linesByGroup.addAll(Lines.getLinesByGroup(context))
                         println("Added to favorites")
                     }
                     menuShown.value = false

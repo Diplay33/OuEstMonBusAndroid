@@ -8,6 +8,8 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -24,6 +26,9 @@ import model.DTO.Lines
 @Composable
 fun LinesMapListMain(state: SearchState = rememberSearchState(), navController: NavController) {
     val context = LocalContext.current
+    val linesByGroup = remember {
+        mutableStateListOf<ArrayList<Line>>()
+    }
 
     Scaffold(topBar = { LinesMapListTopBar() }) {
         Column(
@@ -41,6 +46,7 @@ fun LinesMapListMain(state: SearchState = rememberSearchState(), navController: 
             )
 
             LaunchedEffect(state.query.text) {
+                linesByGroup.addAll(Lines.getLinesByGroup(context))
                 state.searching = true
                 delay(100)
                 state.searchResults = Lines.getLinesBySearchText(state.query.text)
@@ -53,11 +59,15 @@ fun LinesMapListMain(state: SearchState = rememberSearchState(), navController: 
                         var isFirst = true
                         var favoriteLines: ArrayList<Line> = arrayListOf()
 
-                        items(Lines.getLinesByGroup(context)) { lines ->
+                        items(linesByGroup) { lines ->
                             if(isFirst) {
                                 favoriteLines = lines
                             }
-                            LinesMapListGroup(lines, lines.containsAll(favoriteLines), navController)
+                            LinesMapListGroup(
+                                lines = lines,
+                                isFavorite = favoriteLines.containsAll(lines),
+                                linesByGroup = linesByGroup,
+                                navController = navController)
                             isFirst = false
                         }
                     }
@@ -76,7 +86,7 @@ fun LinesMapListMain(state: SearchState = rememberSearchState(), navController: 
                 SearchDisplay.RESULTS -> {
                     LazyColumn {
                         items(state.searchResults) { line ->
-                            LinesMapListRow(line, navController)
+                            LinesMapListRow(line, linesByGroup, navController)
                         }
                     }
                 }
