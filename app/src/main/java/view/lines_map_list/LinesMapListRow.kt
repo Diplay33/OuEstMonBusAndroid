@@ -50,16 +50,11 @@ fun LinesMapListRow(rowLine: Line, navController: NavController) {
     val menuShown = remember {
         mutableStateOf(false)
     }
-    val isFavorite = remember {
-        mutableStateOf(false)
-    }
-    val isFavoriteIsLoaded = remember {
-        mutableStateOf(false)
-    }
 
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val dataStore = StoreFavoriteLines(context)
+    val dataStore = StoreFavoriteLines(context, rowLine.id.toString())
+    val isFavorite = dataStore.isFavorite.collectAsState(initial = false)
 
     LaunchedEffect(rowLine) {
         servicesAreLoaded.value = false
@@ -183,25 +178,12 @@ fun LinesMapListRow(rowLine: Line, navController: NavController) {
             expanded = menuShown.value,
             onDismissRequest = { menuShown.value = false }
         ) {
-            //if(!isFavoriteIsLoaded.value) {
-                dataStore.isFavorite(rowLine.id.toString()) { result ->
-                    if(rowLine.id == 59) {
-                        println("---------- RÉSULTATS ----------")
-                        println(result)
-                    }
-                    //println("LOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLOLO")
-                    isFavoriteIsLoaded.value = true
-                    isFavorite.value = result
-                }
-            //}
-
-            if(isFavorite.value) {
+            if(isFavorite.value == true) {
                 DropdownMenuItem(onClick = {
-                    println("Remove from favorites")
                     scope.launch {
                         dataStore.removeFromFavorites(rowLine.id.toString())
+                        println("Removed from favorites")
                     }
-                    isFavorite.value = false
                     menuShown.value = false
                 }) {
                     Row {
@@ -225,14 +207,7 @@ fun LinesMapListRow(rowLine: Line, navController: NavController) {
                         dataStore.saveFavoriteLine(rowLine.id.toString())
                         println("Added to favorites")
                     }
-                    isFavorite.value = true
                     menuShown.value = false
-                    dataStore.isFavorite(rowLine.id.toString()) {
-                        println("Vérification...")
-                        if(it) {
-                            println("Ajout bien effectué !")
-                        }
-                    }
                 }) {
                     Row {
                         Icon(imageVector = Icons.Rounded.Star, contentDescription = null, modifier = Modifier
