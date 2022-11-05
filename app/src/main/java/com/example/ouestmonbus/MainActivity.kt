@@ -18,8 +18,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.ouestmonbus.ui.theme.OùEstMonBusTheme
-import view.lines_map_list.MapListGroup
-import view.lines_map_list.MapListMain
+import view.lines_map_list.LinesMapListMain
 import view.lines_map_list.Screens
 import view.lines_map_list.line_map.HelloWorld
 
@@ -36,7 +35,7 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             NavHost(navController = navController, startDestination = Screens.MapListMain.route) {
                 composable(route = Screens.MapListMain.route) {
-                    MapListMain(navController = navController)
+                    LinesMapListMain(navController = navController)
                 }
 
                 composable(route = Screens.HelloWorld.route + "/{lineId}", arguments = listOf(

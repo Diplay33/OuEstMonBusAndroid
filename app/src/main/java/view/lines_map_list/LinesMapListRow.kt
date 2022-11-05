@@ -24,9 +24,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.sp
-import androidx.datastore.core.DataStore
-import androidx.datastore.preferences.core.Preferences
-import androidx.datastore.preferences.preferencesDataStore
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -37,7 +34,7 @@ import model.DTO.Services
 import model.preferences_data_store.StoreFavoriteLines
 
 @Composable
-fun MapListRow(rowLine: Line, navController: NavController) {
+fun LinesMapListRow(rowLine: Line, navController: NavController) {
     val servicesAreLoaded = remember {
         mutableStateOf(false)
     }

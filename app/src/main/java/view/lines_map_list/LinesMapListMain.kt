@@ -19,13 +19,13 @@ import model.DTO.Lines
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun MapListMain(state: SearchState = rememberSearchState(), navController: NavController) {
-    Scaffold(topBar = { MapListTopBar() }) {
+fun LinesMapListMain(state: SearchState = rememberSearchState(), navController: NavController) {
+    Scaffold(topBar = { LinesMapListTopBar() }) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            SearchBar(
+            LinesMapListSearchBar(
                 query = state.query,
                 onQueryChange = { state.query = it },
                 onSearchFocusChange = { state.focused = it },
@@ -46,7 +46,7 @@ fun MapListMain(state: SearchState = rememberSearchState(), navController: NavCo
                 SearchDisplay.INITIALRESULTS -> {
                     LazyColumn {
                         items(Lines.getLinesByGroup()) { lines ->
-                            MapListGroup(lines, navController)
+                            LinesMapListGroup(lines, navController)
                         }
                     }
                 }
@@ -64,7 +64,7 @@ fun MapListMain(state: SearchState = rememberSearchState(), navController: NavCo
                 SearchDisplay.RESULTS -> {
                     LazyColumn {
                         items(state.searchResults) { line ->
-                            MapListRow(line, navController)
+                            LinesMapListRow(line, navController)
                         }
                     }
                 }

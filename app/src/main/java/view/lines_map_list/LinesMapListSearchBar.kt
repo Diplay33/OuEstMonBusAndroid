@@ -156,7 +156,7 @@ fun SearchTextField(
 @ExperimentalAnimationApi
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun SearchBar(
+fun LinesMapListSearchBar(
     query: TextFieldValue,
     onQueryChange: (TextFieldValue) -> Unit,
     onSearchFocusChange: (Boolean) -> Unit,

@@ -9,13 +9,13 @@ import androidx.navigation.NavController
 import model.DTO.Line
 
 @Composable
-fun MapListGroup(lines: ArrayList<Line>, navController: NavController) {
+fun LinesMapListGroup(lines: ArrayList<Line>, navController: NavController) {
     Column(
         modifier = Modifier
             .padding(vertical = 10.dp)
     ) {
         lines.forEach { line ->
-            MapListRow(line, navController)
+            LinesMapListRow(line, navController)
         }
     }
 }
