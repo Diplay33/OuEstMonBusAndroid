@@ -2,7 +2,7 @@ package model.DTO
 
 class Service (val id: Int,
                val vehicleId: Int,
-               val line: Int,
+               val lineId: Int,
                val currentSpeed: Int,
                val state: String,
                val stateTime: Int,

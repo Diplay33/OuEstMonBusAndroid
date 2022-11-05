@@ -27,7 +27,7 @@ class ServiceDAO {
                         services.add(Service(
                             id = propertiesJSONObject.getInt("gid"),
                             vehicleId = propertiesJSONObject.getInt("gid"),
-                            line = propertiesJSONObject.getInt("rs_sv_ligne_a"),
+                            lineId = propertiesJSONObject.getInt("rs_sv_ligne_a"),
                             currentSpeed = propertiesJSONObject.getInt("vitesse"),
                             state = propertiesJSONObject.getString("etat"),
                             stateTime = propertiesJSONObject.getInt("retard"),
@@ -70,7 +70,7 @@ class ServiceDAO {
                         services.add(Service(
                             id = propertiesJSONObject.getInt("gid"),
                             vehicleId = propertiesJSONObject.getInt("gid"),
-                            line = propertiesJSONObject.getInt("rs_sv_ligne_a"),
+                            lineId = propertiesJSONObject.getInt("rs_sv_ligne_a"),
                             currentSpeed = propertiesJSONObject.getInt("vitesse"),
                             state = propertiesJSONObject.getString("etat"),
                             stateTime = propertiesJSONObject.getInt("retard"),
