@@ -6,7 +6,7 @@ import model.DAO.LineDAO
 class Lines {
     companion object {
         fun getLinesByGroup(): ArrayList<ArrayList<Line>> {
-            var linesByGroup: ArrayList<ArrayList<Line>> = arrayListOf(
+            val linesByGroup: ArrayList<ArrayList<Line>> = arrayListOf(
                 arrayListOf(),
                 arrayListOf(),
                 arrayListOf(),

@@ -2,16 +2,15 @@ package model.DAO
 
 import model.DAO.AccessData.CallAPI
 import model.DTO.Service
-import org.json.JSONArray
 import org.json.JSONObject
 
 class ServiceDAO {
     companion object {
         fun getAllServices(callback: (ArrayList<Service>) -> Unit) {
             CallAPI.run("https://data.bordeaux-metropole.fr/geojson?key=0234ABEFGH&typename=sv_vehic_p") { responseBody ->
-                var services: ArrayList<Service> = arrayListOf()
-                var welcomeJSONObject = JSONObject(responseBody)
-                var featuresJSONArray = welcomeJSONObject.getJSONArray("features")
+                val services: ArrayList<Service> = arrayListOf()
+                val welcomeJSONObject = JSONObject(responseBody)
+                val featuresJSONArray = welcomeJSONObject.getJSONArray("features")
 
                 try {
                     for(i in 0 until featuresJSONArray.length()) {
