@@ -39,9 +39,6 @@ fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Lin
     val services = remember {
         mutableStateListOf<Service>()
     }
-    val programmedMessagesCountIsLoaded = remember {
-        mutableStateOf(false)
-    }
     val programmedMessagesCount = remember {
         mutableStateOf(0)
     }
@@ -57,7 +54,6 @@ fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Lin
     LaunchedEffect(rowLine) {
         servicesAreLoaded.value = false
         ProgrammedMessages.getNumberOfMessagesByLine(rowLine.id.toString()) { messagesCount ->
-            programmedMessagesCountIsLoaded.value = true
             programmedMessagesCount.value = messagesCount
         }
 

@@ -23,7 +23,7 @@ fun LinesMapListGroup(
         modifier = Modifier
             .padding(vertical = if(lines.isEmpty()) 0.dp else 10.dp)
     ) {
-        if(isFavorite) {
+        if(isFavorite && lines.isNotEmpty()) {
             Text("Favoris", fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier
                 .padding(start = 15.dp)
             )

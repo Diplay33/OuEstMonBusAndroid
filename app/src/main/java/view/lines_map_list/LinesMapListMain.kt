@@ -56,19 +56,13 @@ fun LinesMapListMain(state: SearchState = rememberSearchState(), navController: 
             when(state.searchDisplay) {
                 SearchDisplay.INITIALRESULTS -> {
                     LazyColumn {
-                        var isFirst = true
-                        var favoriteLines: ArrayList<Line> = arrayListOf()
-
                         items(linesByGroup) { lines ->
-                            if(isFirst) {
-                                favoriteLines = lines
-                            }
                             LinesMapListGroup(
                                 lines = lines,
-                                isFavorite = favoriteLines.containsAll(lines),
+                                isFavorite = linesByGroup[0].containsAll(lines) && linesByGroup[0].isNotEmpty(),
                                 linesByGroup = linesByGroup,
-                                navController = navController)
-                            isFirst = false
+                                navController = navController
+                            )
                         }
                     }
                 }
