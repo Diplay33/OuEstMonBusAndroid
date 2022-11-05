@@ -63,7 +63,11 @@ fun LinesMapListRow(rowLine: Line, navController: NavController) {
 
     LaunchedEffect(rowLine) {
         servicesAreLoaded.value = false
-        programmedMessagesCountIsLoaded.value = false
+        ProgrammedMessages.getNumberOfMessagesByLine(rowLine.id.toString()) { messagesCount ->
+            programmedMessagesCountIsLoaded.value = true
+            programmedMessagesCount.value = messagesCount
+        }
+
         while(true) {
             if(rowLine.id == 132) {
                 Services.getNavetteTramServices { returnedServices ->
@@ -100,7 +104,7 @@ fun LinesMapListRow(rowLine: Line, navController: NavController) {
         }
     ) {
         Row(modifier = Modifier
-            .padding(horizontal = 15.dp)
+            .padding(start = 15.dp)
         ) {
             Image(painterResource(id = rowLine.lineImageResource), contentDescription = null, modifier = Modifier
                 .size(70.dp)
@@ -149,10 +153,6 @@ fun LinesMapListRow(rowLine: Line, navController: NavController) {
                         )
                     }
                 }
-
-                Spacer(modifier = Modifier
-                    .height(5.dp)
-                )
             }
         }
 
@@ -160,18 +160,11 @@ fun LinesMapListRow(rowLine: Line, navController: NavController) {
             .fillMaxHeight()
             .align(Alignment.CenterVertically)
         ) {
-            if(!programmedMessagesCountIsLoaded.value) {
-                ProgrammedMessages.getNumberOfMessagesByLine(rowLine.id.toString()) { messagesCount ->
-                    programmedMessagesCountIsLoaded.value = true
-                    programmedMessagesCount.value = messagesCount
-                }
-
-                if(programmedMessagesCount.value > 0) {
-                    Column(modifier = Modifier
-                        .fillMaxHeight()
-                    ) {
-                        NotificationCountBadge(count = programmedMessagesCount.value)
-                    }
+            if(programmedMessagesCount.value > 0) {
+                Column(modifier = Modifier
+                    .fillMaxHeight()
+                ) {
+                    NotificationCountBadge(count = programmedMessagesCount.value)
                 }
             }
 
