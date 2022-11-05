@@ -10,6 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -20,6 +22,8 @@ import model.DTO.Lines
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun LinesMapListMain(state: SearchState = rememberSearchState(), navController: NavController) {
+    val context = LocalContext.current
+
     Scaffold(topBar = { LinesMapListTopBar() }) {
         Column(
             modifier = Modifier
@@ -45,8 +49,11 @@ fun LinesMapListMain(state: SearchState = rememberSearchState(), navController: 
             when(state.searchDisplay) {
                 SearchDisplay.INITIALRESULTS -> {
                     LazyColumn {
-                        items(Lines.getLinesByGroup()) { lines ->
-                            LinesMapListGroup(lines, navController)
+                        var isFirst = true
+
+                        items(Lines.getLinesByGroup(context)) { lines ->
+                            LinesMapListGroup(lines, isFirst, navController)
+                            isFirst = false
                         }
                     }
                 }
