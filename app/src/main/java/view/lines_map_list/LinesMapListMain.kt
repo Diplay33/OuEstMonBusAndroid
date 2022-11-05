@@ -17,6 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
+import model.DTO.Line
 import model.DTO.Lines
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -50,9 +51,13 @@ fun LinesMapListMain(state: SearchState = rememberSearchState(), navController: 
                 SearchDisplay.INITIALRESULTS -> {
                     LazyColumn {
                         var isFirst = true
+                        var favoriteLines: ArrayList<Line> = arrayListOf()
 
                         items(Lines.getLinesByGroup(context)) { lines ->
-                            LinesMapListGroup(lines, isFirst, navController)
+                            if(isFirst) {
+                                favoriteLines = lines
+                            }
+                            LinesMapListGroup(lines, lines.containsAll(favoriteLines), navController)
                             isFirst = false
                         }
                     }
