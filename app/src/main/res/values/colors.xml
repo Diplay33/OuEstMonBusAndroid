@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="light_grey">#DEDEDE</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="lianes">#3D87C6</color>
+    <color name="tram_a">#782B7D</color>
+    <color name="tram_b">#C72A42</color>
+    <color name="tram_c">#C45895</color>
+    <color name="tram_d">#8A619C</color>
+    <color name="ligne_p">#DF853B</color>
+    <color name="corol">#DF853B</color>
+    <color name="citeis">#81994D</color>
+    <color name="flexo">#81994D</color>
+    <color name="flexo_nuit">#282254</color>
+    <color name="tbnight">#102F49</color>
+    <color name="ligne_u">#81994D</color>
+    <color name="specifique">#81994D</color>
+    <color name="navette_arena">#C02C87</color>
+    <color name="navette_stade">#CE3147</color>
+    <color name="navette_tram">#9DBE44</color>
+    <color name="batcub">#54B8EA</color>
+</resources>

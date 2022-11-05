@@ -1,0 +1,36 @@
+package model.DAO
+
+import model.DAO.AccessData.CallAPI
+import model.DTO.ProgrammedMessage
+import org.json.JSONObject
+
+class ProgrammedMessageDAO {
+    companion object {
+        fun getProgrammedMessagesByLine(lineId: String, callback: (ArrayList<ProgrammedMessage>) -> Unit) {
+            CallAPI.run("https://data.bordeaux-metropole.fr/geojson/features/sv_messa_a?key=0234ABEFGH&filter={\"rs_sv_ligne_a\":$lineId}") { responseBody ->
+                val programmedMessages: ArrayList<ProgrammedMessage> = arrayListOf()
+                val welcomeObject = JSONObject(responseBody)
+                val featuresJSONArray = welcomeObject.getJSONArray("features")
+
+                try {
+                    for(i in 0 until featuresJSONArray.length()) {
+                        val featuresJSONObject = featuresJSONArray.getJSONObject(i)
+                        val propertiesJSONObject = featuresJSONObject.getJSONObject("properties")
+                        programmedMessages.add(ProgrammedMessage(
+                            id = propertiesJSONObject.getInt("gid"),
+                            title = propertiesJSONObject.getString("titre"),
+                            bodyMessage = propertiesJSONObject.getString("message"),
+                            lineId = propertiesJSONObject.getInt("rs_sv_ligne_a"),
+                            lastUpdated = propertiesJSONObject.getString("mdate")
+                        ))
+                    }
+                }
+                catch(e: Exception) {
+                    println("Error during decoding process: $e")
+                }
+
+                callback(programmedMessages)
+            }
+        }
+    }
+}
