@@ -1,4 +1,4 @@
-package view.more
+package view.more_view
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
