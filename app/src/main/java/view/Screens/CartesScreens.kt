@@ -1,8 +1,8 @@
-package view.lines_map_list
+package view.Screens
 
-sealed class Screens(val route: String) {
-    object MapListMain: Screens(route = "map_list_main")
-    object HelloWorld: Screens(route = "hello_world")
+sealed class CartesScreens(val route: String) {
+    //object MapListMain: Screens(route = "map_list_main")
+    object HelloWorld: CartesScreens(route = "hello_world")
 
     fun withArgs(vararg args: String): String {
         return buildString {

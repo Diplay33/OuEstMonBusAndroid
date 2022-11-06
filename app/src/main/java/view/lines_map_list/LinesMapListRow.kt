@@ -13,7 +13,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.FavoriteBorder
-import androidx.compose.material.icons.rounded.Star
 import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
@@ -32,7 +31,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import model.DTO.*
 import model.preferences_data_store.StoreFavoriteLines
-import view.Screens
+import view.Screens.CartesScreens
 
 
 @Composable
@@ -92,7 +91,7 @@ fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Lin
                 onPress = { },
                 onDoubleTap = { },
                 onLongPress = { menuShown.value = true },
-                onTap = { navController.navigate(Screens.HelloWorld.withArgs(rowLine.id.toString())) }
+                onTap = { navController.navigate(CartesScreens.HelloWorld.withArgs(rowLine.id.toString())) }
             )
         }
     ) {

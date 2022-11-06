@@ -4,9 +4,17 @@ import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
@@ -18,34 +26,50 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.ouestmonbus.ui.theme.OùEstMonBusTheme
+import view.BottomNavigationBar
+import view.Screens.BottomNavigationScreens
+import view.Screens.CartesScreens
 import view.lines_map_list.LinesMapListMain
-import view.lines_map_list.Screens
 import view.lines_map_list.line_map.HelloWorld
-
-val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "favoriteLines")
-
-suspend fun Context.writeInt(key: String, value: Int) {
-    dataStore.edit { pref -> pref[intPreferencesKey(key)] = value }
-}
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
-            NavHost(navController = navController, startDestination = Screens.MapListMain.route) {
-                composable(route = Screens.MapListMain.route) {
-                    LinesMapListMain(navController = navController)
-                }
-
-                composable(route = Screens.HelloWorld.route + "/{lineId}", arguments = listOf(
-                    navArgument("lineId") {
-                        type = NavType.StringType
-                        defaultValue = "0"
-                        nullable = true
+            val bottomNavigationItems = listOf(
+                BottomNavigationScreens.Cartes,
+                BottomNavigationScreens.Plus
+            )
+            
+            Scaffold(bottomBar = { BottomNavigationBar(navController, bottomNavigationItems) } ) {
+                NavHost(navController, startDestination = BottomNavigationScreens.Cartes.route) {
+                    //Cartes screen
+                    composable(BottomNavigationScreens.Cartes.route) {
+                        LinesMapListMain(navController = navController)
                     }
-                )) { entry ->
-                    HelloWorld(entry.arguments?.getString("lineId"))
+
+                    composable(route = CartesScreens.HelloWorld.route + "/{lineId}", arguments = listOf(
+                        navArgument("lineId") {
+                            type = NavType.StringType
+                            defaultValue = "0"
+                            nullable = true
+                        }
+                    )) { entry ->
+                        HelloWorld(entry.arguments?.getString("lineId"))
+                    }
+
+
+                    //Plus screen
+                    composable(BottomNavigationScreens.Plus.route) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+                            .fillMaxWidth()
+                        ) {
+                            Text("Hello World!", textAlign = TextAlign.Center, modifier = Modifier
+                                .padding(vertical = 10.dp)
+                            )
+                        }
+                    }
                 }
             }
         }
