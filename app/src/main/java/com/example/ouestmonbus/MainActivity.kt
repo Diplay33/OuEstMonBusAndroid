@@ -31,6 +31,7 @@ import view.Screens.BottomNavigationScreens
 import view.Screens.CartesScreens
 import view.lines_map_list.LinesMapListMain
 import view.lines_map_list.line_map.HelloWorld
+import view.more.MoreMain
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,13 +63,7 @@ class MainActivity : ComponentActivity() {
 
                     //Plus screen
                     composable(BottomNavigationScreens.Plus.route) {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-                            .fillMaxWidth()
-                        ) {
-                            Text("Hello World!", textAlign = TextAlign.Center, modifier = Modifier
-                                .padding(vertical = 10.dp)
-                            )
-                        }
+                        MoreMain(navController)
                     }
                 }
             }
