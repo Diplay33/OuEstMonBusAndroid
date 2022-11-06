@@ -11,6 +11,8 @@ import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowForward
+import androidx.compose.material.icons.rounded.Favorite
+import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material.icons.rounded.Star
 import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -30,6 +32,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import model.DTO.*
 import model.preferences_data_store.StoreFavoriteLines
+import view.Screens
 
 
 @Composable
@@ -186,7 +189,7 @@ fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Lin
                     menuShown.value = false
                 }) {
                     Row {
-                        Icon(imageVector = Icons.Rounded.Star, contentDescription = null, modifier = Modifier
+                        Icon(imageVector = Icons.Rounded.Favorite, contentDescription = null, modifier = Modifier
                             .size(30.dp)
                         )
 
@@ -211,7 +214,7 @@ fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Lin
                     menuShown.value = false
                 }) {
                     Row {
-                        Icon(imageVector = Icons.Rounded.Star, contentDescription = null, modifier = Modifier
+                        Icon(imageVector = Icons.Rounded.FavoriteBorder, contentDescription = null, modifier = Modifier
                             .size(30.dp)
                         )
 

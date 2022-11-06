@@ -31,6 +31,7 @@ class Lines {
                         linesByGroup[0].add(line)
                     }
                 }
+
                 when(line.listGroup) {
                     ListGroup.TRAM -> linesByGroup[1].add(line)
                     ListGroup.LIANES -> linesByGroup[2].add(line)
