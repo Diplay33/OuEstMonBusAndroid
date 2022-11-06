@@ -15,21 +15,22 @@ import androidx.compose.material.icons.rounded.Star
 import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import model.DTO.*
 import model.preferences_data_store.StoreFavoriteLines
+
 
 @Composable
 fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Line>>, navController: NavController) {
@@ -119,7 +120,8 @@ fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Lin
                     if(!servicesAreLoaded.value) {
                         Text("Chargement en cours...",
                             fontStyle = FontStyle.Italic,
-                            color = Color.Gray)
+                            color = Color.Gray
+                        )
                     }
                     else {
                         ColorIndicatorDot(if (services.isEmpty()) Color.Red else Color.Green,
@@ -132,13 +134,14 @@ fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Lin
                             .width(5.dp)
                         )
 
-                        Text(if (services.isEmpty())
-                            "Aucun véhicule en service"
-                        else
-                            if (services.size == 1)
-                                "1 véhicule en service"
+                        Text(
+                            if (services.isEmpty())
+                                "Aucun véhicule en service"
                             else
-                                services.size.toString() + " véhicules en service"
+                                if (services.size == 1)
+                                    "1 véhicule en service"
+                                else
+                                    services.size.toString() + " véhicules en service"
                         )
                     }
                 }

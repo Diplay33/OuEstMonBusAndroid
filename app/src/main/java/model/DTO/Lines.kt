@@ -1,7 +1,6 @@
 package model.DTO
 
 import android.content.Context
-import androidx.compose.runtime.collectAsState
 import com.example.ouestmonbus.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -51,7 +50,7 @@ class Lines {
 
         fun getLinesBySearchText(text: String): List<Line> {
             return LineDAO.getLines().filter { line ->
-                line.lineName.lowercase().contains(text.lowercase())
+                line.lineName.lowercase().contains(text.trim().lowercase())
             }
         }
 
