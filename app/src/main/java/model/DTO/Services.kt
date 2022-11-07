@@ -77,6 +77,8 @@ class Services {
 
                 servicesToReturn.add(tempServices)
                 servicesToReturn.removeFirst()
+
+                callback(servicesToReturn)
             }
         }
     }
