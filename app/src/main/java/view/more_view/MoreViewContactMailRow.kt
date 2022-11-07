@@ -36,7 +36,7 @@ fun MoreViewContactMailRow() {
                 .width(15.dp)
             )
 
-            Text("À venir", fontSize = 20.sp, modifier = Modifier
+            Text("À venir", fontSize = 18.sp, modifier = Modifier
                 .align(Alignment.CenterVertically)
             )
 

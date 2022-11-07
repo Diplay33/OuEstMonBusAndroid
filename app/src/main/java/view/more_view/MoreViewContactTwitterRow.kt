@@ -2,8 +2,10 @@ package view.more_view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -12,13 +14,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ouestmonbus.R
 
 @Composable
 fun MoreViewContactTwitterRow() {
+    val uriHandler = LocalUriHandler.current
+
     Row(modifier = Modifier
         .padding(horizontal = 15.dp)
         .fillMaxWidth()
@@ -39,8 +47,11 @@ fun MoreViewContactTwitterRow() {
                 .width(15.dp)
             )
 
-            Text("À venir", fontSize = 20.sp, modifier = Modifier
+            Text("Jacques HU (@diplay3311)", fontSize = 18.sp, modifier = Modifier
                 .align(Alignment.CenterVertically)
+                .clickable {
+                    uriHandler.openUri("https://twitter.com/diplay3311")
+                }
             )
 
             Spacer(modifier = Modifier
