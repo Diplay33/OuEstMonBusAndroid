@@ -63,6 +63,12 @@ fun LinesMapListMain(state: SearchState = rememberSearchState(), navController: 
                                 navController = navController
                             )
                         }
+
+                        item {
+                            Spacer(modifier = Modifier
+                                .height(50.dp)
+                            )
+                        }
                     }
                 }
 

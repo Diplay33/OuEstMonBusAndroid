@@ -36,7 +36,7 @@ fun MoreViewAppInfoGroup() {
             color = Color.LightGray,
             textAlign = TextAlign.Center
         )
-        
+
         Text(
             text = "v3.0 b01",
             fontSize = 18.sp,
