@@ -4,6 +4,12 @@ import model.DAO.ServiceDAO
 
 class Services {
     companion object {
+        fun getAllServices(callback: (ArrayList<Service>) -> Unit) {
+            ServiceDAO.getAllServices { services ->
+                callback(services)
+            }
+        }
+
         fun getServicesByLine(lineId: Int, callback: (ArrayList<Service>) -> Unit) {
             ServiceDAO.getServicesByLine(lineId) { services ->
                 callback(services)
@@ -40,6 +46,37 @@ class Services {
                     }
                 }
                 callback(navetteTramServices)
+            }
+        }
+
+        fun getServicesSortedByVehicle(callback: (ArrayList<Service>) -> Unit) {
+            ServiceDAO.getAllServices { services ->
+                val returnServices = arrayListOf<Service>()
+                returnServices.addAll(services.sortedBy { it.vehicle.id }.sortedBy { it.vehicle.model })
+                callback(returnServices)
+            }
+        }
+
+        fun getServicesByVehicle(callback: (ArrayList<ArrayList<Service>>) -> Unit) {
+            getServicesSortedByVehicle { services ->
+                val servicesToReturn = arrayListOf<ArrayList<Service>>()
+                val tempServices = arrayListOf<Service>()
+                var precedentVehicle = ""
+
+                services.forEach { service ->
+                    if(service.vehicle.model == precedentVehicle) {
+                        tempServices.add(service)
+                    }
+                    else {
+                        servicesToReturn.add(tempServices)
+                        tempServices.clear()
+                        tempServices.add(service)
+                        precedentVehicle = service.vehicle.model
+                    }
+                }
+
+                servicesToReturn.add(tempServices)
+                servicesToReturn.removeFirst()
             }
         }
     }

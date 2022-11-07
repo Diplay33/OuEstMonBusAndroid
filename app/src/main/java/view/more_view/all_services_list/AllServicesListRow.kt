@@ -30,6 +30,7 @@ fun AllServicesListRow() {
 
     Row(modifier = Modifier
         .padding(horizontal = 15.dp)
+        .padding(bottom = 10.dp)
         .fillMaxWidth()
     ) {
         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
@@ -50,6 +51,11 @@ fun AllServicesListRow() {
                             .size(25.dp)
                             .align(Alignment.CenterVertically)
                     )
+
+                    /*Image(systemName: "questionmark.app.fill")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(maxWidth: 25)*/
 
                     Spacer(modifier = Modifier
                         .width(10.dp)

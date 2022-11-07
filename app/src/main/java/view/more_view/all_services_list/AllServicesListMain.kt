@@ -10,7 +10,7 @@ fun AllServicesListMain(navController: NavController) {
     Scaffold(topBar = { AllServicesListTopBar(navController) }) {
         LazyColumn {
             item {
-                AllServicesListRow()
+                AllServicesListGroup()
             }
         }
     }
