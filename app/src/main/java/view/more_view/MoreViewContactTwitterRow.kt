@@ -37,7 +37,7 @@ fun MoreViewContactTwitterRow() {
         )
     ) {
         Row(modifier = Modifier
-            .padding(horizontal = 15.dp, vertical = 4.dp)
+            .padding(horizontal = 15.dp)
             .align(Alignment.CenterVertically)
         ) {
             Image(painterResource(id = R.drawable.twitter), contentDescription = null, modifier = Modifier

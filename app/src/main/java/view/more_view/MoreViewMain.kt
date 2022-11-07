@@ -28,6 +28,12 @@ fun MoreViewMain(navController: NavController) {
                 )
 
                 MoreViewAllServicesRow(navController)
+
+                Spacer(modifier = Modifier
+                    .height(30.dp)
+                )
+
+                MoreViewSettingsGroup()
             }
         }
     }
