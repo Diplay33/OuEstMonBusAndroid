@@ -10,5 +10,5 @@ class Service (val id: Int,
                val latitude: Double,
                val longitude: Double,
                val currentStop: Int,
-               var vehicle: Vehicle = Vehicle(1, 1, "", "", "", "")
+               var vehicle: Vehicle = Vehicles.getVehicleById(vehicleId.toString())
 )
