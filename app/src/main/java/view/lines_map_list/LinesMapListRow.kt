@@ -30,6 +30,7 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import model.DTO.*
+import model.preferences_data_store.StoreDisplayNotifCountParam
 import model.preferences_data_store.StoreFavoriteLines
 import view.Screens.CartesScreens
 
@@ -51,8 +52,10 @@ fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Lin
 
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
-    val dataStore = StoreFavoriteLines(context, rowLine.id.toString())
-    val isFavorite = dataStore.isFavorite.collectAsState(initial = false)
+    val storeFavLines = StoreFavoriteLines(context, rowLine.id.toString())
+    val storeDisplayNotifCount = StoreDisplayNotifCountParam(context)
+    val isFavorite = storeFavLines.isFavorite.collectAsState(initial = false)
+    val displayNotifCount = storeDisplayNotifCount.isEnabled.collectAsState(initial = false)
 
     LaunchedEffect(rowLine) {
         servicesAreLoaded.value = false
@@ -154,7 +157,7 @@ fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Lin
             .fillMaxHeight()
             .align(Alignment.CenterVertically)
         ) {
-            if(programmedMessagesCount.value > 0) {
+            if(programmedMessagesCount.value > 0 && displayNotifCount.value == true) {
                 Column(modifier = Modifier
                     .fillMaxHeight()
                 ) {
@@ -180,7 +183,7 @@ fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Lin
             if(isFavorite.value == true) {
                 DropdownMenuItem(onClick = {
                     scope.launch {
-                        dataStore.removeFromFavorites(rowLine.id.toString())
+                        storeFavLines.removeFromFavorites(rowLine.id.toString())
                         linesByGroup.clear()
                         linesByGroup.addAll(Lines.getLinesByGroup(context))
                         println("Removed from favorites")
@@ -205,7 +208,7 @@ fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Lin
             else {
                 DropdownMenuItem(onClick = {
                     scope.launch {
-                        dataStore.saveFavoriteLine(rowLine.id.toString())
+                        storeFavLines.saveFavoriteLine(rowLine.id.toString())
                         linesByGroup.clear()
                         linesByGroup.addAll(Lines.getLinesByGroup(context))
                         println("Added to favorites")
