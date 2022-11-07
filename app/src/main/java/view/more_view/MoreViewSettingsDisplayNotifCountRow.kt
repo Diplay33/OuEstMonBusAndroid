@@ -25,6 +25,7 @@ import model.preferences_data_store.StoreDisplayNotifCountParam
 import model.preferences_data_store.StoreFavoriteLines
 
 @Composable
+//TODO: Enable setting by default
 fun MoreViewSettingsDisplayNotifCountRow() {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
