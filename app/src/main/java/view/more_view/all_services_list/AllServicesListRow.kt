@@ -22,11 +22,11 @@ import com.example.ouestmonbus.R
 import model.DTO.Line
 import model.DTO.Lines
 import model.DTO.ListGroup
+import model.DTO.Service
 
 @Composable
-fun AllServicesListRow() {
-    val exampleLine = Line(3, "Lianes 3", R.drawable.lianes_3, R.color.lianes, ListGroup.LIANES)
-    //val exampleService =
+fun AllServicesListRow(service: Service) {
+    val line = Lines.getLine(service.lineId.toString())
 
     Row(modifier = Modifier
         .padding(horizontal = 15.dp)
@@ -35,7 +35,7 @@ fun AllServicesListRow() {
     ) {
         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
             .background(
-                color = colorResource(exampleLine.lineColorResource).copy(alpha = 0.2f),
+                color = colorResource(line.lineColorResource).copy(alpha = 0.2f),
                 shape = RoundedCornerShape(10.dp)
             )
             .padding(horizontal = 15.dp)
@@ -45,7 +45,7 @@ fun AllServicesListRow() {
             Column {
                 Row {
                     Image(
-                        painter = painterResource(id = exampleLine.lineImageResource),
+                        painter = painterResource(id = line.lineImageResource),
                         contentDescription = null,
                         modifier = Modifier
                             .size(25.dp)
@@ -62,7 +62,7 @@ fun AllServicesListRow() {
                     )
 
                     Text(
-                        text = exampleLine.lineName,
+                        text = line.lineName,
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
                         modifier = Modifier
@@ -98,7 +98,7 @@ fun AllServicesListRow() {
             Row(modifier = Modifier
                 .align(Alignment.CenterVertically)
             ) {
-                Text("1415", fontSize = 18.sp, fontWeight = FontWeight.Bold, modifier = Modifier
+                Text(service.vehicle.parkId.toString(), fontSize = 18.sp, fontWeight = FontWeight.Bold, modifier = Modifier
                     .align(Alignment.CenterVertically)
                 )
 

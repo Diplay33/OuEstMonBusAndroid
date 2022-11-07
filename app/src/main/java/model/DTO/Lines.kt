@@ -55,13 +55,13 @@ class Lines {
             }
         }
 
-        fun getLine(lineId: String?): Line? {
+        fun getLine(lineId: String?): Line {
             LineDAO.getLines().map { line ->
                 if(line.id.toString() == lineId) {
                     return line
                 }
             }
-            return null
+            return getEmptyLine()
         }
 
         fun getEmptyLine(): Line {
