@@ -11,14 +11,26 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.launch
+import model.DTO.Lines
+import model.preferences_data_store.StoreDisplayNotifCountParam
+import model.preferences_data_store.StoreFavoriteLines
 
 @Composable
 fun MoreViewSettingsDisplayNotifCountRow() {
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+    val dataStore = StoreDisplayNotifCountParam(context)
+    val isEnabled = dataStore.isEnabled.collectAsState(initial = false)
+
     Row(modifier = Modifier
         .padding(horizontal = 15.dp)
         .height(45.dp)
@@ -36,7 +48,19 @@ fun MoreViewSettingsDisplayNotifCountRow() {
                 .align(Alignment.CenterVertically)
             )
 
-            Switch(checked = true, onCheckedChange = { })
+            Switch(
+                checked = if (isEnabled.value == null) false else isEnabled.value!!,
+                onCheckedChange = { newValue ->
+                    scope.launch {
+                        if(newValue) {
+                            dataStore.enable()
+                        }
+                        else {
+                            dataStore.disable()
+                        }
+                    }
+                }
+            )
         }
     }
 }
