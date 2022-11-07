@@ -60,23 +60,27 @@ class Services {
         fun getServicesByVehicle(callback: (ArrayList<ArrayList<Service>>) -> Unit) {
             getServicesSortedByVehicle { services ->
                 val servicesToReturn = arrayListOf<ArrayList<Service>>()
-                val tempServices = arrayListOf<Service>()
+                var tempServices = arrayListOf<Service>()
                 var precedentVehicle = ""
 
                 services.forEach { service ->
-                    if(service.vehicle.model == precedentVehicle) {
-                        tempServices.add(service)
-                    }
-                    else {
-                        servicesToReturn.add(tempServices)
-                        tempServices.clear()
+                    if(servicesToReturn.isEmpty() && tempServices.isEmpty()) {
                         tempServices.add(service)
                         precedentVehicle = service.vehicle.model
                     }
+                    else {
+                        if(service.vehicle.model == precedentVehicle) {
+                            tempServices.add(service)
+                        }
+                        else {
+                            servicesToReturn.add(tempServices)
+                            tempServices = arrayListOf()
+                            tempServices.add(service)
+                            precedentVehicle = service.vehicle.model
+                        }
+                    }
                 }
-
                 servicesToReturn.add(tempServices)
-                servicesToReturn.removeFirst()
 
                 callback(servicesToReturn)
             }
