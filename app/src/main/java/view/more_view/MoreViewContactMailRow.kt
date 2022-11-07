@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.sp
 fun MoreViewContactMailRow() {
     Row(modifier = Modifier
         .padding(horizontal = 15.dp)
+        .height(45.dp)
         .fillMaxWidth()
         .background(
             Color(0xffF5F5F5),
@@ -25,10 +26,10 @@ fun MoreViewContactMailRow() {
         )
     ) {
         Row(modifier = Modifier
-            .padding(horizontal = 15.dp, vertical = 4.dp)
+            .padding(horizontal = 15.dp)
+            .align(Alignment.CenterVertically)
         ) {
             Icon(imageVector = Icons.Rounded.Email, contentDescription = null, modifier = Modifier
-                .align(Alignment.CenterVertically)
                 .size(25.dp)
             )
 
@@ -36,13 +37,7 @@ fun MoreViewContactMailRow() {
                 .width(15.dp)
             )
 
-            Text("À venir", fontSize = 18.sp, modifier = Modifier
-                .align(Alignment.CenterVertically)
-            )
-
-            Spacer(modifier = Modifier
-                .height(35.dp)
-            )
+            Text("À venir", fontSize = 18.sp)
         }
     }
 }

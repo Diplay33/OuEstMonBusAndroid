@@ -22,6 +22,12 @@ fun MoreViewMain(navController: NavController) {
                 )
 
                 MoreViewWebVersionRow()
+
+                Spacer(modifier = Modifier
+                    .height(30.dp)
+                )
+
+                MoreViewAllServicesRow(navController)
             }
         }
     }

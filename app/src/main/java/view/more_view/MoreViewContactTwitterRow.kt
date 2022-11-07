@@ -29,6 +29,7 @@ fun MoreViewContactTwitterRow() {
 
     Row(modifier = Modifier
         .padding(horizontal = 15.dp)
+        .height(45.dp)
         .fillMaxWidth()
         .background(
             Color(0xffF5F5F5),
@@ -37,9 +38,9 @@ fun MoreViewContactTwitterRow() {
     ) {
         Row(modifier = Modifier
             .padding(horizontal = 15.dp, vertical = 4.dp)
+            .align(Alignment.CenterVertically)
         ) {
             Image(painterResource(id = R.drawable.twitter), contentDescription = null, modifier = Modifier
-                .align(Alignment.CenterVertically)
                 .size(25.dp)
             )
 
@@ -51,14 +52,9 @@ fun MoreViewContactTwitterRow() {
                 fontSize = 18.sp,
                 color = Color.Blue,
                 modifier = Modifier
-                    .align(Alignment.CenterVertically)
                     .clickable {
                         uriHandler.openUri("https://twitter.com/diplay3311")
                     }
-            )
-
-            Spacer(modifier = Modifier
-                .height(35.dp)
             )
         }
     }
