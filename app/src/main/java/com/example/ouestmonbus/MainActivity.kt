@@ -27,6 +27,7 @@ import view.Screens.PlusScreens
 import view.lines_map_list.LinesMapListMain
 import view.lines_map_list.line_map.HelloWorld
 import view.more_view.MoreViewMain
+import view.more_view.all_services_list.AllServicesListMain
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,9 +66,7 @@ class MainActivity : ComponentActivity() {
                         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
                             .fillMaxWidth()
                         ) {
-                            Text("Hello World!", textAlign = TextAlign.Center, modifier = Modifier
-                                .padding(vertical = 10.dp)
-                            )
+                            AllServicesListMain(navController)
                         }
                     }
                 }
