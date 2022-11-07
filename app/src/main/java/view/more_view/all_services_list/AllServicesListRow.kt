@@ -19,14 +19,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.ouestmonbus.R
-import model.DTO.Line
-import model.DTO.Lines
-import model.DTO.ListGroup
-import model.DTO.Service
+import model.DAO.AccessData.DestinationData
+import model.DTO.*
 
 @Composable
 fun AllServicesListRow(service: Service) {
     val line = Lines.getLine(service.lineId.toString())
+    val destination = Destinations.getDestinationFromRaw(service.destination)
 
     Row(modifier = Modifier
         .padding(horizontal = 15.dp)
@@ -39,7 +38,7 @@ fun AllServicesListRow(service: Service) {
                 shape = RoundedCornerShape(10.dp)
             )
             .padding(horizontal = 15.dp)
-            .padding(top = 7.dp, bottom = 5.dp)
+            .padding(top = 7.dp, bottom = if (destination.first() == "") 7.dp else 5.dp)
             .fillMaxWidth()
         ) {
             Column {
@@ -76,20 +75,22 @@ fun AllServicesListRow(service: Service) {
                         contentDescription = null,
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
-                            .offset(x = -7.dp)
+                            .offset(x = (-7).dp)
                     )
 
-                    Column(verticalArrangement = Arrangement.spacedBy(0.dp)) {
-                        Text(
-                            text = "BORDEAUX",
-                            fontSize = 13.sp,
-                            color = Color.Gray,
-                            modifier = Modifier
-                                .offset(y = 2.dp)
-                        )
+                    Column {
+                        if(destination.first() != "") {
+                            Text(
+                                text = "BORDEAUX",
+                                fontSize = 13.sp,
+                                color = Color.Gray,
+                                modifier = Modifier
+                                    .offset(y = if (destination.first() == "") 0.dp else 2.dp)
+                            )
+                        }
 
-                        Text("Quinconces", fontSize = 18.sp, modifier = Modifier
-                            .offset(y = -2.dp)
+                        Text(destination.last(), fontSize = 18.sp, modifier = Modifier
+                            .offset(y = if (destination.first() == "") 0.dp else (-2).dp)
                         )
                     }
                 }
