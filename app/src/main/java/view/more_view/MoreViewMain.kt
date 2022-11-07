@@ -34,6 +34,12 @@ fun MoreViewMain(navController: NavController) {
                 )
 
                 MoreViewSettingsGroup()
+
+                Spacer(modifier = Modifier
+                    .height(30.dp)
+                )
+
+                MoreViewAppInfoGroup()
             }
         }
     }
