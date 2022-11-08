@@ -112,8 +112,7 @@ fun SearchTextField(
             ),
         color = Color(0xffF5F5F5),
         shape = RoundedCornerShape(10.dp)
-    )
-    {
+    ) {
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             Box(contentAlignment = Alignment.CenterStart, modifier = modifier) {
                 if(query.text.isEmpty()) {
@@ -121,7 +120,7 @@ fun SearchTextField(
                         .padding(start = 24.dp, end = 8.dp)
                     )
                 }
-                
+
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     BasicTextField(value = query, onValueChange = onQueryChange, modifier = Modifier
                         .fillMaxHeight()
@@ -180,8 +179,7 @@ fun AllServicesListSearchBar(
                     focusManager.clearFocus()
                     keyboardController?.hide()
                     onBack()
-                }
-            ) {
+                }) {
                 Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = null)
             }
         }

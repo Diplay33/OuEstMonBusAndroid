@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.sp
 import model.DTO.Service
 
 @Composable
-fun AllServicesListGroup(services: MutableList<Service>) {
+fun AllServicesListGroup(services: List<Service>) {
     Column(modifier = Modifier
         .padding(bottom = 15.dp)
     ) {
@@ -18,7 +18,9 @@ fun AllServicesListGroup(services: MutableList<Service>) {
             .fillMaxWidth()
             .padding(horizontal = 15.dp)
         ) {
-            Text(services.first().vehicle.model, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            if(services.isNotEmpty()) {
+                Text(services.first().vehicle.model, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            }
         }
         services.forEach { service ->
             AllServicesListRow(service)

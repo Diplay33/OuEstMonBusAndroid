@@ -1,6 +1,8 @@
 package model.DTO
 
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import model.DAO.ServiceDAO
+import java.text.Normalizer
 
 class Services {
     companion object {
@@ -84,6 +86,48 @@ class Services {
 
                 callback(servicesToReturn)
             }
+        }
+
+        fun filterServicesSortedByVehicle(services: List<Service>): List<Service> {
+            return services.sortedBy { it.vehicle.id }.sortedBy { it.vehicle.model }
+        }
+
+        fun filterServicesByVehicle(services: List<Service>): List<List<Service>> {
+            var filteredServices = filterServicesSortedByVehicle(services)
+            val servicesToReturn = mutableListOf<List<Service>>()
+            var tempServices = mutableListOf<Service>()
+            var precedentVehicle = ""
+
+            filteredServices.forEach { service ->
+                if(servicesToReturn.isEmpty() && tempServices.isEmpty()) {
+                    tempServices.add(service)
+                    precedentVehicle = service.vehicle.model
+                }
+                else {
+                    if(service.vehicle.model == precedentVehicle) {
+                        tempServices.add(service)
+                    }
+                    else {
+                        servicesToReturn.add(tempServices)
+                        tempServices = mutableListOf()
+                        tempServices.add(service)
+                        precedentVehicle = service.vehicle.model
+                    }
+                }
+            }
+            servicesToReturn.add(tempServices)
+
+            return servicesToReturn
+        }
+
+        fun filterServicesBySearchText(services: SnapshotStateList<Service>, text: String): List<Service> {
+            val REGEX_UNACCENT = "\\p{InCombiningDiacriticalMarks}+".toRegex()
+            fun CharSequence.unaccent(): String {
+                val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
+                return REGEX_UNACCENT.replace(temp, "")
+            }
+
+            return services.filter { it.vehicle.parkId.toString().contains(text.trim()) || Lines.getLine(it.lineId.toString()).lineName.lowercase().unaccent().contains(text.lowercase().unaccent().trim()) }
         }
     }
 }

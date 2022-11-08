@@ -19,6 +19,7 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import model.DTO.Service
 import model.DTO.Services
+import model.DTO.Vehicles
 import view.lines_map_list.SearchDisplay
 
 @OptIn(ExperimentalAnimationApi::class)
@@ -28,10 +29,11 @@ fun AllServicesListMain(
     navController: NavController
 ) {
     val services = remember {
-        mutableStateListOf<MutableList<Service>>()
+        mutableStateListOf<Service>()
     }
-    Services.getServicesByVehicle { servicesByVehicle ->
-        services.addAll(servicesByVehicle)
+    Services.getAllServices {
+        services.clear()
+        services.addAll(Services.filterServicesSortedByVehicle(it))
     }
 
     Scaffold(topBar = { AllServicesListTopBar(navController) }) {
@@ -52,14 +54,14 @@ fun AllServicesListMain(
             LaunchedEffect(state.query.text) {
                 state.searching = true
                 delay(100)
-                state.searchResults = emptyList() //TODO: implement search algorithm
                 state.searching = false
             }
+            state.searchResults = Services.filterServicesBySearchText(services, state.query.text)
 
             when(state.searchDisplay) {
                 SearchDisplay.INITIALRESULTS -> {
                     LazyColumn {
-                        items(services) { services ->
+                        items(Services.filterServicesByVehicle(services)) { services ->
                             AllServicesListGroup(services)
                         }
 
@@ -81,14 +83,17 @@ fun AllServicesListMain(
                     }
                 }
 
-                //TODO: implement
                 SearchDisplay.RESULTS -> {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-                        .fillMaxWidth()
-                    ) {
-                        Text("Aucun résultat", textAlign = TextAlign.Center, modifier = Modifier
-                            .padding(vertical = 10.dp)
-                        )
+                    LazyColumn {
+                        items(Services.filterServicesByVehicle(state.searchResults)) { services ->
+                            AllServicesListGroup(services)
+                        }
+
+                        item {
+                            Spacer(modifier = Modifier
+                                .height(275.dp)
+                            )
+                        }
                     }
                 }
             }
