@@ -90,7 +90,7 @@ fun AllServicesListMain(
 
                         item {
                             Spacer(modifier = Modifier
-                                .height(275.dp)
+                                .height(300.dp)
                             )
                         }
                     }

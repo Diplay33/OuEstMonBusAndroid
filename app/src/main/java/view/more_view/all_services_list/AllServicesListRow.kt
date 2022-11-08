@@ -27,7 +27,7 @@ fun AllServicesListRow(service: Service) {
 
     Row(modifier = Modifier
         .padding(horizontal = 15.dp)
-        .padding(bottom = 10.dp)
+        .padding(bottom = 8.dp)
         .fillMaxWidth()
     ) {
         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
