@@ -19,27 +19,18 @@
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/ouestmonbus/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/ouestmonbus/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/model/DAO/VehicleDAO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/DAO/VehicleDAO.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/model/DTO/Lines.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/DTO/Lines.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/model/DTO/Services.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/DTO/Services.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/Screens/CartesScreens.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/Screens/CartesScreens.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/LinesMapListSearchBar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/LinesMapListSearchBar.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/more_view/MoreViewAllServicesRow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/more_view/MoreViewAllServicesRow.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/more_view/MoreViewContactTwitterRow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/more_view/MoreViewContactTwitterRow.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/more_view/MoreViewSettingsDisplayNotifCountRow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/more_view/MoreViewSettingsDisplayNotifCountRow.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/more_view/all_services_list/AllServicesListMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/more_view/all_services_list/AllServicesListMain.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/more_view/all_services_list/AllServicesListRow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/more_view/all_services_list/AllServicesListRow.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/more_view/all_services_list/AllServicesListSearchBar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/more_view/all_services_list/AllServicesListSearchBar.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/more_view/all_services_list/AllServicesListTopBar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/more_view/all_services_list/AllServicesListTopBar.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/model/DAO/AccessData/DestinationData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/DAO/AccessData/DestinationData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/model/DAO/AccessData/VehicleData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/DAO/AccessData/VehicleData.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/Users/jacqueshu/.android/avd/Pixel_3a_API_33_arm64-v8a.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[RF8F816GZAR]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -56,6 +47,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />

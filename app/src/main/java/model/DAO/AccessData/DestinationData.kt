@@ -22,6 +22,7 @@ class DestinationData {
             "Blanquefort" to listOf("BLANQUEFORT", "Gare"),
             "Bougnard" to listOf("PESSAC", "Bougnard"),
             "Bouliac Ccial" to listOf("BOULIAC", "Centre Commercial"),
+            "Bourgogne" to listOf("BORDEAUX", "Porte de Bourgogne"),
             //C
             "Carle Vernet" to listOf("BORDEAUX", "Carle Vernet"),
             //Q
