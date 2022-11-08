@@ -16,6 +16,12 @@ class DestinationData {
             "Beaudésert" to listOf("MERIGNAC", "Beaudésert"),
             "Beausite" to listOf("CENON", "Beausite"),
             "Beausoleil" to listOf("GRADIGNAN", "Beausoleil"),
+            "Belle Rive" to listOf("SAINT LOUIS DE MONTFERRAND", "Belle Rive"),
+            "Berge De Garonne" to listOf("BORDEAUX", "Berges de la Garonne"),
+            "Berges de Garonne" to listOf("BORDEAUX", "Berges de la Garonne"),
+            "Blanquefort" to listOf("BLANQUEFORT", "Gare"),
+            "Bougnard" to listOf("PESSAC", "Bougnard"),
+            "Bouliac Ccial" to listOf("BOULIAC", "Centre Commercial"),
             //C
             "Carle Vernet" to listOf("BORDEAUX", "Carle Vernet"),
             //Q
