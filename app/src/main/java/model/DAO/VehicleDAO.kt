@@ -11,7 +11,7 @@ class VehicleDAO {
                 val foundVehicle = vehicleDict.first()
                 Vehicle(
                     id = foundVehicle["id"]!!.toInt(),
-                    parkId = foundVehicle["parkId"]!!.toInt(),
+                    parkId = foundVehicle["parkId"]!!,
                     brand = foundVehicle["brand"]!!,
                     model = foundVehicle["model"]!!,
                     type = foundVehicle["type"]!!,
@@ -26,7 +26,7 @@ class VehicleDAO {
         private fun getUnknownVehicle(id: Int): Vehicle {
             return Vehicle(
                 id = id,
-                parkId = id,
+                parkId = id.toString(),
                 brand = "INCONNU",
                 model = "Modèle de véhicule inconnu",
                 type = "INCONNU",
