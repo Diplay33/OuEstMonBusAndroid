@@ -66,7 +66,7 @@ class MainActivity : ComponentActivity() {
                         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
                             .fillMaxWidth()
                         ) {
-                            AllServicesListMain(navController)
+                            AllServicesListMain(navController = navController)
                         }
                     }
                 }

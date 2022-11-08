@@ -1,4 +1,4 @@
-package view.lines_map_list
+package view.more_view.all_services_list
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -7,11 +7,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.Search
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -24,18 +24,15 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import model.DTO.Line
-
-enum class SearchDisplay {
-    INITIALRESULTS, RESULTS, NORESULT
-}
+import model.DTO.Service
+import view.lines_map_list.SearchDisplay
 
 @Stable
-class LinesMapListSearchState(
+class AllServicesListSearchState(
     query: TextFieldValue,
     focused: Boolean,
     searching: Boolean,
-    searchResults: List<Line>
+    searchResults: List<Service>
 ) {
     var query by mutableStateOf(query)
     var focused by mutableStateOf(focused)
@@ -61,10 +58,10 @@ fun rememberSearchState(
     query: TextFieldValue = TextFieldValue(""),
     focused: Boolean = false,
     searching: Boolean = false,
-    searchResults: List<Line> = emptyList()
-): LinesMapListSearchState {
+    searchResults: List<Service> = emptyList()
+): AllServicesListSearchState {
     return remember {
-        LinesMapListSearchState(
+        AllServicesListSearchState(
             query = query,
             focused = focused,
             searching = searching,
@@ -85,7 +82,7 @@ private fun SearchHint(modifier: Modifier = Modifier) {
             .width(10.dp)
         )
 
-        Text("Rechercher une ligne", color = Color(0xff757575))
+        Text("Rechercher", color = Color(0xff757575))
     }
 }
 
@@ -102,7 +99,7 @@ fun SearchTextField(
     val focusRequester = remember { FocusRequester() }
 
     Surface(
-        modifier = modifier
+        modifier = Modifier
             .then(
                 Modifier
                     .height(56.dp)
@@ -115,7 +112,8 @@ fun SearchTextField(
             ),
         color = Color(0xffF5F5F5),
         shape = RoundedCornerShape(10.dp)
-    ) {
+    )
+    {
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
             Box(contentAlignment = Alignment.CenterStart, modifier = modifier) {
                 if(query.text.isEmpty()) {
@@ -123,7 +121,7 @@ fun SearchTextField(
                         .padding(start = 24.dp, end = 8.dp)
                     )
                 }
-
+                
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     BasicTextField(value = query, onValueChange = onQueryChange, modifier = Modifier
                         .fillMaxHeight()
@@ -133,7 +131,7 @@ fun SearchTextField(
                         }
                         .focusRequester(focusRequester)
                         .padding(top = 9.dp, bottom = 8.dp, start = 24.dp, end = 8.dp),
-                    singleLine = true
+                        singleLine = true
                     )
 
                     when {
@@ -158,7 +156,7 @@ fun SearchTextField(
 @ExperimentalAnimationApi
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun LinesMapListSearchBar(
+fun AllServicesListSearchBar(
     query: TextFieldValue,
     onQueryChange: (TextFieldValue) -> Unit,
     onSearchFocusChange: (Boolean) -> Unit,
@@ -170,7 +168,7 @@ fun LinesMapListSearchBar(
 ) {
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
-    
+
     Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier
         .fillMaxWidth()
     ) {
@@ -182,7 +180,8 @@ fun LinesMapListSearchBar(
                     focusManager.clearFocus()
                     keyboardController?.hide()
                     onBack()
-                }) {
+                }
+            ) {
                 Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = null)
             }
         }

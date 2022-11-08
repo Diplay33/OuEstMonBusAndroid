@@ -23,7 +23,7 @@ import model.DTO.Lines
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun LinesMapListMain(state: SearchState = rememberSearchState(), navController: NavController) {
+fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), navController: NavController) {
     val context = LocalContext.current
     val linesByGroup = remember {
         mutableStateListOf<ArrayList<Line>>()
