@@ -25,8 +25,21 @@ class DestinationData {
             "Bourgogne" to listOf("BORDEAUX", "Porte de Bourgogne"),
             //C
             "Carle Vernet" to listOf("BORDEAUX", "Carle Vernet"),
+            //G
+            "Galin" to listOf("BORDEAUX", "Galin"),
+            "Gare Routière" to listOf("SAINT MÉDARD EN JALLES", "Gare Routière"),
+            //L
+            "La Cite Du Vin" to listOf("BORDEAUX", "La Cité du Vin"),
+            "La Cité du Vin" to listOf("BORDEAUX", "La Cité du Vin"),
+            "Libération" to listOf("PAREMPUYRE", "Libération"),
+            //N
+            "New York" to listOf("BORDEAUX", "New York"),
             //Q
             "Quinconces" to listOf("BORDEAUX", "Quinconces"),
+            //R
+            "René Coty" to listOf("AMBARÈS", "René Coty"),
+            //T
+            "Thiers Benauge" to listOf("BORDEAUX", "Thiers Benauge"),
             //V
             "Villepreux" to listOf("SAINT AUBIN", "Villepreux")
         )
