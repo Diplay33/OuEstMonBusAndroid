@@ -81,7 +81,7 @@ fun AllServicesListRow(service: Service) {
                     Column {
                         if(destination.first() != "") {
                             Text(
-                                text = "BORDEAUX",
+                                text = destination.first(),
                                 fontSize = 13.sp,
                                 color = Color.Gray,
                                 modifier = Modifier
