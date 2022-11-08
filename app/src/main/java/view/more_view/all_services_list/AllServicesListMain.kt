@@ -19,7 +19,6 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import model.DTO.Service
 import model.DTO.Services
-import model.DTO.Vehicles
 import view.lines_map_list.SearchDisplay
 
 @OptIn(ExperimentalAnimationApi::class)

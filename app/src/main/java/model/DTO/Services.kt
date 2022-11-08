@@ -51,7 +51,7 @@ class Services {
             }
         }
 
-        fun getServicesSortedByVehicle(callback: (ArrayList<Service>) -> Unit) {
+        /*fun getServicesSortedByVehicle(callback: (ArrayList<Service>) -> Unit) {
             ServiceDAO.getAllServices { services ->
                 val returnServices = arrayListOf<Service>()
                 returnServices.addAll(services.sortedBy { it.vehicle.id }.sortedBy { it.vehicle.model })
@@ -86,14 +86,14 @@ class Services {
 
                 callback(servicesToReturn)
             }
-        }
+        }*/
 
         fun filterServicesSortedByVehicle(services: List<Service>): List<Service> {
             return services.sortedBy { it.vehicle.id }.sortedBy { it.vehicle.model }
         }
 
         fun filterServicesByVehicle(services: List<Service>): List<List<Service>> {
-            var filteredServices = filterServicesSortedByVehicle(services)
+            val filteredServices = filterServicesSortedByVehicle(services)
             val servicesToReturn = mutableListOf<List<Service>>()
             var tempServices = mutableListOf<Service>()
             var precedentVehicle = ""

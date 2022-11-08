@@ -64,7 +64,7 @@ class Lines {
             return getEmptyLine()
         }
 
-        fun getEmptyLine(): Line {
+        private fun getEmptyLine(): Line {
             return Line(
                 id =0,
                 lineName = "Ligne inconnue",
