@@ -34,6 +34,13 @@ class DestinationData {
             "Cantinolle" to listOf("EYSINES", "Cantinolle"),
             "Cap de Bos" to listOf("PESSAC", "Cap de Bos"),
             "Carle Vernet" to listOf("BORDEAUX", "Carle Vernet"),
+            "Caychac" to listOf("BLANQUEFORT", "Caychac"),
+            "Cenon Gare" to listOf("CENON", "Cenon Gare"),
+            "Centre Commercial" to listOf("BORDEAUX", "Centre Commercial du Lac"),
+            "Centre-Forum" to listOf("TALENCE", "Forum"),
+            "Château Rouquey" to listOf("MERIGNAC", "Château Rouquey"),
+            "Cimetière Interco" to listOf("MERIGNAC", "Cimetière Intercommunal"),
+            "Claveau" to listOf("BORDEAUX", "Claveau"),
             //G
             "Galin" to listOf("BORDEAUX", "Galin"),
             "Gare Routière" to listOf("SAINT MÉDARD EN JALLES", "Gare Routière"),

@@ -49,11 +49,6 @@ fun AllServicesListRow(service: Service) {
                             .align(Alignment.CenterVertically)
                     )
 
-                    /*Image(systemName: "questionmark.app.fill")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(maxWidth: 25)*/
-
                     Spacer(modifier = Modifier
                         .width(10.dp)
                     )

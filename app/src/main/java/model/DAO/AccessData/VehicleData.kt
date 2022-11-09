@@ -656,6 +656,55 @@ class VehicleData {
             mapOf("id" to "93225", "parkId" to "113225", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
             mapOf("id" to "93236", "parkId" to "113236", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
             mapOf("id" to "93240", "parkId" to "113240", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+
+            //MercedesBenz Citaro O530 Facelift
+            mapOf("id" to "99093", "parkId" to "089093", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99096", "parkId" to "089096", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99099", "parkId" to "089099", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99003", "parkId" to "109003", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99005", "parkId" to "109005", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99006", "parkId" to "109006", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99007", "parkId" to "109007", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99008", "parkId" to "109008", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99009", "parkId" to "109009", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99010", "parkId" to "109010", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99012", "parkId" to "109012", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99013", "parkId" to "109013", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99014", "parkId" to "109014", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99015", "parkId" to "109015", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99016", "parkId" to "109016", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99017", "parkId" to "109017", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99018", "parkId" to "109018", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99019", "parkId" to "109019", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99020", "parkId" to "109020", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99021", "parkId" to "109021", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99022", "parkId" to "109022", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99023", "parkId" to "109023", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99024", "parkId" to "109024", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99025", "parkId" to "109025", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99150", "parkId" to "109150", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99151", "parkId" to "109151", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99160", "parkId" to "109160", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99161", "parkId" to "109161", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99162", "parkId" to "109162", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99163", "parkId" to "109163", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "99164", "parkId" to "109164", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+
+            //HeuliezBus Access'BUS GX 127
+            mapOf("id" to "79005", "parkId" to "077005", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "97002", "parkId" to "107002", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "97003", "parkId" to "107003", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "97004", "parkId" to "107004", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "77005", "parkId" to "107005", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "97006", "parkId" to "107006", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "97007", "parkId" to "107007", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+
+            //HeuliezBus Access'BUS GX 127 L
+            mapOf("id" to "97014", "parkId" to "087014", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "97015", "parkId" to "087015", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+
+            //MercedesBenz Citaro C1
+            mapOf("id" to "99045", "parkId" to "069045", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C1", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
         )
     }
 }
