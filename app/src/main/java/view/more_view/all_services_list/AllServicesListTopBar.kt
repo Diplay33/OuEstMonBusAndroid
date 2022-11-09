@@ -7,6 +7,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 
 @Composable
-fun AllServicesListTopBar(navController: NavController) {
+fun AllServicesListTopBar(navController: NavController, isLoading: MutableState<Boolean>) {
     TopAppBar(backgroundColor = Color.White, elevation = 0.dp) {
         Row(modifier = Modifier
             .fillMaxWidth()
@@ -43,13 +44,21 @@ fun AllServicesListTopBar(navController: NavController) {
                         .padding(horizontal = 15.dp)
                 )
 
-                Icon(
-                    imageVector = Icons.Rounded.Refresh,
-                    contentDescription = null,
-                    modifier = Modifier
-                        .clickable {  }
-                        .size(30.dp)
-                )
+                if(isLoading.value) {
+                    CircularProgressIndicator(modifier = Modifier
+                        .size(25.dp)
+                        .align(Alignment.CenterVertically)
+                    )
+                }
+                else {
+                    Icon(
+                        imageVector = Icons.Rounded.Refresh,
+                        contentDescription = null,
+                        modifier = Modifier
+                            .clickable {  }
+                            .size(30.dp)
+                    )
+                }
             }
         }
     }

@@ -6,10 +6,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.TextFieldValue
@@ -30,12 +27,16 @@ fun AllServicesListMain(
     val services = remember {
         mutableStateListOf<Service>()
     }
+    val isLoading = remember {
+        mutableStateOf(true)
+    }
     Services.getAllServices {
         services.clear()
         services.addAll(Services.filterServicesSortedByVehicle(it))
+        isLoading.value = false
     }
 
-    Scaffold(topBar = { AllServicesListTopBar(navController) }) {
+    Scaffold(topBar = { AllServicesListTopBar(navController, isLoading) }) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
