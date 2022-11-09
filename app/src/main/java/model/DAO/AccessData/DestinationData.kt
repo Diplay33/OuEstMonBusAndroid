@@ -32,6 +32,7 @@ class DestinationData {
             "Camping Internat" to listOf("BORDEAUX", "Camping International"),
             "Candau" to listOf("PESSAC", "Candau"),
             "Cantinolle" to listOf("EYSINES", "Cantinolle"),
+            "Cap de Bos" to listOf("PESSAC", "Cap de Bos"),
             "Carle Vernet" to listOf("BORDEAUX", "Carle Vernet"),
             //G
             "Galin" to listOf("BORDEAUX", "Galin"),
