@@ -38,7 +38,7 @@ fun AllServicesListMain(
         isLoading.value = false
     }
 
-    Scaffold(topBar = { AllServicesListTopBar(navController, isLoading) }) {
+    Scaffold(topBar = { AllServicesListTopBar(navController, services, isLoading) }) {
         Column(
             modifier = Modifier
                 .fillMaxSize()

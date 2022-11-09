@@ -8,6 +8,7 @@ import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,9 +16,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import model.DTO.Service
+import model.DTO.Services
 
 @Composable
-fun AllServicesListTopBar(navController: NavController, isLoading: MutableState<Boolean>) {
+fun AllServicesListTopBar(
+    navController: NavController,
+    services: SnapshotStateList<Service>,
+    isLoading: MutableState<Boolean>
+) {
     TopAppBar(backgroundColor = Color.White, elevation = 0.dp) {
         Row(modifier = Modifier
             .fillMaxWidth()
@@ -55,7 +62,14 @@ fun AllServicesListTopBar(navController: NavController, isLoading: MutableState<
                         imageVector = Icons.Rounded.Refresh,
                         contentDescription = null,
                         modifier = Modifier
-                            .clickable {  }
+                            .clickable {
+                                isLoading.value = true
+                                Services.getAllServices {
+                                    services.clear()
+                                    services.addAll(Services.filterServicesSortedByVehicle(it))
+                                    isLoading.value = false
+                                }
+                            }
                             .size(30.dp)
                     )
                 }
