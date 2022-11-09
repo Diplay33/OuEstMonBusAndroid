@@ -4,6 +4,8 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -60,16 +62,16 @@ fun AllServicesListMain(
 
             when(state.searchDisplay) {
                 SearchDisplay.INITIALRESULTS -> {
-                    LazyColumn {
-                        items(Services.filterServicesByVehicle(services)) { services ->
+                    Column(modifier = Modifier
+                        .verticalScroll(rememberScrollState())
+                    ) {
+                        Services.filterServicesByVehicle(services).forEach { services ->
                             AllServicesListGroup(services)
                         }
 
-                        item {
-                            Spacer(modifier = Modifier
-                                .height(50.dp)
-                            )
-                        }
+                        Spacer(modifier = Modifier
+                            .height(50.dp)
+                        )
                     }
                 }
 
@@ -84,16 +86,16 @@ fun AllServicesListMain(
                 }
 
                 SearchDisplay.RESULTS -> {
-                    LazyColumn {
-                        items(Services.filterServicesByVehicle(state.searchResults)) { services ->
+                    Column(modifier = Modifier
+                        .verticalScroll(rememberScrollState())
+                    ) {
+                        Services.filterServicesByVehicle(state.searchResults).forEach { services ->
                             AllServicesListGroup(services)
                         }
 
-                        item {
-                            Spacer(modifier = Modifier
-                                .height(300.dp)
-                            )
-                        }
+                        Spacer(modifier = Modifier
+                            .height(300.dp)
+                        )
                     }
                 }
             }
