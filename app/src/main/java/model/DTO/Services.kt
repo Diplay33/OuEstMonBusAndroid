@@ -89,7 +89,7 @@ class Services {
         }*/
 
         fun filterServicesSortedByVehicle(services: List<Service>): List<Service> {
-            return services.sortedBy { it.vehicle.id }.sortedBy { it.vehicle.model }
+            return services.sortedBy { it.vehicle.parkId }.sortedBy { it.vehicle.model }
         }
 
         fun filterServicesByVehicle(services: List<Service>): List<List<Service>> {
