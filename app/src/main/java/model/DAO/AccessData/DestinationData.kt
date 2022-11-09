@@ -44,6 +44,7 @@ class DestinationData {
             "Collège C Massé" to listOf("AMBARÈS", "Collège Claude Massé"),
             "Coll Simone Veil" to listOf("CARBON BLANC", "Collège Simone Veil"),
             "Courréjean" to listOf("VILLENAVE D'ORNON", "Courréjean"),
+            "Cracovie" to listOf("BORDEAUX", "Cracovie"),
             //G
             "Galin" to listOf("BORDEAUX", "Galin"),
             "Gare Routière" to listOf("SAINT MÉDARD EN JALLES", "Gare Routière"),

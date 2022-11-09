@@ -735,6 +735,42 @@ class VehicleData {
             //OTOKAR Vectio C
             mapOf("id" to "88700", "parkId" to "8700", "brand" to "OTOKAR", "model" to "OTOKAR Vectio C", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
             mapOf("id" to "88701", "parkId" to "8701", "brand" to "OTOKAR", "model" to "OTOKAR Vectio C", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+
+            //IVECO Bus Crossway LE City
+            mapOf("id" to "86840", "parkId" to "6840", "brand" to "IVECO Bus", "model" to "IVECO Bus Crossway LE City", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86841", "parkId" to "6841", "brand" to "IVECO Bus", "model" to "IVECO Bus Crossway LE City", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86843", "parkId" to "6843", "brand" to "IVECO Bus", "model" to "IVECO Bus Crossway LE City", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86844", "parkId" to "6844", "brand" to "IVECO Bus", "model" to "IVECO Bus Crossway LE City", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86845", "parkId" to "6845", "brand" to "IVECO Bus", "model" to "IVECO Bus Crossway LE City", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86846", "parkId" to "6846", "brand" to "IVECO Bus", "model" to "IVECO Bus Crossway LE City", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86847", "parkId" to "6847", "brand" to "IVECO Bus", "model" to "IVECO Bus Crossway LE City", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86848", "parkId" to "6848", "brand" to "IVECO Bus", "model" to "IVECO Bus Crossway LE City", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86849", "parkId" to "6849", "brand" to "IVECO Bus", "model" to "IVECO Bus Crossway LE City", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86850", "parkId" to "6850", "brand" to "IVECO Bus", "model" to "IVECO Bus Crossway LE City", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86851", "parkId" to "6851", "brand" to "IVECO Bus", "model" to "IVECO Bus Crossway LE City", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86852", "parkId" to "6852", "brand" to "IVECO Bus", "model" to "IVECO Bus Crossway LE City", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86853", "parkId" to "6853", "brand" to "IVECO Bus", "model" to "IVECO Bus Crossway LE City", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86854", "parkId" to "6854", "brand" to "IVECO Bus", "model" to "IVECO Bus Crossway LE City", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86855", "parkId" to "6855", "brand" to "IVECO Bus", "model" to "IVECO Bus Crossway LE City", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86856", "parkId" to "6856", "brand" to "IVECO Bus", "model" to "IVECO Bus Crossway LE City", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86857", "parkId" to "6857", "brand" to "IVECO Bus", "model" to "IVECO Bus Crossway LE City", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86858", "parkId" to "6858", "brand" to "IVECO Bus", "model" to "IVECO Bus Crossway LE City", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86859", "parkId" to "6859", "brand" to "IVECO Bus", "model" to "IVECO Bus Crossway LE City", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86860", "parkId" to "6860", "brand" to "IVECO Bus", "model" to "IVECO Bus Crossway LE City", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+
+
+            /*SARL Evadys*/
+            //Véhicules
+            mapOf("id" to "60001", "parkId" to "0001", "brand" to "Inconnu", "model" to "MiniBus", "type" to "BUS", "operator" to "SARL Evadys"),
+            mapOf("id" to "60002", "parkId" to "0002", "brand" to "VEHIXEL", "model" to "VEHIXEL Cytios 4/32", "type" to "BUS", "operator" to "SARL Evadys"),
+
+
+            /*Bordeaux River Cruise*/
+            //Bateaux
+            mapOf("id" to "6901", "parkId" to "6901", "brand" to "Bateau", "model" to "Catamaran \"L'Hirondelle\"", "type" to "BATEAU", "operator" to "Bordeaux River Cruise"),
+            mapOf("id" to "6902", "parkId" to "6902", "brand" to "Bateau", "model" to "Catamaran \"La Gondole\"", "type" to "BATEAU", "operator" to "Bordeaux River Cruise"),
+            mapOf("id" to "6903", "parkId" to "6903", "brand" to "Bateau", "model" to "Bateau \"La Mouette\"", "type" to "BATEAU", "operator" to "Bordeaux River Cruise"),
+            mapOf("id" to "6904", "parkId" to "6904", "brand" to "Bateau", "model" to "Bateau \"Le Silnet\"", "type" to "BATEAU", "operator" to "Bordeaux River Cruise"),
         )
     }
 }
