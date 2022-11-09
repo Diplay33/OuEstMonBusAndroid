@@ -41,6 +41,9 @@ class DestinationData {
             "Château Rouquey" to listOf("MERIGNAC", "Château Rouquey"),
             "Cimetière Interco" to listOf("MERIGNAC", "Cimetière Intercommunal"),
             "Claveau" to listOf("BORDEAUX", "Claveau"),
+            "Collège C Massé" to listOf("AMBARÈS", "Collège Claude Massé"),
+            "Coll Simone Veil" to listOf("CARBON BLANC", "Collège Simone Veil"),
+            "Courréjean" to listOf("VILLENAVE D'ORNON", "Courréjean"),
             //G
             "Galin" to listOf("BORDEAUX", "Galin"),
             "Gare Routière" to listOf("SAINT MÉDARD EN JALLES", "Gare Routière"),

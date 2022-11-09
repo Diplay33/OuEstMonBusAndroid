@@ -127,7 +127,8 @@ class Services {
                 return REGEX_UNACCENT.replace(temp, "")
             }
 
-            return services.filter { it.vehicle.parkId.toString().contains(text.trim()) || Lines.getLine(it.lineId.toString()).lineName.lowercase().unaccent().contains(text.lowercase().unaccent().trim()) }
+            return services.filter { it.vehicle.parkId.contains(text.trim()) ||
+                    Lines.getLine(it.lineId.toString()).lineName.lowercase().unaccent().contains(text.lowercase().unaccent().trim()) }
         }
     }
 }

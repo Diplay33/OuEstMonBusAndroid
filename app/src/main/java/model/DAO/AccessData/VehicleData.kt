@@ -587,6 +587,7 @@ class VehicleData {
             mapOf("id" to "2719", "parkId" to "2719", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 327 CNG", "type" to "BUS", "operator" to "Keolis Bordeaux Métropole"),
             mapOf("id" to "2720", "parkId" to "2720", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 327 CNG", "type" to "BUS", "operator" to "Keolis Bordeaux Métropole"),
 
+
             /*Keolis Gironde / Keolis Cars de Bordeaux*/
             //HeuliezBus GX 337
             mapOf("id" to "99112", "parkId" to "159112", "brand" to "HeuliezBus", "model" to "HeuliezBus GX 337", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
@@ -700,11 +701,40 @@ class VehicleData {
             mapOf("id" to "97007", "parkId" to "107007", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
 
             //HeuliezBus Access'BUS GX 127 L
-            mapOf("id" to "97014", "parkId" to "087014", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
-            mapOf("id" to "97015", "parkId" to "087015", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "97014", "parkId" to "087014", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127 L", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "97015", "parkId" to "087015", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127 L", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
 
             //MercedesBenz Citaro C1
             mapOf("id" to "99045", "parkId" to "069045", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C1", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+
+
+            /*TRANSDEV Citram Aquitaine*/
+            //IRISBUS Crossway LE
+            mapOf("id" to "86800", "parkId" to "6800", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86801", "parkId" to "6801", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86802", "parkId" to "6802", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86803", "parkId" to "6803", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86805", "parkId" to "6805", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86806", "parkId" to "6806", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86807", "parkId" to "6807", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86809", "parkId" to "6809", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86810", "parkId" to "6810", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86811", "parkId" to "6811", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86812", "parkId" to "6812", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86813", "parkId" to "6813", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86814", "parkId" to "6814", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86815", "parkId" to "6815", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86816", "parkId" to "6816", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86817", "parkId" to "6817", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86818", "parkId" to "6818", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86819", "parkId" to "6819", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86820", "parkId" to "6820", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86821", "parkId" to "6821", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "86822", "parkId" to "6822", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+
+            //OTOKAR Vectio C
+            mapOf("id" to "88700", "parkId" to "8700", "brand" to "OTOKAR", "model" to "OTOKAR Vectio C", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "88701", "parkId" to "8701", "brand" to "OTOKAR", "model" to "OTOKAR Vectio C", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
         )
     }
 }
