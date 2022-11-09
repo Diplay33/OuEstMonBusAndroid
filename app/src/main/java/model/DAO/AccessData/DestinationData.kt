@@ -23,7 +23,15 @@ class DestinationData {
             "Bougnard" to listOf("PESSAC", "Bougnard"),
             "Bouliac Ccial" to listOf("BOULIAC", "Centre Commercial"),
             "Bourgogne" to listOf("BORDEAUX", "Porte de Bourgogne"),
+            "Brandenburg" to listOf("BORDEAUX", "Brandenburg"),
+            "Brulatour" to listOf("BORDEAUX", "Brulatour"),
+            "Buttinière" to listOf("LORMONT", "Buttinière"),
             //C
+            "Camille Jullian" to listOf("BORDEAUX", "Lycée Camille Jullian"),
+            "Camping" to listOf("BORDEAUX", "Camping International"),
+            "Camping Internat" to listOf("BORDEAUX", "Camping International"),
+            "Candau" to listOf("PESSAC", "Candau"),
+            "Cantinolle" to listOf("EYSINES", "Cantinolle"),
             "Carle Vernet" to listOf("BORDEAUX", "Carle Vernet"),
             //G
             "Galin" to listOf("BORDEAUX", "Galin"),
