@@ -45,6 +45,9 @@ class DestinationData {
             "Coll Simone Veil" to listOf("CARBON BLANC", "Collège Simone Veil"),
             "Courréjean" to listOf("VILLENAVE D'ORNON", "Courréjean"),
             "Cracovie" to listOf("BORDEAUX", "Cracovie"),
+            //D
+            "Délestage TyF" to listOf("ARTIGUES PRÈS BORDEAUX", "Tout y Faut"),
+            "Dravemont" to listOf("FLOIRAC", "Dravemont"),
             //G
             "Galin" to listOf("BORDEAUX", "Galin"),
             "Gare Routière" to listOf("SAINT MÉDARD EN JALLES", "Gare Routière"),
