@@ -122,6 +122,7 @@ fun SearchTextField(
                     )
                 }
 
+                //TODO: Limit to one line max
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     BasicTextField(value = query, onValueChange = onQueryChange, modifier = Modifier
                         .fillMaxHeight()

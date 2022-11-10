@@ -65,6 +65,7 @@ fun AllServicesListMain(
                     Column(modifier = Modifier
                         .verticalScroll(rememberScrollState())
                     ) {
+                        //TODO: Improve the way this is done
                         Services.filterServicesByVehicle(services).forEach { services ->
                             AllServicesListGroup(services)
                         }
@@ -89,6 +90,7 @@ fun AllServicesListMain(
                     Column(modifier = Modifier
                         .verticalScroll(rememberScrollState())
                     ) {
+                        //TODO: Improve the way this is done
                         Services.filterServicesByVehicle(state.searchResults).forEach { services ->
                             AllServicesListGroup(services)
                         }
