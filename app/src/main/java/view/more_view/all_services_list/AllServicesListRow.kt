@@ -92,7 +92,7 @@ fun AllServicesListRow(service: Service) {
             Row(modifier = Modifier
                 .align(Alignment.CenterVertically)
             ) {
-                Text(service.vehicle.parkId.toString(), fontSize = 18.sp, fontWeight = FontWeight.Bold, modifier = Modifier
+                Text(service.vehicle.parkId, fontSize = 18.sp, fontWeight = FontWeight.Bold, modifier = Modifier
                     .align(Alignment.CenterVertically)
                 )
 

@@ -10,7 +10,7 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun MoreViewSettingsGroup() {
-    Text("Réglages", fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier
+    Text("Réglages", fontWeight = FontWeight.Bold, fontSize = 18.sp, modifier = Modifier
         .padding(start = 15.dp)
     )
 

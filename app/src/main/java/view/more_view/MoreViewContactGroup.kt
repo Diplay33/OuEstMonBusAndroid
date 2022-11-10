@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun MoreViewContactGroup() {
     Column {
-        Text("Contacter le développeur", fontWeight = FontWeight.Bold, fontSize = 20.sp, modifier = Modifier
+        Text("Contacter le développeur", fontWeight = FontWeight.Bold, fontSize = 18.sp, modifier = Modifier
             .padding(start = 15.dp)
         )
 
