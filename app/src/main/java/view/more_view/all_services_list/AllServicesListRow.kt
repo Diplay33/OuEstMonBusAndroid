@@ -74,7 +74,7 @@ fun AllServicesListRow(service: Service) {
                     Column {
                         if(destination.first() != "") {
                             Text(
-                                text = destination.first(),
+                                text = if (service.destination == "Les Pins" && service.lineId == 9) "MARTIGNAS SUR JALLE" else destination.first(),
                                 fontSize = 13.sp,
                                 color = Color.Gray,
                                 modifier = Modifier
