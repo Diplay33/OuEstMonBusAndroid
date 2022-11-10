@@ -28,8 +28,8 @@ fun AllServicesListMain(
     state: AllServicesListSearchState = rememberSearchState(),
     navController: NavController
 ) {
-    val services = remember {
-        mutableStateListOf<Service>()
+    val filteredServices = remember {
+        mutableStateListOf<List<Service>>()
     }
     val isLoading = remember {
         mutableStateOf(true)
@@ -39,13 +39,13 @@ fun AllServicesListMain(
     }
     val formatter = SimpleDateFormat("HH:mm")
     Services.getAllServices {
-        services.clear()
-        services.addAll(Services.filterServicesSortedByVehicle(it))
+        filteredServices.clear()
+        filteredServices.addAll(Services.filterServicesByVehicle(it))
         isLoading.value = false
         refreshDate.value = Calendar.getInstance().time
     }
 
-    Scaffold(topBar = { AllServicesListTopBar(navController, services, isLoading, refreshDate) }) {
+    Scaffold(topBar = { AllServicesListTopBar(navController, filteredServices, isLoading, refreshDate) }) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -65,27 +65,31 @@ fun AllServicesListMain(
                 delay(100)
                 state.searching = false
             }
-            state.searchResults = Services.filterServicesBySearchText(services, state.query.text)
+            state.searchResults = Services.filterServicesBySearchText(filteredServices, state.query.text)
 
             when(state.searchDisplay) {
                 SearchDisplay.INITIALRESULTS -> {
                     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
                         .verticalScroll(rememberScrollState())
+                        .fillMaxWidth()
                     ) {
-                        //TODO: Improve the way this is done
-                        Services.filterServicesByVehicle(services).forEach { services ->
-                            AllServicesListGroup(services)
+                        var servicesCount = 0
+                        state.searchResults.forEach { services ->
+                            if(services.isNotEmpty()) {
+                                servicesCount += services.size
+                                AllServicesListGroup(services)
+                            }
                         }
 
                         if(!isLoading.value) {
                             Text(
-                                text = if (services.isEmpty())
+                                text = if (servicesCount == 0)
                                     "Aucun véhicule en circulation"
                                 else
-                                    if (services.size == 1)
+                                    if (servicesCount == 1)
                                         "1 véhicule en circulation"
                                     else
-                                        "${services.size} véhicules en circulation",
+                                        "$servicesCount véhicules en circulation",
                                 color = Color.Gray,
                                 fontSize = 18.sp
                             )
@@ -114,23 +118,27 @@ fun AllServicesListMain(
                 }
 
                 SearchDisplay.RESULTS -> {
-                     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+                    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
                         .verticalScroll(rememberScrollState())
+                        .fillMaxWidth()
                     ) {
-                        //TODO: Improve the way this is done
-                        Services.filterServicesByVehicle(state.searchResults).forEach { services ->
-                            AllServicesListGroup(services)
+                        var servicesCount = 0
+                        state.searchResults.forEach { services ->
+                            if(services.isNotEmpty()) {
+                                servicesCount =+ services.size
+                                AllServicesListGroup(services)
+                            }
                         }
 
                         if(!isLoading.value) {
                             Text(
-                                text = if (services.isEmpty())
+                                text = if (servicesCount == 0)
                                     "Aucun véhicule en trouvé"
                                 else
-                                    if (services.size == 1)
+                                    if (servicesCount == 1)
                                         "1 véhicule trouvé"
                                     else
-                                        "${state.searchResults.size} véhicules trouvés",
+                                        "$servicesCount véhicules trouvés",
                                 color = Color.Gray,
                                 fontSize = 18.sp
                             )

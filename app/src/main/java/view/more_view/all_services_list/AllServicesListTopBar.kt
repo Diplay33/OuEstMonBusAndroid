@@ -23,7 +23,7 @@ import java.util.*
 @Composable
 fun AllServicesListTopBar(
     navController: NavController,
-    services: SnapshotStateList<Service>,
+    services: SnapshotStateList<List<Service>>,
     isLoading: MutableState<Boolean>,
     refreshDate: MutableState<Date>
 ) {
@@ -68,7 +68,7 @@ fun AllServicesListTopBar(
                                 isLoading.value = true
                                 Services.getAllServices {
                                     services.clear()
-                                    services.addAll(Services.filterServicesSortedByVehicle(it))
+                                    services.addAll(Services.filterServicesByVehicle(it))
                                     isLoading.value = false
                                     refreshDate.value = Calendar.getInstance().time
                                 }

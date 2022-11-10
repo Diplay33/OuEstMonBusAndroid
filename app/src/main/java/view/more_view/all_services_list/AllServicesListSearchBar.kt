@@ -31,7 +31,7 @@ class AllServicesListSearchState(
     query: TextFieldValue,
     focused: Boolean,
     searching: Boolean,
-    searchResults: List<Service>
+    searchResults: List<List<Service>>
 ) {
     var query by mutableStateOf(query)
     var focused by mutableStateOf(focused)
@@ -57,7 +57,7 @@ fun rememberSearchState(
     query: TextFieldValue = TextFieldValue(""),
     focused: Boolean = false,
     searching: Boolean = false,
-    searchResults: List<Service> = emptyList()
+    searchResults: List<List<Service>> = emptyList()
 ): AllServicesListSearchState {
     return remember {
         AllServicesListSearchState(

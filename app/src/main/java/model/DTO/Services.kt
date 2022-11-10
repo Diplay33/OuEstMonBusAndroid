@@ -120,15 +120,15 @@ class Services {
             return servicesToReturn
         }
 
-        fun filterServicesBySearchText(services: SnapshotStateList<Service>, text: String): List<Service> {
+        fun filterServicesBySearchText(services: SnapshotStateList<List<Service>>, text: String): List<List<Service>> {
             val REGEX_UNACCENT = "\\p{InCombiningDiacriticalMarks}+".toRegex()
             fun CharSequence.unaccent(): String {
                 val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
                 return REGEX_UNACCENT.replace(temp, "")
             }
 
-            return services.filter { it.vehicle.parkId.contains(text.trim()) ||
-                    Lines.getLine(it.lineId.toString()).lineName.lowercase().unaccent().contains(text.lowercase().unaccent().trim()) }
+            return services.map { it.filter { it.vehicle.parkId.contains(text.trim()) ||
+                    Lines.getLine(it.lineId.toString()).lineName.lowercase().unaccent().contains(text.lowercase().unaccent().trim()) } }
         }
     }
 }
