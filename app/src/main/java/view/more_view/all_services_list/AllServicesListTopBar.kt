@@ -18,12 +18,14 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import model.DTO.Service
 import model.DTO.Services
+import java.util.*
 
 @Composable
 fun AllServicesListTopBar(
     navController: NavController,
     services: SnapshotStateList<Service>,
-    isLoading: MutableState<Boolean>
+    isLoading: MutableState<Boolean>,
+    refreshDate: MutableState<Date>
 ) {
     TopAppBar(backgroundColor = Color.White, elevation = 0.dp) {
         Row(modifier = Modifier
@@ -68,6 +70,7 @@ fun AllServicesListTopBar(
                                     services.clear()
                                     services.addAll(Services.filterServicesSortedByVehicle(it))
                                     isLoading.value = false
+                                    refreshDate.value = Calendar.getInstance().time
                                 }
                             }
                             .size(30.dp)
