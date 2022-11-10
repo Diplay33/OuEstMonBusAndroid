@@ -8,8 +8,11 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -17,6 +20,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.ouestmonbus.ui.theme.OùEstMonBusTheme
+import kotlinx.coroutines.launch
+import model.preferences_data_store.StoreDisplayNotifCountParam
+import model.preferences_data_store.StoreFirstLaunch
 import view.BottomNavigationBar
 import view.Screens.BottomNavigationScreens
 import view.Screens.CartesScreens
@@ -30,6 +36,18 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val context = LocalContext.current
+            val scope = rememberCoroutineScope()
+            val firstLaunchDataStore = StoreFirstLaunch(context)
+            val displayNotifCountDataStore = StoreDisplayNotifCountParam(context)
+
+            if(firstLaunchDataStore.isEnabled.collectAsState(initial = false).value != true) {
+                scope.launch {
+                    firstLaunchDataStore.enable()
+                    displayNotifCountDataStore.enable()
+                }
+            }
+
             val navController = rememberNavController()
             val bottomNavigationItems = listOf(
                 BottomNavigationScreens.Cartes,

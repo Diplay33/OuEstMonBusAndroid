@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
 import model.preferences_data_store.StoreDisplayNotifCountParam
 
 @Composable
-//TODO: Enable setting by default
 fun MoreViewSettingsDisplayNotifCountRow() {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
