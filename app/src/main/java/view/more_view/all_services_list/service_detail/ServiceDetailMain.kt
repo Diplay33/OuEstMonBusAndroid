@@ -41,6 +41,12 @@ fun ServiceDetailMain(
             )
 
             ServiceDetailVehicleRow(vehicle.model, line.lineName)
+
+            Spacer(modifier = Modifier
+                .height(10.dp)
+            )
+
+            ServiceDetailOperatorRow(vehicle.operator)
         }
     }
 }
