@@ -34,7 +34,8 @@ fun MoreViewWebVersionRow() {
             .align(Alignment.CenterVertically)
         ) {
             Icon(imageVector = Icons.Rounded.Search, contentDescription = null, modifier = Modifier
-                .size(25.dp)
+                .size(20.dp)
+                .align(Alignment.CenterVertically)
             )
 
             Spacer(modifier = Modifier
