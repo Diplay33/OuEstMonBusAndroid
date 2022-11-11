@@ -34,7 +34,8 @@ fun ServiceDetailHeader(line: Line, destination: List<String>) {
             contentDescription = null,
             modifier = Modifier
                 .padding(start = 15.dp)
-                .size(70.dp)
+                .width(70.dp)
+                .height(55.dp)
                 .align(Alignment.CenterVertically)
         )
 

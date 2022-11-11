@@ -35,6 +35,12 @@ fun ServiceDetailMain(
                 line = line,
                 destination = Destinations.getDestinationFromRaw(destination ?: "")
             )
+
+            Spacer(modifier = Modifier
+                .height(30.dp)
+            )
+
+            ServiceDetailVehicleRow(vehicle.model, line.lineName)
         }
     }
 }
