@@ -38,11 +38,14 @@ fun AllServicesListMain(
         mutableStateOf(Calendar.getInstance().time)
     }
     val formatter = SimpleDateFormat("HH:mm")
-    Services.getAllServices {
-        filteredServices.clear()
-        filteredServices.addAll(Services.filterServicesByVehicle(it))
-        isLoading.value = false
-        refreshDate.value = Calendar.getInstance().time
+
+    if(filteredServices.isEmpty()) {
+        Services.getAllServices {
+            filteredServices.clear()
+            filteredServices.addAll(Services.filterServicesByVehicle(it))
+            isLoading.value = false
+            refreshDate.value = Calendar.getInstance().time
+        }
     }
 
     Scaffold(topBar = { AllServicesListTopBar(navController, filteredServices, isLoading, refreshDate) }) {
@@ -77,7 +80,7 @@ fun AllServicesListMain(
                         state.searchResults.forEach { services ->
                             if(services.isNotEmpty()) {
                                 servicesCount += services.size
-                                AllServicesListGroup(services)
+                                AllServicesListGroup(services, navController)
                             }
                         }
 
@@ -126,7 +129,7 @@ fun AllServicesListMain(
                         state.searchResults.forEach { services ->
                             if(services.isNotEmpty()) {
                                 servicesCount =+ services.size
-                                AllServicesListGroup(services)
+                                AllServicesListGroup(services, navController)
                             }
                         }
 

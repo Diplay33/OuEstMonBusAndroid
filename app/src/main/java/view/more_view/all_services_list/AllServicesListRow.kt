@@ -2,6 +2,7 @@ package view.more_view.all_services_list
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -18,10 +19,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import model.DTO.*
+import view.Screens.PlusScreens
 
 @Composable
-fun AllServicesListRow(service: Service) {
+fun AllServicesListRow(service: Service, navController: NavController) {
     val line = Lines.getLine(service.lineId.toString())
     val destination = Destinations.getDestinationFromRaw(service.destination)
 
@@ -38,6 +41,13 @@ fun AllServicesListRow(service: Service) {
             .padding(horizontal = 15.dp)
             .padding(top = 7.dp, bottom = if (destination.first() == "") 7.dp else 5.dp)
             .fillMaxWidth()
+            .clickable {
+                navController.navigate(PlusScreens.ServiceDetail.withArgs(
+                    line.id.toString(),
+                    service.vehicleId.toString(),
+                    service.destination
+                ))
+            }
         ) {
             Column {
                 Row {

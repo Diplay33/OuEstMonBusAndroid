@@ -31,6 +31,7 @@ import view.lines_map_list.LinesMapListMain
 import view.lines_map_list.line_map.HelloWorld
 import view.more_view.MoreViewMain
 import view.more_view.all_services_list.AllServicesListMain
+import view.more_view.all_services_list.service_detail.ServiceDetailMain
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,17 +73,37 @@ class MainActivity : ComponentActivity() {
                     }
 
 
-                    //Plus screen
+                    //BottomNavigationBar
                     composable(BottomNavigationScreens.Plus.route) {
                         MoreViewMain(navController)
                     }
 
+
+                    //Plus screen
                     composable(PlusScreens.AllServicesList.route) {
                         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
                             .fillMaxWidth()
                         ) {
                             AllServicesListMain(navController = navController)
                         }
+                    }
+
+                    composable(
+                        route = PlusScreens.ServiceDetail.route + "/{lineId}/{vehicleId}/{destination}",
+                        arguments = listOf(
+                            navArgument("lineId") {
+                                type = NavType.StringType
+                                defaultValue = "0"
+                                nullable = true
+                            }
+                        )
+                    ) { entry ->
+                        ServiceDetailMain(
+                            navController = navController,
+                            lineId = entry.arguments?.getString("lineId"),
+                            vehicleId = entry.arguments?.getString("vehicleId"),
+                            destination = entry.arguments?.getString("destination")
+                        )
                     }
                 }
             }

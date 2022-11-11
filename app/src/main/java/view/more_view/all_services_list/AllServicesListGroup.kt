@@ -19,11 +19,12 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import model.DTO.Service
 
 @Composable
-fun AllServicesListGroup(services: List<Service>) {
+fun AllServicesListGroup(services: List<Service>, navController: NavController) {
     val isCollapsed = remember {
         mutableStateOf(false)
     }
@@ -72,7 +73,7 @@ fun AllServicesListGroup(services: List<Service>) {
 
         if(!isCollapsed.value) {
             services.forEach { service ->
-                AllServicesListRow(service)
+                AllServicesListRow(service, navController)
             }
         }
     }
