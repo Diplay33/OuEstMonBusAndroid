@@ -30,8 +30,12 @@ fun ServiceDetailVehicleRow(vehicleModel: String, lineName: String) {
             .padding(horizontal = 15.dp)
             .align(Alignment.CenterVertically)
         ) {
+            //Need to precise Tram letter, and not using .contains() because Navette Tram exists
             Image(
-                painter = painterResource(id = if (lineName.contains("Tram"))
+                painter = painterResource(id = if (lineName == "Tram A" ||
+                                                   lineName == "Tram B" ||
+                                                   lineName == "Tram C" ||
+                                                   lineName == "Tram D")
                     R.drawable.tram
                 else
                     if (lineName == "BatCUB")
