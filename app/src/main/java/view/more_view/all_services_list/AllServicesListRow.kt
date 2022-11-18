@@ -45,7 +45,9 @@ fun AllServicesListRow(service: Service, navController: NavController) {
                 navController.navigate(PlusScreens.ServiceDetail.withArgs(
                     line.id.toString(),
                     service.vehicleId.toString(),
-                    service.destination
+                    service.destination,
+                    service.latitude.toString(),
+                    service.longitude.toString()
                 ))
             }
         ) {

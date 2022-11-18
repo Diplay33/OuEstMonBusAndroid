@@ -49,9 +49,9 @@ fun AllServicesListMain(
     }
 
     Scaffold(topBar = { AllServicesListTopBar(navController, filteredServices, isLoading, refreshDate) }) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
+        Column(modifier = Modifier
+            .fillMaxSize()
+            .padding(it)
         ) {
             AllServicesListSearchBar(
                 query = state.query,

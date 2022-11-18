@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -56,7 +57,12 @@ class MainActivity : ComponentActivity() {
             )
             
             Scaffold(bottomBar = { BottomNavigationBar(navController, bottomNavigationItems) } ) {
-                NavHost(navController, startDestination = BottomNavigationScreens.Cartes.route) {
+                NavHost(
+                    navController = navController,
+                    startDestination = BottomNavigationScreens.Cartes.route,
+                    modifier = Modifier
+                        .padding(it)
+                ) {
                     //Cartes screen
                     composable(BottomNavigationScreens.Cartes.route) {
                         LinesMapListMain(navController = navController)
@@ -89,7 +95,7 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable(
-                        route = PlusScreens.ServiceDetail.route + "/{lineId}/{vehicleId}/{destination}",
+                        route = PlusScreens.ServiceDetail.route + "/{lineId}/{vehicleId}/{destination}/{latitude}/{longitude}",
                         arguments = listOf(
                             navArgument("lineId") {
                                 type = NavType.StringType
@@ -102,7 +108,9 @@ class MainActivity : ComponentActivity() {
                             navController = navController,
                             lineId = entry.arguments?.getString("lineId"),
                             vehicleId = entry.arguments?.getString("vehicleId"),
-                            destination = entry.arguments?.getString("destination")
+                            destination = entry.arguments?.getString("destination"),
+                            latitude = entry.arguments?.getString("latitude"),
+                            longitude = entry.arguments?.getString("longitude")
                         )
                     }
                 }
