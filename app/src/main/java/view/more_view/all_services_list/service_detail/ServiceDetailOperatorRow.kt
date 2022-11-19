@@ -36,7 +36,7 @@ fun ServiceDetailOperatorRow(operator: String) {
                     if (operator.contains("TRANSDEV"))
                         R.drawable.transdev
                     else
-                        if (operator.contains("Rivet Cruise"))
+                        if (operator.contains("River Cruise"))
                             R.drawable.river_cruise
                         else
                             R.drawable.evadys),
