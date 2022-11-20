@@ -18,6 +18,7 @@ fun ServiceDetailMain(
     lineId: String?,
     vehicleId: String?,
     destination: String?,
+    stationId: String?,
     latitude: String?,
     longitude: String?
 ) {
@@ -52,6 +53,7 @@ fun ServiceDetailMain(
 
             ServiceDetailMapRow(
                 lineName = line.lineName,
+                stationId = stationId ?: "",
                 latitude = latitude?.toDouble() ?: 0.0,
                 longitude = longitude?.toDouble() ?: 0.0
             )

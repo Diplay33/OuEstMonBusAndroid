@@ -47,7 +47,8 @@ fun AllServicesListRow(service: Service, navController: NavController) {
                     service.vehicleId.toString(),
                     service.destination,
                     service.latitude.toString(),
-                    service.longitude.toString()
+                    service.longitude.toString(),
+                    service.currentStop.toString(),
                 ))
             }
         ) {

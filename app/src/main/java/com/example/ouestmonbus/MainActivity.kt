@@ -95,7 +95,7 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable(
-                        route = PlusScreens.ServiceDetail.route + "/{lineId}/{vehicleId}/{destination}/{latitude}/{longitude}",
+                        route = PlusScreens.ServiceDetail.route + "/{lineId}/{vehicleId}/{destination}/{latitude}/{longitude}/{stationId}",
                         arguments = listOf(
                             navArgument("lineId") {
                                 type = NavType.StringType
@@ -110,7 +110,8 @@ class MainActivity : ComponentActivity() {
                             vehicleId = entry.arguments?.getString("vehicleId"),
                             destination = entry.arguments?.getString("destination"),
                             latitude = entry.arguments?.getString("latitude"),
-                            longitude = entry.arguments?.getString("longitude")
+                            longitude = entry.arguments?.getString("longitude"),
+                            stationId = entry.arguments?.getString("stationId")
                         )
                     }
                 }
