@@ -11,6 +11,7 @@ class DestinationData {
             "Arena" to listOf("FLOIRAC", "Arkéa Arena"),
             //B
             "Barrière d'Ornano" to listOf("BORDEAUX", "Barrière d'Ornano"),
+            "Barriere Medoc" to listOf("BORDEAUX", "Barrière du Médoc"),
             "Base sous-marine" to listOf("BORDEAUX", "Base sous-marine"),
             "Bassins à Flot" to listOf("BORDEAUX", "Bassins à Flot"),
             "Beaudésert" to listOf("MERIGNAC", "Beaudésert"),
