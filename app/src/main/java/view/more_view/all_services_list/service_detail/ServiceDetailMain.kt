@@ -22,7 +22,9 @@ fun ServiceDetailMain(
     stationId: String?,
     latitude: String?,
     longitude: String?,
-    currentSpeed: String?
+    currentSpeed: String?,
+    state: String?,
+    stateTime: String?
 ) {
     val line = Lines.getLine(lineId)
     val vehicle = Vehicles.getVehicleById(vehicleId ?: "")
@@ -65,6 +67,12 @@ fun ServiceDetailMain(
             )
 
             ServiceDetailSpeedRow(currentSpeed?.toInt() ?: 0)
+
+            Spacer(modifier = Modifier
+                .height(30.dp)
+            )
+
+            ServiceDetailStateRow(state ?: "", stateTime?.toInt() ?: 0)
         }
     }
 }
