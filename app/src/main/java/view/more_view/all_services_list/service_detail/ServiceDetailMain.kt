@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
+import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -20,7 +21,8 @@ fun ServiceDetailMain(
     destination: String?,
     stationId: String?,
     latitude: String?,
-    longitude: String?
+    longitude: String?,
+    currentSpeed: String?
 ) {
     val line = Lines.getLine(lineId)
     val vehicle = Vehicles.getVehicleById(vehicleId ?: "")
@@ -57,6 +59,12 @@ fun ServiceDetailMain(
                 latitude = latitude?.toDouble() ?: 0.0,
                 longitude = longitude?.toDouble() ?: 0.0
             )
+
+            Spacer(modifier = Modifier
+                .height(30.dp)
+            )
+
+            ServiceDetailSpeedRow(currentSpeed?.toInt() ?: 0)
         }
     }
 }
