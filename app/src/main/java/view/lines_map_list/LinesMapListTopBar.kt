@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun LinesMapListTopBar() {
     TopAppBar(backgroundColor = Color.White, elevation = 0.dp) {
-        Text("Lignes",
+        Text("Cartes",
             style = MaterialTheme.typography.h4,
             textAlign = TextAlign.Center,
             color = Color.Black,

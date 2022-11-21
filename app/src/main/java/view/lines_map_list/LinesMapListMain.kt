@@ -29,10 +29,11 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
         mutableStateListOf<ArrayList<Line>>()
     }
 
-    Scaffold(topBar = { LinesMapListTopBar() }) {
+    Scaffold(topBar = { LinesMapListTopBar() }) { padding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(padding)
         ) {
             LinesMapListSearchBar(
                 query = state.query,
