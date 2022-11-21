@@ -12,7 +12,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -73,8 +72,7 @@ fun ServiceDetailMapRow(lineName: String, stationId: String, latitude: Double, l
                         "Tram D" -> R.drawable.map_logo_tram
                         "BatCUB" -> R.drawable.map_logo_ferry
                         else -> R.drawable.map_logo_bus
-                    }),
-                    anchor = Offset(0.5f, 0.5f)
+                    })
                 )
             }
         }
@@ -125,8 +123,8 @@ fun ServiceDetailMapRow(lineName: String, stationId: String, latitude: Double, l
 
 fun bitmapDescriptor(context: Context, vectorResId: Int): BitmapDescriptor? {
     val drawable = ContextCompat.getDrawable(context, vectorResId) ?: return null
-    drawable.setBounds(0, 0, 145, 135)
-    val bm = Bitmap.createBitmap(145, 135, Bitmap.Config.ARGB_8888)
+    drawable.setBounds(0, 0, 90, 90)
+    val bm = Bitmap.createBitmap(90, 90, Bitmap.Config.ARGB_8888)
 
     val canvas = android.graphics.Canvas(bm)
     drawable.draw(canvas)
