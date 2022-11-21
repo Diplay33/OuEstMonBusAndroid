@@ -29,7 +29,7 @@ import view.Screens.BottomNavigationScreens
 import view.Screens.CartesScreens
 import view.Screens.PlusScreens
 import view.lines_map_list.LinesMapListMain
-import view.lines_map_list.line_map.HelloWorld
+import view.lines_map_list.line_map.LineMapViewMain
 import view.more_view.MoreViewMain
 import view.more_view.all_services_list.AllServicesListMain
 import view.more_view.all_services_list.service_detail.ServiceDetailMain
@@ -75,7 +75,7 @@ class MainActivity : ComponentActivity() {
                             nullable = true
                         }
                     )) { entry ->
-                        HelloWorld(entry.arguments?.getString("lineId"))
+                        LineMapViewMain(navController, entry.arguments?.getString("lineId"))
                     }
 
 
