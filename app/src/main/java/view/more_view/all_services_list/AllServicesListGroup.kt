@@ -24,12 +24,17 @@ import kotlinx.coroutines.launch
 import model.DTO.Service
 
 @Composable
-fun AllServicesListGroup(services: List<Service>, navController: NavController) {
+fun AllServicesListGroup(
+    services: List<Service>,
+    navController: NavController,
+    collapsedGroupHandler: MutableList<Boolean>,
+    groupIndex: Int
+) {
     val isCollapsed = remember {
-        mutableStateOf(false)
+        mutableStateOf(collapsedGroupHandler[groupIndex])
     }
     val currentRotation = remember {
-        mutableStateOf(0f)
+        mutableStateOf(if (isCollapsed.value) -90f else 0f)
     }
     val rotation = remember {
         Animatable(currentRotation.value)
@@ -60,6 +65,7 @@ fun AllServicesListGroup(services: List<Service>, navController: NavController) 
                         .rotate(rotation.value)
                         .clickable {
                             isCollapsed.value = !isCollapsed.value
+                            collapsedGroupHandler[groupIndex] = isCollapsed.value
                             scope.launch {
                                 rotation.animateTo(
                                     targetValue = if (isCollapsed.value) -90f else 0f,

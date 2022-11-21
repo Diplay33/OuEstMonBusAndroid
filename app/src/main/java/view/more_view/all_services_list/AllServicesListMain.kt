@@ -2,6 +2,8 @@ package view.more_view.all_services_list
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
@@ -72,41 +74,52 @@ fun AllServicesListMain(
 
             when(state.searchDisplay) {
                 SearchDisplay.INITIALRESULTS -> {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-                        .verticalScroll(rememberScrollState())
+                    val collapsedGroupHandler: MutableList<Boolean> = state.searchResults.map {
+                        false
+                    }.toMutableList()
+
+                    LazyColumn(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
                         .fillMaxWidth()
                     ) {
                         var servicesCount = 0
-                        state.searchResults.forEach { services ->
-                            if(services.isNotEmpty()) {
-                                servicesCount += services.size
-                                AllServicesListGroup(services, navController)
+                        items(state.searchResults.size) { groupIndex ->
+                            if(state.searchResults[groupIndex].isNotEmpty()) {
+                                servicesCount += state.searchResults[groupIndex].size
+
+                                AllServicesListGroup(
+                                    services = state.searchResults[groupIndex],
+                                    navController = navController,
+                                    collapsedGroupHandler = collapsedGroupHandler,
+                                    groupIndex = groupIndex
+                                )
                             }
                         }
 
-                        if(!isLoading.value) {
-                            Text(
-                                text = if (servicesCount == 0)
-                                    "Aucun véhicule en circulation"
-                                else
-                                    if (servicesCount == 1)
-                                        "1 véhicule en circulation"
+                        item {
+                            if(!isLoading.value) {
+                                Text(
+                                    text = if (servicesCount == 0)
+                                        "Aucun véhicule en circulation"
                                     else
-                                        "$servicesCount véhicules en circulation",
-                                color = Color.Gray,
-                                fontSize = 18.sp
-                            )
+                                        if (servicesCount == 1)
+                                            "1 véhicule en circulation"
+                                        else
+                                            "$servicesCount véhicules en circulation",
+                                    color = Color.Gray,
+                                    fontSize = 18.sp
+                                )
 
-                            Text(
-                                text = "Dernière actualisation à ${formatter.format(refreshDate.value)}",
-                                color = Color.Gray,
-                                fontSize = 18.sp
+                                Text(
+                                    text = "Dernière actualisation à ${formatter.format(refreshDate.value)}",
+                                    color = Color.Gray,
+                                    fontSize = 18.sp
+                                )
+                            }
+
+                            Spacer(modifier = Modifier
+                                .height(65.dp)
                             )
                         }
-
-                        Spacer(modifier = Modifier
-                            .height(65.dp)
-                        )
                     }
                 }
 
@@ -121,41 +134,52 @@ fun AllServicesListMain(
                 }
 
                 SearchDisplay.RESULTS -> {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-                        .verticalScroll(rememberScrollState())
+                    val collapsedGroupHandler: MutableList<Boolean> = state.searchResults.map {
+                        false
+                    }.toMutableList()
+
+                    LazyColumn(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
                         .fillMaxWidth()
                     ) {
                         var servicesCount = 0
-                        state.searchResults.forEach { services ->
-                            if(services.isNotEmpty()) {
-                                servicesCount =+ services.size
-                                AllServicesListGroup(services, navController)
+                        items(state.searchResults.size) { groupIndex ->
+                            if(state.searchResults[groupIndex].isNotEmpty()) {
+                                servicesCount =+ state.searchResults[groupIndex].size
+
+                                AllServicesListGroup(
+                                    services = state.searchResults[groupIndex],
+                                    navController = navController,
+                                    collapsedGroupHandler = collapsedGroupHandler,
+                                    groupIndex = groupIndex
+                                )
                             }
                         }
 
-                        if(!isLoading.value) {
-                            Text(
-                                text = if (servicesCount == 0)
-                                    "Aucun véhicule en trouvé"
-                                else
-                                    if (servicesCount == 1)
-                                        "1 véhicule trouvé"
+                        item {
+                            if(!isLoading.value) {
+                                Text(
+                                    text = if (servicesCount == 0)
+                                        "Aucun véhicule trouvé"
                                     else
-                                        "$servicesCount véhicules trouvés",
-                                color = Color.Gray,
-                                fontSize = 18.sp
-                            )
+                                        if (servicesCount == 1)
+                                            "1 véhicule trouvé"
+                                        else
+                                            "$servicesCount véhicules trouvés",
+                                    color = Color.Gray,
+                                    fontSize = 18.sp
+                                )
 
-                            Text(
-                                text = "Dernière actualisation à ${formatter.format(refreshDate.value)}",
-                                color = Color.Gray,
-                                fontSize = 18.sp
+                                Text(
+                                    text = "Dernière actualisation à ${formatter.format(refreshDate.value)}",
+                                    color = Color.Gray,
+                                    fontSize = 18.sp
+                                )
+                            }
+
+                            Spacer(modifier = Modifier
+                                .height(300.dp)
                             )
                         }
-
-                        Spacer(modifier = Modifier
-                            .height(300.dp)
-                        )
                     }
                 }
             }
