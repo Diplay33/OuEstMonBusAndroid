@@ -74,6 +74,14 @@ fun ServiceDetailStateRow(state: String, stateTime: Int) {
                             Color.Red
                     )
                 }
+                else -> {
+                    Text(
+                        text = "État du véhicule inconnu",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.Gray
+                    )
+                }
             }
         }
     }
