@@ -12,8 +12,10 @@ import androidx.navigation.NavController
 
 @Composable
 fun MoreViewMain(navController: NavController) {
-    Scaffold(topBar = { MoreTopBar() } ) {
-        LazyColumn {
+    Scaffold(topBar = { MoreTopBar() } ) { padding ->
+        LazyColumn(modifier = Modifier
+            .padding(padding)
+        ) {
             item {
                 MoreViewContactGroup()
 

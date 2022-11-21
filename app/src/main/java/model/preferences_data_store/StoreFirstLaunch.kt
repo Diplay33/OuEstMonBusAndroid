@@ -20,11 +20,11 @@ class StoreFirstLaunch(private val context: Context) {
         }
     }
 
-    suspend fun disable() {
+    /*suspend fun disable() {
         context.dataStore.edit { preferences ->
             preferences[booleanPreferencesKey("firstLaunchDone")] = false
         }
-    }
+    }*/
 
     val isEnabled: Flow<Boolean?> = context.dataStore.data.map { preferences ->
         preferences[booleanPreferencesKey("firstLaunchDone")]

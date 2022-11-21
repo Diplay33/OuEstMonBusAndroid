@@ -3,9 +3,6 @@ package view.more_view.all_services_list
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -50,10 +47,10 @@ fun AllServicesListMain(
         }
     }
 
-    Scaffold(topBar = { AllServicesListTopBar(navController, filteredServices, isLoading, refreshDate) }) {
+    Scaffold(topBar = { AllServicesListTopBar(navController, filteredServices, isLoading, refreshDate) }) { padding ->
         Column(modifier = Modifier
             .fillMaxSize()
-            .padding(it)
+            .padding(padding)
         ) {
             AllServicesListSearchBar(
                 query = state.query,
@@ -98,13 +95,11 @@ fun AllServicesListMain(
                         item {
                             if(!isLoading.value) {
                                 Text(
-                                    text = if (servicesCount == 0)
-                                        "Aucun véhicule en circulation"
-                                    else
-                                        if (servicesCount == 1)
-                                            "1 véhicule en circulation"
-                                        else
-                                            "$servicesCount véhicules en circulation",
+                                    text = when(servicesCount) {
+                                        0 -> "Aucun véhicule en circulation"
+                                        1 -> "1 véhicule en circulation"
+                                        else -> "$servicesCount véhicules en circulation"
+                                    },
                                     color = Color.Gray,
                                     fontSize = 18.sp
                                 )
@@ -158,13 +153,11 @@ fun AllServicesListMain(
                         item {
                             if(!isLoading.value) {
                                 Text(
-                                    text = if (servicesCount == 0)
-                                        "Aucun véhicule trouvé"
-                                    else
-                                        if (servicesCount == 1)
-                                            "1 véhicule trouvé"
-                                        else
-                                            "$servicesCount véhicules trouvés",
+                                    text = when(servicesCount) {
+                                        0 -> "Aucun véhicule trouvé"
+                                        1 -> "1 véhicule trouvé"
+                                        else -> "$servicesCount véhicules trouvés"
+                                    },
                                     color = Color.Gray,
                                     fontSize = 18.sp
                                 )
