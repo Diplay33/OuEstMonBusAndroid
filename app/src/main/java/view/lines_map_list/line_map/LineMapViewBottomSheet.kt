@@ -1,0 +1,42 @@
+package view.lines_map_list.line_map
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import model.DTO.Service
+
+@Composable
+fun LineMapViewBottomSheet(services: List<Service>) {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .height(300.dp)
+    ) {
+        Spacer(modifier = Modifier
+            .height(10.dp)
+        )
+
+        Box(modifier = Modifier
+            .clip(RoundedCornerShape(10.dp))
+            .background(Color.LightGray)
+            .width(40.dp)
+            .height(5.dp)
+            .align(Alignment.CenterHorizontally)
+        )
+
+        Spacer(modifier = Modifier
+            .height(25.dp)
+        )
+
+        //TODO: If there's messages, then display them
+
+        LineMapViewServicesList(services)
+    }
+}
