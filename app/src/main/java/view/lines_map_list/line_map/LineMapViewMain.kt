@@ -24,9 +24,17 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
     Scaffold { padding ->
         LaunchedEffect(line) {
             while(true) {
-                Services.getServicesByLine(line.id) { returnedServices ->
-                    services.clear()
-                    services.addAll(returnedServices)
+                if(lineId == "132") {
+                    Services.getNavetteTramServices { returnedServices ->
+                        services.clear()
+                        services.addAll(returnedServices)
+                    }
+                }
+                else {
+                    Services.getServicesByLine(line.id) { returnedServices ->
+                        services.clear()
+                        services.addAll(returnedServices)
+                    }
                 }
                 delay(2000)
             }
