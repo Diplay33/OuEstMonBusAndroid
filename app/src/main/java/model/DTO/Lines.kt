@@ -76,7 +76,7 @@ class Lines {
 
         private fun getEmptyLine(): Line {
             return Line(
-                id =0,
+                id = 0,
                 lineName = "Ligne inconnue",
                 lineImageResource = R.drawable.question_mark_box,
                 lineColorResource = R.color.light_grey,
