@@ -20,6 +20,7 @@ import model.DTO.Lines
 import model.DTO.ProgrammedMessages
 import model.DTO.Service
 import model.DTO.Services
+import java.util.*
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -31,13 +32,24 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
     val programmedMessagesCount = remember {
         mutableStateOf(0)
     }
+    val isLoading = remember {
+        mutableStateOf(true)
+    }
+    val refreshDate = remember {
+        mutableStateOf(Calendar.getInstance().time)
+    }
     
     BottomSheetScaffold(
         sheetContent = {
-            LineMapViewBottomSheet(services, programmedMessagesCount.value)
+            LineMapViewBottomSheet(
+                services = services,
+                programmedMessagesCount = programmedMessagesCount.value,
+                isLoading = isLoading.value,
+                refreshDate = refreshDate.value
+            )
         },
         sheetBackgroundColor = Color.White.copy(alpha = 0.9f),
-        sheetShape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp),
+        sheetShape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp),
         sheetElevation = 0.dp,
         scaffoldState = rememberBottomSheetScaffoldState(
             bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Expanded)
@@ -53,12 +65,16 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
                     Services.getNavetteTramServices { returnedServices ->
                         services.clear()
                         services.addAll(returnedServices)
+                        isLoading.value = false
+                        refreshDate.value = Calendar.getInstance().time
                     }
                 }
                 else {
                     Services.getServicesByLine(line.id) { returnedServices ->
                         services.clear()
                         services.addAll(returnedServices)
+                        isLoading.value = false
+                        refreshDate.value = Calendar.getInstance().time
                     }
                 }
                 delay(2000)

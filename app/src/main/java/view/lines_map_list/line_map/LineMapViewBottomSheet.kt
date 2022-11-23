@@ -3,8 +3,10 @@ package view.lines_map_list.line_map
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -13,9 +15,15 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import model.DTO.Service
+import java.util.Date
 
 @Composable
-fun LineMapViewBottomSheet(services: List<Service>, programmedMessagesCount: Int) {
+fun LineMapViewBottomSheet(
+    services: List<Service>,
+    programmedMessagesCount: Int,
+    isLoading: Boolean,
+    refreshDate: Date
+) {
     Column(modifier = Modifier
         .fillMaxWidth()
         .height(LocalConfiguration.current.screenHeightDp.dp / 2 - 50.dp)
@@ -36,6 +44,18 @@ fun LineMapViewBottomSheet(services: List<Service>, programmedMessagesCount: Int
             .height(20.dp)
         )
 
-        LineMapViewServicesList(services, programmedMessagesCount)
+        if(isLoading) {
+            Row(horizontalArrangement = Arrangement.Center, modifier = Modifier
+                .fillMaxWidth()
+            ) {
+                CircularProgressIndicator(modifier = Modifier
+                    .size(25.dp)
+                    .align(Alignment.CenterVertically)
+                )
+            }
+        }
+        else {
+            LineMapViewServicesList(services, programmedMessagesCount, refreshDate)
+        }
     }
 }

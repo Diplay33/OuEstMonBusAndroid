@@ -9,6 +9,9 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.MailOutline
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -18,9 +21,18 @@ import androidx.compose.ui.unit.sp
 import model.DTO.Service
 import model.DTO.Services
 import view.lines_map_list.NotificationCountBadge
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
 
 @Composable
-fun LineMapViewServicesList(services: List<Service>, programmedMessagesCount: Int) {
+fun LineMapViewServicesList(
+    services: List<Service>,
+    programmedMessagesCount: Int,
+    refreshDate: Date
+) {
+    val formatter = SimpleDateFormat("HH:mm")
+
     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
         .fillMaxWidth()
     ) {
@@ -61,6 +73,26 @@ fun LineMapViewServicesList(services: List<Service>, programmedMessagesCount: In
     ) {
         Services.filterServicesByVehicle(services).forEach { services ->
             LineMapViewServicesListGroup(services)
+        }
+
+        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+            .fillMaxWidth()
+        ) {
+            Text(
+                text = when(services.size) {
+                    0 -> "Aucun véhicule ne circule sur la ligne"
+                    1 -> "1 véhicule circule sur la ligne"
+                    else -> "${services.size} véhicules circulent sur la ligne"
+                },
+                color = Color.Gray,
+                fontSize = 18.sp
+            )
+
+            Text(
+                text = "Dernière actualisation à ${formatter.format(refreshDate)}",
+                color = Color.Gray,
+                fontSize = 18.sp
+            )
         }
     }
 }
