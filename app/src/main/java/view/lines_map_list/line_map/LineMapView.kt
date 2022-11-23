@@ -18,7 +18,7 @@ import view.more_view.all_services_list.service_detail.bitmapDescriptor
 fun LineMapView(services: SnapshotStateList<Service>, lineName: String) {
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(
-            LatLng(44.838670, -0.578620), 10.8f
+            LatLng(44.838670 - 0.06, -0.578620), 10.8f
         )
     }
     val mapProperties by remember {

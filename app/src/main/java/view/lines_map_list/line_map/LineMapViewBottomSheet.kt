@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import model.DTO.Service
@@ -17,7 +18,7 @@ import model.DTO.Service
 fun LineMapViewBottomSheet(services: List<Service>) {
     Column(modifier = Modifier
         .fillMaxWidth()
-        .height(300.dp)
+        .height(LocalConfiguration.current.screenHeightDp.dp / 2 - 50.dp)
     ) {
         Spacer(modifier = Modifier
             .height(10.dp)
@@ -32,7 +33,7 @@ fun LineMapViewBottomSheet(services: List<Service>) {
         )
 
         Spacer(modifier = Modifier
-            .height(25.dp)
+            .height(20.dp)
         )
 
         //TODO: If there's messages, then display them
