@@ -36,8 +36,6 @@ fun LineMapViewBottomSheet(services: List<Service>, programmedMessagesCount: Int
             .height(20.dp)
         )
 
-        //TODO: If there's messages, then display them
-
         LineMapViewServicesList(services, programmedMessagesCount)
     }
 }

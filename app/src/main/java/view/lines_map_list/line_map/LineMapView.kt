@@ -10,7 +10,6 @@ import com.example.ouestmonbus.R
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.*
-import model.DTO.Lines
 import model.DTO.Service
 import view.more_view.all_services_list.service_detail.bitmapDescriptor
 
@@ -24,10 +23,14 @@ fun LineMapView(services: SnapshotStateList<Service>, lineName: String) {
     val mapProperties by remember {
         mutableStateOf(MapProperties(isBuildingEnabled = true))
     }
+    val mapUISettings by remember {
+        mutableStateOf(MapUiSettings(compassEnabled = false, zoomControlsEnabled = false))
+    }
 
     GoogleMap(
         properties = mapProperties,
-        cameraPositionState = cameraPositionState
+        cameraPositionState = cameraPositionState,
+        uiSettings = mapUISettings
     ) {
         services.forEach { service ->
             Marker(
