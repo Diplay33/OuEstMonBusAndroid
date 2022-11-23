@@ -29,7 +29,8 @@ import java.util.Date
 fun LineMapViewServicesList(
     services: List<Service>,
     programmedMessagesCount: Int,
-    refreshDate: Date
+    refreshDate: Date,
+    selectedService: MutableState<Service?>
 ) {
     val formatter = SimpleDateFormat("HH:mm")
 
@@ -72,7 +73,7 @@ fun LineMapViewServicesList(
         .verticalScroll(rememberScrollState())
     ) {
         Services.filterServicesByVehicle(services).forEach { services ->
-            LineMapViewServicesListGroup(services)
+            LineMapViewServicesListGroup(services, selectedService)
         }
 
         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier

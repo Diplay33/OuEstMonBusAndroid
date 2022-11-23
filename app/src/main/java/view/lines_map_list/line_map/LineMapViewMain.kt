@@ -38,6 +38,9 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
     val refreshDate = remember {
         mutableStateOf(Calendar.getInstance().time)
     }
+    val selectedService = remember {
+        mutableStateOf<Service?>(null)
+    }
     
     BottomSheetScaffold(
         sheetContent = {
@@ -45,7 +48,8 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
                 services = services,
                 programmedMessagesCount = programmedMessagesCount.value,
                 isLoading = isLoading.value,
-                refreshDate = refreshDate.value
+                refreshDate = refreshDate.value,
+                selectedService = selectedService
             )
         },
         sheetBackgroundColor = Color.White.copy(alpha = 0.9f),
@@ -84,7 +88,7 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
         Box(modifier = Modifier
             .padding(padding)
         ) {
-            LineMapView(services, line.lineName)
+            LineMapView(services, line.lineName, selectedService)
 
             LineMapViewTopBar(navController, line)
         }

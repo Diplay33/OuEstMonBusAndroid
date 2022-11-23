@@ -22,7 +22,8 @@ fun LineMapViewBottomSheet(
     services: List<Service>,
     programmedMessagesCount: Int,
     isLoading: Boolean,
-    refreshDate: Date
+    refreshDate: Date,
+    selectedService: MutableState<Service?>
 ) {
     Column(modifier = Modifier
         .fillMaxWidth()
@@ -40,22 +41,35 @@ fun LineMapViewBottomSheet(
             .align(Alignment.CenterHorizontally)
         )
 
-        Spacer(modifier = Modifier
-            .height(20.dp)
+        Spacer(
+            modifier = Modifier
+                .height(20.dp)
         )
 
-        if(isLoading) {
-            Row(horizontalArrangement = Arrangement.Center, modifier = Modifier
-                .fillMaxWidth()
-            ) {
-                CircularProgressIndicator(modifier = Modifier
-                    .size(25.dp)
-                    .align(Alignment.CenterVertically)
+        if(selectedService.value == null) {
+            if(isLoading) {
+                Row(
+                    horizontalArrangement = Arrangement.Center, modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .size(25.dp)
+                            .align(Alignment.CenterVertically)
+                    )
+                }
+            }
+            else {
+                LineMapViewServicesList(
+                    services = services,
+                    programmedMessagesCount = programmedMessagesCount,
+                    refreshDate = refreshDate,
+                    selectedService = selectedService
                 )
             }
         }
         else {
-            LineMapViewServicesList(services, programmedMessagesCount, refreshDate)
+            Text(selectedService.value?.vehicle?.parkId ?: "0000")
         }
     }
 }

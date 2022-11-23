@@ -1,9 +1,6 @@
 package view.lines_map_list.line_map
 
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.platform.LocalContext
 import com.example.ouestmonbus.R
@@ -14,7 +11,11 @@ import model.DTO.Service
 import view.more_view.all_services_list.service_detail.bitmapDescriptor
 
 @Composable
-fun LineMapView(services: SnapshotStateList<Service>, lineName: String) {
+fun LineMapView(
+    services: SnapshotStateList<Service>,
+    lineName: String,
+    selectedService: MutableState<Service?>
+) {
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(
             LatLng(44.838670 - 0.06, -0.578620), 10.8f
@@ -46,7 +47,12 @@ fun LineMapView(services: SnapshotStateList<Service>, lineName: String) {
                         else -> R.drawable.map_logo_bus
                     }
                 ),
-                title = service.vehicle.parkId
+                title = service.vehicle.parkId,
+                onClick = { marker ->
+                    selectedService.value = service
+                    marker.showInfoWindow()
+                    true
+                }
             )
         }
     }

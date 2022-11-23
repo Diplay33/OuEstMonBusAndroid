@@ -1,6 +1,7 @@
 package view.lines_map_list.line_map
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -8,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,7 +22,7 @@ import model.DTO.Lines
 import model.DTO.Service
 
 @Composable
-fun LineMapViewServicesListRow(service: Service) {
+fun LineMapViewServicesListRow(service: Service, selectedService: MutableState<Service?>) {
     val line = Lines.getLine(service.lineId.toString())
     val destination = Destinations.getDestinationFromRaw(service.destination)
 
@@ -37,6 +39,7 @@ fun LineMapViewServicesListRow(service: Service) {
             .padding(horizontal = 15.dp)
             .padding(top = 7.dp, bottom = if (destination.first() == "") 7.dp else 5.dp)
             .fillMaxWidth()
+            .clickable { selectedService.value = service }
         ) {
             Row {
                 Text(
