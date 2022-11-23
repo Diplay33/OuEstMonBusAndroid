@@ -7,10 +7,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,6 +17,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import model.DTO.Lines
+import model.DTO.ProgrammedMessages
 import model.DTO.Service
 import model.DTO.Services
 
@@ -30,10 +28,13 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
     val services = remember {
         mutableStateListOf<Service>()
     }
+    val programmedMessagesCount = remember {
+        mutableStateOf(0)
+    }
     
     BottomSheetScaffold(
         sheetContent = {
-            LineMapViewBottomSheet(services)
+            LineMapViewBottomSheet(services, programmedMessagesCount.value)
         },
         sheetBackgroundColor = Color.White.copy(alpha = 0.9f),
         sheetShape = RoundedCornerShape(topStart = 15.dp, topEnd = 15.dp),
@@ -43,6 +44,10 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
         )
     ) { padding ->
         LaunchedEffect(line) {
+            ProgrammedMessages.getNumberOfMessagesByLine(line.id.toString()) { count ->
+                programmedMessagesCount.value = count
+            }
+
             while(true) {
                 if(lineId == "132") {
                     Services.getNavetteTramServices { returnedServices ->

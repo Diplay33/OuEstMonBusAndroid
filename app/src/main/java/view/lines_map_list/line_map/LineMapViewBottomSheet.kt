@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.sp
 import model.DTO.Service
 
 @Composable
-fun LineMapViewBottomSheet(services: List<Service>) {
+fun LineMapViewBottomSheet(services: List<Service>, programmedMessagesCount: Int) {
     Column(modifier = Modifier
         .fillMaxWidth()
         .height(LocalConfiguration.current.screenHeightDp.dp / 2 - 50.dp)
@@ -38,6 +38,6 @@ fun LineMapViewBottomSheet(services: List<Service>) {
 
         //TODO: If there's messages, then display them
 
-        LineMapViewServicesList(services)
+        LineMapViewServicesList(services, programmedMessagesCount)
     }
 }
