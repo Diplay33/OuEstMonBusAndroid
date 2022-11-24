@@ -69,7 +69,7 @@ fun LineMapViewBottomSheet(
             }
         }
         else {
-            Text(selectedService.value?.vehicle?.parkId ?: "0000")
+            LineMapViewServiceDetail(selectedService)
         }
     }
 }
