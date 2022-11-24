@@ -9,5 +9,11 @@ class ProgrammedMessages {
                 callback(programmedMessages.size)
             }
         }
+
+        fun getProgrammedMessagesByLine(lineId: String, callback: (List<ProgrammedMessage>) -> Unit) {
+            ProgrammedMessageDAO.getProgrammedMessagesByLine(lineId) { programmedMessages ->
+                callback(programmedMessages)
+            }
+        }
     }
 }
