@@ -57,7 +57,7 @@ fun LineMapViewBottomSheet(
         )
 
         if(areMessagesDisplayed.value) {
-            LineMapViewProgrammedMessagesViewMain(line)
+            LineMapViewProgrammedMessagesViewMain(line, areMessagesDisplayed)
         }
         else {
             if(selectedService.value == null) {
