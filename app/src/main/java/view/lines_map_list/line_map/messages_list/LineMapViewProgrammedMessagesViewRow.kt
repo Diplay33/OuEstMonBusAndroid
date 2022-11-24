@@ -13,6 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import model.DTO.ProgrammedMessage
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun LineMapViewProgrammedMessagesViewRow(programmedMessage: ProgrammedMessage) {
@@ -21,39 +22,52 @@ fun LineMapViewProgrammedMessagesViewRow(programmedMessage: ProgrammedMessage) {
         .fillMaxWidth()
         .padding(bottom = 15.dp)
     ) {
-        Column(modifier = Modifier
-            .background(
-                Color(0xffF5F5F5),
-                shape = RoundedCornerShape(10.dp)
-            )
-        ) {
-            Text(
-                text = programmedMessage.title.replace("\\s+".toRegex(), " "),
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .padding(vertical = 7.dp)
-                    .padding(horizontal = 15.dp)
-            )
-
-            Row {
-                Spacer(modifier = Modifier
-                    .width(15.dp)
+        Column {
+            Column(modifier = Modifier
+                .background(
+                    Color(0xffF5F5F5),
+                    shape = RoundedCornerShape(10.dp)
+                )
+            ) {
+                Text(
+                    text = programmedMessage.title.replace("\\s+".toRegex(), " "),
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    modifier = Modifier
+                        .padding(vertical = 7.dp)
+                        .padding(horizontal = 15.dp)
                 )
 
-                Box(modifier = Modifier
-                    .clip(RectangleShape)
-                    .background(Color.LightGray)
-                    .fillMaxWidth()
-                    .height(1.dp)
+                Row {
+                    Spacer(modifier = Modifier
+                        .width(15.dp)
+                    )
+
+                    Box(modifier = Modifier
+                        .clip(RectangleShape)
+                        .background(Color.LightGray)
+                        .fillMaxWidth()
+                        .height(1.dp)
+                    )
+                }
+
+                Text(
+                    text = programmedMessage.bodyMessage.replace("\\s+".toRegex(), " "),
+                    fontSize = 18.sp,
+                    modifier = Modifier
+                        .padding(vertical = 7.dp)
+                        .padding(horizontal = 15.dp)
                 )
             }
 
             Text(
-                text = programmedMessage.bodyMessage.replace("\\s+".toRegex(), " "),
-                fontSize = 18.sp,
+                text = "Mis à jour le ${
+                    programmedMessage.lastUpdated.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))
+                } à ${
+                    programmedMessage.lastUpdated.format(DateTimeFormatter.ofPattern("HH:mm"))
+                }",
+                color = Color.Gray,
                 modifier = Modifier
-                    .padding(vertical = 7.dp)
                     .padding(horizontal = 15.dp)
             )
         }

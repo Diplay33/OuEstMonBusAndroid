@@ -24,7 +24,7 @@ class ProgrammedMessageDAO {
                                     title = propertiesJSONObject.getString("titre"),
                                     bodyMessage = propertiesJSONObject.getString("message"),
                                     lineId = propertiesJSONObject.getInt("rs_sv_ligne_a"),
-                                    lastUpdated = propertiesJSONObject.getString("mdate")
+                                    lastUpdatedRaw = propertiesJSONObject.getString("mdate")
                                 )
                             )
                         }
