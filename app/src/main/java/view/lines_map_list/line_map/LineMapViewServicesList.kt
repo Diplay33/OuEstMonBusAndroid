@@ -1,5 +1,6 @@
 package view.lines_map_list.line_map
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -30,7 +31,8 @@ fun LineMapViewServicesList(
     services: List<Service>,
     programmedMessagesCount: Int,
     refreshDate: Date,
-    selectedService: MutableState<Service?>
+    selectedService: MutableState<Service?>,
+    areMessagesDisplayed: MutableState<Boolean>
 ) {
     val formatter = SimpleDateFormat("HH:mm")
 
@@ -51,6 +53,9 @@ fun LineMapViewServicesList(
             Box(modifier = Modifier
                 .align(Alignment.CenterVertically)
                 .padding(end = 15.dp)
+                .clickable {
+                    areMessagesDisplayed.value = true
+                }
             ) {
                 Icon(
                     imageVector = Icons.Rounded.MailOutline,

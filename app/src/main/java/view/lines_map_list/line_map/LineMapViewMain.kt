@@ -49,7 +49,8 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
                 programmedMessagesCount = programmedMessagesCount.value,
                 isLoading = isLoading.value,
                 refreshDate = refreshDate.value,
-                selectedService = selectedService
+                selectedService = selectedService,
+                line = line
             )
         },
         sheetBackgroundColor = Color.White.copy(alpha = 0.9f),

@@ -7,6 +7,8 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -14,7 +16,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import model.DTO.Line
+import model.DTO.Lines
 import model.DTO.Service
+import view.lines_map_list.line_map.messages_list.LineMapViewProgrammedMessagesViewMain
 import java.util.Date
 
 @Composable
@@ -23,8 +28,13 @@ fun LineMapViewBottomSheet(
     programmedMessagesCount: Int,
     isLoading: Boolean,
     refreshDate: Date,
-    selectedService: MutableState<Service?>
+    selectedService: MutableState<Service?>,
+    line: Line
 ) {
+    val areMessagesDisplayed = remember {
+        mutableStateOf(false)
+    }
+
     Column(modifier = Modifier
         .fillMaxWidth()
         .height(LocalConfiguration.current.screenHeightDp.dp / 2 - 50.dp)
@@ -46,30 +56,36 @@ fun LineMapViewBottomSheet(
                 .height(20.dp)
         )
 
-        if(selectedService.value == null) {
-            if(isLoading) {
-                Row(
-                    horizontalArrangement = Arrangement.Center, modifier = Modifier
-                        .fillMaxWidth()
-                ) {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .size(25.dp)
-                            .align(Alignment.CenterVertically)
+        if(areMessagesDisplayed.value) {
+            LineMapViewProgrammedMessagesViewMain(line)
+        }
+        else {
+            if(selectedService.value == null) {
+                if(isLoading) {
+                    Row(
+                        horizontalArrangement = Arrangement.Center, modifier = Modifier
+                            .fillMaxWidth()
+                    ) {
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .size(25.dp)
+                                .align(Alignment.CenterVertically)
+                        )
+                    }
+                }
+                else {
+                    LineMapViewServicesList(
+                        services = services,
+                        programmedMessagesCount = programmedMessagesCount,
+                        refreshDate = refreshDate,
+                        selectedService = selectedService,
+                        areMessagesDisplayed = areMessagesDisplayed
                     )
                 }
             }
             else {
-                LineMapViewServicesList(
-                    services = services,
-                    programmedMessagesCount = programmedMessagesCount,
-                    refreshDate = refreshDate,
-                    selectedService = selectedService
-                )
+                LineMapViewServiceDetail(selectedService)
             }
-        }
-        else {
-            LineMapViewServiceDetail(selectedService)
         }
     }
 }

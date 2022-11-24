@@ -93,19 +93,19 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>) {
             ServiceDetailOperatorRow(service.vehicle.operator)
 
             Spacer(modifier = Modifier
-                .height(30.dp)
+                .height(10.dp)
             )
 
             LineMapViewServiceDetailCurrentStopRow(service.currentStop.toString())
 
             Spacer(modifier = Modifier
-                .height(30.dp)
+                .height(10.dp)
             )
 
             ServiceDetailSpeedRow(service.currentSpeed)
 
             Spacer(modifier = Modifier
-                .height(30.dp)
+                .height(10.dp)
             )
 
             ServiceDetailStateRow(service.state, service.stateTime)
