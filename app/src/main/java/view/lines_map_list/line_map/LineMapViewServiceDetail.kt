@@ -38,7 +38,7 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>) {
         .fillMaxWidth()
     ) {
         Text(
-            text = "Véhicule n° ${service.vehicle.parkId}",
+            text = "Véhicule n°${service.vehicle.parkId}",
             fontSize = 25.sp,
             color = Color.Black,
             fontWeight = FontWeight.Bold,
