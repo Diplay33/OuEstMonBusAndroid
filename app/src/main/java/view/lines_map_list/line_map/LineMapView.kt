@@ -3,6 +3,7 @@ package view.lines_map_list.line_map
 import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.MutableLiveData
 import com.example.ouestmonbus.R
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -15,7 +16,9 @@ fun LineMapView(
     services: SnapshotStateList<Service>,
     lineName: String,
     selectedService: MutableState<Service?>,
-    cameraPositionState: CameraPositionState
+    cameraPositionState: CameraPositionState,
+    isUserLocationShown: Boolean,
+    userPosition: LatLng
 ) {
     val mapProperties by remember {
         mutableStateOf(MapProperties(isBuildingEnabled = true))
@@ -52,6 +55,13 @@ fun LineMapView(
                     )
                     true
                 }
+            )
+        }
+
+        if(isUserLocationShown) {
+            Marker(
+                state = MarkerState(position = userPosition),
+                title = "Ma position"
             )
         }
     }

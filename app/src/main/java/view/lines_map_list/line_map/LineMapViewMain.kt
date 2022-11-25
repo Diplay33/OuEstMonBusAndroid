@@ -49,6 +49,12 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
             LatLng(44.838670 - 0.06, -0.578620), 10.8f
         )
     }
+    val isUserLocationShown = remember {
+        mutableStateOf(false)
+    }
+    val userPosition = remember {
+        mutableStateOf(LatLng(44.838670, -0.578620))
+    }
 
     BottomSheetScaffold(
         sheetContent = {
@@ -98,9 +104,16 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
         Box(modifier = Modifier
             .padding(padding)
         ) {
-            LineMapView(services, line.lineName, selectedService, cameraPositionState)
+            LineMapView(
+                services = services,
+                lineName = line.lineName,
+                selectedService = selectedService,
+                cameraPositionState = cameraPositionState,
+                isUserLocationShown = isUserLocationShown.value,
+                userPosition = userPosition.value
+            )
 
-            LineMapViewTopBar(navController, line)
+            LineMapViewTopBar(navController, line, isUserLocationShown, cameraPositionState, userPosition)
         }
     }
 }
