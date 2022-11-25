@@ -14,5 +14,6 @@ class ProgrammedMessage(val id: Int,
                         val lastUpdatedRaw: String,
                         val lastUpdated: LocalDateTime = ZonedDateTime
                             .parse(lastUpdatedRaw)
-                            .toLocalDateTime()
+                            .toLocalDateTime(),
+                        val severity: Severity
 )

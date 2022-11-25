@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -32,7 +33,8 @@ fun LineMapViewServicesList(
     programmedMessagesCount: Int,
     refreshDate: Date,
     selectedService: MutableState<Service?>,
-    areMessagesDisplayed: MutableState<Boolean>
+    areMessagesDisplayed: MutableState<Boolean>,
+    isLoading: Boolean
 ) {
     val formatter = SimpleDateFormat("HH:mm")
 
@@ -74,31 +76,45 @@ fun LineMapViewServicesList(
         }
     }
 
-    Column(modifier = Modifier
-        .verticalScroll(rememberScrollState())
-    ) {
-        Services.filterServicesByVehicle(services).forEach { services ->
-            LineMapViewServicesListGroup(services, selectedService)
-        }
 
-        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+    if(isLoading) {
+        Row(horizontalArrangement = Arrangement.Center, modifier = Modifier
             .fillMaxWidth()
         ) {
-            Text(
-                text = when(services.size) {
-                    0 -> "Aucun véhicule ne circule sur la ligne"
-                    1 -> "1 véhicule circule sur la ligne"
-                    else -> "${services.size} véhicules circulent sur la ligne"
-                },
-                color = Color.Gray,
-                fontSize = 18.sp
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .size(25.dp)
+                    .align(Alignment.CenterVertically)
             )
+        }
+    }
+    else {
+        Column(modifier = Modifier
+            .verticalScroll(rememberScrollState())
+        ) {
+            Services.filterServicesByVehicle(services).forEach { services ->
+                LineMapViewServicesListGroup(services, selectedService)
+            }
 
-            Text(
-                text = "Dernière actualisation à ${formatter.format(refreshDate)}",
-                color = Color.Gray,
-                fontSize = 18.sp
-            )
+            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+                .fillMaxWidth()
+            ) {
+                Text(
+                    text = when(services.size) {
+                        0 -> "Aucun véhicule ne circule sur la ligne"
+                        1 -> "1 véhicule circule sur la ligne"
+                        else -> "${services.size} véhicules circulent sur la ligne"
+                    },
+                    color = Color.Gray,
+                    fontSize = 18.sp
+                )
+
+                Text(
+                    text = "Dernière actualisation à ${formatter.format(refreshDate)}",
+                    color = Color.Gray,
+                    fontSize = 18.sp
+                )
+            }
         }
     }
 }

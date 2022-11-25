@@ -13,6 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import model.DTO.ProgrammedMessage
+import model.DTO.Severity
 import java.time.format.DateTimeFormatter
 
 @Composable
@@ -25,14 +26,27 @@ fun LineMapViewProgrammedMessagesViewRow(programmedMessage: ProgrammedMessage) {
         Column {
             Column(modifier = Modifier
                 .background(
-                    Color(0xffF5F5F5),
+                    when(programmedMessage.severity) {
+                        Severity.LOW -> Color(0xff358BCC).copy(alpha = 0.1f)
+                        Severity.MIDDLE -> Color(0xffF19138).copy(alpha = 0.1f)
+                        Severity.IMPORTANT -> Color.Red.copy(alpha = 0.1f)
+                    },
                     shape = RoundedCornerShape(10.dp)
                 )
             ) {
                 Text(
-                    text = programmedMessage.title.replace("\\s+".toRegex(), " "),
+                    text = when(programmedMessage.severity) {
+                        Severity.LOW -> "ℹ️ "
+                        Severity.MIDDLE -> "⚠️ "
+                        Severity.IMPORTANT -> "🔴 "
+                    } + programmedMessage.title.replace("\\s+".toRegex(), " "),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
+                    color = when(programmedMessage.severity) {
+                        Severity.LOW -> Color(0xff358BCC)
+                        Severity.MIDDLE -> Color(0xffF19138)
+                        Severity.IMPORTANT -> Color.Red
+                    },
                     modifier = Modifier
                         .padding(vertical = 7.dp)
                         .padding(horizontal = 15.dp)

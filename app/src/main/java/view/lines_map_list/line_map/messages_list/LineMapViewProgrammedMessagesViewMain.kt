@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -27,11 +28,15 @@ fun LineMapViewProgrammedMessagesViewMain(line: Line, areMessagesDisplayed: Muta
     val programmedMessages = remember {
         mutableStateListOf<ProgrammedMessage>()
     }
+    val areMessagesLoaded = remember {
+        mutableStateOf(false)
+    }
 
     LaunchedEffect(line) {
         ProgrammedMessages.getProgrammedMessagesByLine(line.id.toString()) {
             programmedMessages.clear()
             programmedMessages.addAll(it)
+            areMessagesLoaded.value = true
         }
     }
 
@@ -72,8 +77,23 @@ fun LineMapViewProgrammedMessagesViewMain(line: Line, areMessagesDisplayed: Muta
     )
 
     LazyColumn {
-        items(programmedMessages) { programmedMessage ->
-            LineMapViewProgrammedMessagesViewRow(programmedMessage)
+        if(!areMessagesLoaded.value) {
+            item {
+                Row(horizontalArrangement = Arrangement.Center, modifier = Modifier
+                    .fillMaxWidth()
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .size(25.dp)
+                            .align(Alignment.CenterVertically)
+                    )
+                }
+            }
+        }
+        else {
+            items(programmedMessages) { programmedMessage ->
+                LineMapViewProgrammedMessagesViewRow(programmedMessage)
+            }
         }
     }
 }

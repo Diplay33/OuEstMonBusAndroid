@@ -2,6 +2,7 @@ package model.DAO
 
 import model.DAO.AccessData.CallAPI
 import model.DTO.ProgrammedMessage
+import model.DTO.Severity
 import org.json.JSONObject
 
 class ProgrammedMessageDAO {
@@ -24,7 +25,14 @@ class ProgrammedMessageDAO {
                                     title = propertiesJSONObject.getString("titre"),
                                     bodyMessage = propertiesJSONObject.getString("message"),
                                     lineId = propertiesJSONObject.getInt("rs_sv_ligne_a"),
-                                    lastUpdatedRaw = propertiesJSONObject.getString("mdate")
+                                    lastUpdatedRaw = propertiesJSONObject.getString("mdate"),
+                                    severity = if (propertiesJSONObject.getString("severite").contains("1"))
+                                        Severity.LOW
+                                    else
+                                        if (propertiesJSONObject.getString("severite").contains("2"))
+                                            Severity.MIDDLE
+                                        else
+                                            Severity.IMPORTANT
                                 )
                             )
                         }

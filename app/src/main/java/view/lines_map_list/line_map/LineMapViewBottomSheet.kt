@@ -61,27 +61,14 @@ fun LineMapViewBottomSheet(
         }
         else {
             if(selectedService.value == null) {
-                if(isLoading) {
-                    Row(
-                        horizontalArrangement = Arrangement.Center, modifier = Modifier
-                            .fillMaxWidth()
-                    ) {
-                        CircularProgressIndicator(
-                            modifier = Modifier
-                                .size(25.dp)
-                                .align(Alignment.CenterVertically)
-                        )
-                    }
-                }
-                else {
-                    LineMapViewServicesList(
-                        services = services,
-                        programmedMessagesCount = programmedMessagesCount,
-                        refreshDate = refreshDate,
-                        selectedService = selectedService,
-                        areMessagesDisplayed = areMessagesDisplayed
-                    )
-                }
+                LineMapViewServicesList(
+                    services = services,
+                    programmedMessagesCount = programmedMessagesCount,
+                    refreshDate = refreshDate,
+                    selectedService = selectedService,
+                    areMessagesDisplayed = areMessagesDisplayed,
+                    isLoading = isLoading
+                )
             }
             else {
                 LineMapViewServiceDetail(selectedService)
