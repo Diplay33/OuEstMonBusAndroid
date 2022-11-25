@@ -33,6 +33,7 @@ import view.lines_map_list.line_map.LineMapViewMain
 import view.more_view.MoreViewMain
 import view.more_view.all_services_list.AllServicesListMain
 import view.more_view.all_services_list.service_detail.ServiceDetailMain
+import view.next_schedules.NextSchedulesHomeViewMain
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,6 +54,7 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             val bottomNavigationItems = listOf(
                 BottomNavigationScreens.Cartes,
+                BottomNavigationScreens.Prochains,
                 BottomNavigationScreens.Plus
             )
             
@@ -82,6 +84,12 @@ class MainActivity : ComponentActivity() {
                     //BottomNavigationBar
                     composable(BottomNavigationScreens.Plus.route) {
                         MoreViewMain(navController)
+                    }
+
+
+                    //Prochains Passages screen
+                    composable(BottomNavigationScreens.Prochains.route) {
+                        NextSchedulesHomeViewMain()
                     }
 
 
