@@ -15,6 +15,9 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.delay
 import model.DTO.Lines
 import model.DTO.ProgrammedMessages
@@ -41,7 +44,12 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
     val selectedService = remember {
         mutableStateOf<Service?>(null)
     }
-    
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(
+            LatLng(44.838670 - 0.06, -0.578620), 10.8f
+        )
+    }
+
     BottomSheetScaffold(
         sheetContent = {
             LineMapViewBottomSheet(
@@ -50,7 +58,8 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
                 isLoading = isLoading.value,
                 refreshDate = refreshDate.value,
                 selectedService = selectedService,
-                line = line
+                line = line,
+                cameraPositionState = cameraPositionState
             )
         },
         sheetBackgroundColor = Color.White.copy(alpha = 0.9f),
@@ -89,7 +98,7 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
         Box(modifier = Modifier
             .padding(padding)
         ) {
-            LineMapView(services, line.lineName, selectedService)
+            LineMapView(services, line.lineName, selectedService, cameraPositionState)
 
             LineMapViewTopBar(navController, line)
         }

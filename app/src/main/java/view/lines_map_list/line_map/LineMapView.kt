@@ -14,13 +14,9 @@ import view.more_view.all_services_list.service_detail.bitmapDescriptor
 fun LineMapView(
     services: SnapshotStateList<Service>,
     lineName: String,
-    selectedService: MutableState<Service?>
+    selectedService: MutableState<Service?>,
+    cameraPositionState: CameraPositionState
 ) {
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(
-            LatLng(44.838670 - 0.06, -0.578620), 10.8f
-        )
-    }
     val mapProperties by remember {
         mutableStateOf(MapProperties(isBuildingEnabled = true))
     }
@@ -51,6 +47,9 @@ fun LineMapView(
                 onClick = { marker ->
                     selectedService.value = service
                     marker.showInfoWindow()
+                    cameraPositionState.position = CameraPosition.fromLatLngZoom(
+                        LatLng(service.latitude - 0.013, service.longitude), 13f
+                    )
                     true
                 }
             )

@@ -16,6 +16,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.CameraPositionState
 import model.DTO.Line
 import model.DTO.Lines
 import model.DTO.Service
@@ -29,7 +32,8 @@ fun LineMapViewBottomSheet(
     isLoading: Boolean,
     refreshDate: Date,
     selectedService: MutableState<Service?>,
-    line: Line
+    line: Line,
+    cameraPositionState: CameraPositionState
 ) {
     val areMessagesDisplayed = remember {
         mutableStateOf(false)
@@ -72,6 +76,13 @@ fun LineMapViewBottomSheet(
             }
             else {
                 LineMapViewServiceDetail(selectedService)
+
+                cameraPositionState.position = CameraPosition.fromLatLngZoom(
+                    LatLng(
+                        (selectedService.value?.latitude ?: 0) as Double - 0.013,
+                        (selectedService.value?.longitude ?: 0) as Double
+                    ), 13f
+                )
             }
         }
     }

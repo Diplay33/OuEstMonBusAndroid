@@ -20,15 +20,10 @@
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/model/DAO/ProgrammedMessageDAO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/DAO/ProgrammedMessageDAO.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/model/DTO/ProgrammedMessage.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/DTO/ProgrammedMessage.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/line_map/LineMapView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/line_map/LineMapView.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/line_map/LineMapViewBottomSheet.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/line_map/LineMapViewBottomSheet.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/line_map/LineMapViewServicesList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/line_map/LineMapViewServicesList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/line_map/messages_list/LineMapViewProgrammedMessagesViewMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/line_map/messages_list/LineMapViewProgrammedMessagesViewMain.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/line_map/messages_list/LineMapViewProgrammedMessagesViewRow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/line_map/messages_list/LineMapViewProgrammedMessagesViewRow.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/line_map/LineMapViewMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/line_map/LineMapViewMain.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
