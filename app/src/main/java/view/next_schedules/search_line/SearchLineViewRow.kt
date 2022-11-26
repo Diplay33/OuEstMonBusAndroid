@@ -115,7 +115,7 @@ fun SearchLineViewRow(line: Line) {
             }
         }
 
-        /*if(!isCollapsed.value) {
+        if(!isCollapsed.value) {
             Column(modifier = Modifier
                 .background(
                     colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
@@ -124,44 +124,8 @@ fun SearchLineViewRow(line: Line) {
                 .fillMaxWidth()
                 .padding(15.dp)
             ) {
-                Row(modifier = Modifier
-                    .background(
-                        Color.White.copy(alpha = 0.4f),
-                        shape = RoundedCornerShape(10.dp)
-                    )
-                    .clickable {  }
-                    .padding(horizontal = 15.dp)
-                    .padding(vertical = 2.dp)
-                    .fillMaxWidth()
-                ) {
-                    Icon(
-                        imageVector = Icons.Rounded.PlayArrow,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .align(Alignment.CenterVertically)
-                            .offset(x = (-7).dp)
-                    )
-
-                    Column {
-                        //if(destination.first() != "") {
-                            Text(
-                                text = //if (service.destination == "Les Pins" && service.lineId == 9)
-                                    "MARTIGNAS SUR JALLE"
-                                //else
-                                    /*destination.first()*/,
-                                fontSize = 13.sp,
-                                color = Color.Gray,
-                                modifier = Modifier
-                                    .offset(y = /*if (destination.first() == "") 0.dp else */2.dp)
-                            )
-                        //}
-
-                        Text("Quinconces"/*destination.last()*/, fontSize = 18.sp, modifier = Modifier
-                            .offset(y = /*if (destination.first() == "") 0.dp else */(-2).dp)
-                        )
-                    }
-                }
+                SearchLineViewDestinationRow()
             }
-        }*/
+        }
     }
 }
