@@ -1,0 +1,28 @@
+package view.next_schedules.search_line
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import model.DTO.Line
+
+@Composable
+fun SearchLineViewGroup(lines: List<Line>, isFavorite: Boolean) {
+    Column(modifier = Modifier
+        .padding(vertical = if (lines.isEmpty()) 0.dp else 10.dp)
+    ) {
+        if(isFavorite && lines.isNotEmpty()) {
+            Text("Favoris", fontWeight = FontWeight.Bold, fontSize = 18.sp, modifier = Modifier
+                .padding(start = 15.dp)
+            )
+        }
+
+        lines.forEach { line ->
+            SearchLineViewRow(line)
+        }
+    }
+}

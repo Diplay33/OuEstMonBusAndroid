@@ -19,9 +19,8 @@ fun LinesMapListGroup(
     linesByGroup: SnapshotStateList<ArrayList<Line>>,
     navController: NavController
 ) {
-    Column(
-        modifier = Modifier
-            .padding(vertical = if(lines.isEmpty()) 0.dp else 10.dp)
+    Column(modifier = Modifier
+        .padding(vertical = if(lines.isEmpty()) 0.dp else 10.dp)
     ) {
         if(isFavorite && lines.isNotEmpty()) {
             Text("Favoris", fontWeight = FontWeight.Bold, fontSize = 18.sp, modifier = Modifier
