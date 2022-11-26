@@ -28,12 +28,14 @@ import view.BottomNavigationBar
 import view.Screens.BottomNavigationScreens
 import view.Screens.CartesScreens
 import view.Screens.PlusScreens
+import view.Screens.ProchainsScreens
 import view.lines_map_list.LinesMapListMain
 import view.lines_map_list.line_map.LineMapViewMain
 import view.more_view.MoreViewMain
 import view.more_view.all_services_list.AllServicesListMain
 import view.more_view.all_services_list.service_detail.ServiceDetailMain
 import view.next_schedules.NextSchedulesHomeViewMain
+import view.next_schedules.search_line.SearchLineViewMain
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,7 +91,11 @@ class MainActivity : ComponentActivity() {
 
                     //Prochains Passages screen
                     composable(BottomNavigationScreens.Prochains.route) {
-                        NextSchedulesHomeViewMain()
+                        NextSchedulesHomeViewMain(navController)
+                    }
+
+                    composable(ProchainsScreens.SearchLineView.route) {
+                        SearchLineViewMain(navController)
                     }
 
 
