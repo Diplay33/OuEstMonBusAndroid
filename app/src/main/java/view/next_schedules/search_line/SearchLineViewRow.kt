@@ -15,10 +15,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.PlayArrow
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -33,6 +30,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import kotlinx.coroutines.launch
 import model.DTO.Line
+import model.DTO.Path
+import model.DTO.Paths
 
 @Composable
 fun SearchLineViewRow(line: Line) {
@@ -40,12 +39,15 @@ fun SearchLineViewRow(line: Line) {
         mutableStateOf(true)
     }
     val currentRotation = remember {
-        mutableStateOf(0f)//if (isCollapsed.value) -90f else 0f)
+        mutableStateOf(0f)
     }
     val rotation = remember {
         Animatable(currentRotation.value)
     }
     val scope = rememberCoroutineScope()
+    val paths = remember {
+        mutableStateListOf<List<Path>>()
+    }
 
     Column(modifier = Modifier
         .padding(horizontal = 15.dp)
@@ -59,6 +61,13 @@ fun SearchLineViewRow(line: Line) {
             .height(45.dp)
             .fillMaxWidth()
             .clickable {
+                if(isCollapsed.value) {
+                    Paths.getOrderedPathsByLine(line.id) { returnedPaths ->
+                        println(returnedPaths)
+                        paths.clear()
+                        paths.addAll(returnedPaths)
+                    }
+                }
                 isCollapsed.value = !isCollapsed.value
                 scope.launch {
                     rotation.animateTo(
@@ -124,6 +133,11 @@ fun SearchLineViewRow(line: Line) {
                 .fillMaxWidth()
                 .padding(15.dp)
             ) {
+                paths.forEach { paths ->
+                    paths.forEach { path ->
+                        Text(path.name)
+                    }
+                }
                 SearchLineViewDestinationRow()
             }
         }
