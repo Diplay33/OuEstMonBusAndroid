@@ -22,7 +22,9 @@ fun SearchLineViewGroup(lines: List<Line>, isFavorite: Boolean) {
         }
 
         lines.forEach { line ->
-            SearchLineViewRow(line)
+            if(line.id != 132) {
+                SearchLineViewRow(line)
+            }
         }
     }
 }
