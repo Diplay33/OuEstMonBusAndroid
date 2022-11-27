@@ -131,14 +131,16 @@ fun SearchLineViewRow(line: Line) {
                     shape = RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp)
                 )
                 .fillMaxWidth()
-                .padding(15.dp)
+                .padding(horizontal = 15.dp)
+                .padding(top = 15.dp)
             ) {
                 paths.forEach { paths ->
-                    paths.forEach { path ->
-                        Text(path.name)
-                    }
+                    SearchLineViewDestinationRow(paths)
+
+                    Spacer(modifier = Modifier
+                        .height(15.dp)
+                    )
                 }
-                SearchLineViewDestinationRow()
             }
         }
     }

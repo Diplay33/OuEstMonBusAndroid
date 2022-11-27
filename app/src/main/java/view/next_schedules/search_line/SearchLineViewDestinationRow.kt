@@ -12,12 +12,15 @@ import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import model.DTO.Path
 
 @Composable
-fun SearchLineViewDestinationRow() {
+fun SearchLineViewDestinationRow(paths: List<Path>) {
     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
         .background(
             Color.White.copy(alpha = 0.4f),
@@ -37,23 +40,42 @@ fun SearchLineViewDestinationRow() {
                     .offset(x = (-7).dp)
             )
 
-            Column {
-                //if(destination.first() != "") {
-                Text(
-                    text = //if (service.destination == "Les Pins" && service.lineId == 9)
-                    "MARTIGNAS SUR JALLE"
-                    //else
-                    /*destination.first()*/,
-                    fontSize = 13.sp,
-                    color = Color.Gray,
-                    modifier = Modifier
-                        .offset(y = /*if (destination.first() == "") 0.dp else */2.dp)
-                )
-                //}
+            Column(modifier = Modifier
+                .align(Alignment.CenterVertically)
+            ) {
+                paths.forEach { path ->
+                    Text(text = path.name, fontSize = 18.sp, modifier = Modifier
+                        .padding(vertical = 8.dp)
+                        .fillMaxWidth(fraction = 0.85f)
+                    )
 
-                Text("Quinconces"/*destination.last()*/, fontSize = 18.sp, modifier = Modifier
-                    .offset(y = /*if (destination.first() == "") 0.dp else */(-2).dp)
-                )
+                    if(path != paths.last()) {
+                        Box(modifier = Modifier
+                            .clip(RectangleShape)
+                            .background(Color.LightGray)
+                            .fillMaxWidth(fraction = 0.85f)
+                            .height(1.dp)
+                        )
+                    }
+                }
+                /*Column {
+                    //if(destination.first() != "") {
+                    Text(
+                        text = //if (service.destination == "Les Pins" && service.lineId == 9)
+                        "MARTIGNAS SUR JALLE"
+                        //else
+                        /*destination.first()*/,
+                        fontSize = 13.sp,
+                        color = Color.Gray,
+                        modifier = Modifier
+                            .offset(y = /*if (destination.first() == "") 0.dp else */2.dp)
+                    )
+                    //}
+
+                    Text("Quinconces"/*destination.last()*/, fontSize = 18.sp, modifier = Modifier
+                        .offset(y = /*if (destination.first() == "") 0.dp else */(-2).dp)
+                    )
+                }*/
             }
         }
 
