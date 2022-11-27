@@ -10,6 +10,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,6 +24,16 @@ import model.DTO.Path
 
 @Composable
 fun SearchLineViewDestinationRow(paths: List<Path>, destinations: List<List<String>> = listOf()) {
+    val destinationsSet = remember {
+        mutableSetOf<String>()
+    }
+
+    LaunchedEffect(paths) {
+        paths.forEach { path ->
+            destinationsSet.add(path.getDestinationName())
+        }
+    }
+
     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
         .background(
             Color.White.copy(alpha = 0.4f),
@@ -44,13 +57,13 @@ fun SearchLineViewDestinationRow(paths: List<Path>, destinations: List<List<Stri
                 .align(Alignment.CenterVertically)
             ) {
                 if(destinations.isEmpty()) {
-                    paths.forEach { path ->
-                        Text(text = path.getDestinationName(), fontSize = 18.sp, modifier = Modifier
+                    destinationsSet.forEach { destination ->
+                        Text(text = destination, fontSize = 18.sp, modifier = Modifier
                             .padding(vertical = 8.dp)
                             .fillMaxWidth(fraction = 0.85f)
                         )
 
-                        if(path != paths.last()) {
+                        if(destination != destinationsSet.last()) {
                             Box(modifier = Modifier
                                 .clip(RectangleShape)
                                 .background(Color.LightGray)
