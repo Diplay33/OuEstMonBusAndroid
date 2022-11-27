@@ -9,6 +9,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -47,6 +48,9 @@ fun SearchLineViewRow(line: Line) {
     val paths = remember {
         mutableStateListOf<List<Path>>()
     }
+    val isLoading = remember {
+        mutableStateOf(false)
+    }
 
     Column(modifier = Modifier
         .padding(horizontal = 15.dp)
@@ -60,19 +64,29 @@ fun SearchLineViewRow(line: Line) {
             .height(45.dp)
             .fillMaxWidth()
             .clickable {
-                if(isCollapsed.value) {
+                if(isCollapsed.value && paths.isEmpty()) {
+                    isLoading.value = true
                     Paths.getOrderedPathsByLine(line.id) { returnedPaths ->
-                        println(returnedPaths)
                         paths.clear()
                         paths.addAll(returnedPaths)
+                        isLoading.value = false
+                        isCollapsed.value = !isCollapsed.value
+                        scope.launch {
+                            rotation.animateTo(
+                                targetValue = if (isCollapsed.value) 0f else 90f,
+                                animationSpec = tween(200, easing = LinearEasing)
+                            )
+                        }
                     }
                 }
-                isCollapsed.value = !isCollapsed.value
-                scope.launch {
-                    rotation.animateTo(
-                        targetValue = if (isCollapsed.value) 0f else 90f,
-                        animationSpec = tween(200, easing = LinearEasing)
-                    )
+                else {
+                    isCollapsed.value = !isCollapsed.value
+                    scope.launch {
+                        rotation.animateTo(
+                            targetValue = if (isCollapsed.value) 0f else 90f,
+                            animationSpec = tween(200, easing = LinearEasing)
+                        )
+                    }
                 }
             }
         ) {
@@ -112,12 +126,20 @@ fun SearchLineViewRow(line: Line) {
                         .align(Alignment.Center)
                     )
 
-                    Icon(
-                        imageVector = Icons.Rounded.ArrowForward,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .rotate(rotation.value)
-                    )
+                    if(isLoading.value) {
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .size(20.dp)
+                        )
+                    }
+                    else {
+                        Icon(
+                            imageVector = Icons.Rounded.ArrowForward,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .rotate(rotation.value)
+                        )
+                    }
                 }
 
             }
