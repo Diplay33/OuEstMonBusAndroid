@@ -5,7 +5,19 @@ class Path(val id: Int,
            val direction: String
 ) {
     fun getDestinationName(): String {
-        //TODO: Do the function
-        return ""
+        var destinationName = ""
+        var writeInName = false
+
+        name.forEach { char ->
+            if(writeInName) {
+                destinationName += char
+            }
+
+            if(char == "-".first()) {
+                writeInName = true
+            }
+        }
+
+        return destinationName.trim()
     }
 }

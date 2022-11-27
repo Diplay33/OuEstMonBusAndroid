@@ -135,11 +135,13 @@ fun SearchLineViewRow(line: Line) {
                 .padding(top = 15.dp)
             ) {
                 paths.forEach { paths ->
-                    SearchLineViewDestinationRow(paths)
+                    if(paths.isNotEmpty()) {
+                        SearchLineViewDestinationRow(paths)
 
-                    Spacer(modifier = Modifier
-                        .height(15.dp)
-                    )
+                        Spacer(modifier = Modifier
+                            .height(15.dp)
+                        )
+                    }
                 }
             }
         }

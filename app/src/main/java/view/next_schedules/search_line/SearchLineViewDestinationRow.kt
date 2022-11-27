@@ -44,7 +44,7 @@ fun SearchLineViewDestinationRow(paths: List<Path>) {
                 .align(Alignment.CenterVertically)
             ) {
                 paths.forEach { path ->
-                    Text(text = path.name, fontSize = 18.sp, modifier = Modifier
+                    Text(text = path.getDestinationName(), fontSize = 18.sp, modifier = Modifier
                         .padding(vertical = 8.dp)
                         .fillMaxWidth(fraction = 0.85f)
                     )
