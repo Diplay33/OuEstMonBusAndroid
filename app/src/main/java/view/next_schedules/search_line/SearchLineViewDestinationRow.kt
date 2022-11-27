@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import model.DTO.Path
 
 @Composable
-fun SearchLineViewDestinationRow(paths: List<Path>) {
+fun SearchLineViewDestinationRow(paths: List<Path>, destinations: List<List<String>> = listOf()) {
     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
         .background(
             Color.White.copy(alpha = 0.4f),
@@ -43,39 +43,49 @@ fun SearchLineViewDestinationRow(paths: List<Path>) {
             Column(modifier = Modifier
                 .align(Alignment.CenterVertically)
             ) {
-                paths.forEach { path ->
-                    Text(text = path.getDestinationName(), fontSize = 18.sp, modifier = Modifier
-                        .padding(vertical = 8.dp)
-                        .fillMaxWidth(fraction = 0.85f)
-                    )
-
-                    if(path != paths.last()) {
-                        Box(modifier = Modifier
-                            .clip(RectangleShape)
-                            .background(Color.LightGray)
+                if(destinations.isEmpty()) {
+                    paths.forEach { path ->
+                        Text(text = path.getDestinationName(), fontSize = 18.sp, modifier = Modifier
+                            .padding(vertical = 8.dp)
                             .fillMaxWidth(fraction = 0.85f)
-                            .height(1.dp)
                         )
+
+                        if(path != paths.last()) {
+                            Box(modifier = Modifier
+                                .clip(RectangleShape)
+                                .background(Color.LightGray)
+                                .fillMaxWidth(fraction = 0.85f)
+                                .height(1.dp)
+                            )
+                        }
                     }
                 }
-                /*Column {
-                    //if(destination.first() != "") {
-                    Text(
-                        text = //if (service.destination == "Les Pins" && service.lineId == 9)
-                        "MARTIGNAS SUR JALLE"
-                        //else
-                        /*destination.first()*/,
-                        fontSize = 13.sp,
-                        color = Color.Gray,
-                        modifier = Modifier
-                            .offset(y = /*if (destination.first() == "") 0.dp else */2.dp)
-                    )
-                    //}
+                else {
+                    destinations.forEach { destination ->
+                        Column {
+                            Text(
+                                text = destination.first(),
+                                fontSize = 13.sp,
+                                color = Color.Gray,
+                                modifier = Modifier
+                                    .offset(y = 2.dp)
+                            )
 
-                    Text("Quinconces"/*destination.last()*/, fontSize = 18.sp, modifier = Modifier
-                        .offset(y = /*if (destination.first() == "") 0.dp else */(-2).dp)
-                    )
-                }*/
+                            Text(destination.last(), fontSize = 18.sp, modifier = Modifier
+                                .offset(y = (-2).dp)
+                            )
+                        }
+
+                        if(destination != destinations.last()) {
+                            Box(modifier = Modifier
+                                .clip(RectangleShape)
+                                .background(Color.LightGray)
+                                .fillMaxWidth(fraction = 0.85f)
+                                .height(1.dp)
+                            )
+                        }
+                    }
+                }
             }
         }
 

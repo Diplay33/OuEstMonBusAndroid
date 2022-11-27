@@ -29,9 +29,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import kotlinx.coroutines.launch
-import model.DTO.Line
-import model.DTO.Path
-import model.DTO.Paths
+import model.DAO.AccessData.DestinationAllerData
+import model.DTO.*
 
 @Composable
 fun SearchLineViewRow(line: Line) {
@@ -136,7 +135,11 @@ fun SearchLineViewRow(line: Line) {
             ) {
                 paths.forEach { paths ->
                     if(paths.isNotEmpty()) {
-                        SearchLineViewDestinationRow(paths)
+                        SearchLineViewDestinationRow(paths, if (paths.first().direction == "ALLER")
+                            DestinationsAller.getDestinationAllerOfLine(line.id)
+                        else
+                            DestinationsRetour.getDestinationRetourOfLine(line.id)
+                        )
 
                         Spacer(modifier = Modifier
                             .height(15.dp)
