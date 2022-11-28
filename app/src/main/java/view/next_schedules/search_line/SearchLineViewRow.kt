@@ -32,6 +32,7 @@ import androidx.compose.ui.zIndex
 import kotlinx.coroutines.launch
 import model.DAO.AccessData.DestinationAllerData
 import model.DTO.*
+import view.lines_map_list.ColorIndicatorDot
 
 @Composable
 fun SearchLineViewRow(line: Line) {
@@ -51,6 +52,15 @@ fun SearchLineViewRow(line: Line) {
     val isLoading = remember {
         mutableStateOf(false)
     }
+    val isLineInService = remember {
+        mutableStateOf<Boolean?>(null)
+    }
+
+    LaunchedEffect(line) {
+        Services.getServicesByLine(line.id) { services ->
+            isLineInService.value = services.isNotEmpty()
+        }
+    }
 
     Column(modifier = Modifier
         .padding(horizontal = 15.dp)
@@ -64,7 +74,7 @@ fun SearchLineViewRow(line: Line) {
             .height(45.dp)
             .fillMaxWidth()
             .clickable {
-                if(isCollapsed.value && paths.isEmpty()) {
+                if (isCollapsed.value && paths.isEmpty()) {
                     isLoading.value = true
                     Paths.getOrderedPathsByLine(line.id) { returnedPaths ->
                         paths.clear()
@@ -78,8 +88,7 @@ fun SearchLineViewRow(line: Line) {
                             )
                         }
                     }
-                }
-                else {
+                } else {
                     isCollapsed.value = !isCollapsed.value
                     scope.launch {
                         rotation.animateTo(
@@ -116,32 +125,51 @@ fun SearchLineViewRow(line: Line) {
                     )
                 }
 
-                Box(contentAlignment = Alignment.Center, modifier = Modifier
+                Row(modifier = Modifier
                     .align(Alignment.CenterVertically)
                 ) {
-                    Box(modifier = Modifier
-                        .size(30.dp)
-                        .clip(CircleShape)
-                        .background(Color.Gray.copy(alpha = 0.2f))
-                        .align(Alignment.Center)
+                    if(isLineInService.value != null) {
+                        ColorIndicatorDot(
+                            color = if (isLineInService.value == true)
+                                Color.Green
+                            else
+                                Color.Red,
+                            size = 15.dp,
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically)
+                        )
+                    }
+
+                    Spacer(modifier = Modifier
+                        .width(15.dp)
                     )
 
-                    if(isLoading.value) {
-                        CircularProgressIndicator(
-                            modifier = Modifier
-                                .size(20.dp)
+                    Box(contentAlignment = Alignment.Center, modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                    ) {
+                        Box(modifier = Modifier
+                            .size(30.dp)
+                            .clip(CircleShape)
+                            .background(Color.Gray.copy(alpha = 0.2f))
+                            .align(Alignment.Center)
                         )
-                    }
-                    else {
-                        Icon(
-                            imageVector = Icons.Rounded.ArrowForward,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .rotate(rotation.value)
-                        )
+
+                        if(isLoading.value) {
+                            CircularProgressIndicator(
+                                modifier = Modifier
+                                    .size(20.dp)
+                            )
+                        }
+                        else {
+                            Icon(
+                                imageVector = Icons.Rounded.ArrowForward,
+                                contentDescription = null,
+                                modifier = Modifier
+                                    .rotate(rotation.value)
+                            )
+                        }
                     }
                 }
-
             }
         }
 
