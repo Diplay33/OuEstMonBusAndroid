@@ -37,7 +37,7 @@ fun SearchLineViewTopBar(navController: NavController) {
                 .align(Alignment.CenterVertically)
             ) {
                 Text(
-                    text = "Choisir une ligne",
+                    text = "Choisir un itinéraire",
                     style = MaterialTheme.typography.h5,
                     textAlign = TextAlign.Center,
                     color = Color.Black,
