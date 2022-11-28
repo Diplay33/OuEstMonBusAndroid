@@ -3,6 +3,8 @@ package model.DAO.AccessData
 class DestinationData {
     companion object {
         val destinations: Map<String, List<String>> = mapOf(
+            //4
+            "4 Chemins" to listOf("MERIGNAC", "4 Chemins"),
             //5
             "5 Chemins" to listOf("LE HAILLAN", "5 Chemins"),
             //A
