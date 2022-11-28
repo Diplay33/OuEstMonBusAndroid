@@ -215,6 +215,7 @@ fun SearchLineViewRow(
                                 DestinationsAller.getDestinationAllerOfLine(line.id)
                             else
                                 DestinationsRetour.getDestinationRetourOfLine(line.id),
+                            lineId = line.id.toString(),
                             navController = navController
                         )
 

@@ -13,8 +13,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="853b1dde-6ba6-4f74-bc27-81c49f9b99f7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/search_line/search_stop_list/SearchStopListMain.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/search_line/search_stop_list/SearchStopListTopBar.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.bin" afterDir="false" />
@@ -25,9 +23,8 @@
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/ouestmonbus/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/ouestmonbus/MainActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/view/Screens/ProchainsScreens.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/Screens/ProchainsScreens.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/search_line/SearchLineViewDestinationRow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/search_line/SearchLineViewDestinationRow.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/search_line/SearchLineViewGroup.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/search_line/SearchLineViewGroup.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/search_line/SearchLineViewMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/search_line/SearchLineViewMain.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/search_line/SearchLineViewRow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/search_line/SearchLineViewRow.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/search_line/search_stop_list/SearchStopListMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/search_line/search_stop_list/SearchStopListMain.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

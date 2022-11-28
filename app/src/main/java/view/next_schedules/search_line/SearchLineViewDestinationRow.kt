@@ -28,6 +28,7 @@ import view.Screens.ProchainsScreens
 fun SearchLineViewDestinationRow(
     paths: List<Path>,
     destinations: List<List<String>> = listOf(),
+    lineId: String,
     navController: NavController
 ) {
     val destinationsSet = remember {
@@ -45,7 +46,11 @@ fun SearchLineViewDestinationRow(
             Color.White.copy(alpha = 0.4f),
             shape = RoundedCornerShape(10.dp)
         )
-        .clickable { navController.navigate(ProchainsScreens.SearchStopList.route) }
+        .clickable {
+            navController.navigate(ProchainsScreens.SearchStopList.withArgs(
+                lineId
+            ))
+        }
         .padding(horizontal = 15.dp)
         .padding(vertical = 2.dp)
         .fillMaxWidth()

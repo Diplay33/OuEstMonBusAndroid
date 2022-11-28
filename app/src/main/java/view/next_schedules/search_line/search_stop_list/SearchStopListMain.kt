@@ -9,15 +9,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import model.DTO.Lines
 
 @Composable
-fun SearchStopListMain(navController: NavController) {
+fun SearchStopListMain(navController: NavController, lineId: String?) {
+    val line = Lines.getLine(lineId)
+
     Scaffold(topBar = { SearchStopListTopBar(navController) }) { padding ->
         Box(contentAlignment = Alignment.Center, modifier = Modifier
             .fillMaxSize()
             .padding(padding)
         ) {
-            Text("Coming Soon...")
+            Text(line.lineName)
         }
     }
 }
