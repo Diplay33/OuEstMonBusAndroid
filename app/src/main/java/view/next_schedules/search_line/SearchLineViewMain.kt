@@ -8,16 +8,27 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
+import model.DTO.Line
 import model.DTO.Lines
 
 @Composable
 fun SearchLineViewMain(navController: NavController) {
     val context = LocalContext.current
-    val linesByGroup = Lines.getLinesByGroup(context)
+    val linesByGroup = remember {
+        mutableStateListOf<List<Line>>()
+    }
+
+    LaunchedEffect("") {
+        linesByGroup.clear()
+        linesByGroup.addAll(Lines.getLinesByGroup(context))
+    }
 
     Scaffold(topBar = { SearchLineViewTopBar(navController) }) { padding ->
         Column(modifier = Modifier
@@ -27,6 +38,7 @@ fun SearchLineViewMain(navController: NavController) {
         ) {
             linesByGroup.forEach { lines ->
                 SearchLineViewGroup(
+                    linesByGroup = linesByGroup,
                     lines = lines,
                     isFavorite = linesByGroup[0].containsAll(lines) && linesByGroup[0].isNotEmpty()
                 )

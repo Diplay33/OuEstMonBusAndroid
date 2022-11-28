@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -11,7 +12,11 @@ import androidx.compose.ui.unit.sp
 import model.DTO.Line
 
 @Composable
-fun SearchLineViewGroup(lines: List<Line>, isFavorite: Boolean) {
+fun SearchLineViewGroup(
+    linesByGroup: SnapshotStateList<List<Line>>,
+    lines: List<Line>,
+    isFavorite: Boolean
+) {
     Column(modifier = Modifier
         .padding(vertical = if (lines.isEmpty()) 0.dp else 10.dp)
     ) {
@@ -23,7 +28,7 @@ fun SearchLineViewGroup(lines: List<Line>, isFavorite: Boolean) {
 
         lines.forEach { line ->
             if(line.id != 132) {
-                SearchLineViewRow(line)
+                SearchLineViewRow(linesByGroup, line)
             }
         }
     }

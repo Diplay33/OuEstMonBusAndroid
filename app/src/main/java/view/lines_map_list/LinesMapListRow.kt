@@ -186,7 +186,6 @@ fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Lin
                         storeFavLines.removeFromFavorites(rowLine.id.toString())
                         linesByGroup.clear()
                         linesByGroup.addAll(Lines.getLinesByGroup(context))
-                        println("Removed from favorites")
                     }
                     menuShown.value = false
                 }) {
@@ -211,7 +210,6 @@ fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Lin
                         storeFavLines.saveFavoriteLine(rowLine.id.toString())
                         linesByGroup.clear()
                         linesByGroup.addAll(Lines.getLinesByGroup(context))
-                        println("Added to favorites")
                     }
                     menuShown.value = false
                 }) {
@@ -230,7 +228,6 @@ fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Lin
                     }
                 }
             }
-
         }
     }
 }
