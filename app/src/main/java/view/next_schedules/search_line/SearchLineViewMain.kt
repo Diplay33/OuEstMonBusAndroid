@@ -75,7 +75,8 @@ fun SearchLineViewMain(
                             SearchLineViewGroup(
                                 linesByGroup = linesByGroup,
                                 lines = lines,
-                                isFavorite = linesByGroup[0].containsAll(lines) && linesByGroup[0].isNotEmpty()
+                                isFavorite = linesByGroup[0].containsAll(lines) && linesByGroup[0].isNotEmpty(),
+                                navController = navController
                             )
                         }
                     }
@@ -96,7 +97,7 @@ fun SearchLineViewMain(
                 SearchDisplay.RESULTS -> {
                     LazyColumn {
                         items(state.searchResults) { line ->
-                            SearchLineViewRow(linesByGroup, line)
+                            SearchLineViewRow(linesByGroup, line, navController)
                         }
 
                         item {

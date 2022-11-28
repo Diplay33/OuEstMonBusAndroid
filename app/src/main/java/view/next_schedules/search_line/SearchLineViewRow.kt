@@ -32,6 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import model.DAO.AccessData.DestinationAllerData
 import model.DTO.*
@@ -39,7 +40,11 @@ import model.preferences_data_store.StoreFavoriteLines
 import view.lines_map_list.ColorIndicatorDot
 
 @Composable
-fun SearchLineViewRow(linesByGroup: SnapshotStateList<List<Line>>, line: Line) {
+fun SearchLineViewRow(
+    linesByGroup: SnapshotStateList<List<Line>>,
+    line: Line,
+    navController: NavController
+) {
     val isCollapsed = remember {
         mutableStateOf(true)
     }
@@ -204,10 +209,13 @@ fun SearchLineViewRow(linesByGroup: SnapshotStateList<List<Line>>, line: Line) {
             ) {
                 paths.forEach { paths ->
                     if(paths.isNotEmpty()) {
-                        SearchLineViewDestinationRow(paths, if (paths.first().direction == "ALLER")
-                            DestinationsAller.getDestinationAllerOfLine(line.id)
-                        else
-                            DestinationsRetour.getDestinationRetourOfLine(line.id)
+                        SearchLineViewDestinationRow(
+                            paths = paths,
+                            destinations = if (paths.first().direction == "ALLER")
+                                DestinationsAller.getDestinationAllerOfLine(line.id)
+                            else
+                                DestinationsRetour.getDestinationRetourOfLine(line.id),
+                            navController = navController
                         )
 
                         Spacer(modifier = Modifier

@@ -9,13 +9,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import model.DTO.Line
 
 @Composable
 fun SearchLineViewGroup(
     linesByGroup: SnapshotStateList<List<Line>>,
     lines: List<Line>,
-    isFavorite: Boolean
+    isFavorite: Boolean,
+    navController: NavController
 ) {
     Column(modifier = Modifier
         .padding(vertical = if (lines.isEmpty()) 0.dp else 10.dp)
@@ -28,7 +30,7 @@ fun SearchLineViewGroup(
 
         lines.forEach { line ->
             if(line.id != 132) {
-                SearchLineViewRow(linesByGroup, line)
+                SearchLineViewRow(linesByGroup, line, navController)
             }
         }
     }

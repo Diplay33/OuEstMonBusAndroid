@@ -20,10 +20,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import model.DTO.Path
+import view.Screens.ProchainsScreens
 
 @Composable
-fun SearchLineViewDestinationRow(paths: List<Path>, destinations: List<List<String>> = listOf()) {
+fun SearchLineViewDestinationRow(
+    paths: List<Path>,
+    destinations: List<List<String>> = listOf(),
+    navController: NavController
+) {
     val destinationsSet = remember {
         mutableSetOf<String>()
     }
@@ -39,7 +45,7 @@ fun SearchLineViewDestinationRow(paths: List<Path>, destinations: List<List<Stri
             Color.White.copy(alpha = 0.4f),
             shape = RoundedCornerShape(10.dp)
         )
-        .clickable { }
+        .clickable { navController.navigate(ProchainsScreens.SearchStopList.route) }
         .padding(horizontal = 15.dp)
         .padding(vertical = 2.dp)
         .fillMaxWidth()

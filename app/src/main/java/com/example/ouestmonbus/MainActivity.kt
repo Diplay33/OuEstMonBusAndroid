@@ -36,6 +36,7 @@ import view.more_view.all_services_list.AllServicesListMain
 import view.more_view.all_services_list.service_detail.ServiceDetailMain
 import view.next_schedules.NextSchedulesHomeViewMain
 import view.next_schedules.search_line.SearchLineViewMain
+import view.next_schedules.search_line.search_stop_list.SearchStopListMain
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -96,6 +97,10 @@ class MainActivity : ComponentActivity() {
 
                     composable(ProchainsScreens.SearchLineView.route) {
                         SearchLineViewMain(navController)
+                    }
+
+                    composable(ProchainsScreens.SearchStopList.route) {
+                        SearchStopListMain(navController)
                     }
 
 
