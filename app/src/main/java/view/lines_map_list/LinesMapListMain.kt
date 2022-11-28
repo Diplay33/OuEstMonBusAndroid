@@ -88,6 +88,12 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
                         items(state.searchResults) { line ->
                             LinesMapListRow(line, linesByGroup, navController)
                         }
+
+                        item {
+                            Spacer(modifier = Modifier
+                                .height(300.dp)
+                            )
+                        }
                     }
                 }
             }

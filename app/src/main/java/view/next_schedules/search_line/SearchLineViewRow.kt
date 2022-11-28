@@ -67,6 +67,7 @@ fun SearchLineViewRow(linesByGroup: SnapshotStateList<List<Line>>, line: Line) {
     val isFavorite = storeFavLines.isFavorite.collectAsState(initial = false)
 
     LaunchedEffect(line) {
+        isLineInService.value = null
         Services.getServicesByLine(line.id) { services ->
             isLineInService.value = services.isNotEmpty()
         }
