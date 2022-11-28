@@ -163,6 +163,7 @@ class DestinationData {
             //Q
             "Quai Français" to listOf("BASSENS", "Quai Français"),
             "Quarante Journaux" to listOf("BORDEAUX", "Quarante Journaux"),
+            "Quatre Chemins" to listOf("MERIGNAC", "4 Chemins"),
             "Quinc. Fleuve" to listOf("BORDEAUX", "Quinconces Fleuve"),
             "Quinc Jean Jaurès" to listOf("BORDEAUX", "Quinconces (Jean Jaurès)"),
             "Quinconces" to listOf("BORDEAUX", "Quinconces"),
