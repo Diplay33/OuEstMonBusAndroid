@@ -1,5 +1,6 @@
 package view.next_schedules.search_line.search_stop_list
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -13,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import model.DTO.*
+import view.Screens.ProchainsScreens
 
 @Composable
 fun SearchStopListMain(navController: NavController, lineId: String?, pathDirection: String?) {
@@ -51,7 +53,13 @@ fun SearchStopListMain(navController: NavController, lineId: String?, pathDirect
             SearchStopListHeader(line, paths, destinations)
             
             stops.forEach { stop -> 
-                Text(text = stop.name)
+                Text(text = stop.name, modifier = Modifier
+                    .clickable {
+                        navController.navigate(ProchainsScreens.NextLineSchedules.withArgs(
+                            stop.name
+                        ))
+                    }
+                )
             }
         }
     }
