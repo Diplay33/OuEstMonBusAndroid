@@ -24,11 +24,21 @@ fun SearchStopListMain(navController: NavController, lineId: String?, pathDirect
         DestinationsAller.getDestinationAllerOfLine(line.id)
     else
         DestinationsRetour.getDestinationRetourOfLine(line.id)
+    val stops = remember {
+        mutableStateListOf<Station>()
+    }
 
     LaunchedEffect(lineId) {
         Paths.getOrderedPathsByLine(lineId?.toInt() ?: 0) { returnedPaths ->
             paths.clear()
             returnedPaths.map { if (it.first().direction == pathDirection) paths.addAll(it) }
+        }
+        Stations.getSortedStationsByLineAndDirection(
+            lineId = line.id, 
+            direction = pathDirection ?: "ALLER"
+        ) { returnedStations ->
+            stops.clear()
+            stops.addAll(returnedStations)
         }
     }
 
@@ -39,6 +49,10 @@ fun SearchStopListMain(navController: NavController, lineId: String?, pathDirect
             .padding(padding)
         ) {
             SearchStopListHeader(line, paths, destinations)
+            
+            stops.forEach { stop -> 
+                Text(text = stop.name)
+            }
         }
     }
 }

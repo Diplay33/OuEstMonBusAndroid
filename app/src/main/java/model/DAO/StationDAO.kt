@@ -2,6 +2,7 @@ package model.DAO
 
 import model.DAO.AccessData.CallAPI
 import model.DTO.Station
+import model.DTO.Stations
 import org.json.JSONObject
 
 class StationDAO {
@@ -37,7 +38,40 @@ class StationDAO {
                     println("Error during decoding process : $e")
                 }
             }
+        }
 
+        fun getStationsByLineAndDirection(lineId: Int, direction: String, callback: (List<Station>) -> Unit) {
+            CallAPI.run("https://data.bordeaux-metropole.fr/geojson/process/saeiv_arrets_sens?key=0234ABEFGH&datainputs={\"gid\":$lineId,\"sens\":\"$direction\"}") { responseBody ->
+                try {
+                    var stations: MutableList<Station> = mutableListOf()
+                    val welcomeJSONObject = JSONObject(responseBody)
+                    val featuresJSONArray = welcomeJSONObject.getJSONArray("features")
+
+                    try {
+                        for(i in 0 until featuresJSONArray.length()) {
+                            val featuresJSONObject = featuresJSONArray.getJSONObject(i)
+                            val geometry = if (featuresJSONObject.isNull("geometry"))
+                                null
+                            else
+                                featuresJSONObject.getJSONObject("geometry")
+                            val latitude = geometry?.getJSONArray("coordinates")?.getDouble(1) ?: 0.0
+                            val longitude = geometry?.getJSONArray("coordinates")?.getDouble(0) ?: 0.0
+                            val id = featuresJSONObject.getJSONObject("properties").getInt("gid")
+                            val name = featuresJSONObject.getJSONObject("properties").getString("libelle")
+
+                            stations.add(Station(id, name, latitude, longitude))
+                        }
+                    }
+                    catch(e: Exception) {
+                        println("Error during decoding process : $e")
+                    }
+
+                    callback(stations)
+                }
+                catch(e: Exception) {
+                    println("Error during decoding process : $e")
+                }
+            }
         }
     }
 }
