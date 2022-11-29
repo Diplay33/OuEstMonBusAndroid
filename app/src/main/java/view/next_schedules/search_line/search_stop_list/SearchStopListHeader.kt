@@ -147,7 +147,7 @@ fun SearchStopListHeader(
                                     Box(modifier = Modifier
                                         .clip(RectangleShape)
                                         .background(Color.LightGray)
-                                        .fillMaxWidth(fraction = 0.85f)
+                                        .fillMaxWidth()
                                         .height(1.dp)
                                     )
                                 }
