@@ -6,14 +6,31 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import model.DTO.Lines
+import model.DTO.*
 
 @Composable
-fun SearchStopListMain(navController: NavController, lineId: String?) {
+fun SearchStopListMain(navController: NavController, lineId: String?, pathDirection: String?) {
     val line = Lines.getLine(lineId)
+    val paths = remember {
+        mutableStateListOf<Path>()
+    }
+    val destinations = if (pathDirection == "ALLER")
+        DestinationsAller.getDestinationAllerOfLine(line.id)
+    else
+        DestinationsRetour.getDestinationRetourOfLine(line.id)
+
+    LaunchedEffect(lineId) {
+        Paths.getOrderedPathsByLine(lineId?.toInt() ?: 0) { returnedPaths ->
+            paths.clear()
+            returnedPaths.map { if (it.first().direction == pathDirection) paths.addAll(it) }
+        }
+    }
 
     Scaffold(topBar = { SearchStopListTopBar(navController) }) { padding ->
         Column(modifier = Modifier
@@ -21,7 +38,7 @@ fun SearchStopListMain(navController: NavController, lineId: String?) {
             .fillMaxWidth()
             .padding(padding)
         ) {
-            SearchStopListHeader(line)
+            SearchStopListHeader(line, paths)
         }
     }
 }

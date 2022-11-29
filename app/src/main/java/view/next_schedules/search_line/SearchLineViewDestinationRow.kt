@@ -48,7 +48,7 @@ fun SearchLineViewDestinationRow(
         )
         .clickable {
             navController.navigate(ProchainsScreens.SearchStopList.withArgs(
-                lineId
+                lineId, paths.first().direction
             ))
         }
         .padding(horizontal = 15.dp)

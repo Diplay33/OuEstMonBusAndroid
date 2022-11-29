@@ -101,7 +101,7 @@ class MainActivity : ComponentActivity() {
 
                     composable(
                         route = ProchainsScreens.SearchStopList.route
-                        + "/{lineId}",
+                        + "/{lineId}/{pathDirection}",
                         arguments = listOf(
                             navArgument("lineId") {
                                 type = NavType.StringType
@@ -110,7 +110,11 @@ class MainActivity : ComponentActivity() {
                             }
                         )
                     ) { entry ->
-                        SearchStopListMain(navController, entry.arguments?.getString("lineId"))
+                        SearchStopListMain(
+                            navController = navController,
+                            lineId = entry.arguments?.getString("lineId"),
+                            pathDirection = entry.arguments?.getString("pathDirection")
+                        )
                     }
 
 
