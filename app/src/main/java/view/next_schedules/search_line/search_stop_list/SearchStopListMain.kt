@@ -38,7 +38,7 @@ fun SearchStopListMain(navController: NavController, lineId: String?, pathDirect
             .fillMaxWidth()
             .padding(padding)
         ) {
-            SearchStopListHeader(line, paths)
+            SearchStopListHeader(line, paths, destinations)
         }
     }
 }

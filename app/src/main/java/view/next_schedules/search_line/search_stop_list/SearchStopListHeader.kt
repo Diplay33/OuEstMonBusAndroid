@@ -27,7 +27,11 @@ import model.DTO.Line
 import model.DTO.Path
 
 @Composable
-fun SearchStopListHeader(line: Line, paths: List<Path>) {
+fun SearchStopListHeader(
+    line: Line,
+    paths: List<Path>,
+    destinations: List<List<String>> = listOf()
+) {
     val destinationsSet = remember {
         mutableSetOf<String>()
     }
@@ -90,28 +94,60 @@ fun SearchStopListHeader(line: Line, paths: List<Path>) {
                             .offset(x = (-7).dp)
                     )
 
-                    if(destinationsSet.isEmpty()) {
-                        CircularProgressIndicator(
-                            modifier = Modifier
-                                .size(20.dp)
-                        )
+                    if(destinations.isEmpty()) {
+                        if(destinationsSet.isEmpty()) {
+                            CircularProgressIndicator(
+                                modifier = Modifier
+                                    .size(20.dp)
+                            )
+                        }
+                        else {
+                            Column(modifier = Modifier
+                                .align(Alignment.CenterVertically)
+                            ) {
+                                destinationsSet.forEach { destination ->
+                                    Text(text = destination, fontSize = 18.sp, modifier = Modifier
+                                        .padding(vertical = 8.dp)
+                                        .padding(end = 15.dp)
+                                        .fillMaxWidth(fraction = 0.85f)
+                                    )
+
+                                    if(destination != destinationsSet.last()) {
+                                        Box(modifier = Modifier
+                                            .clip(RectangleShape)
+                                            .background(Color.LightGray)
+                                            .fillMaxWidth()
+                                            .height(1.dp)
+                                        )
+                                    }
+                                }
+                            }
+                        }
                     }
                     else {
                         Column(modifier = Modifier
                             .align(Alignment.CenterVertically)
                         ) {
-                            destinationsSet.forEach { destination ->
-                                Text(text = destination, fontSize = 18.sp, modifier = Modifier
-                                    .padding(vertical = 8.dp)
-                                    .padding(end = 15.dp)
-                                    .fillMaxWidth(fraction = 0.85f)
-                                )
+                            destinations.forEach { destination ->
+                                Column {
+                                    Text(
+                                        text = destination.first(),
+                                        fontSize = 13.sp,
+                                        color = Color.Gray,
+                                        modifier = Modifier
+                                            .offset(y = 2.dp)
+                                    )
 
-                                if(destination != destinationsSet.last()) {
+                                    Text(destination.last(), fontSize = 18.sp, modifier = Modifier
+                                        .offset(y = (-2).dp)
+                                    )
+                                }
+
+                                if(destination != destinations.last()) {
                                     Box(modifier = Modifier
                                         .clip(RectangleShape)
                                         .background(Color.LightGray)
-                                        .fillMaxWidth()
+                                        .fillMaxWidth(fraction = 0.85f)
                                         .height(1.dp)
                                     )
                                 }
