@@ -10,7 +10,7 @@ class StationDAO {
         fun getStationById(stationId: String, callback: (Station) -> Unit) {
             CallAPI.run("https://data.bordeaux-metropole.fr/geojson/features/sv_arret_p?key=0234ABEFGH&filter={\"GID\":$stationId}") { responseBody ->
                 try {
-                    var station = Station(0, "Arrêt inconnu",  0.0, 0.0)
+                    var station = Station(0, "", "Arrêt inconnu",  0.0, 0.0)
                     val welcomeJSONObject = JSONObject(responseBody)
                     val featuresJSONArray = welcomeJSONObject.getJSONArray("features")
 
@@ -24,8 +24,9 @@ class StationDAO {
                             val latitude = geometry?.getJSONArray("coordinates")?.getDouble(1) ?: 0.0
                             val longitude = geometry?.getJSONArray("coordinates")?.getDouble(0) ?: 0.0
                             val name = featuresJSONObject.getJSONObject("properties").getString("libelle")
+                            val ident = featuresJSONObject.getJSONObject("properties").getString("ident")
 
-                            station = Station(stationId.toInt(), name, latitude, longitude)
+                            station = Station(stationId.toInt(), ident, name, latitude, longitude)
                         }
                     }
                     catch(e: Exception) {
@@ -58,8 +59,9 @@ class StationDAO {
                             val longitude = geometry?.getJSONArray("coordinates")?.getDouble(0) ?: 0.0
                             val id = featuresJSONObject.getJSONObject("properties").getInt("gid")
                             val name = featuresJSONObject.getJSONObject("properties").getString("libelle")
+                            val stationId = featuresJSONObject.getJSONObject("properties").getString("ident")
 
-                            stations.add(Station(id, name, latitude, longitude))
+                            stations.add(Station(id, stationId, name, latitude, longitude))
                         }
                     }
                     catch(e: Exception) {

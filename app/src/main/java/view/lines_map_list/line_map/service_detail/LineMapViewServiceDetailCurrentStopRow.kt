@@ -23,7 +23,7 @@ import model.DTO.Stations
 @Composable
 fun LineMapViewServiceDetailCurrentStopRow(stationId: String) {
     val station = remember {
-        mutableStateOf(Station(id = 0, name = "", latitude = 0.0, longitude = 0.0))
+        mutableStateOf(Station(id = 0, stationId = "", name = "", latitude = 0.0, longitude = 0.0))
     }
 
     LaunchedEffect(stationId) {

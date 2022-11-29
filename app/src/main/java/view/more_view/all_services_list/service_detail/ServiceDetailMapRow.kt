@@ -36,12 +36,12 @@ fun ServiceDetailMapRow(lineName: String, stationId: String, latitude: Double, l
         mutableStateOf(MapProperties(isBuildingEnabled = true))
     }
     val station = remember {
-        mutableStateOf(Station(0, "", 0.0, 0.0))
+        mutableStateOf(Station(0, "", "", 0.0, 0.0))
     }
 
     LaunchedEffect(lineName) {
         if(stationId == "") {
-            station.value = Station(0, "Arrêt inconnu",  0.0, 0.0)
+            station.value = Station(0, "", "Arrêt inconnu",  0.0, 0.0)
         }
         else {
             Stations.getStationById(stationId) { returnedStation ->
