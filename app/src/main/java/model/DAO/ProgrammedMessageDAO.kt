@@ -15,7 +15,7 @@ class ProgrammedMessageDAO {
                     val featuresJSONArray = welcomeObject.getJSONArray("features")
 
                     try {
-                        for (i in 0 until featuresJSONArray.length()) {
+                        for(i in 0 until featuresJSONArray.length()) {
                             val featuresJSONObject = featuresJSONArray.getJSONObject(i)
                             val propertiesJSONObject =
                                 featuresJSONObject.getJSONObject("properties")

@@ -56,7 +56,8 @@ fun SearchStopListMain(navController: NavController, lineId: String?, pathDirect
                 Text(text = stop.name, modifier = Modifier
                     .clickable {
                         navController.navigate(ProchainsScreens.NextLineSchedules.withArgs(
-                            stop.name
+                            stop.name,
+                            stop.stationId
                         ))
                     }
                 )
