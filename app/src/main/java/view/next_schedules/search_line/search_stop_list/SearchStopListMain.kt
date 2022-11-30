@@ -3,13 +3,16 @@ package view.next_schedules.search_line.search_stop_list
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
+import androidx.compose.material.Text
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import model.DTO.*
 
@@ -26,6 +29,9 @@ fun SearchStopListMain(navController: NavController, lineId: String?, pathDirect
     val stops = remember {
         mutableStateListOf<Station>()
     }
+    val isLoading = remember {
+        mutableStateOf(true)
+    }
 
     LaunchedEffect(lineId) {
         Paths.getOrderedPathsByLine(lineId?.toInt() ?: 0) { returnedPaths ->
@@ -38,6 +44,7 @@ fun SearchStopListMain(navController: NavController, lineId: String?, pathDirect
         ) { returnedStations ->
             stops.clear()
             stops.addAll(returnedStations)
+            isLoading.value = false
         }
     }
 
@@ -53,8 +60,32 @@ fun SearchStopListMain(navController: NavController, lineId: String?, pathDirect
                 .height(30.dp)
             )
 
-            stops.forEach { stop ->
-                SearchStopListRow(stop, stops, navController, line)
+            if(isLoading.value) {
+                Column(modifier = Modifier
+                    .fillMaxWidth()
+                ) {
+                    CircularProgressIndicator(modifier = Modifier
+                        .size(25.dp)
+                        .align(Alignment.CenterHorizontally)
+                    )
+
+                    Spacer(modifier = Modifier
+                        .height(10.dp)
+                    )
+                    
+                    Text(
+                        text = "Chargement des arrêts",
+                        fontSize = 18.sp,
+                        color = Color.Gray,
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
+                    )
+                }
+            }
+            else {
+                stops.forEach { stop ->
+                    SearchStopListRow(stop, stops, navController, line)
+                }
             }
         }
     }
