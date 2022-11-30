@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import model.DAO.LineDAO
 import model.preferences_data_store.StoreFavoriteLines
+import java.text.Normalizer
 
 class Lines {
     companion object {
@@ -50,8 +51,14 @@ class Lines {
         }
 
         fun getLinesBySearchText(text: String): List<Line> {
+            val REGEX_UNACCENT = "\\p{InCombiningDiacriticalMarks}+".toRegex()
+            fun CharSequence.unaccent(): String {
+                val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
+                return REGEX_UNACCENT.replace(temp, "")
+            }
+
             return LineDAO.getLines().filter { line ->
-                line.lineName.lowercase().contains(text.trim().lowercase())
+                line.lineName.lowercase().unaccent().contains(text.trim().lowercase().unaccent())
             }
         }
 

@@ -65,33 +65,37 @@ fun SearchStopListRow(stop: Station, stops: List<Station>, navController: NavCon
             .padding(start = 38.dp)
             .height(56.dp)
         ) {
-            Box(contentAlignment = Alignment.Center) {
-                when(stop) {
-                    stops.first() -> {
-                        Box(modifier = Modifier
-                            .padding(top = 25.dp)
-                            .clip(RectangleShape)
-                            .background(colorResource(id = line.lineColorResource))
-                            .fillMaxHeight()
-                            .width(8.dp)
-                        )
-                    }
-                    stops.last() -> {
-                        Box(modifier = Modifier
-                            .padding(bottom = 30.dp)
-                            .clip(RectangleShape)
-                            .background(colorResource(id = line.lineColorResource))
-                            .fillMaxHeight()
-                            .width(8.dp)
-                        )
-                    }
-                    else -> {
-                        Box(modifier = Modifier
-                            .clip(RectangleShape)
-                            .background(colorResource(id = line.lineColorResource))
-                            .fillMaxHeight()
-                            .width(8.dp)
-                        )
+            Box(contentAlignment = Alignment.Center, modifier = Modifier
+                .align(Alignment.CenterVertically)
+            ) {
+                if(stops.size > 1) {
+                    when(stop) {
+                        stops.first() -> {
+                            Box(modifier = Modifier
+                                .padding(top = 25.dp)
+                                .clip(RectangleShape)
+                                .background(colorResource(id = line.lineColorResource))
+                                .fillMaxHeight()
+                                .width(8.dp)
+                            )
+                        }
+                        stops.last() -> {
+                            Box(modifier = Modifier
+                                .padding(bottom = 30.dp)
+                                .clip(RectangleShape)
+                                .background(colorResource(id = line.lineColorResource))
+                                .fillMaxHeight()
+                                .width(8.dp)
+                            )
+                        }
+                        else -> {
+                            Box(modifier = Modifier
+                                .clip(RectangleShape)
+                                .background(colorResource(id = line.lineColorResource))
+                                .fillMaxHeight()
+                                .width(8.dp)
+                            )
+                        }
                     }
                 }
 

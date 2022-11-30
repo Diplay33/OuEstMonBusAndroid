@@ -1,6 +1,7 @@
 package model.DTO
 
 import model.DAO.StationDAO
+import java.text.Normalizer
 
 class Stations {
     companion object {
@@ -17,6 +18,20 @@ class Stations {
         ) {
             StationDAO.getStationsByLineAndDirection(lineId, direction) { stations ->
                 callback(stations.sortedBy { it.name })
+            }
+        }
+
+        fun filterStationsBySearchText(stations: List<Station>, searchText: String): List<Station> {
+            val REGEX_UNACCENT = "\\p{InCombiningDiacriticalMarks}+".toRegex()
+            fun CharSequence.unaccent(): String {
+                val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
+                return REGEX_UNACCENT.replace(temp, "")
+            }
+
+            return stations.filter { station ->
+                station.name.lowercase().trim().unaccent().contains(
+                    searchText.lowercase().trim().unaccent()
+                )
             }
         }
     }
