@@ -54,7 +54,7 @@ fun SearchStopListMain(navController: NavController, lineId: String?, pathDirect
             )
 
             stops.forEach { stop ->
-                SearchStopListRow(stop, navController, line)
+                SearchStopListRow(stop, stops, navController, line)
             }
         }
     }
