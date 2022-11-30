@@ -16,23 +16,34 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
-import model.DTO.Lines
-import model.DTO.NextSchedule
-import model.DTO.NextSchedules
+import model.DTO.*
 
 @Composable
 fun NextLineSchedulesMain(
     navController: NavController,
     stopName: String?,
     stopId: String?,
-    lineId: String?
+    lineId: String?,
+    pathDirection: String?
 ) {
     val line = Lines.getLine(lineId)
     val nextSchedules = remember {
         mutableStateListOf<NextSchedule>()
     }
+    val paths = remember {
+        mutableStateListOf<Path>()
+    }
+    val destinations = if (pathDirection == "ALLER")
+        DestinationsAller.getDestinationAllerOfLine(line.id)
+    else
+        DestinationsRetour.getDestinationRetourOfLine(line.id)
 
     LaunchedEffect(stopName) {
+        Paths.getOrderedPathsByLine(line.id) { returnedPaths ->
+            paths.clear()
+            returnedPaths.map { if (it.first().direction == pathDirection) paths.addAll(it) }
+        }
+
         while(true) {
             NextSchedules.getNextSchedulesByStationId(stopId ?: "") { returnedNextSchedules ->
                 nextSchedules.clear()
@@ -49,6 +60,10 @@ fun NextLineSchedulesMain(
         LazyColumn(modifier = Modifier
             .padding(padding)
         ) {
+            item {
+                NextLineSchedulesHeader(line, paths, destinations)
+            }
+
             items(nextSchedules) { nextSchedule ->
                 if(nextSchedule.lineId == line.id) {
                     Row(modifier = Modifier

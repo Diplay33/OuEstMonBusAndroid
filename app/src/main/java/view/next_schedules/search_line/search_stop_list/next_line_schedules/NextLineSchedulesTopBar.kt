@@ -39,11 +39,12 @@ fun NextLineSchedulesTopBar(navController: NavController, stopName: String) {
                 Text(
                     text = stopName,
                     style = MaterialTheme.typography.h5,
-                    textAlign = TextAlign.Center,
+                    textAlign = TextAlign.Start,
                     color = Color.Black,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .padding(horizontal = 15.dp)
+                    //If needed, .fillMaxWidth(fraction = xf) for showing right situated content
                 )
             }
         }

@@ -26,7 +26,13 @@ import model.DTO.Station
 import view.Screens.ProchainsScreens
 
 @Composable
-fun SearchStopListRow(stop: Station, stops: List<Station>, navController: NavController, line: Line) {
+fun SearchStopListRow(
+    stop: Station,
+    stops: List<Station>,
+    navController: NavController,
+    line: Line,
+    pathDirection: String
+) {
     Box {
         Row(modifier = Modifier
             .padding(horizontal = 15.dp)
@@ -37,7 +43,8 @@ fun SearchStopListRow(stop: Station, stops: List<Station>, navController: NavCon
                     ProchainsScreens.NextLineSchedules.withArgs(
                         stop.name,
                         stop.stationId,
-                        line.id.toString()
+                        line.id.toString(),
+                        pathDirection
                     )
                 )
             }

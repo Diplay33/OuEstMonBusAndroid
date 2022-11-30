@@ -118,7 +118,13 @@ fun SearchStopListMain(
                         }
                         else {
                             stops.forEach { stop ->
-                                SearchStopListRow(stop, stops, navController, line)
+                                SearchStopListRow(
+                                    stop = stop,
+                                    stops = stops,
+                                    navController = navController,
+                                    line = line,
+                                    pathDirection = pathDirection ?: "ALLER"
+                                )
                             }
                         }
                     }
@@ -171,7 +177,13 @@ fun SearchStopListMain(
                         }
                         else {
                             state.searchResults.forEach { stop ->
-                                SearchStopListRow(stop, state.searchResults, navController, line)
+                                SearchStopListRow(
+                                    stop = stop,
+                                    stops = state.searchResults,
+                                    navController = navController,
+                                    line = line,
+                                    pathDirection = pathDirection ?: ""
+                                )
                             }
 
                             Spacer(modifier = Modifier
