@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
@@ -54,10 +55,18 @@ fun SearchStopListRow(stop: Station, stops: List<Station>, navController: NavCon
             ) {
                 Text(
                     text = stop.name,
-                    fontSize = 18.sp
+                    fontSize = 18.sp,
+                    textAlign = TextAlign.Left,
+                    modifier = Modifier
+                        .fillMaxWidth(fraction = 0.9f)
                 )
 
-                Icon(imageVector = Icons.Rounded.ArrowForward, contentDescription = null)
+                Icon(
+                    imageVector = Icons.Rounded.ArrowForward,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                )
             }
         }
 
