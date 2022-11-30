@@ -13,6 +13,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import model.DTO.Lines
@@ -55,10 +56,15 @@ fun NextLineSchedulesMain(
                     ) {
                         Text(text = nextSchedule.destination)
 
-                        Text(text = if (nextSchedule.isOnline)
-                            nextSchedule.getEstimatedTimeLeft()
-                        else
-                            nextSchedule.getTheoricTimeLeft()
+                        Text(
+                            text = if (nextSchedule.isOnline)
+                                nextSchedule.getEstimatedTimeLeft()
+                            else
+                                nextSchedule.getTheoricTimeLeft(),
+                            fontWeight = if (nextSchedule.isOnline)
+                                FontWeight.Bold
+                            else
+                                FontWeight.Normal
                         )
                     }
                 }
