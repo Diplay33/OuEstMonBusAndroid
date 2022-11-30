@@ -29,7 +29,8 @@ fun SearchStopListRow(stop: Station, navController: NavController, line: Line) {
             navController.navigate(
                 ProchainsScreens.NextLineSchedules.withArgs(
                     stop.name,
-                    stop.stationId
+                    stop.stationId,
+                    line.id.toString()
                 ))
         }
         .background(
