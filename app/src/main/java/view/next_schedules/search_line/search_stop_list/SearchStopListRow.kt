@@ -5,7 +5,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,14 +46,18 @@ fun SearchStopListRow(stop: Station, stops: List<Station>, navController: NavCon
             )
             .fillMaxWidth()
         ) {
-            Row(modifier = Modifier
+            Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
+                .fillMaxWidth()
                 .padding(start = 60.dp)
+                .padding(end = 15.dp)
                 .align(Alignment.CenterVertically)
             ) {
                 Text(
                     text = stop.name,
                     fontSize = 18.sp
                 )
+
+                Icon(imageVector = Icons.Rounded.ArrowForward, contentDescription = null)
             }
         }
 
@@ -59,31 +66,33 @@ fun SearchStopListRow(stop: Station, stops: List<Station>, navController: NavCon
             .height(56.dp)
         ) {
             Box(contentAlignment = Alignment.Center) {
-                if(stop == stops.first()) {
-                    Box(modifier = Modifier
-                        .padding(top = 25.dp)
-                        .clip(RectangleShape)
-                        .background(colorResource(id = line.lineColorResource))
-                        .fillMaxHeight()
-                        .width(8.dp)
-                    )
-                }
-                else if(stop == stops.last()) {
-                    Box(modifier = Modifier
-                        .padding(bottom = 30.dp)
-                        .clip(RectangleShape)
-                        .background(colorResource(id = line.lineColorResource))
-                        .fillMaxHeight()
-                        .width(8.dp)
-                    )
-                }
-                else {
-                    Box(modifier = Modifier
-                        .clip(RectangleShape)
-                        .background(colorResource(id = line.lineColorResource))
-                        .fillMaxHeight()
-                        .width(8.dp)
-                    )
+                when(stop) {
+                    stops.first() -> {
+                        Box(modifier = Modifier
+                            .padding(top = 25.dp)
+                            .clip(RectangleShape)
+                            .background(colorResource(id = line.lineColorResource))
+                            .fillMaxHeight()
+                            .width(8.dp)
+                        )
+                    }
+                    stops.last() -> {
+                        Box(modifier = Modifier
+                            .padding(bottom = 30.dp)
+                            .clip(RectangleShape)
+                            .background(colorResource(id = line.lineColorResource))
+                            .fillMaxHeight()
+                            .width(8.dp)
+                        )
+                    }
+                    else -> {
+                        Box(modifier = Modifier
+                            .clip(RectangleShape)
+                            .background(colorResource(id = line.lineColorResource))
+                            .fillMaxHeight()
+                            .width(8.dp)
+                        )
+                    }
                 }
 
                 Box(contentAlignment = Alignment.Center, modifier = Modifier
