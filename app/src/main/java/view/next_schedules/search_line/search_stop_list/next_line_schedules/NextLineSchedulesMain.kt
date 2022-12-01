@@ -1,9 +1,6 @@
 package view.next_schedules.search_line.search_stop_list.next_line_schedules
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
@@ -14,6 +11,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import model.DTO.*
@@ -62,27 +60,12 @@ fun NextLineSchedulesMain(
         ) {
             item {
                 NextLineSchedulesHeader(line, paths, destinations)
-            }
 
-            items(nextSchedules) { nextSchedule ->
-                if(nextSchedule.lineId == line.id) {
-                    Row(modifier = Modifier
-                        .fillMaxWidth()
-                    ) {
-                        Text(text = nextSchedule.destination)
+                Spacer(modifier = Modifier
+                    .height(30.dp)
+                )
 
-                        Text(
-                            text = if (nextSchedule.isOnline)
-                                nextSchedule.getEstimatedTimeLeft()
-                            else
-                                nextSchedule.getTheoricTimeLeft(),
-                            fontWeight = if (nextSchedule.isOnline)
-                                FontWeight.Bold
-                            else
-                                FontWeight.Normal
-                        )
-                    }
-                }
+                NextLineSchedulesView(nextSchedules, line)
             }
         }
     }
