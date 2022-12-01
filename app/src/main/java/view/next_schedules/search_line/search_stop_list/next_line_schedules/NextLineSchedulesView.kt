@@ -1,11 +1,19 @@
 package view.next_schedules.search_line.search_stop_list.next_line_schedules
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -22,23 +30,63 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line) {
             .padding(horizontal = 15.dp)
     )
 
-    nextSchedules.forEach { nextSchedule ->
-        if(nextSchedule.lineId == line.id) {
-            Row(modifier = Modifier
-                .fillMaxWidth()
-            ) {
-                Text(text = nextSchedule.destination)
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .padding(horizontal = 15.dp)
+        .background(
+            colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+            shape = RoundedCornerShape(10.dp)
+        )
+    ) {
+        nextSchedules.forEach { nextSchedule ->
+            if(nextSchedule.lineId == line.id) {
+                Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 15.dp)
+                ) {
+                    Row {
+                        Icon(
+                            imageVector = Icons.Rounded.PlayArrow,
+                            contentDescription = null,
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically)
+                                .offset(x = (-7).dp)
+                        )
 
-                Text(
-                    text = if (nextSchedule.isOnline)
-                        nextSchedule.getEstimatedTimeLeft()
-                    else
-                        nextSchedule.getTheoricTimeLeft(),
-                    fontWeight = if (nextSchedule.isOnline)
-                        FontWeight.Bold
-                    else
-                        FontWeight.Normal
-                )
+                        Text(text = nextSchedule.destination, modifier = Modifier
+                            .padding(vertical = 8.dp)
+                            .align(Alignment.CenterVertically)
+                        )
+                    }
+
+                    Text(
+                        text = if (nextSchedule.isOnline)
+                            nextSchedule.getEstimatedTimeLeft()
+                        else
+                            nextSchedule.getTheoricTimeLeft(),
+                        fontWeight = if (nextSchedule.isOnline)
+                            FontWeight.Bold
+                        else
+                            FontWeight.Normal,
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                    )
+                }
+
+                if(nextSchedule != nextSchedules.last()) {
+                    Row {
+                        Spacer(modifier = Modifier
+                            .width(40.dp)
+                        )
+
+                        Box(modifier = Modifier
+                            .clip(RectangleShape)
+                            .background(Color.LightGray)
+                            .fillMaxWidth()
+                            .height(1.dp)
+                        )
+                    }
+                }
             }
         }
     }
