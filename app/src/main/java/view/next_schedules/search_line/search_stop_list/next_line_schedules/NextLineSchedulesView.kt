@@ -53,7 +53,7 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line) {
                                 .offset(x = (-7).dp)
                         )
 
-                        Text(text = nextSchedule.destination, modifier = Modifier
+                        Text(text = nextSchedule.destination, fontSize = 18.sp, modifier = Modifier
                             .padding(vertical = 8.dp)
                             .align(Alignment.CenterVertically)
                         )
@@ -73,7 +73,7 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line) {
                     )
                 }
 
-                if(nextSchedule != nextSchedules.last()) {
+                if(nextSchedule != nextSchedules.last { it.lineId == line.id }) {
                     Row {
                         Spacer(modifier = Modifier
                             .width(40.dp)
