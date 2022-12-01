@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import model.DTO.Line
 import model.DTO.NextSchedule
+import model.DTO.NextSchedulesDestinations
 
 @Composable
 fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line) {
@@ -39,6 +40,8 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line) {
         )
     ) {
         nextSchedules.forEach { nextSchedule ->
+            val destination = NextSchedulesDestinations.getDestinationFromRaw((nextSchedule.destination))
+
             if(nextSchedule.lineId == line.id) {
                 Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
                     .fillMaxWidth()
@@ -53,10 +56,29 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line) {
                                 .offset(x = (-7).dp)
                         )
 
-                        Text(text = nextSchedule.destination, fontSize = 18.sp, modifier = Modifier
-                            .padding(vertical = 8.dp)
-                            .align(Alignment.CenterVertically)
-                        )
+                        if(destination.isEmpty()) {
+                            Text(text = nextSchedule.destination, fontSize = 18.sp, modifier = Modifier
+                                .padding(vertical = 8.dp)
+                                .align(Alignment.CenterVertically)
+                            )
+                        }
+                        else {
+                            Column(modifier = Modifier
+                                .padding(vertical = 3.dp)
+                            ) {
+                                Text(
+                                    text = destination.first(),
+                                    fontSize = 13.sp,
+                                    color = Color.Gray,
+                                    modifier = Modifier
+                                        .offset(y = 2.dp)
+                                )
+
+                                Text(destination.last(), fontSize = 18.sp, modifier = Modifier
+                                    .offset(y = (-2).dp)
+                                )
+                            }
+                        }
                     }
 
                     Text(
