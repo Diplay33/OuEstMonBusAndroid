@@ -98,7 +98,7 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line) {
                 if(nextSchedule != nextSchedules.last { it.lineId == line.id }) {
                     Row {
                         Spacer(modifier = Modifier
-                            .width(40.dp)
+                            .width(39.dp)
                         )
 
                         Box(modifier = Modifier
