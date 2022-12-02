@@ -61,10 +61,7 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line) {
     ) {
         nextSchedules.forEach { nextSchedule ->
             val destination = NextSchedulesDestinations.getDestinationFromRaw((nextSchedule.destination))
-            val displayedTime = if (nextSchedule.isOnline)
-                nextSchedule.getEstimatedTimeLeft()
-            else
-                nextSchedule.getTheoricTimeLeft()
+            val displayedTime = nextSchedule.getEstimatedTimeLeft()
 
             if(nextSchedule.lineId == line.id) {
                 Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
