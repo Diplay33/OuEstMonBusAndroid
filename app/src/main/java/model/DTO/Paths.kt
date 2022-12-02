@@ -17,7 +17,12 @@ class Paths {
                         pathsRetour.add(path)
                     }
                 }
-                callback(listOf(pathsAller, pathsRetour))
+                if(pathsRetour.isEmpty()) {
+                    callback(listOf(pathsAller))
+                }
+                else {
+                    callback(listOf(pathsAller, pathsRetour))
+                }
             }
         }
     }

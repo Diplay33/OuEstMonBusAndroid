@@ -19,10 +19,10 @@ class PathDAO {
 
                         paths.add(
                             Path(
-                            id = propertiesJSONObject.getInt("gid"),
-                            name = propertiesJSONObject.getString("libelle"),
-                            direction = propertiesJSONObject.getString("sens")
-                        )
+                                id = propertiesJSONObject.getInt("gid"),
+                                name = propertiesJSONObject.getString("libelle"),
+                                direction = propertiesJSONObject.getString("sens")
+                            )
                         )
                     }
                 }
