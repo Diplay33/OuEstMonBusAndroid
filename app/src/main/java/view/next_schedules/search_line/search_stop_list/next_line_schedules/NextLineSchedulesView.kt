@@ -17,6 +17,7 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import model.DTO.Line
 import model.DTO.NextSchedule
 import model.DTO.NextSchedulesDestinations
@@ -81,18 +82,34 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line) {
                         }
                     }
 
-                    Text(
-                        text = if (nextSchedule.isOnline)
-                            nextSchedule.getEstimatedTimeLeft()
-                        else
-                            nextSchedule.getTheoricTimeLeft(),
-                        fontWeight = if (nextSchedule.isOnline)
-                            FontWeight.Bold
-                        else
-                            FontWeight.Normal,
-                        modifier = Modifier
-                            .align(Alignment.CenterVertically)
-                    )
+                    Box(contentAlignment = Alignment.Center, modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .size(35.dp)
+                        .background(
+                            colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+                            shape = RoundedCornerShape(10.dp)
+                        )
+                    ) {
+                        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+                            .fillMaxWidth()
+                        ) {
+                            Text(
+                                text = if (nextSchedule.isOnline)
+                                    nextSchedule.getEstimatedTimeLeft()
+                                else
+                                    nextSchedule.getTheoricTimeLeft(),
+                                fontSize = 18.sp
+                            )
+
+                            Text(
+                                text = "MIN",
+                                fontSize = 10.sp,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier
+                                    .offset(y = (-3).dp)
+                            )
+                        }
+                    }
                 }
 
                 if(nextSchedule != nextSchedules.last { it.lineId == line.id }) {

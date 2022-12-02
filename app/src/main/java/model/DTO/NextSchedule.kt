@@ -42,7 +42,7 @@ class NextSchedule(val lineId: Int,
         }
 
         return if(hh == 0 && day == 0) {
-            "$mm min"
+            "$mm"
         }
         else if(day == 0) {
             "$hh hour $mm min"
