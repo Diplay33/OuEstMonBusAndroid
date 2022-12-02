@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -28,7 +29,7 @@ import com.example.ouestmonbus.R
 import kotlinx.coroutines.delay
 
 @Composable
-fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line) {
+fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoading: Boolean) {
     val animationState = remember {
         mutableStateOf(false)
     }
@@ -51,116 +52,140 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line) {
             .padding(horizontal = 15.dp)
     )
 
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .padding(horizontal = 15.dp)
-        .background(
-            colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
-            shape = RoundedCornerShape(10.dp)
-        )
-    ) {
-        nextSchedules.forEach { nextSchedule ->
-            val destination = NextSchedulesDestinations.getDestinationFromRaw((nextSchedule.destination))
-            val displayedTime = nextSchedule.getEstimatedTimeLeft()
+    if(isLoading) {
+        Column(modifier = Modifier
+            .fillMaxWidth()
+        ) {
+            CircularProgressIndicator(modifier = Modifier
+                .size(25.dp)
+                .align(Alignment.CenterHorizontally)
+            )
 
-            if(nextSchedule.lineId == line.id) {
-                Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 15.dp)
-                ) {
-                    Row {
-                        Icon(
-                            imageVector = Icons.Rounded.PlayArrow,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .align(Alignment.CenterVertically)
-                                .offset(x = (-7).dp)
-                        )
+            Spacer(modifier = Modifier
+                .height(10.dp)
+            )
 
-                        if(destination.isEmpty()) {
-                            Text(text = nextSchedule.destination, fontSize = 18.sp, modifier = Modifier
-                                .padding(vertical = 8.dp)
-                                .align(Alignment.CenterVertically)
-                            )
-                        }
-                        else {
-                            Column(modifier = Modifier
-                                .padding(vertical = 3.dp)
-                            ) {
-                                Text(
-                                    text = destination.first(),
-                                    fontSize = 13.sp,
-                                    color = Color.Gray,
-                                    modifier = Modifier
-                                        .offset(y = 2.dp)
-                                )
+            Text(
+                text = "Chargement en cours",
+                fontSize = 18.sp,
+                color = Color.Gray,
+                modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+            )
+        }
+    }
+    else {
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 15.dp)
+            .background(
+                colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+                shape = RoundedCornerShape(10.dp)
+            )
+        ) {
+            nextSchedules.forEach { nextSchedule ->
+                val destination = NextSchedulesDestinations.getDestinationFromRaw((nextSchedule.destination))
+                val displayedTime = nextSchedule.getEstimatedTimeLeft()
 
-                                Text(destination.last(), fontSize = 18.sp, modifier = Modifier
-                                    .offset(y = (-2).dp)
-                                )
-                            }
-                        }
-                    }
-
-                    Box(contentAlignment = Alignment.Center, modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                        .size(35.dp)
-                        .background(
-                            colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
-                            shape = RoundedCornerShape(10.dp)
-                        )
+                if(nextSchedule.lineId == line.id) {
+                    Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 15.dp)
                     ) {
-                        if(displayedTime == "0") {
-                            Text(
-                                text = "PROCHE",
-                                fontSize = 8.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                        }
-                        else {
-                            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-                                .fillMaxWidth()
-                            ) {
-                                Text(
-                                    text = displayedTime,
-                                    fontSize = 15.sp
-                                )
-
-                                Text(
-                                    text = "MIN",
-                                    fontSize = 10.sp,
-                                    fontWeight = FontWeight.Bold,
-                                    modifier = Modifier
-                                        .offset(y = (-3).dp)
-                                )
-                            }
-                        }
-
-                        if(nextSchedule.isOnline) {
-                            Image(
-                                painter = painterResource(id = R.drawable.bean_small),
+                        Row {
+                            Icon(
+                                imageVector = Icons.Rounded.PlayArrow,
                                 contentDescription = null,
                                 modifier = Modifier
-                                    .size(15.dp)
-                                    .offset(x = 11.dp, y = (-11).dp)
-                                    .alpha(indicatorOpacity)
+                                    .align(Alignment.CenterVertically)
+                                    .offset(x = (-7).dp)
                             )
+
+                            if(destination.isEmpty()) {
+                                Text(text = nextSchedule.destination, fontSize = 18.sp, modifier = Modifier
+                                    .padding(vertical = 8.dp)
+                                    .align(Alignment.CenterVertically)
+                                )
+                            }
+                            else {
+                                Column(modifier = Modifier
+                                    .padding(vertical = 3.dp)
+                                ) {
+                                    Text(
+                                        text = destination.first(),
+                                        fontSize = 13.sp,
+                                        color = Color.Gray,
+                                        modifier = Modifier
+                                            .offset(y = 2.dp)
+                                    )
+
+                                    Text(destination.last(), fontSize = 18.sp, modifier = Modifier
+                                        .offset(y = (-2).dp)
+                                    )
+                                }
+                            }
+                        }
+
+                        Box(contentAlignment = Alignment.Center, modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                            .size(35.dp)
+                            .background(
+                                colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+                                shape = RoundedCornerShape(10.dp)
+                            )
+                        ) {
+                            if(displayedTime == "0") {
+                                Text(
+                                    text = "PROCHE",
+                                    fontSize = 8.sp,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            }
+                            else {
+                                Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+                                    .fillMaxWidth()
+                                ) {
+                                    Text(
+                                        text = displayedTime,
+                                        fontSize = 15.sp
+                                    )
+
+                                    Text(
+                                        text = "MIN",
+                                        fontSize = 10.sp,
+                                        fontWeight = FontWeight.Bold,
+                                        modifier = Modifier
+                                            .offset(y = (-3).dp)
+                                    )
+                                }
+                            }
+
+                            if(nextSchedule.isOnline) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.bean_small),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .size(15.dp)
+                                        .offset(x = 11.dp, y = (-11).dp)
+                                        .alpha(indicatorOpacity)
+                                )
+                            }
                         }
                     }
-                }
 
-                if(nextSchedule != nextSchedules.last { it.lineId == line.id }) {
-                    Row {
-                        Spacer(modifier = Modifier
-                            .width(39.dp)
-                        )
+                    if(nextSchedule != nextSchedules.last { it.lineId == line.id }) {
+                        Row {
+                            Spacer(modifier = Modifier
+                                .width(39.dp)
+                            )
 
-                        Box(modifier = Modifier
-                            .clip(RectangleShape)
-                            .background(Color.LightGray)
-                            .fillMaxWidth()
-                            .height(1.dp)
-                        )
+                            Box(modifier = Modifier
+                                .clip(RectangleShape)
+                                .background(Color.LightGray)
+                                .fillMaxWidth()
+                                .height(1.dp)
+                            )
+                        }
                     }
                 }
             }

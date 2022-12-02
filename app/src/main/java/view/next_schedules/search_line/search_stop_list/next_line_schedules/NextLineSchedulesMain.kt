@@ -5,10 +5,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -35,6 +32,9 @@ fun NextLineSchedulesMain(
         DestinationsAller.getDestinationAllerOfLine(line.id)
     else
         DestinationsRetour.getDestinationRetourOfLine(line.id)
+    val isLoading = remember {
+        mutableStateOf(true)
+    }
 
     LaunchedEffect(stopName) {
         Paths.getOrderedPathsByLine(line.id) { returnedPaths ->
@@ -46,6 +46,7 @@ fun NextLineSchedulesMain(
             NextSchedules.getNextSchedulesByStationId(stopId ?: "") { returnedNextSchedules ->
                 nextSchedules.clear()
                 nextSchedules.addAll(returnedNextSchedules)
+                isLoading.value = false
             }
             delay(10000)
         }
@@ -65,7 +66,7 @@ fun NextLineSchedulesMain(
                     .height(30.dp)
                 )
 
-                NextLineSchedulesView(nextSchedules, line)
+                NextLineSchedulesView(nextSchedules, line, isLoading.value)
             }
         }
     }
