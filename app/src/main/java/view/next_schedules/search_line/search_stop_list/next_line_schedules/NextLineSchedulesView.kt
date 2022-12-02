@@ -75,7 +75,7 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoadi
         }
     }
     else {
-        if(nextSchedules.isEmpty()) {
+        if(nextSchedules.none { it.lineId == line.id }) {
             Row(horizontalArrangement = Arrangement.Center, modifier = Modifier
                 .fillMaxWidth()
             ) {
