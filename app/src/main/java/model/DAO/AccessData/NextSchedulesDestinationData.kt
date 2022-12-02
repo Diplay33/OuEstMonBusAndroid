@@ -156,7 +156,7 @@ class NextSchedulesDestinationData {
         //MARK: - U
         "Unitec" to listOf("PESSAC", "Unitec"),
         //MARK: - V
-        "Vettiner" to listOf("BOULIAC", "Vettiner"),
+        "Delestage Terminus Vettiner" to listOf("BOULIAC", "Vettiner"),
         "Victoire (Pasteur)" to listOf("BORDEAUX", "Victoire"),
         "Village 5" to listOf("GRADIGNAN", "Village 5"),
         "Villenave Bourg" to listOf("VILLENAVE D'ORNON", "Bourg"),
