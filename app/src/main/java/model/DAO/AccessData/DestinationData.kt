@@ -8,6 +8,7 @@ class DestinationData {
             //5
             "5 Chemins" to listOf("LE HAILLAN", "5 Chemins"),
             //A
+            "Achard" to listOf("BORDEAUX", "Rue Achard"),
             "Aéroport" to listOf("MERIGNAC", "Aéroport"),
             "Alfred De Vigny" to listOf("MERIGNAC", "Alfred de Vigny"),
             "Arena" to listOf("FLOIRAC", "Arkéa Arena"),
