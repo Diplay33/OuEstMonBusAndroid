@@ -57,6 +57,7 @@ class DestinationData {
             //E
             "Ecoparc" to listOf("BLANQUEFORT", "Ecoparc"),
             "Escarraguel" to listOf("AMBÈS", "Escarraguel"),
+            "Eysines Centre" to listOf("EYSINES", "Centre"),
             //F
             "Floirac Dravemont" to listOf("FLOIRAC", "Dravemont"),
             "Fondaudege" to listOf("BORDEAUX", "Fondaudège Muséum"),
