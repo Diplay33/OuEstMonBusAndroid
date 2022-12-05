@@ -8,7 +8,11 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Favorite
+import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,6 +24,10 @@ import androidx.navigation.NavController
 @Composable
 fun NextLineSchedulesTopBar(navController: NavController, stopName: String) {
     TopAppBar(backgroundColor = Color.White, elevation = 0.dp) {
+        val isFavorite = remember {
+            mutableStateOf(false)
+        }
+
         Row(modifier = Modifier
             .fillMaxWidth()
         ) {
@@ -44,7 +52,18 @@ fun NextLineSchedulesTopBar(navController: NavController, stopName: String) {
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .padding(horizontal = 15.dp)
-                    //If needed, .fillMaxWidth(fraction = xf) for showing right situated content
+                        .fillMaxWidth(fraction = 0.9f)
+                )
+
+                Icon(
+                    imageVector = if (isFavorite.value)
+                        Icons.Rounded.Favorite
+                    else
+                        Icons.Rounded.FavoriteBorder,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
+                        .clickable { isFavorite.value = !isFavorite.value }
                 )
             }
         }
