@@ -87,14 +87,15 @@ fun NextLineSchedulesTopBar(
                                         lineId = line.id.toString(),
                                         stopId = stopId
                                     )
+                                    isFavorite.value = false
                                 }
                                 else {
                                     storeFavStopsWithLine.saveFavoriteStopForLine(
                                         lineId = line.id.toString(),
                                         stopId = stopId
                                     )
+                                    isFavorite.value = true
                                 }
-                                isFavorite.value = !isFavorite.value
                             }
                         }
                 )
