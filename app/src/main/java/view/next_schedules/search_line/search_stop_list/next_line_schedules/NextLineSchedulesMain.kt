@@ -54,7 +54,9 @@ fun NextLineSchedulesMain(
     
     Scaffold(topBar = { NextLineSchedulesTopBar(
         navController = navController,
-        stopName = stopName ?: "Arrêt inconnu"
+        stopId = stopId.toString(),
+        stopName = stopName ?: "Arrêt inconnu",
+        line = line
     ) }) { padding ->
         LazyColumn(modifier = Modifier
             .padding(padding)

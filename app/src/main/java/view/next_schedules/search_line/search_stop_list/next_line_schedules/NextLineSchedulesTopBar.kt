@@ -10,22 +10,39 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.FavoriteBorder
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import kotlinx.coroutines.launch
+import model.DTO.Line
+import model.preferences_data_store.StoreFavoriteStopsWithLine
 
 @Composable
-fun NextLineSchedulesTopBar(navController: NavController, stopName: String) {
+fun NextLineSchedulesTopBar(
+    navController: NavController,
+    stopId: String,
+    stopName: String,
+    line: Line
+) {
     TopAppBar(backgroundColor = Color.White, elevation = 0.dp) {
+        val scope = rememberCoroutineScope()
+        val context = LocalContext.current
+        val storeFavStopsWithLine = StoreFavoriteStopsWithLine(context)
         val isFavorite = remember {
             mutableStateOf(false)
+        }
+
+        LaunchedEffect(line) {
+            storeFavStopsWithLine.getFavoriteStopsForLine(line.id.toString()) { favoriteStops ->
+                println(favoriteStops)
+                isFavorite.value = favoriteStops.contains(stopId)
+            }
         }
 
         Row(modifier = Modifier
@@ -63,7 +80,23 @@ fun NextLineSchedulesTopBar(navController: NavController, stopName: String) {
                     contentDescription = null,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
-                        .clickable { isFavorite.value = !isFavorite.value }
+                        .clickable {
+                            scope.launch {
+                                if(isFavorite.value) {
+                                    storeFavStopsWithLine.removeFavoriteStopForLine(
+                                        lineId = line.id.toString(),
+                                        stopId = stopId
+                                    )
+                                }
+                                else {
+                                    storeFavStopsWithLine.saveFavoriteStopForLine(
+                                        lineId = line.id.toString(),
+                                        stopId = stopId
+                                    )
+                                }
+                                isFavorite.value = !isFavorite.value
+                            }
+                        }
                 )
             }
         }
