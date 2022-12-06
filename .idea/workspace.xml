@@ -20,6 +20,8 @@
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/model/DTO/Lines.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/DTO/Lines.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/model/preferences_data_store/StoreFavoriteStopsWithLine.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/preferences_data_store/StoreFavoriteStopsWithLine.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/search_line/search_stop_list/next_line_schedules/NextLineSchedulesTopBar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/search_line/search_stop_list/next_line_schedules/NextLineSchedulesTopBar.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

@@ -2,10 +2,7 @@ package view.next_schedules.search_line.search_stop_list.next_line_schedules
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Favorite
@@ -37,11 +34,24 @@ fun NextLineSchedulesTopBar(
         val isFavorite = remember {
             mutableStateOf(false)
         }
+        val isMaxFavoritesReached = remember {
+            mutableStateOf(false)
+        }
+        val isDialogShown = remember {
+            mutableStateOf(false)
+        }
 
         LaunchedEffect(line) {
-            storeFavStopsWithLine.getFavoriteStopsForLine(line.id.toString()) { favoriteStops ->
-                println(favoriteStops)
-                isFavorite.value = favoriteStops.contains(stopId)
+            scope.launch {
+                storeFavStopsWithLine.getFavoriteStopsForLine(line.id.toString()) { favoriteStops ->
+                    isFavorite.value = favoriteStops.contains(stopId)
+                }
+            }
+            scope.launch {
+                storeFavStopsWithLine.checkMaxStopCountReached {
+                    println(it)
+                    isMaxFavoritesReached.value = it
+                }
             }
         }
 
@@ -82,24 +92,59 @@ fun NextLineSchedulesTopBar(
                         .align(Alignment.CenterVertically)
                         .clickable {
                             scope.launch {
-                                if(isFavorite.value) {
+                                if (isFavorite.value) {
                                     storeFavStopsWithLine.removeFavoriteStopForLine(
                                         lineId = line.id.toString(),
                                         stopId = stopId
                                     )
+                                    storeFavStopsWithLine.checkMaxStopCountReached { result ->
+                                        isMaxFavoritesReached.value = result
+                                    }
                                     isFavorite.value = false
-                                }
-                                else {
-                                    storeFavStopsWithLine.saveFavoriteStopForLine(
-                                        lineId = line.id.toString(),
-                                        stopId = stopId
-                                    )
-                                    isFavorite.value = true
+                                } else {
+                                    if (isMaxFavoritesReached.value) {
+                                        isDialogShown.value = true
+                                    } else {
+                                        storeFavStopsWithLine.saveFavoriteStopForLine(
+                                            lineId = line.id.toString(),
+                                            stopId = stopId
+                                        )
+                                        storeFavStopsWithLine.checkMaxStopCountReached { result ->
+                                            isMaxFavoritesReached.value = result
+                                        }
+                                        isFavorite.value = true
+                                    }
                                 }
                             }
                         }
                 )
             }
+        }
+
+        if(isDialogShown.value) {
+            AlertDialog(
+                onDismissRequest = {
+                    isDialogShown.value = false
+                },
+                title = {
+                    Text("Nombre maximum d'arrêts en favori atteint")
+                },
+                text = {
+                    Text("Le nombre maximum d'arrêts en favori (10) a été atteint, veuillez " +
+                            "en supprimer pour pouvoir ajouter celui-ci. Si d'autres lignes " +
+                            "passent par cet arrêt, vous pourrez cependant ajouter ces autres " +
+                            "lignes en favori avec cet arrêt.")
+                },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            isDialogShown.value = false
+                        }
+                    ) {
+                        Text("OK")
+                    }
+                }
+            )
         }
     }
 }

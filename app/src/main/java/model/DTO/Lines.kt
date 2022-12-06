@@ -11,6 +11,10 @@ import java.text.Normalizer
 
 class Lines {
     companion object {
+        fun getAllLines(): List<Line> {
+            return LineDAO.getLines()
+        }
+
         fun getLinesByGroup(context: Context): ArrayList<ArrayList<Line>> {
             val linesByGroup: ArrayList<ArrayList<Line>> = arrayListOf(
                 arrayListOf(),

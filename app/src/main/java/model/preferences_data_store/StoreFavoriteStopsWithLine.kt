@@ -1,16 +1,12 @@
 package model.preferences_data_store
 
 import android.content.Context
-import androidx.compose.runtime.collectAsState
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.preferencesDataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
-import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.map
+import model.DTO.Lines
 
 //key: lineId, value: stationId(s)
 class StoreFavoriteStopsWithLine(private val context: Context) {
@@ -27,6 +23,16 @@ class StoreFavoriteStopsWithLine(private val context: Context) {
     suspend fun removeFavoriteStopForLine(lineId: String, stopId: String) {
         context.dataStore.edit { preferences ->
             preferences[stringSetPreferencesKey(lineId)] = preferences[stringSetPreferencesKey(lineId)]?.minus(stopId) ?: setOf()
+        }
+    }
+
+    suspend fun checkMaxStopCountReached(callback: (Boolean) -> Unit) {
+        context.dataStore.data.collect { preferences ->
+            val favoriteStopsSet = mutableSetOf<String>()
+            Lines.getAllLines().forEach { line ->
+                favoriteStopsSet.addAll(preferences[stringSetPreferencesKey(line.id.toString())]?.toList() ?: listOf())
+            }
+            callback(favoriteStopsSet.count() >= 10 )
         }
     }
 
