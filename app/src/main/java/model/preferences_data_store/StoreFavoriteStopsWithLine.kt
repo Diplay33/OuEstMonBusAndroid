@@ -41,4 +41,17 @@ class StoreFavoriteStopsWithLine(private val context: Context) {
             callback(preferences[stringSetPreferencesKey(lineId)] ?: setOf())
         }
     }
+
+    suspend fun getFavoriteStopsWithLine(callback: (Map<String, List<String>>) -> Unit) {
+        val canReturn = false
+        val dict = mutableMapOf<String, List<String>>()
+        Lines.getAllLines().forEach { line ->
+            getFavoriteStopsForLine(line.id.toString()) { set ->
+                dict[line.id.toString()] = set.toList()
+            }
+        }
+        if(canReturn) {
+            callback(dict)
+        }
+    }
 }
