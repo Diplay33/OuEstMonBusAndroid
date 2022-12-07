@@ -708,7 +708,7 @@ class VehicleData {
             mapOf("id" to "99045", "parkId" to "069045", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C1", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
 
             //MercedesBenz Citaro C2 NGT
-            mapOf("id" to "xxxx", "parkId" to "169xxx", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 NGT", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "79069", "parkId" to "169069", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 NGT", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
 
 
             /*TRANSDEV Citram Aquitaine*/
