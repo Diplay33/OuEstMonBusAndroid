@@ -7,10 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -23,7 +20,7 @@ import model.preferences_data_store.StoreFavoriteStopsWithLine
 @Composable
 fun NextSchedulesHomeViewFavoritesGroup() {
     val favoriteStopsWithLine = remember {
-        mutableMapOf<String, List<String>>()
+        mutableStateMapOf<String, List<String>>()
     }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
@@ -46,10 +43,6 @@ fun NextSchedulesHomeViewFavoritesGroup() {
             fontSize = 18.sp,
             modifier = Modifier
                 .padding(start = 15.dp)
-                .clickable {
-                    println(favoriteStopsWithLine.size)
-                    println(favoriteStopsWithLine)
-                }
         )
 
         Column {
