@@ -1,11 +1,7 @@
 package view.next_schedules
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -15,6 +11,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import model.DTO.Lines
+import model.DTO.Station
+import model.DTO.Stations
 import model.preferences_data_store.StoreFavoriteStopsWithLine
 
 @Composable
@@ -25,12 +23,22 @@ fun NextSchedulesHomeViewFavoritesGroup() {
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val storeFavStopsWithLine = StoreFavoriteStopsWithLine(context)
+    val favoriteStopsSet = remember {
+        mutableStateListOf<Station>()
+    }
 
     LaunchedEffect("r") {
         Lines.getAllLines().forEach { line ->
             scope.launch {
                 storeFavStopsWithLine.getFavoriteStopsForLine(line.id.toString()) { set ->
                     favoriteStopsWithLine[line.id.toString()] = set.toList()
+                    set.forEach { stationId ->
+                        Stations.getStationByStationId(stationId) { station ->
+                            if(favoriteStopsSet.firstOrNull { station.stationId == it.stationId } == null) {
+                                favoriteStopsSet.add(station)
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -46,8 +54,13 @@ fun NextSchedulesHomeViewFavoritesGroup() {
         )
 
         Column {
-            Lines.getAllLines().forEach { line ->
-                NextSchedulesHomeFavoriteRow("${line.lineName} : ${favoriteStopsWithLine[line.id.toString()]}")
+            favoriteStopsSet.sortedBy { it.name }.forEach { station ->
+                NextSchedulesHomeFavoriteRow(
+                    station = station,
+                    lines = Lines.getAllLines().filter { line ->
+                        favoriteStopsWithLine[line.id.toString()]?.contains(station.stationId) ?: false
+                    }
+                )
             }
         }
     }

@@ -11,6 +11,12 @@ class Stations {
             }
         }
 
+        fun getStationByStationId(stationId: String, callback: (Station) -> Unit) {
+            StationDAO.getStationByStationId(stationId) { station ->
+                callback(station)
+            }
+        }
+
         fun getSortedStationsByLineAndDirection(
             lineId: Int,
             direction: String,
