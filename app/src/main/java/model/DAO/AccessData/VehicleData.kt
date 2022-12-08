@@ -696,7 +696,7 @@ class VehicleData {
             mapOf("id" to "97002", "parkId" to "107002", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
             mapOf("id" to "97003", "parkId" to "107003", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
             mapOf("id" to "97004", "parkId" to "107004", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
-            mapOf("id" to "77005", "parkId" to "107005", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "xxx05", "parkId" to "107005", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
             mapOf("id" to "97006", "parkId" to "107006", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
             mapOf("id" to "97007", "parkId" to "107007", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
 
@@ -708,7 +708,7 @@ class VehicleData {
             mapOf("id" to "99045", "parkId" to "069045", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C1", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
 
             //MercedesBenz Citaro C2 NGT
-            mapOf("id" to "79069", "parkId" to "169069", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 NGT", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "77005", "parkId" to "169069", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 NGT", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
 
 
             /*TRANSDEV Citram Aquitaine*/
