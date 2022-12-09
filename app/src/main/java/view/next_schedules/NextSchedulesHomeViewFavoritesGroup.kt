@@ -1,9 +1,10 @@
 package view.next_schedules
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -26,6 +27,9 @@ fun NextSchedulesHomeViewFavoritesGroup() {
     val favoriteStopsSet = remember {
         mutableStateListOf<Station>()
     }
+    val isLoading = remember {
+        mutableStateOf(true)
+    }
 
     LaunchedEffect("r") {
         Lines.getAllLines().forEach { line ->
@@ -37,6 +41,7 @@ fun NextSchedulesHomeViewFavoritesGroup() {
                             if(favoriteStopsSet.firstOrNull { station.stationId == it.stationId } == null) {
                                 favoriteStopsSet.add(station)
                             }
+                            isLoading.value = false
                         }
                     }
                 }
@@ -53,14 +58,28 @@ fun NextSchedulesHomeViewFavoritesGroup() {
                 .padding(start = 15.dp)
         )
 
-        Column {
-            favoriteStopsSet.sortedBy { it.name }.forEach { station ->
-                NextSchedulesHomeFavoriteRow(
-                    station = station,
-                    lines = Lines.getAllLines().filter { line ->
-                        favoriteStopsWithLine[line.id.toString()]?.contains(station.stationId) ?: false
-                    }
+        if(isLoading.value) {
+            Row(horizontalArrangement = Arrangement.Center, modifier = Modifier
+                .fillMaxWidth()
+            ) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .padding(top = 50.dp)
+                        .size(25.dp)
+                        .align(Alignment.CenterVertically)
                 )
+            }
+        }
+        else {
+            Column {
+                favoriteStopsSet.sortedBy { it.name }.forEach { station ->
+                    NextSchedulesHomeFavoriteRow(
+                        station = station,
+                        lines = Lines.getAllLines().filter { line ->
+                            favoriteStopsWithLine[line.id.toString()]?.contains(station.stationId) ?: false
+                        }
+                    )
+                }
             }
         }
     }
