@@ -39,6 +39,7 @@ fun NextSchedulesHomeFavoriteView(
     }
     val indicatorOpacityState = if (animationState.value) 0.1f else 0.8f
     val indicatorOpacity by animateFloatAsState(targetValue = indicatorOpacityState)
+    val filteredNextSchedules = nextSchedules.filter { it.lineId == line.id }
 
     LaunchedEffect(line) {
         delay(1000)
@@ -72,11 +73,23 @@ fun NextSchedulesHomeFavoriteView(
             }
         }
         else {
-            nextSchedules.forEach { nextSchedule ->
-                val destination = NextSchedulesDestinations.getDestinationFromRaw((nextSchedule.destination))
-                val displayedTime = nextSchedule.getEstimatedTimeLeft()
+            if(filteredNextSchedules.isEmpty()) {
+                Row(horizontalArrangement = Arrangement.Center, modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp)
+                ) {
+                    Text(
+                        text = "Aucun résultat à l'heure actuelle",
+                        fontSize = 18.sp,
+                        color = Color.Gray
+                    )
+                }
+            }
+            else {
+                filteredNextSchedules.forEach { nextSchedule ->
+                    val destination = NextSchedulesDestinations.getDestinationFromRaw((nextSchedule.destination))
+                    val displayedTime = nextSchedule.getEstimatedTimeLeft()
 
-                if(nextSchedule.lineId == line.id) {
                     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 15.dp)
@@ -162,7 +175,7 @@ fun NextSchedulesHomeFavoriteView(
                         }
                     }
 
-                    if(nextSchedule != nextSchedules.last { it.lineId == line.id }) {
+                    if(nextSchedule != filteredNextSchedules.last()) {
                         Row {
                             Spacer(modifier = Modifier
                                 .width(39.dp)
