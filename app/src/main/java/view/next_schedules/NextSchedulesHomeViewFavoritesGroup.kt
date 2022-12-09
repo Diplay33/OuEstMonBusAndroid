@@ -30,8 +30,13 @@ fun NextSchedulesHomeViewFavoritesGroup() {
     val isLoading = remember {
         mutableStateOf(true)
     }
+    val refreshValue = remember {
+        mutableStateOf(false)
+    }
 
-    LaunchedEffect("r") {
+    LaunchedEffect(refreshValue.value) {
+        favoriteStopsSet.clear()
+
         Lines.getAllLines().forEach { line ->
             scope.launch {
                 storeFavStopsWithLine.getFavoriteStopsForLine(line.id.toString()) { set ->
@@ -77,7 +82,8 @@ fun NextSchedulesHomeViewFavoritesGroup() {
                         station = station,
                         lines = Lines.getAllLines().filter { line ->
                             favoriteStopsWithLine[line.id.toString()]?.contains(station.stationId) ?: false
-                        }
+                        },
+                        refreshValue = refreshValue
                     )
                 }
             }

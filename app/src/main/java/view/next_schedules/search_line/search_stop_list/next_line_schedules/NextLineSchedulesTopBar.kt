@@ -92,7 +92,7 @@ fun NextLineSchedulesTopBar(
                         .align(Alignment.CenterVertically)
                         .clickable {
                             scope.launch {
-                                if (isFavorite.value) {
+                                if(isFavorite.value) {
                                     storeFavStopsWithLine.removeFavoriteStopForLine(
                                         lineId = line.id.toString(),
                                         stopId = stopId
