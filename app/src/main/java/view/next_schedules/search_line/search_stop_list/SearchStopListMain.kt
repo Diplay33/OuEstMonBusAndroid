@@ -8,6 +8,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -68,7 +69,6 @@ fun SearchStopListMain(
                     returnedPaths.map { if (it.first().direction == pathDirection) paths.addAll(it) }
 
                     Stations.getSortedStationsByPaths(paths) { returnedStations ->
-                        stops.clear()
                         stops.addAll(returnedStations)
                         isLoading.value = false
                     }
@@ -78,7 +78,10 @@ fun SearchStopListMain(
                 delay(100)
                 state.searching = false
             }
-            state.searchResults = Stations.filterStationsBySearchText(stops, state.query.text)
+            state.searchResults = Stations.filterStationsBySearchText(
+                stations = stops.distinctBy { it.stationId }.sortedBy { it.name },
+                searchText = state.query.text
+            )
 
             when(state.searchDisplay) {
                 SearchDisplay.INITIALRESULTS -> {
@@ -115,10 +118,10 @@ fun SearchStopListMain(
                             }
                         }
                         else {
-                            stops.forEach { stop ->
+                            stops.distinctBy { it.stationId }.sortedBy { it.name }.forEach { stop ->
                                 SearchStopListRow(
                                     stop = stop,
-                                    stops = stops,
+                                    stops = stops.distinctBy { it.stationId }.sortedBy { it.name },
                                     navController = navController,
                                     line = line,
                                     pathDirection = pathDirection ?: "ALLER"

@@ -28,14 +28,9 @@ class Stations {
         }*/
 
         fun getSortedStationsByPaths(paths: List<Path>, callback: (List<Station>) -> Unit) {
-            val stations = mutableListOf<Station>()
             paths.forEach { path ->
                 StationDAO.getStationsByPath(path.id) { returnedStations ->
-                    stations.addAll(returnedStations)
-
-                    if(path.id == paths.last().id) {
-                        callback(stations.distinctBy { it.stationId }.sortedBy { it.name })
-                    }
+                    callback(returnedStations)
                 }
             }
         }
