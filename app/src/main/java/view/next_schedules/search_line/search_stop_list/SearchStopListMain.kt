@@ -66,14 +66,12 @@ fun SearchStopListMain(
                 Paths.getOrderedPathsByLine(lineId?.toInt() ?: 0) { returnedPaths ->
                     paths.clear()
                     returnedPaths.map { if (it.first().direction == pathDirection) paths.addAll(it) }
-                }
-                Stations.getSortedStationsByLineAndDirection(
-                    lineId = line.id,
-                    direction = pathDirection ?: "ALLER"
-                ) { returnedStations ->
-                    stops.clear()
-                    stops.addAll(returnedStations)
-                    isLoading.value = false
+
+                    Stations.getSortedStationsByPaths(paths) { returnedStations ->
+                        stops.clear()
+                        stops.addAll(returnedStations)
+                        isLoading.value = false
+                    }
                 }
 
                 state.searching = true

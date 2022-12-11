@@ -17,13 +17,26 @@ class Stations {
             }
         }
 
-        fun getSortedStationsByLineAndDirection(
+        /*fun getSortedStationsByLineAndDirection(
             lineId: Int,
             direction: String,
             callback: (List<Station>) -> Unit
         ) {
             StationDAO.getStationsByLineAndDirection(lineId, direction) { stations ->
                 callback(stations.sortedBy { it.name })
+            }
+        }*/
+
+        fun getSortedStationsByPaths(paths: List<Path>, callback: (List<Station>) -> Unit) {
+            val stations = mutableListOf<Station>()
+            paths.forEach { path ->
+                StationDAO.getStationsByPath(path.id) { returnedStations ->
+                    stations.addAll(returnedStations)
+
+                    if(path.id == paths.last().id) {
+                        callback(stations.distinctBy { it.stationId }.sortedBy { it.name })
+                    }
+                }
             }
         }
 
