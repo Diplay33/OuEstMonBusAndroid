@@ -28,7 +28,7 @@ fun NextSchedulesHomeViewFavoritesGroup() {
         mutableStateListOf<Station>()
     }
     val isLoading = remember {
-        mutableStateOf(true)
+        mutableStateOf(false)
     }
     val refreshValue = remember {
         mutableStateOf(false)
@@ -42,6 +42,7 @@ fun NextSchedulesHomeViewFavoritesGroup() {
                 storeFavStopsWithLine.getFavoriteStopsForLine(line.id.toString()) { set ->
                     favoriteStopsWithLine[line.id.toString()] = set.toList()
                     set.forEach { stationId ->
+                        isLoading.value = true
                         Stations.getStationByStationId(stationId) { station ->
                             if(favoriteStopsSet.firstOrNull { station.stationId == it.stationId } == null) {
                                 favoriteStopsSet.add(station)
@@ -54,37 +55,42 @@ fun NextSchedulesHomeViewFavoritesGroup() {
         }
     }
 
-    Column {
-        Text(
-            text = "Arrêts favoris",
-            fontWeight = FontWeight.Bold,
-            fontSize = 18.sp,
-            modifier = Modifier
-                .padding(start = 15.dp)
-        )
+    if(favoriteStopsSet.isEmpty() && !isLoading.value) {
+        NextSchedulesHomeNoFavoriteView()
+    }
+    else {
+        Column {
+            Text(
+                text = "Arrêts favoris",
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp,
+                modifier = Modifier
+                    .padding(start = 15.dp)
+            )
 
-        if(isLoading.value) {
-            Row(horizontalArrangement = Arrangement.Center, modifier = Modifier
-                .fillMaxWidth()
-            ) {
-                CircularProgressIndicator(
-                    modifier = Modifier
-                        .padding(top = 50.dp)
-                        .size(25.dp)
-                        .align(Alignment.CenterVertically)
-                )
-            }
-        }
-        else {
-            Column {
-                favoriteStopsSet.sortedBy { it.name }.forEach { station ->
-                    NextSchedulesHomeFavoriteRow(
-                        station = station,
-                        lines = Lines.getAllLines().filter { line ->
-                            favoriteStopsWithLine[line.id.toString()]?.contains(station.stationId) ?: false
-                        },
-                        refreshValue = refreshValue
+            if(isLoading.value) {
+                Row(horizontalArrangement = Arrangement.Center, modifier = Modifier
+                    .fillMaxWidth()
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .padding(top = 50.dp)
+                            .size(25.dp)
+                            .align(Alignment.CenterVertically)
                     )
+                }
+            }
+            else {
+                Column {
+                    favoriteStopsSet.sortedBy { it.name }.forEach { station ->
+                        NextSchedulesHomeFavoriteRow(
+                            station = station,
+                            lines = Lines.getAllLines().filter { line ->
+                                favoriteStopsWithLine[line.id.toString()]?.contains(station.stationId) ?: false
+                            },
+                            refreshValue = refreshValue
+                        )
+                    }
                 }
             }
         }
