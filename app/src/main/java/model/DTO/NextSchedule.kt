@@ -10,18 +10,18 @@ class NextSchedule(val lineId: Int,
                    val vehicleId: Int?,
                    val rawTheoricTime: String,
                    val rawEstimatedTime: String,
-                   /*val theoricTime: LocalDateTime = LocalDateTime
-                       .parse(rawTheoricTime),
-                   val estimated_time: LocalDateTime = LocalDateTime
-                       .parse(raw_estimated_time),*/
                    val isOnline: Boolean = vehicleId != null
 ) {
-    fun getTheoricTimeLeft(): String {
+    private fun getTheoreticalTimeLeft(): String {
         return getTimeLeft(rawTheoricTime)
     }
 
-    fun getEstimatedTimeLeft(): String {
+    private fun getEstimatedTimeLeft(): String {
         return getTimeLeft(rawEstimatedTime)
+    }
+
+    fun getTimeLeft(): String {
+        return if (isOnline) getEstimatedTimeLeft() else getTheoreticalTimeLeft()
     }
 
     private fun getTimeLeft(eventTime: String): String {

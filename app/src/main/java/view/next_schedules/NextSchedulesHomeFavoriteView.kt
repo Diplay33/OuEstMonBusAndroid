@@ -88,7 +88,7 @@ fun NextSchedulesHomeFavoriteView(
             else {
                 filteredNextSchedules.forEach { nextSchedule ->
                     val destination = NextSchedulesDestinations.getDestinationFromRaw((nextSchedule.destination))
-                    val displayedTime = nextSchedule.getEstimatedTimeLeft()
+                    val displayedTime = nextSchedule.getTimeLeft()
 
                     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
                         .fillMaxWidth()
