@@ -38,6 +38,16 @@ fun ServiceDetailMapRow(lineName: String, stationId: String, latitude: Double, l
     val station = remember {
         mutableStateOf(Station(0, "", "", 0.0, 0.0))
     }
+    val mapUISettings by remember {
+        mutableStateOf(MapUiSettings(
+            compassEnabled = false,
+            zoomControlsEnabled = false,
+            zoomGesturesEnabled = false,
+            scrollGesturesEnabled = false,
+            tiltGesturesEnabled = false,
+            rotationGesturesEnabled = false
+        ))
+    }
 
     LaunchedEffect(lineName) {
         if(stationId == "") {
@@ -60,6 +70,7 @@ fun ServiceDetailMapRow(lineName: String, stationId: String, latitude: Double, l
             GoogleMap(
                 properties = mapProperties,
                 cameraPositionState = cameraPositionState,
+                uiSettings = mapUISettings,
                 modifier = Modifier
                     .fillMaxSize()
             ) {
