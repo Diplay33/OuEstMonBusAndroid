@@ -17,12 +17,19 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.CameraPositionState
 import model.DTO.Destinations
 import model.DTO.Lines
 import model.DTO.Service
 
 @Composable
-fun LineMapViewServicesListRow(service: Service, selectedService: MutableState<Service?>) {
+fun LineMapViewServicesListRow(
+    service: Service,
+    selectedService: MutableState<Service?>,
+    cameraPositionState: CameraPositionState
+) {
     val line = Lines.getLine(service.lineId.toString())
     val destination = Destinations.getDestinationFromRaw(service.destination)
 
@@ -39,7 +46,12 @@ fun LineMapViewServicesListRow(service: Service, selectedService: MutableState<S
             .padding(horizontal = 15.dp)
             .padding(top = 7.dp, bottom = if (destination.first() == "") 7.dp else 5.dp)
             .fillMaxWidth()
-            .clickable { selectedService.value = service }
+            .clickable {
+                selectedService.value = service
+                cameraPositionState.position = CameraPosition.fromLatLngZoom(
+                    LatLng(service.latitude - 0.013, service.longitude), 13f
+                )
+            }
         ) {
             Row {
                 Text(

@@ -71,18 +71,12 @@ fun LineMapViewBottomSheet(
                     refreshDate = refreshDate,
                     selectedService = selectedService,
                     areMessagesDisplayed = areMessagesDisplayed,
-                    isLoading = isLoading
+                    isLoading = isLoading,
+                    cameraPositionState = cameraPositionState
                 )
             }
             else {
                 LineMapViewServiceDetail(selectedService)
-
-                cameraPositionState.position = CameraPosition.fromLatLngZoom(
-                    LatLng(
-                        (selectedService.value?.latitude ?: 0) as Double - 0.013,
-                        (selectedService.value?.longitude ?: 0) as Double
-                    ), 13f
-                )
             }
         }
     }

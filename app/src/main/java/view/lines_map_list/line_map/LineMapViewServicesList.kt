@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.maps.android.compose.CameraPositionState
 import model.DTO.Service
 import model.DTO.Services
 import view.lines_map_list.NotificationCountBadge
@@ -34,7 +35,8 @@ fun LineMapViewServicesList(
     refreshDate: Date,
     selectedService: MutableState<Service?>,
     areMessagesDisplayed: MutableState<Boolean>,
-    isLoading: Boolean
+    isLoading: Boolean,
+    cameraPositionState: CameraPositionState
 ) {
     val formatter = SimpleDateFormat("HH:mm")
 
@@ -93,7 +95,7 @@ fun LineMapViewServicesList(
             .verticalScroll(rememberScrollState())
         ) {
             Services.filterServicesByVehicle(services).forEach { services ->
-                LineMapViewServicesListGroup(services, selectedService)
+                LineMapViewServicesListGroup(services, selectedService, cameraPositionState)
             }
 
             Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier

@@ -16,11 +16,16 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.maps.android.compose.CameraPositionState
 import kotlinx.coroutines.launch
 import model.DTO.Service
 
 @Composable
-fun LineMapViewServicesListGroup(services: List<Service>, selectedService: MutableState<Service?>) {
+fun LineMapViewServicesListGroup(
+    services: List<Service>,
+    selectedService: MutableState<Service?>,
+    cameraPositionState: CameraPositionState
+) {
     val isCollapsed = remember {
         mutableStateOf(false)
     }
@@ -69,7 +74,7 @@ fun LineMapViewServicesListGroup(services: List<Service>, selectedService: Mutab
 
         if(!isCollapsed.value) {
             services.forEach { service ->
-                LineMapViewServicesListRow(service, selectedService)
+                LineMapViewServicesListRow(service, selectedService, cameraPositionState)
             }
         }
     }
