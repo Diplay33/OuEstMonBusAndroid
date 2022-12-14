@@ -28,7 +28,8 @@ fun NextSchedulesHomeNoFavoriteView() {
         )
         
         Text(
-            text = "Ajouter des arrêts en favoris",
+            text = "Ajouter des arrêts aux favoris",
+            textAlign = TextAlign.Center,
             fontWeight = FontWeight.Bold,
             color = Color.LightGray,
             fontSize = 20.sp,
@@ -37,7 +38,7 @@ fun NextSchedulesHomeNoFavoriteView() {
         )
 
         Text(
-            text = "Vous pouvez ajouter des arrêts en favoris, et les visionner ici. L'ajout d'" +
+            text = "Vous pouvez ajouter des arrêts aux favoris, et les visionner ici. L'ajout d'" +
                 "un arrêt se fait directement depuis la vue de celui-ci, depuis les recherches, " +
                 "via le bouton favori situé en haut à droite de l'écran.",
             textAlign = TextAlign.Center,
