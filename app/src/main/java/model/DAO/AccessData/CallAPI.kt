@@ -24,7 +24,12 @@ class CallAPI {
                             println("$name: $value")
                         }
 
-                        callback(response.body!!.string())
+                        try {
+                            callback(response.body!!.string())
+                        }
+                        catch(e: Exception) {
+                            println("FATAL ERROR: $e")
+                        }
                     }
                 }
             })
