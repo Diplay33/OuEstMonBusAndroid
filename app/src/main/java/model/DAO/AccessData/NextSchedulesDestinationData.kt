@@ -67,7 +67,7 @@ class NextSchedulesDestinationData {
             "Hippodrome" to listOf("EYSINES", "Hippodrome"),
             "Hopital Pellegrin" to listOf("BORDEAUX", "Hôpital Pellegrin"),
             "Hôpital Pellegrin" to listOf("BORDEAUX", "Hôpital Pellegrin"),
-            "Hôpital Surburbain" to listOf("LE BOUSCAT", "Hôpital Surburbain"),
+            "Hôpital Suburbain" to listOf("LE BOUSCAT", "Hôpital Surburbain"),
             //I
             "Iris" to listOf("LORMONT", "Iris"),
             "Issac" to listOf("SAINT MÉDARD EN JALLES", "Issac"),
