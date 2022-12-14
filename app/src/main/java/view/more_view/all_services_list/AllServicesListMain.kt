@@ -137,10 +137,9 @@ fun AllServicesListMain(
                         .fillMaxWidth()
                     ) {
                         var servicesCount = 0
+                        state.searchResults.forEach { servicesCount += it.size }
                         items(state.searchResults.size) { groupIndex ->
                             if(state.searchResults[groupIndex].isNotEmpty()) {
-                                servicesCount =+ state.searchResults[groupIndex].size
-
                                 AllServicesListGroup(
                                     services = state.searchResults[groupIndex],
                                     navController = navController,
