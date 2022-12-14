@@ -34,7 +34,7 @@ import view.next_schedules.search_line.search_stop_list.next_line_schedules.Next
 fun NextSchedulesHomeFavoriteRow(
     station: Station,
     lines: List<Line>,
-    refreshValue: MutableState<Boolean>
+    favoriteStopsSet: MutableList<Station>
 ) {
     val nextSchedules = remember {
         mutableStateListOf<NextSchedule>()
@@ -177,7 +177,11 @@ fun NextSchedulesHomeFavoriteRow(
                                     )
                                 }
                                 menuShown.value = false
-                                refreshValue.value = !refreshValue.value
+                                if(lines.size <= 1) {
+                                    val temporarySet = favoriteStopsSet.filter { it.stationId != station.stationId }
+                                    favoriteStopsSet.clear()
+                                    favoriteStopsSet.addAll(temporarySet)
+                                }
                             }) {
                                 Row {
                                     Icon(imageVector = Icons.Rounded.Favorite, contentDescription = null, modifier = Modifier

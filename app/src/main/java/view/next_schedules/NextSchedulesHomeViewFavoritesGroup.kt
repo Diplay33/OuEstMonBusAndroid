@@ -30,11 +30,8 @@ fun NextSchedulesHomeViewFavoritesGroup() {
     val isLoading = remember {
         mutableStateOf(false)
     }
-    val refreshValue = remember {
-        mutableStateOf(false)
-    }
 
-    LaunchedEffect(refreshValue.value) {
+    LaunchedEffect("a") {
         favoriteStopsSet.clear()
 
         Lines.getAllLines().forEach { line ->
@@ -44,9 +41,7 @@ fun NextSchedulesHomeViewFavoritesGroup() {
                     set.forEach { stationId ->
                         isLoading.value = true
                         Stations.getStationByStationId(stationId) { station ->
-                            if(favoriteStopsSet.firstOrNull { station.stationId == it.stationId } == null) {
-                                favoriteStopsSet.add(station)
-                            }
+                            favoriteStopsSet.add(station)
                             isLoading.value = false
                         }
                     }
@@ -82,13 +77,13 @@ fun NextSchedulesHomeViewFavoritesGroup() {
             }
             else {
                 Column {
-                    favoriteStopsSet.sortedBy { it.name }.forEach { station ->
+                    favoriteStopsSet.distinctBy { it.stationId }.sortedBy { it.name }.forEach { station ->
                         NextSchedulesHomeFavoriteRow(
                             station = station,
                             lines = Lines.getAllLines().filter { line ->
                                 favoriteStopsWithLine[line.id.toString()]?.contains(station.stationId) ?: false
                             },
-                            refreshValue = refreshValue
+                            favoriteStopsSet = favoriteStopsSet
                         )
                     }
                 }
