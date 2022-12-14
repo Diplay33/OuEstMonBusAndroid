@@ -27,6 +27,7 @@ fun LineMapViewServiceDetailCurrentStopRow(stationId: String) {
     }
 
     LaunchedEffect(stationId) {
+        station.value = Station(id = 0, stationId = "", name = "", latitude = 0.0, longitude = 0.0)
         Stations.getStationById(stationId) {
             station.value = it
         }

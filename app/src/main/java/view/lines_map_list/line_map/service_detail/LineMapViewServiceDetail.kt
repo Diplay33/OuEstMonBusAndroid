@@ -1,4 +1,4 @@
-package view.lines_map_list.line_map
+package view.lines_map_list.line_map.service_detail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

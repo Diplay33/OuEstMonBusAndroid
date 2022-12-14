@@ -3,8 +3,6 @@ package view.lines_map_list.line_map
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -15,14 +13,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.CameraPositionState
 import model.DTO.Line
-import model.DTO.Lines
 import model.DTO.Service
 import view.lines_map_list.line_map.messages_list.LineMapViewProgrammedMessagesViewMain
+import view.lines_map_list.line_map.service_detail.LineMapViewServiceDetail
 import java.util.Date
 
 @Composable
