@@ -1,6 +1,7 @@
 package view.lines_map_list.line_map
 
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
+import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.pm.PackageManager
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -140,7 +141,7 @@ fun LineMapViewTopBar(
                         //Get location permission
                         if (ContextCompat.checkSelfPermission(
                                 context,
-                                ACCESS_COARSE_LOCATION
+                                ACCESS_FINE_LOCATION
                             ) == PackageManager.PERMISSION_GRANTED
                         ) {
                             val fusedLocationProviderClient =
@@ -185,7 +186,7 @@ fun LineMapViewTopBar(
                                 print("Error: $e")
                             }
                         } else {
-                            launcher.launch(ACCESS_COARSE_LOCATION)
+                            launcher.launch(ACCESS_FINE_LOCATION)
                         }
                     }
                     .size(30.dp)
