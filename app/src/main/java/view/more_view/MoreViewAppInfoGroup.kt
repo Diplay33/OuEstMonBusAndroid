@@ -1,8 +1,6 @@
 package view.more_view
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -32,6 +30,25 @@ fun MoreViewAppInfoGroup() {
                 " ni à Keolis Bordeaux Métropole. \n Toutes les" +
                 " mentions (Lianes, Corol, Citéis, etc) sont des" +
                 " marques appartenants à Keolis.",
+            fontSize = 18.sp,
+            color = Color.LightGray,
+            textAlign = TextAlign.Center
+        )
+
+        Spacer(modifier = Modifier
+            .height(30.dp)
+        )
+
+        Text(
+            text = "Données fournies par Bordeaux Métropole, via leur programme OpenData.",
+            fontSize = 18.sp,
+            color = Color.LightGray,
+            textAlign = TextAlign.Center
+        )
+
+        Text(
+            text = "Où est mon bus se dédouane de toute responsabilité concernant d'éventuelles " +
+                    "données erronées.",
             fontSize = 18.sp,
             color = Color.LightGray,
             textAlign = TextAlign.Center
