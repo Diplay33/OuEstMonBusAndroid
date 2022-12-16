@@ -1,5 +1,6 @@
 package view
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
@@ -10,24 +11,29 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import view.Screens.BottomNavigationScreens
+import view.advert_view.AdvertView
 
 @Composable
 fun BottomNavigationBar(navController: NavController, items: List<BottomNavigationScreens>) {
-    BottomNavigation(backgroundColor = Color.White) {
-        val currentRoute = currentRoute(navController)
+    Column {
+        AdvertView()
 
-        items.forEach { screen ->
-            BottomNavigationItem(
-                icon = { Icon(imageVector = screen.icon, contentDescription = null) },
-                label = { Text(screen.name) },
-                selected = currentRoute == screen.route,
-                alwaysShowLabel = true,
-                onClick = {
-                    if(currentRoute != screen.route) {
-                        navController.navigate(screen.route)
+        BottomNavigation(backgroundColor = Color.White) {
+            val currentRoute = currentRoute(navController)
+
+            items.forEach { screen ->
+                BottomNavigationItem(
+                    icon = { Icon(imageVector = screen.icon, contentDescription = null) },
+                    label = { Text(screen.name) },
+                    selected = currentRoute == screen.route,
+                    alwaysShowLabel = true,
+                    onClick = {
+                        if(currentRoute != screen.route) {
+                            navController.navigate(screen.route)
+                        }
                     }
-                }
-            )
+                )
+            }
         }
     }
 }
