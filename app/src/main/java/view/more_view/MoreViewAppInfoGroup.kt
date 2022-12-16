@@ -10,6 +10,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.diplay.ouestmonbus.BuildConfig
 
 @Composable
 fun MoreViewAppInfoGroup() {
@@ -55,7 +56,7 @@ fun MoreViewAppInfoGroup() {
         )
 
         Text(
-            text = "v3.0 b01",
+            text = "v${BuildConfig.VERSION_NAME} b00",
             fontSize = 18.sp,
             color = Color(0xffE3E3E3),
             textAlign = TextAlign.Center
