@@ -21,16 +21,17 @@
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/more_view/MoreViewAppInfoGroup.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/more_view/MoreViewAppInfoGroup.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/NextSchedulesHomeFavoriteView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/NextSchedulesHomeFavoriteView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/search_line/search_stop_list/next_line_schedules/NextLineSchedulesView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/search_line/search_stop_list/next_line_schedules/NextLineSchedulesView.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[/Users/jacqueshu/.android/avd/Pixel_3a_API_33_arm64-v8a.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[26261JEGR16450]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />

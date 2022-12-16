@@ -99,7 +99,7 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoadi
                     val destination = NextSchedulesDestinations.getDestinationFromRaw((nextSchedule.destination))
                     val displayedTime = nextSchedule.getTimeLeft()
 
-                    if(nextSchedule.lineId == line.id) {
+                    if(nextSchedule.lineId == line.id && nextSchedule.getTimeLeft().toInt() >= 0) {
                         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 15.dp)
