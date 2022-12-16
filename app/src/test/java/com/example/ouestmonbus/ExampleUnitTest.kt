@@ -1,4 +1,4 @@
-package com.example.ouestmonbus
+package com.diplay.ouestmonbus
 
 import org.junit.Test
 

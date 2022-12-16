@@ -1,4 +1,4 @@
-package com.example.ouestmonbus
+package com.diplay.ouestmonbus
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -20,7 +20,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.ouestmonbus.ui.theme.OùEstMonBusTheme
+import com.diplay.ouestmonbus.ui.theme.OùEstMonBusTheme
 import kotlinx.coroutines.launch
 import model.preferences_data_store.StoreDisplayNotifCountParam
 import model.preferences_data_store.StoreFirstLaunch

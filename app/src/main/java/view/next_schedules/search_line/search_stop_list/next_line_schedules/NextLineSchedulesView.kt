@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.sp
 import model.DTO.Line
 import model.DTO.NextSchedule
 import model.DTO.NextSchedulesDestinations
-import com.example.ouestmonbus.R
+import com.diplay.ouestmonbus.R
 import kotlinx.coroutines.delay
 
 @Composable

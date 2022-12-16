@@ -1,4 +1,4 @@
-package com.example.ouestmonbus.ui.theme
+package com.diplay.ouestmonbus.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

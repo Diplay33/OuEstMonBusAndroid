@@ -4,7 +4,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.MutableLiveData
-import com.example.ouestmonbus.R
+import com.diplay.ouestmonbus.R
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.*

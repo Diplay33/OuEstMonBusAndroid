@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace 'com.example.ouestmonbus'
+    namespace 'com.diplay.ouestmonbus'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.example.ouestmonbus"
+        applicationId "com.diplay.ouestmonbus"
         minSdk 26
         targetSdk 33
         versionCode 1

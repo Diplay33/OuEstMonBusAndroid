@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.ouestmonbus.R
+import com.diplay.ouestmonbus.R
 import model.DTO.Station
 import model.DTO.Stations
 

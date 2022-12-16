@@ -14,8 +14,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="853b1dde-6ba6-4f74-bc27-81c49f9b99f7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/view/advert_view/AdvertView.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/checksums/checksums.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/checksums/md5-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/checksums/sha1-checksums.bin" afterDir="false" />
@@ -26,11 +24,28 @@
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/BottomNavigationBar.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/BottomNavigationBar.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/androidTest/java/com/example/ouestmonbus/ExampleInstrumentedTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/androidTest/java/com/example/ouestmonbus/ExampleInstrumentedTest.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/ouestmonbus/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/ouestmonbus/MainActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/ouestmonbus/ui/theme/Color.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/ouestmonbus/ui/theme/Color.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/ouestmonbus/ui/theme/Shape.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/ouestmonbus/ui/theme/Shape.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/ouestmonbus/ui/theme/Theme.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/ouestmonbus/ui/theme/Theme.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/example/ouestmonbus/ui/theme/Type.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/example/ouestmonbus/ui/theme/Type.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/model/DAO/AccessData/LineData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/DAO/AccessData/LineData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/model/DTO/Lines.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/DTO/Lines.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/advert_view/AdvertView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/advert_view/AdvertView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/line_map/LineMapView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/line_map/LineMapView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/line_map/service_detail/LineMapViewServiceDetailCurrentStopRow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/line_map/service_detail/LineMapViewServiceDetailCurrentStopRow.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/more_view/MoreViewContactTwitterRow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/more_view/MoreViewContactTwitterRow.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/more_view/all_services_list/service_detail/ServiceDetailMapRow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/more_view/all_services_list/service_detail/ServiceDetailMapRow.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/more_view/all_services_list/service_detail/ServiceDetailOperatorRow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/more_view/all_services_list/service_detail/ServiceDetailOperatorRow.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/more_view/all_services_list/service_detail/ServiceDetailSpeedRow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/more_view/all_services_list/service_detail/ServiceDetailSpeedRow.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/more_view/all_services_list/service_detail/ServiceDetailStateRow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/more_view/all_services_list/service_detail/ServiceDetailStateRow.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/more_view/all_services_list/service_detail/ServiceDetailVehicleRow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/more_view/all_services_list/service_detail/ServiceDetailVehicleRow.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/NextSchedulesHomeFavoriteView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/NextSchedulesHomeFavoriteView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/search_line/search_stop_list/next_line_schedules/NextLineSchedulesView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/search_line/search_stop_list/next_line_schedules/NextLineSchedulesView.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/test/java/com/example/ouestmonbus/ExampleUnitTest.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/test/java/com/example/ouestmonbus/ExampleUnitTest.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,6 +85,12 @@
       </list>
     </option>
   </component>
+  <component name="GenerateSignedApkSettings">
+    <option name="EXPORT_PRIVATE_KEY" value="false" />
+    <option name="KEY_STORE_PATH" value="$PROJECT_DIR$/../Android KeyStorePath/KeyStorePath" />
+    <option name="KEY_ALIAS" value="key0" />
+    <option name="REMEMBER_PASSWORDS" value="true" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -91,6 +112,9 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="BundleExportedModule" value="Où_est_mon_bus.app" />
+    <property name="ExportApk.ApkPath" value="$PROJECT_DIR$/app" />
+    <property name="ExportApk.BuildVariants" value="release" />
     <property name="ResourceManagerPrefKey.ResourceType" value="DRAWABLE" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
@@ -99,7 +123,7 @@
     <property name="cidr.known.project.marker" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.project.gradle" />
+    <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
     <key name="MoveKotlinTopLevelDeclarationsDialog.RECENTS_KEY">

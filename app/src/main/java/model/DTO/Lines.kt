@@ -1,7 +1,7 @@
 package model.DTO
 
 import android.content.Context
-import com.example.ouestmonbus.R
+import com.diplay.ouestmonbus.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking

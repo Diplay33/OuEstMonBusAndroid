@@ -14,7 +14,7 @@ import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.ouestmonbus.R
+import com.diplay.ouestmonbus.R
 
 @Composable
 fun MoreViewContactTwitterRow() {
