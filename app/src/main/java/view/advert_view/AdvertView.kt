@@ -11,6 +11,7 @@ import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.diplay.ouestmonbus.BuildConfig
 import com.diplay.ouestmonbus.R
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
@@ -35,7 +36,10 @@ fun AdvertView(modifier: Modifier = Modifier) {
             factory = { context ->
                 AdView(context).apply {
                     setAdSize(AdSize.BANNER)
-                    adUnitId = "ca-app-pub-7236221140829494/2080454618"
+                    adUnitId = if (BuildConfig.DEBUG)
+                        "ca-app-pub-3940256099942544/6300978111"
+                    else
+                        "ca-app-pub-7236221140829494/2080454618"
                     loadAd(AdRequest.Builder().build())
                 }
             },

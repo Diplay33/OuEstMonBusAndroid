@@ -10,13 +10,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.diplay.ouestmonbus.BuildConfig
 import view.Screens.BottomNavigationScreens
 import view.advert_view.AdvertView
 
 @Composable
 fun BottomNavigationBar(navController: NavController, items: List<BottomNavigationScreens>) {
     Column {
-        AdvertView()
+        if(!BuildConfig.DEBUG) {
+            AdvertView()
+        }
 
         BottomNavigation(backgroundColor = Color.White) {
             val currentRoute = currentRoute(navController)
