@@ -56,7 +56,7 @@ fun MoreViewAppInfoGroup() {
         )
 
         Text(
-            text = "v${BuildConfig.VERSION_NAME} b01",
+            text = "v${BuildConfig.VERSION_NAME} b${BuildConfig.VERSION_CODE}",
             fontSize = 18.sp,
             color = Color(0xffE3E3E3),
             textAlign = TextAlign.Center
