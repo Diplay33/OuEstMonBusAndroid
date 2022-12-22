@@ -28,6 +28,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.diplay.ouestmonbus.ui.theme.OùEstMonBusTheme
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.launch
 import model.preferences_data_store.StoreDisplayNotifCountParam
 import model.preferences_data_store.StoreFirstLaunch
@@ -68,7 +69,20 @@ class MainActivity : ComponentActivity() {
                 BottomNavigationScreens.Prochains,
                 BottomNavigationScreens.Plus
             )
-            
+
+            val colorScheme = !isSystemInDarkTheme()
+            val systemUiController = rememberSystemUiController()
+            if(colorScheme){
+                systemUiController.setSystemBarsColor(
+                    color = Color.White
+                )
+            }
+            else{
+                systemUiController.setSystemBarsColor(
+                    color = Color(0xff18191A)
+                )
+            }
+
             Scaffold(bottomBar = { BottomNavigationBar(navController, bottomNavigationItems) } ) {
                 NavHost(
                     navController = navController,
@@ -186,29 +200,6 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String) {
     Text(text = "Hello $name!")
-}
-
-private val ourDarkColorScheme = darkColorScheme(
-    primary = Color.Black,
-    secondary = Color.White
-)
-
-private val ourLightColorScheme = lightColorScheme(
-    primary = Color.Yellow,
-    secondary = Color.Black
-)
-
-@Composable
-fun OurAppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    content: @Composable () -> Unit
-) {
-    val colorScheme = if (darkTheme) ourDarkColorScheme else ourLightColorScheme
-
-    MaterialTheme(
-        content = content,
-        colorScheme = colorScheme
-    )
 }
 
 @Preview(showBackground = true)

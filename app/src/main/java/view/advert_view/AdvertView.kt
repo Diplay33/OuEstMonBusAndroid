@@ -1,6 +1,8 @@
 package view.advert_view
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
@@ -20,6 +22,8 @@ import com.google.android.gms.ads.AdView
 @Composable
 fun AdvertView(modifier: Modifier = Modifier) {
     val isInEditMode = LocalInspectionMode.current
+    val colorScheme = !isSystemInDarkTheme()
+
     if(isInEditMode) {
         Text(
             text = "Advert here",
@@ -32,19 +36,23 @@ fun AdvertView(modifier: Modifier = Modifier) {
         )
     }
     else {
-        AndroidView(
-            factory = { context ->
-                AdView(context).apply {
-                    setAdSize(AdSize.BANNER)
-                    adUnitId = if (BuildConfig.DEBUG)
-                        "ca-app-pub-3940256099942544/6300978111"
-                    else
-                        "ca-app-pub-7236221140829494/2080454618"
-                    loadAd(AdRequest.Builder().build())
-                }
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-        )
+        Row(modifier = Modifier
+            .background(if (colorScheme) Color.White else Color(0xff18191A))
+        ) {
+            AndroidView(
+                factory = { context ->
+                    AdView(context).apply {
+                        setAdSize(AdSize.BANNER)
+                        adUnitId = if (BuildConfig.DEBUG)
+                            "ca-app-pub-3940256099942544/6300978111"
+                        else
+                            "ca-app-pub-7236221140829494/2080454618"
+                        loadAd(AdRequest.Builder().build())
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+        }
     }
 }
