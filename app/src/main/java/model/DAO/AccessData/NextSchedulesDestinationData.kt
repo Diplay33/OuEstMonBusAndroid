@@ -133,6 +133,7 @@ class NextSchedulesDestinationData {
             "République" to listOf("BORDEAUX", "République"),
             "Rives d'Arcins" to listOf("BÈGLES", "Rives d'Arcins"),
             "Romainville" to listOf("PESSAC", "Romainville"),
+            "Rue Achard" to listOf("BORDEAUX", "Rue Achard"),
             //Q
             "Quai Français" to listOf("BASSENS", "Quai Français"),
             "Quinconces" to listOf("BORDEAUX", "Quinconces"),
