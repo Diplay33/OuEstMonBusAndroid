@@ -1,6 +1,7 @@
 package view.more_view
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Switch
@@ -23,13 +24,14 @@ fun MoreViewSettingsDisplayNotifCountRow() {
     val scope = rememberCoroutineScope()
     val dataStore = StoreDisplayNotifCountParam(context)
     val isEnabled = dataStore.isEnabled.collectAsState(initial = false)
+    val colorScheme = !isSystemInDarkTheme()
 
     Row(modifier = Modifier
         .padding(horizontal = 15.dp)
         .height(45.dp)
         .fillMaxWidth()
         .background(
-            Color(0xffF5F5F5),
+            if (colorScheme) Color(0xffF5F5F5) else Color(0xff18191A),
             shape = RoundedCornerShape(10.dp)
         )
     ) {
@@ -37,8 +39,12 @@ fun MoreViewSettingsDisplayNotifCountRow() {
             .fillMaxWidth()
             .padding(horizontal = 15.dp)
         ) {
-            Text(text = "Afficher le nombre de messages", fontSize = 18.sp, modifier = Modifier
-                .align(Alignment.CenterVertically)
+            Text(
+                text = "Afficher le nombre de messages",
+                fontSize = 18.sp,
+                color = if (colorScheme) Color.Black else Color.White,
+                modifier = Modifier
+                    .align(Alignment.CenterVertically)
             )
 
             Switch(

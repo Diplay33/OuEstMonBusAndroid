@@ -2,6 +2,7 @@ package view.more_view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -19,13 +20,15 @@ import view.Screens.PlusScreens
 
 @Composable
 fun MoreViewAllServicesRow(navController: NavController) {
+    val colorScheme = !isSystemInDarkTheme()
+
     Column {
         Row(modifier = Modifier
             .padding(horizontal = 15.dp)
             .height(45.dp)
             .fillMaxWidth()
             .background(
-                Color(0xffF5F5F5),
+                if (colorScheme) Color(0xffF5F5F5) else Color(0xff18191A),
                 shape = RoundedCornerShape(10.dp)
             )
             .clickable {
@@ -36,14 +39,20 @@ fun MoreViewAllServicesRow(navController: NavController) {
                 .padding(horizontal = 15.dp)
                 .align(Alignment.CenterVertically)
             ) {
-                Text(text = "Liste des véhicules",
+                Text(
+                    text = "Liste des véhicules",
                     fontSize = 18.sp,
+                    color = if (colorScheme) Color.Black else Color.White
                 )
 
                 Row(horizontalArrangement = Arrangement.End, modifier = Modifier
                     .fillMaxWidth()
                 ) {
-                    Icon(imageVector = Icons.Rounded.ArrowForward, contentDescription = null)
+                    Icon(
+                        imageVector = Icons.Rounded.ArrowForward,
+                        contentDescription = null,
+                        tint = if (colorScheme) Color.Black else Color.White
+                    )
                 }
             }
         }

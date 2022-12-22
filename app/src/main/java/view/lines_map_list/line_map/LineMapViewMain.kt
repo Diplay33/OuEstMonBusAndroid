@@ -1,6 +1,7 @@
 package view.lines_map_list.line_map
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -55,6 +56,7 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
     val userPosition = remember {
         mutableStateOf(LatLng(44.838670, -0.578620))
     }
+    val colorScheme = !isSystemInDarkTheme()
 
     BottomSheetScaffold(
         sheetContent = {
@@ -68,12 +70,16 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
                 cameraPositionState = cameraPositionState
             )
         },
-        sheetBackgroundColor = Color.White.copy(alpha = 0.9f),
+        sheetBackgroundColor = if (colorScheme)
+            Color.White.copy(alpha = 0.9f)
+        else
+            Color.Black.copy(alpha = 0.9f),
         sheetShape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp),
         sheetElevation = 0.dp,
         scaffoldState = rememberBottomSheetScaffoldState(
             bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Expanded)
-        )
+        ),
+        backgroundColor = if (colorScheme) Color.White else Color.Black
     ) { padding ->
         LaunchedEffect(line) {
             ProgrammedMessages.getNumberOfMessagesByLine(line.id.toString()) { count ->

@@ -3,16 +3,23 @@ package com.diplay.ouestmonbus
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavType
@@ -179,6 +186,29 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun Greeting(name: String) {
     Text(text = "Hello $name!")
+}
+
+private val ourDarkColorScheme = darkColorScheme(
+    primary = Color.Black,
+    secondary = Color.White
+)
+
+private val ourLightColorScheme = lightColorScheme(
+    primary = Color.Yellow,
+    secondary = Color.Black
+)
+
+@Composable
+fun OurAppTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    content: @Composable () -> Unit
+) {
+    val colorScheme = if (darkTheme) ourDarkColorScheme else ourLightColorScheme
+
+    MaterialTheme(
+        content = content,
+        colorScheme = colorScheme
+    )
 }
 
 @Preview(showBackground = true)

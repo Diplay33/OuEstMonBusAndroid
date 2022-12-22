@@ -7,6 +7,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -70,6 +71,7 @@ fun SearchLineViewRow(
     val context = LocalContext.current
     val storeFavLines = StoreFavoriteLines(context, line.id.toString())
     val isFavorite = storeFavLines.isFavorite.collectAsState(initial = false)
+    val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(line) {
         isLineInService.value = null
@@ -81,6 +83,10 @@ fun SearchLineViewRow(
     Column(modifier = Modifier
         .padding(horizontal = 15.dp)
         .padding(vertical = 5.dp)
+        .background(
+            if (colorScheme) Color.Transparent else Color(0xff18191A),
+            shape = RoundedCornerShape(10.dp)
+        )
         .background(
             colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
             shape = RoundedCornerShape(10.dp)
@@ -144,6 +150,7 @@ fun SearchLineViewRow(
                         text = line.lineName,
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
+                        color = if (colorScheme) Color.Black else Color.White,
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                     )
@@ -188,6 +195,7 @@ fun SearchLineViewRow(
                             Icon(
                                 imageVector = Icons.Rounded.ArrowForward,
                                 contentDescription = null,
+                                tint = if (colorScheme) Color.Black else Color.White,
                                 modifier = Modifier
                                     .rotate(rotation.value)
                             )
@@ -227,7 +235,12 @@ fun SearchLineViewRow(
             }
         }
 
-        DropdownMenu(expanded = menuShown.value, onDismissRequest = { menuShown.value = false }) {
+        DropdownMenu(
+            expanded = menuShown.value,
+            onDismissRequest = { menuShown.value = false },
+            modifier = Modifier
+                .background(if (colorScheme) Color.White else Color(0xff18191A))
+        ) {
             if(isFavorite.value == true) {
                 DropdownMenuItem(onClick = {
                     scope.launch {
@@ -241,6 +254,7 @@ fun SearchLineViewRow(
                         Icon(
                             imageVector = Icons.Rounded.Favorite,
                             contentDescription = null,
+                            tint = if (colorScheme) Color.Black else Color.White,
                             modifier = Modifier
                                 .size(30.dp)
                         )
@@ -249,8 +263,11 @@ fun SearchLineViewRow(
                             .width(5.dp)
                         )
 
-                        Text("Retirer des favoris", modifier = Modifier
-                            .align(Alignment.CenterVertically)
+                        Text(
+                            text = "Retirer des favoris",
+                            color = if (colorScheme) Color.Black else Color.White,
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically)
                         )
                     }
                 }
@@ -268,6 +285,7 @@ fun SearchLineViewRow(
                         Icon(
                             imageVector = Icons.Rounded.FavoriteBorder,
                             contentDescription = null,
+                            tint = if (colorScheme) Color.Black else Color.White,
                             modifier = Modifier
                                 .size(30.dp)
                         )
@@ -276,8 +294,11 @@ fun SearchLineViewRow(
                             .width(5.dp)
                         )
 
-                        Text("Ajouter aux favoris", modifier = Modifier
-                            .align(Alignment.CenterVertically)
+                        Text(
+                            text = "Ajouter aux favoris",
+                            color = if (colorScheme) Color.Black else Color.White,
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically)
                         )
                     }
                 }

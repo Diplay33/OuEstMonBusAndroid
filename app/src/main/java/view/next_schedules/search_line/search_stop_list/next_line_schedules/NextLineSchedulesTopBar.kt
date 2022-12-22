@@ -1,6 +1,7 @@
 package view.next_schedules.search_line.search_stop_list.next_line_schedules
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -27,7 +28,12 @@ fun NextLineSchedulesTopBar(
     stopName: String,
     line: Line
 ) {
-    TopAppBar(backgroundColor = Color.White, elevation = 0.dp) {
+    val colorScheme = !isSystemInDarkTheme()
+
+    TopAppBar(
+        backgroundColor = if (colorScheme) Color.White else Color.Black,
+        elevation = 0.dp
+    ) {
         val scope = rememberCoroutineScope()
         val context = LocalContext.current
         val storeFavStopsWithLine = StoreFavoriteStopsWithLine(context)
@@ -61,6 +67,7 @@ fun NextLineSchedulesTopBar(
             Icon(
                 imageVector = Icons.Rounded.ArrowBack,
                 contentDescription = null,
+                tint = if (colorScheme) Color.Black else Color.White,
                 modifier = Modifier
                     .clickable { navController.navigateUp() }
                     .size(30.dp)
@@ -75,7 +82,7 @@ fun NextLineSchedulesTopBar(
                     text = stopName,
                     style = MaterialTheme.typography.h5,
                     textAlign = TextAlign.Start,
-                    color = Color.Black,
+                    color = if (colorScheme) Color.Black else Color.White,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .padding(horizontal = 15.dp)
@@ -88,6 +95,7 @@ fun NextLineSchedulesTopBar(
                     else
                         Icons.Rounded.FavoriteBorder,
                     contentDescription = null,
+                    tint = if (colorScheme) Color.Black else Color.White,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                         .clickable {

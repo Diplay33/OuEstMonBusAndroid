@@ -2,6 +2,7 @@ package view.more_view.all_services_list.service_detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -21,9 +22,15 @@ import model.DTO.Line
 
 @Composable
 fun ServiceDetailHeader(line: Line, destination: List<String>) {
+    val colorScheme = !isSystemInDarkTheme()
+
     Row(modifier = Modifier
         .padding(horizontal = 15.dp)
         .fillMaxWidth()
+        .background(
+            if (colorScheme) Color.Transparent else Color(0xff18191A),
+            shape = RoundedCornerShape(10.dp)
+        )
         .background(
             color = colorResource(line.lineColorResource).copy(alpha = 0.2f),
             shape = RoundedCornerShape(10.dp)
@@ -47,6 +54,7 @@ fun ServiceDetailHeader(line: Line, destination: List<String>) {
                 text = line.lineName,
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
+                color = if (colorScheme) Color.Black else Color.White,
                 modifier = Modifier
                     .padding(horizontal = 10.dp)
             )
@@ -57,6 +65,7 @@ fun ServiceDetailHeader(line: Line, destination: List<String>) {
                 Icon(
                     imageVector = Icons.Rounded.PlayArrow,
                     contentDescription = null,
+                    tint = if (colorScheme) Color.Black else Color.White,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                         .offset(x = 4.dp)
@@ -78,8 +87,12 @@ fun ServiceDetailHeader(line: Line, destination: List<String>) {
                         )
                     }
 
-                    Text(destination.last(), fontSize = 18.sp, modifier = Modifier
-                        .offset(y = if (destination.first() == "") 0.dp else (-2).dp)
+                    Text(
+                        text = destination.last(),
+                        fontSize = 18.sp,
+                        color = if (colorScheme) Color.Black else Color.White,
+                        modifier = Modifier
+                            .offset(y = if (destination.first() == "") 0.dp else (-2).dp)
                     )
                 }
             }

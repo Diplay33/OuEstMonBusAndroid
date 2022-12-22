@@ -4,6 +4,7 @@ import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -16,6 +17,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -40,6 +42,7 @@ fun AllServicesListGroup(
         Animatable(currentRotation.value)
     }
     val scope = rememberCoroutineScope()
+    val colorScheme = !isSystemInDarkTheme()
 
     Column(modifier = Modifier
         .padding(bottom = 15.dp)
@@ -53,6 +56,7 @@ fun AllServicesListGroup(
                     text = services.first().vehicle.model,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
+                    color = if (colorScheme) Color.Black else Color.White,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                 )
@@ -60,6 +64,7 @@ fun AllServicesListGroup(
                 Icon(
                     imageVector = Icons.Rounded.ArrowDropDown,
                     contentDescription = null,
+                    tint = if (colorScheme) Color.Black else Color.White,
                     modifier = Modifier
                         .size(35.dp)
                         .rotate(rotation.value)

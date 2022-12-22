@@ -1,6 +1,7 @@
 package view.more_view.all_services_list.service_detail
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -19,13 +20,19 @@ import androidx.navigation.NavController
 
 @Composable
 fun ServiceDetailTopBar(vehicleParkId: String, navController: NavController) {
-    TopAppBar(backgroundColor = Color.White, elevation = 0.dp) {
+    val colorScheme = !isSystemInDarkTheme()
+
+    TopAppBar(
+        backgroundColor = if (colorScheme) Color.White else Color.Black,
+        elevation = 0.dp
+    ) {
         Row(modifier = Modifier
             .fillMaxWidth()
         ) {
             Icon(
                 imageVector = Icons.Rounded.ArrowBack,
                 contentDescription = null,
+                tint = if (colorScheme) Color.Black else Color.White,
                 modifier = Modifier
                     .clickable { navController.navigateUp() }
                     .size(30.dp)
@@ -40,7 +47,7 @@ fun ServiceDetailTopBar(vehicleParkId: String, navController: NavController) {
                     text = "Véhicule n°$vehicleParkId",
                     style = MaterialTheme.typography.h5,
                     textAlign = TextAlign.Center,
-                    color = Color.Black,
+                    color = if (colorScheme) Color.Black else Color.White,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .padding(horizontal = 15.dp)

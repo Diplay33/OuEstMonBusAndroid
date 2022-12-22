@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
@@ -13,27 +14,30 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.content.ContextCompat
 import com.diplay.ouestmonbus.R
-import com.google.android.gms.maps.model.BitmapDescriptor
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.*
 import com.google.maps.android.compose.*
 import model.DTO.Station
 import model.DTO.Stations
+import view.lines_map_list.line_map.MapStyle
 
 @Composable
 fun ServiceDetailMapRow(lineName: String, stationId: String, latitude: Double, longitude: Double) {
+    val colorScheme = !isSystemInDarkTheme()
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(LatLng(latitude + 0.0005, longitude), 15.5f)
     }
     val mapProperties by remember {
-        mutableStateOf(MapProperties(isBuildingEnabled = true))
+        mutableStateOf(MapProperties(
+            isBuildingEnabled = true,
+            mapStyleOptions = if (colorScheme) null else MapStyleOptions(MapStyle.json)
+        ))
     }
     val station = remember {
         mutableStateOf(Station(0, "", "", 0.0, 0.0))
@@ -93,7 +97,7 @@ fun ServiceDetailMapRow(lineName: String, stationId: String, latitude: Double, l
             .height(45.dp)
             .fillMaxWidth()
             .background(
-                Color(0xffF5F5F5).copy(alpha = 0.8f),
+                Color(if (colorScheme) 0xffF5F5F5 else 0xff18191A).copy(alpha = 0.8f),
                 shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp)
             )
         ) {
@@ -111,6 +115,10 @@ fun ServiceDetailMapRow(lineName: String, stationId: String, latitude: Double, l
                     Image(
                         painter = painterResource(id = R.drawable.mappin),
                         contentDescription = null,
+                        colorFilter = ColorFilter.tint(if (colorScheme)
+                            Color.Black
+                        else
+                            Color.White),
                         modifier = Modifier
                             .size(20.dp)
                             .align(Alignment.CenterVertically)
@@ -123,6 +131,7 @@ fun ServiceDetailMapRow(lineName: String, stationId: String, latitude: Double, l
                     Text(
                         text = station.value.name,
                         fontSize = 18.sp,
+                        color = if (colorScheme) Color.Black else Color.White,
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                     )

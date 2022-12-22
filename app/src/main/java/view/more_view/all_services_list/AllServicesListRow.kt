@@ -3,6 +3,7 @@ package view.more_view.all_services_list
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -27,6 +28,7 @@ import view.Screens.PlusScreens
 fun AllServicesListRow(service: Service, navController: NavController) {
     val line = Lines.getLine(service.lineId.toString())
     val destination = Destinations.getDestinationFromRaw(service.destination)
+    val colorScheme = !isSystemInDarkTheme()
 
     Row(modifier = Modifier
         .padding(horizontal = 15.dp)
@@ -34,6 +36,10 @@ fun AllServicesListRow(service: Service, navController: NavController) {
         .fillMaxWidth()
     ) {
         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
+            .background(
+                if (colorScheme) Color.Transparent else Color(0xff18191A),
+                shape = RoundedCornerShape(10.dp)
+            )
             .background(
                 color = colorResource(line.lineColorResource).copy(alpha = 0.2f),
                 shape = RoundedCornerShape(10.dp)
@@ -73,6 +79,7 @@ fun AllServicesListRow(service: Service, navController: NavController) {
                         text = line.lineName,
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
+                        color = if (colorScheme) Color.Black else Color.White,
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                     )
@@ -82,6 +89,7 @@ fun AllServicesListRow(service: Service, navController: NavController) {
                     Icon(
                         imageVector = Icons.Rounded.PlayArrow,
                         contentDescription = null,
+                        tint = if (colorScheme) Color.Black else Color.White,
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .offset(x = (-7).dp)
@@ -101,8 +109,12 @@ fun AllServicesListRow(service: Service, navController: NavController) {
                             )
                         }
 
-                        Text(destination.last(), fontSize = 18.sp, modifier = Modifier
-                            .offset(y = if (destination.first() == "") 0.dp else (-2).dp)
+                        Text(
+                            text = destination.last(),
+                            fontSize = 18.sp,
+                            color = if (colorScheme) Color.Black else Color.White,
+                            modifier = Modifier
+                                .offset(y = if (destination.first() == "") 0.dp else (-2).dp)
                         )
                     }
                 }
@@ -111,8 +123,13 @@ fun AllServicesListRow(service: Service, navController: NavController) {
             Row(modifier = Modifier
                 .align(Alignment.CenterVertically)
             ) {
-                Text(service.vehicle.parkId, fontSize = 18.sp, fontWeight = FontWeight.Bold, modifier = Modifier
-                    .align(Alignment.CenterVertically)
+                Text(
+                    text = service.vehicle.parkId,
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = if (colorScheme) Color.Black else Color.White,
+                    modifier = Modifier
+                        .align(Alignment.CenterVertically)
                 )
 
                 Spacer(modifier = Modifier
@@ -122,6 +139,7 @@ fun AllServicesListRow(service: Service, navController: NavController) {
                 Icon(
                     imageVector = Icons.Rounded.ArrowForward,
                     contentDescription = null,
+                    tint = if (colorScheme) Color.Black else Color.White,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                 )

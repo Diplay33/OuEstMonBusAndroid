@@ -1,11 +1,13 @@
 package view.next_schedules.search_line
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -19,12 +21,19 @@ fun SearchLineViewGroup(
     isFavorite: Boolean,
     navController: NavController
 ) {
+    val colorScheme = !isSystemInDarkTheme()
+
     Column(modifier = Modifier
         .padding(vertical = if (lines.isEmpty()) 0.dp else 10.dp)
     ) {
         if(isFavorite && lines.isNotEmpty()) {
-            Text("Favoris", fontWeight = FontWeight.Bold, fontSize = 18.sp, modifier = Modifier
-                .padding(start = 15.dp)
+            Text(
+                text = "Favoris",
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp,
+                color = if (colorScheme) Color.Black else Color.White,
+                modifier = Modifier
+                    .padding(start = 15.dp)
             )
         }
 

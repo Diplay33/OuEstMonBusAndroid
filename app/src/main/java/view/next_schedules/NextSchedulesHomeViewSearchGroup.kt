@@ -2,6 +2,7 @@ package view.next_schedules
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -20,11 +21,14 @@ import view.Screens.ProchainsScreens
 
 @Composable
 fun NextSchedulesHomeViewSearchGroup(navController: NavController) {
+    val colorScheme = !isSystemInDarkTheme()
+
     Column {
         Text(
             text = "Rechercher par",
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
+            color = if (colorScheme) Color.Black else Color.White,
             modifier = Modifier
                 .padding(start = 15.dp)
         )
@@ -34,7 +38,7 @@ fun NextSchedulesHomeViewSearchGroup(navController: NavController) {
             .height(45.dp)
             .fillMaxWidth()
             .background(
-                Color(0xffF5F5F5),
+                if (colorScheme) Color(0xffF5F5F5) else Color(0xff18191A),
                 shape = RoundedCornerShape(10.dp)
             )
             .clickable { navController.navigate(ProchainsScreens.SearchLineView.route) }
@@ -44,9 +48,17 @@ fun NextSchedulesHomeViewSearchGroup(navController: NavController) {
                 .padding(horizontal = 15.dp)
                 .align(Alignment.CenterVertically)
             ) {
-                Text(text = "Ligne", fontSize = 18.sp)
+                Text(
+                    text = "Ligne",
+                    fontSize = 18.sp,
+                    color = if (colorScheme) Color.Black else Color.White
+                )
 
-                Icon(imageVector = Icons.Rounded.ArrowForward, contentDescription = null)
+                Icon(
+                    imageVector = Icons.Rounded.ArrowForward,
+                    contentDescription = null,
+                    tint = if (colorScheme) Color.Black else Color.White
+                )
             }
         }
     }

@@ -2,6 +2,7 @@ package view.more_view.all_services_list.service_detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -16,12 +17,14 @@ import com.diplay.ouestmonbus.R
 
 @Composable
 fun ServiceDetailOperatorRow(operator: String) {
+    val colorScheme = !isSystemInDarkTheme()
+
     Row(modifier = Modifier
         .padding(horizontal = 15.dp)
         .height(45.dp)
         .fillMaxWidth()
         .background(
-            Color(0xffF5F5F5),
+            if (colorScheme) Color(0xffF5F5F5) else Color(0xff18191A),
             shape = RoundedCornerShape(10.dp)
         )
     ) {
@@ -49,7 +52,11 @@ fun ServiceDetailOperatorRow(operator: String) {
                 .width(15.dp)
             )
 
-            Text(operator, fontSize = 18.sp)
+            Text(
+                text = operator,
+                fontSize = 18.sp,
+                color = if (colorScheme) Color.Black else Color.White
+            )
         }
     }
 }

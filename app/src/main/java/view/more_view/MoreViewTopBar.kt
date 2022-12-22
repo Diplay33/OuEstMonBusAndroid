@@ -1,5 +1,6 @@
 package view.more_view
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -13,11 +14,16 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun MoreTopBar() {
-    TopAppBar(backgroundColor = Color.White, elevation = 0.dp) {
+    val colorScheme = !isSystemInDarkTheme()
+
+    TopAppBar(
+        backgroundColor = if (colorScheme) Color.White else Color.Black,
+        elevation = 0.dp
+    ) {
         Text("Plus",
             style = MaterialTheme.typography.h4,
             textAlign = TextAlign.Center,
-            color = Color.Black,
+            color = if (colorScheme) Color.Black else Color.White,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .padding(horizontal = 15.dp)

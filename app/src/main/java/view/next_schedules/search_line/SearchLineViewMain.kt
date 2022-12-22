@@ -1,6 +1,8 @@
 package view.next_schedules.search_line
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -14,6 +16,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
@@ -38,11 +41,13 @@ fun SearchLineViewMain(
     val linesByGroup = remember {
         mutableStateListOf<List<Line>>()
     }
+    val colorScheme = !isSystemInDarkTheme()
 
     Scaffold(topBar = { SearchLineViewTopBar(navController) }) { padding ->
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(padding)
+            .background(if (colorScheme) Color.White else Color.Black)
         ) {
             LinesMapListSearchBar(
                 query = state.query,

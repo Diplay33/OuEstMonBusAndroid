@@ -1,6 +1,8 @@
 package view.lines_map_list
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -12,6 +14,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
@@ -28,12 +31,14 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
     val linesByGroup = remember {
         mutableStateListOf<ArrayList<Line>>()
     }
+    val colorScheme = !isSystemInDarkTheme()
 
     Scaffold(topBar = { LinesMapListTopBar() }) { padding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
+                .background(if (colorScheme) Color.White else Color.Black)
         ) {
             LinesMapListSearchBar(
                 query = state.query,
@@ -55,7 +60,9 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
 
             when(state.searchDisplay) {
                 SearchDisplay.INITIALRESULTS -> {
-                    LazyColumn {
+                    LazyColumn(modifier = Modifier
+                        .background(if (colorScheme) Color.White else Color.Black)
+                    ) {
                         items(linesByGroup) { lines ->
                             LinesMapListGroup(
                                 lines = lines,
@@ -77,8 +84,12 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
                     Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
                         .fillMaxWidth()
                     ) {
-                        Text("Aucun résultat", textAlign = TextAlign.Center, modifier = Modifier
-                            .padding(vertical = 10.dp)
+                        Text(
+                            text = "Aucun résultat",
+                            textAlign = TextAlign.Center,
+                            color = if (colorScheme) Color.Black else Color.White,
+                            modifier = Modifier
+                                .padding(vertical = 10.dp)
                         )
                     }
                 }

@@ -2,6 +2,7 @@ package view.next_schedules.search_line.search_stop_list.next_line_schedules
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
@@ -34,9 +35,14 @@ fun NextLineSchedulesHeader(
         mutableSetOf<String>()
     }
     paths.forEach { destinationsSet.add(it.getDestinationName()) }
+    val colorScheme = !isSystemInDarkTheme()
 
     Column(modifier = Modifier
         .padding(horizontal = 15.dp)
+        .background(
+            if (colorScheme) Color.Transparent else Color(0xff18191A),
+            shape = RoundedCornerShape(10.dp)
+        )
         .background(
             colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
             shape = RoundedCornerShape(10.dp)
@@ -58,6 +64,7 @@ fun NextLineSchedulesHeader(
                 text = line.lineName,
                 fontSize = 23.sp,
                 fontWeight = FontWeight.Bold,
+                color = if (colorScheme) Color.Black else Color.White,
                 modifier = Modifier
                     .padding(horizontal = 15.dp)
                     .padding(vertical = 13.dp)
@@ -76,7 +83,10 @@ fun NextLineSchedulesHeader(
         ) {
             Row(modifier = Modifier
                 .background(
-                    Color.White.copy(alpha = 0.4f),
+                    if (colorScheme)
+                        Color.White.copy(alpha = 0.4f)
+                    else
+                        Color(0xff18191A).copy(alpha = 0.4f),
                     shape = RoundedCornerShape(10.dp)
                 )
                 .padding(start = 15.dp)
@@ -87,6 +97,7 @@ fun NextLineSchedulesHeader(
                     Icon(
                         imageVector = Icons.Rounded.PlayArrow,
                         contentDescription = null,
+                        tint = if (colorScheme) Color.Black else Color.White,
                         modifier = Modifier
                             .align(Alignment.CenterVertically)
                             .offset(x = (-7).dp)
@@ -103,16 +114,24 @@ fun NextLineSchedulesHeader(
                                 .align(Alignment.CenterVertically)
                             ) {
                                 destinationsSet.forEach { destination ->
-                                    Text(text = destination, fontSize = 18.sp, modifier = Modifier
-                                        .padding(vertical = 8.dp)
-                                        .padding(end = 15.dp)
-                                        .fillMaxWidth(fraction = 0.85f)
+                                    Text(
+                                        text = destination,
+                                        fontSize = 18.sp,
+                                        color = if (colorScheme) Color.Black else Color.White,
+                                        modifier = Modifier
+                                            .padding(vertical = 8.dp)
+                                            .padding(end = 15.dp)
+                                            .fillMaxWidth(fraction = 0.85f)
                                     )
 
                                     if(destination != destinationsSet.last()) {
                                         Box(modifier = Modifier
                                             .clip(RectangleShape)
-                                            .background(Color.LightGray)
+                                            .background(if (colorScheme)
+                                                Color.LightGray
+                                            else
+                                                Color.Gray
+                                            )
                                             .fillMaxWidth()
                                             .height(1.dp)
                                         )
@@ -135,15 +154,23 @@ fun NextLineSchedulesHeader(
                                             .offset(y = 2.dp)
                                     )
 
-                                    Text(destination.last(), fontSize = 18.sp, modifier = Modifier
-                                        .offset(y = (-2).dp)
+                                    Text(
+                                        text = destination.last(),
+                                        fontSize = 18.sp,
+                                        color = if (colorScheme) Color.Black else Color.White,
+                                        modifier = Modifier
+                                            .offset(y = (-2).dp)
                                     )
                                 }
 
                                 if(destination != destinations.last()) {
                                     Box(modifier = Modifier
                                         .clip(RectangleShape)
-                                        .background(Color.LightGray)
+                                        .background(if (colorScheme)
+                                            Color.LightGray
+                                        else
+                                            Color.Gray
+                                        )
                                         .fillMaxWidth()
                                         .height(1.dp)
                                     )

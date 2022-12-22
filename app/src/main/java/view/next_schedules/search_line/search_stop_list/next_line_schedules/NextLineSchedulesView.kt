@@ -3,6 +3,7 @@ package view.next_schedules.search_line.search_stop_list.next_line_schedules
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -35,6 +37,7 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoadi
     }
     val indicatorOpacityState = if (animationState.value) 0.1f else 0.8f
     val indicatorOpacity by animateFloatAsState(targetValue = indicatorOpacityState)
+    val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(line) {
         delay(1000)
@@ -48,6 +51,7 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoadi
         text = "Prochains passages",
         fontWeight = FontWeight.Bold,
         fontSize = 18.sp,
+        color = if (colorScheme) Color.Black else Color.White,
         modifier = Modifier
             .padding(horizontal = 15.dp)
     )
@@ -91,6 +95,10 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoadi
                 .fillMaxWidth()
                 .padding(horizontal = 15.dp)
                 .background(
+                    if (colorScheme) Color.Transparent else Color(0xff18191A),
+                    shape = RoundedCornerShape(10.dp)
+                )
+                .background(
                     colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
                     shape = RoundedCornerShape(10.dp)
                 )
@@ -108,15 +116,20 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoadi
                                 Icon(
                                     imageVector = Icons.Rounded.PlayArrow,
                                     contentDescription = null,
+                                    tint = if (colorScheme) Color.Black else Color.White,
                                     modifier = Modifier
                                         .align(Alignment.CenterVertically)
                                         .offset(x = (-7).dp)
                                 )
 
                                 if(destination.isEmpty()) {
-                                    Text(text = nextSchedule.destination, fontSize = 18.sp, modifier = Modifier
-                                        .padding(vertical = 8.dp)
-                                        .align(Alignment.CenterVertically)
+                                    Text(
+                                        text = nextSchedule.destination,
+                                        fontSize = 18.sp,
+                                        color = if (colorScheme) Color.Black else Color.White,
+                                        modifier = Modifier
+                                            .padding(vertical = 8.dp)
+                                            .align(Alignment.CenterVertically)
                                     )
                                 }
                                 else {
@@ -131,8 +144,12 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoadi
                                                 .offset(y = 2.dp)
                                         )
 
-                                        Text(destination.last(), fontSize = 18.sp, modifier = Modifier
-                                            .offset(y = (-2).dp)
+                                        Text(
+                                            text = destination.last(),
+                                            fontSize = 18.sp,
+                                            color = if (colorScheme) Color.Black else Color.White,
+                                            modifier = Modifier
+                                                .offset(y = (-2).dp)
                                         )
                                     }
                                 }
@@ -150,6 +167,7 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoadi
                                     Text(
                                         text = "PROCHE",
                                         fontSize = 8.sp,
+                                        color = if (colorScheme) Color.Black else Color.White,
                                         fontWeight = FontWeight.Bold
                                     )
                                 }
@@ -159,13 +177,15 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoadi
                                     ) {
                                         Text(
                                             text = displayedTime,
-                                            fontSize = 15.sp
+                                            fontSize = 15.sp,
+                                            color = if (colorScheme) Color.Black else Color.White
                                         )
 
                                         Text(
                                             text = "MIN",
                                             fontSize = 10.sp,
                                             fontWeight = FontWeight.Bold,
+                                            color = if (colorScheme) Color.Black else Color.White,
                                             modifier = Modifier
                                                 .offset(y = (-3).dp)
                                         )
@@ -176,6 +196,10 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoadi
                                     Image(
                                         painter = painterResource(id = R.drawable.bean_small),
                                         contentDescription = null,
+                                        colorFilter = ColorFilter.tint(if (colorScheme)
+                                            Color.Black
+                                        else
+                                            Color.White),
                                         modifier = Modifier
                                             .size(15.dp)
                                             .offset(x = 11.dp, y = (-11).dp)

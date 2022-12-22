@@ -1,6 +1,7 @@
 package view.lines_map_list.line_map.messages_list
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -18,6 +19,8 @@ import java.time.format.DateTimeFormatter
 
 @Composable
 fun LineMapViewProgrammedMessagesViewRow(programmedMessage: ProgrammedMessage) {
+    val colorScheme = !isSystemInDarkTheme()
+
     Row(modifier = Modifier
         .padding(horizontal = 15.dp)
         .fillMaxWidth()
@@ -25,6 +28,10 @@ fun LineMapViewProgrammedMessagesViewRow(programmedMessage: ProgrammedMessage) {
     ) {
         Column {
             Column(modifier = Modifier
+                .background(
+                    if (colorScheme) Color.Transparent else Color(0xff18191A),
+                    shape = RoundedCornerShape(10.dp)
+                )
                 .background(
                     when(programmedMessage.severity) {
                         Severity.LOW -> Color(0xff358BCC).copy(alpha = 0.1f)
@@ -59,7 +66,7 @@ fun LineMapViewProgrammedMessagesViewRow(programmedMessage: ProgrammedMessage) {
 
                     Box(modifier = Modifier
                         .clip(RectangleShape)
-                        .background(Color.LightGray)
+                        .background(if (colorScheme) Color.LightGray else Color.Gray)
                         .fillMaxWidth()
                         .height(1.dp)
                     )
@@ -68,6 +75,7 @@ fun LineMapViewProgrammedMessagesViewRow(programmedMessage: ProgrammedMessage) {
                 Text(
                     text = programmedMessage.bodyMessage.replace("\\s+".toRegex(), " "),
                     fontSize = 18.sp,
+                    color = if (colorScheme) Color.Black else Color.White,
                     modifier = Modifier
                         .padding(vertical = 7.dp)
                         .padding(horizontal = 15.dp)

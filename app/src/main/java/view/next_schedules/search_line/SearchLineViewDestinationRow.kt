@@ -2,6 +2,7 @@ package view.next_schedules.search_line
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -34,6 +35,7 @@ fun SearchLineViewDestinationRow(
     val destinationsSet = remember {
         mutableSetOf<String>()
     }
+    val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(paths) {
         paths.forEach { path ->
@@ -43,7 +45,10 @@ fun SearchLineViewDestinationRow(
 
     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
         .background(
-            Color.White.copy(alpha = 0.4f),
+            if (colorScheme)
+                Color.White.copy(alpha = 0.4f)
+            else
+                Color(0xff18191A).copy(alpha = 0.4f),
             shape = RoundedCornerShape(10.dp)
         )
         .clickable {
@@ -59,6 +64,7 @@ fun SearchLineViewDestinationRow(
             Icon(
                 imageVector = Icons.Rounded.PlayArrow,
                 contentDescription = null,
+                tint = if (colorScheme) Color.Black else Color.White,
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
                     .offset(x = (-7).dp)
@@ -69,15 +75,19 @@ fun SearchLineViewDestinationRow(
             ) {
                 if(destinations.isEmpty()) {
                     destinationsSet.forEach { destination ->
-                        Text(text = destination, fontSize = 18.sp, modifier = Modifier
-                            .padding(vertical = 8.dp)
-                            .fillMaxWidth(fraction = 0.85f)
+                        Text(
+                            text = destination,
+                            fontSize = 18.sp,
+                            color = if (colorScheme) Color.Black else Color.White,
+                            modifier = Modifier
+                                .padding(vertical = 8.dp)
+                                .fillMaxWidth(fraction = 0.85f)
                         )
 
                         if(destination != destinationsSet.last()) {
                             Box(modifier = Modifier
                                 .clip(RectangleShape)
-                                .background(Color.LightGray)
+                                .background(if (colorScheme) Color.LightGray else Color.Gray)
                                 .fillMaxWidth(fraction = 0.85f)
                                 .height(1.dp)
                             )
@@ -95,15 +105,19 @@ fun SearchLineViewDestinationRow(
                                     .offset(y = 2.dp)
                             )
 
-                            Text(destination.last(), fontSize = 18.sp, modifier = Modifier
-                                .offset(y = (-2).dp)
+                            Text(
+                                text = destination.last(),
+                                fontSize = 18.sp,
+                                color = if (colorScheme) Color.Black else Color.White,
+                                modifier = Modifier
+                                    .offset(y = (-2).dp)
                             )
                         }
 
                         if(destination != destinations.last()) {
                             Box(modifier = Modifier
                                 .clip(RectangleShape)
-                                .background(Color.LightGray)
+                                .background(if (colorScheme) Color.LightGray else Color.Gray)
                                 .fillMaxWidth(fraction = 0.85f)
                                 .height(1.dp)
                             )
@@ -113,8 +127,12 @@ fun SearchLineViewDestinationRow(
             }
         }
 
-        Icon(imageVector = Icons.Rounded.ArrowForward, contentDescription = null, modifier = Modifier
-            .align(Alignment.CenterVertically)
+        Icon(
+            imageVector = Icons.Rounded.ArrowForward,
+            contentDescription = null,
+            tint = if (colorScheme) Color.Black else Color.White,
+            modifier = Modifier
+                .align(Alignment.CenterVertically)
         )
     }
 }

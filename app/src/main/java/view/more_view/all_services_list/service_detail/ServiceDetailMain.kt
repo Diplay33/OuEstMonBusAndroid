@@ -1,11 +1,14 @@
 package view.more_view.all_services_list.service_detail
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import model.DTO.Destinations
@@ -27,11 +30,14 @@ fun ServiceDetailMain(
 ) {
     val line = Lines.getLine(lineId)
     val vehicle = Vehicles.getVehicleById(vehicleId ?: "")
+    val colorScheme = !isSystemInDarkTheme()
 
     Scaffold(topBar = { ServiceDetailTopBar(vehicle.parkId, navController) }) { padding ->
         Column(modifier = Modifier
+            .fillMaxHeight()
             .verticalScroll(rememberScrollState())
             .padding(padding)
+            .background(if (colorScheme) Color.White else Color.Black)
         ) {
             ServiceDetailHeader(
                 line = line,

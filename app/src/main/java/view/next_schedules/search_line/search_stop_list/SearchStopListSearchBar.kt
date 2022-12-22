@@ -2,6 +2,8 @@ package view.next_schedules.search_line.search_stop_list.next_line_schedules
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -65,23 +67,7 @@ fun rememberSearchState(
     }
 }
 
-@Composable
-private fun SearchHint(modifier: Modifier) {
-    Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
-        .fillMaxSize()
-        .then(modifier)
-    ) {
-        Icon(imageVector = Icons.Rounded.Search, contentDescription = null)
-
-        Spacer(modifier = Modifier
-            .width(10.dp)
-        )
-
-        Text("Rechercher", color = Color(0xff757575))
-    }
-}
-
-//
+//Missing part into AllServicesListSearchBar
 
 @ExperimentalAnimationApi
 @OptIn(ExperimentalComposeUiApi::class)
@@ -98,9 +84,11 @@ fun SearchStopListSearchBar(
 ) {
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
+    val colorScheme = !isSystemInDarkTheme()
     
     Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier
         .fillMaxWidth()
+        .background(if (colorScheme) Color.White else Color.Black)
     ) {
         AnimatedVisibility(visible = focused) {
             //Back button
@@ -111,8 +99,11 @@ fun SearchStopListSearchBar(
                     keyboardController?.hide()
                     onBack()
                 }) {
-
-                Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = null)
+                Icon(
+                    imageVector = Icons.Rounded.ArrowBack,
+                    contentDescription = null,
+                    tint = if (colorScheme) Color.Black else Color.White
+                )
             }
         }
 

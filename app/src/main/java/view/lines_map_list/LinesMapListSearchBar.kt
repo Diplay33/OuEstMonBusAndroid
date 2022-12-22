@@ -2,6 +2,8 @@ package view.lines_map_list
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -18,6 +20,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.TextFieldValue
@@ -73,17 +76,26 @@ fun rememberSearchState(
 
 @Composable
 private fun SearchHint(modifier: Modifier = Modifier) {
+    val colorScheme = !isSystemInDarkTheme()
+
     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier
         .fillMaxSize()
         .then(modifier)
     ) {
-        Icon(imageVector = Icons.Rounded.Search, contentDescription = null)
+        Icon(
+            imageVector = Icons.Rounded.Search,
+            contentDescription = null,
+            tint = if (colorScheme) Color.Gray else Color.White
+        )
 
         Spacer(modifier = Modifier
             .width(10.dp)
         )
 
-        Text("Rechercher une ligne", color = Color(0xff757575))
+        Text(
+            text = "Rechercher une ligne",
+            color = if (colorScheme) Color(0xff757575) else Color.White
+        )
     }
 }
 
@@ -98,9 +110,11 @@ fun SearchTextField(
     modifier: Modifier = Modifier
 ) {
     val focusRequester = remember { FocusRequester() }
+    val colorScheme = !isSystemInDarkTheme()
 
     Surface(
         modifier = modifier
+            .background(if (colorScheme) Color.White else Color.Black)
             .then(
                 Modifier
                     .height(56.dp)
@@ -111,7 +125,7 @@ fun SearchTextField(
                         end = 16.dp
                     )
             ),
-        color = Color(0xffF5F5F5),
+        color = if (colorScheme) Color(0xffF5F5F5) else Color(0xff18191A),
         shape = RoundedCornerShape(10.dp)
     ) {
         CompositionLocalProvider(LocalContentAlpha provides ContentAlpha.medium) {
@@ -123,15 +137,23 @@ fun SearchTextField(
                 }
 
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    BasicTextField(value = query, onValueChange = onQueryChange, modifier = Modifier
-                        .fillMaxHeight()
-                        .weight(1f)
-                        .onFocusChanged {
-                            onSearchFocusChange(it.isFocused)
-                        }
-                        .focusRequester(focusRequester)
-                        .padding(top = 9.dp, bottom = 8.dp, start = 24.dp, end = 8.dp),
-                    singleLine = true
+                    BasicTextField(
+                        value = query,
+                        onValueChange = onQueryChange,
+                        cursorBrush = SolidColor(if (colorScheme) Color.Black else Color.White),
+                        textStyle = LocalTextStyle.current.copy(if (colorScheme)
+                            Color.Black
+                        else
+                            Color.White),
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .weight(1f)
+                            .onFocusChanged {
+                                onSearchFocusChange(it.isFocused)
+                            }
+                            .focusRequester(focusRequester)
+                            .padding(top = 9.dp, bottom = 8.dp, start = 24.dp, end = 8.dp),
+                        singleLine = true
                     )
 
                     when {
@@ -143,7 +165,11 @@ fun SearchTextField(
                         }
                         query.text.isNotEmpty() -> {
                             IconButton(onClick = onClearQuery) {
-                                Icon(imageVector = Icons.Filled.Close, contentDescription = null)
+                                Icon(
+                                    imageVector = Icons.Filled.Close,
+                                    contentDescription = null,
+                                    tint = if (colorScheme) Color.Black else Color.White
+                                )
                             }
                         }
                     }
@@ -168,9 +194,11 @@ fun LinesMapListSearchBar(
 ) {
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
+    val colorScheme = !isSystemInDarkTheme()
     
     Row(verticalAlignment = Alignment.CenterVertically, modifier = modifier
         .fillMaxWidth()
+        .background(if (colorScheme) Color.White else Color.Black)
     ) {
         AnimatedVisibility(visible = focused) {
             //Back button
@@ -181,7 +209,11 @@ fun LinesMapListSearchBar(
                     keyboardController?.hide()
                     onBack()
                 }) {
-                Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = null)
+                Icon(
+                    imageVector = Icons.Rounded.ArrowBack,
+                    contentDescription = null,
+                    tint = if (colorScheme) Color.Black else Color.White
+                )
             }
         }
 

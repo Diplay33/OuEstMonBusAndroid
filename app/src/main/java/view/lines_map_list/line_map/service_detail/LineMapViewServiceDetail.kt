@@ -2,6 +2,7 @@ package view.lines_map_list.line_map.service_detail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
@@ -39,6 +40,7 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>) {
         currentStop = 0
     )
     val line = Lines.getLine(service.lineId.toString())
+    val colorScheme = !isSystemInDarkTheme()
 
     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
         .fillMaxWidth()
@@ -46,7 +48,7 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>) {
         Text(
             text = "Véhicule n°${service.vehicle.parkId}",
             fontSize = 25.sp,
-            color = Color.Black,
+            color = if (colorScheme) Color.Black else Color.White,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .padding(start = 15.dp)
@@ -56,7 +58,7 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>) {
         Box(contentAlignment = Alignment.Center, modifier = Modifier
             .padding(end = 15.dp)
             .clip(CircleShape)
-            .background(Color.LightGray)
+            .background(if (colorScheme) Color.LightGray else Color(0xff18191A))
             .size(35.dp)
             .clickable {
                 selectedService.value = null
@@ -64,7 +66,8 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>) {
         ) {
             Icon(
                 imageVector = Icons.Rounded.Close,
-                contentDescription = null
+                contentDescription = null,
+                tint = if (colorScheme) Color.Black else Color.White
             )
         }
     }

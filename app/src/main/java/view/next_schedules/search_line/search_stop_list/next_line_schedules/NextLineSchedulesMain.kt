@@ -1,5 +1,7 @@
 package view.next_schedules.search_line.search_stop_list.next_line_schedules
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -7,6 +9,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -35,6 +38,7 @@ fun NextLineSchedulesMain(
     val isLoading = remember {
         mutableStateOf(true)
     }
+    val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(stopName) {
         Paths.getOrderedPathsByLine(line.id) { returnedPaths ->
@@ -60,6 +64,8 @@ fun NextLineSchedulesMain(
     ) }) { padding ->
         LazyColumn(modifier = Modifier
             .padding(padding)
+            .fillMaxHeight()
+            .background(if (colorScheme) Color.White else Color.Black)
         ) {
             item {
                 NextLineSchedulesHeader(line, paths, destinations)

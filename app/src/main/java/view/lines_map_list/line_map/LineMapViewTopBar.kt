@@ -8,6 +8,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -56,6 +57,7 @@ fun LineMapViewTopBar(
             isDialogShown.value = true
         }
     }
+    val colorScheme = !isSystemInDarkTheme()
 
     if(isDialogShown.value) {
         AlertDialog(
@@ -63,12 +65,18 @@ fun LineMapViewTopBar(
                 isDialogShown.value = false
             },
             title = {
-                Text("Services de localisation désactivés")
+                Text(
+                    text = "Services de localisation désactivés",
+                    color = if (colorScheme) Color.Black else Color.White
+                )
             },
             text = {
-                Text("Pour pouvoir vous localiser sur la carte, veuillez autoriser " +
+                Text(
+                    text = "Pour pouvoir vous localiser sur la carte, veuillez autoriser " +
                         "l'application à accéder aux services de localisation depuis vos " +
-                        "paramètres système")
+                        "paramètres système",
+                    color = if (colorScheme) Color.Black else Color.White
+                )
             },
             confirmButton = {
                 Button(
@@ -78,7 +86,8 @@ fun LineMapViewTopBar(
                 ) {
                     Text("OK")
                 }
-            }
+            },
+            backgroundColor = if (colorScheme) Color.White else Color(0xff18191A)
         )
     }
 
@@ -88,11 +97,17 @@ fun LineMapViewTopBar(
                 isErrorDialogShown.value = false
             },
             title = {
-                Text("Erreur")
+                Text(
+                    text = "Erreur",
+                    color = if (colorScheme) Color.Black else Color.White
+                )
             },
             text = {
-                Text("Une erreur s'est produite lors de la récupération de votre position, " +
-                        "veuillez réessayer")
+                Text(
+                    text = "Une erreur s'est produite lors de la récupération de votre position, " +
+                        "veuillez réessayer",
+                    color = if (colorScheme) Color.Black else Color.White
+                )
             },
             confirmButton = {
                 Button(
@@ -102,7 +117,8 @@ fun LineMapViewTopBar(
                 ) {
                     Text("OK")
                 }
-            }
+            },
+            backgroundColor = if (colorScheme) Color.White else Color.Black
         )
     }
 
@@ -113,6 +129,7 @@ fun LineMapViewTopBar(
             Icon(
                 imageVector = Icons.Rounded.ArrowBack,
                 contentDescription = null,
+                tint = if (colorScheme) Color.Black else Color.White,
                 modifier = Modifier
                     .clickable { navController.navigateUp() }
                     .size(30.dp)
@@ -136,6 +153,7 @@ fun LineMapViewTopBar(
             Icon(
                 imageVector = Icons.Rounded.LocationOn,
                 contentDescription = null,
+                tint = if (colorScheme) Color.Black else Color.White,
                 modifier = Modifier
                     .clickable {
                         //Get location permission

@@ -1,6 +1,8 @@
 package view.next_schedules.search_line.search_stop_list
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -47,11 +49,13 @@ fun SearchStopListMain(
     val isLoading = remember {
         mutableStateOf(true)
     }
+    val colorScheme = !isSystemInDarkTheme()
 
     Scaffold(topBar = { SearchStopListTopBar(navController) }) { padding ->
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(padding)
+            .background(if (colorScheme) Color.White else Color.Black)
         ) {
             SearchStopListSearchBar(
                 query = state.query,
@@ -137,8 +141,12 @@ fun SearchStopListMain(
                         modifier = Modifier
                             .fillMaxWidth()
                     ) {
-                        Text("Aucun résultat", textAlign = TextAlign.Center, modifier = Modifier
-                            .padding(vertical = 10.dp)
+                        Text(
+                            text = "Aucun résultat",
+                            textAlign = TextAlign.Center,
+                            color = if (colorScheme) Color.Black else Color.White,
+                            modifier = Modifier
+                                .padding(vertical = 10.dp)
                         )
                     }
                 }

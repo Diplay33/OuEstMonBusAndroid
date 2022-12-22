@@ -2,6 +2,7 @@ package view.lines_map_list.line_map
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -32,6 +33,7 @@ fun LineMapViewServicesListRow(
 ) {
     val line = Lines.getLine(service.lineId.toString())
     val destination = Destinations.getDestinationFromRaw(service.destination)
+    val colorScheme = !isSystemInDarkTheme()
 
     Row(modifier = Modifier
         .padding(horizontal = 15.dp)
@@ -39,6 +41,10 @@ fun LineMapViewServicesListRow(
         .fillMaxWidth()
     ) {
         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
+            .background(
+                if (colorScheme) Color.Transparent else Color(0xff18191A),
+                shape = RoundedCornerShape(10.dp)
+            )
             .background(
                 color = colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
                 shape = RoundedCornerShape(10.dp)
@@ -58,6 +64,7 @@ fun LineMapViewServicesListRow(
                     text = service.vehicle.parkId,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
+                    color = if (colorScheme) Color.Black else Color.White,
                     modifier = Modifier
                         .width(if (service.vehicle.parkId.count() == 4) 46.dp else 68.dp)
                         .align(Alignment.CenterVertically)
@@ -81,8 +88,12 @@ fun LineMapViewServicesListRow(
                         )
                     }
 
-                    Text(destination.last(), fontSize = 18.sp, modifier = Modifier
-                        .offset(y = if (destination.first() == "") 0.dp else (-2).dp)
+                    Text(
+                        text = destination.last(),
+                        fontSize = 18.sp,
+                        color = if (colorScheme) Color.Black else Color.White,
+                        modifier = Modifier
+                            .offset(y = if (destination.first() == "") 0.dp else (-2).dp)
                     )
                 }
             }
@@ -90,6 +101,7 @@ fun LineMapViewServicesListRow(
             Icon(
                 imageVector = Icons.Rounded.ArrowForward,
                 contentDescription = null,
+                tint = if (colorScheme) Color.Black else Color.White,
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
             )

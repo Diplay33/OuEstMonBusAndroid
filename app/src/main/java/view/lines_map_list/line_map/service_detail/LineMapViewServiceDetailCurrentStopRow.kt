@@ -2,6 +2,7 @@ package view.lines_map_list.line_map.service_detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
@@ -13,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,6 +27,7 @@ fun LineMapViewServiceDetailCurrentStopRow(stationId: String) {
     val station = remember {
         mutableStateOf(Station(id = 0, stationId = "", name = "", latitude = 0.0, longitude = 0.0))
     }
+    val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(stationId) {
         station.value = Station(id = 0, stationId = "", name = "", latitude = 0.0, longitude = 0.0)
@@ -38,7 +41,7 @@ fun LineMapViewServiceDetailCurrentStopRow(stationId: String) {
         .height(45.dp)
         .fillMaxWidth()
         .background(
-            Color(0xffF5F5F5),
+            if (colorScheme) Color(0xffF5F5F5) else Color(0xff18191A),
             shape = RoundedCornerShape(10.dp)
         )
     ) {
@@ -56,6 +59,7 @@ fun LineMapViewServiceDetailCurrentStopRow(stationId: String) {
                 Image(
                     painter = painterResource(id = R.drawable.mappin),
                     contentDescription = null,
+                    colorFilter = ColorFilter.tint(if (colorScheme) Color.Black else Color.White),
                     modifier = Modifier
                         .size(20.dp)
                         .align(Alignment.CenterVertically)
@@ -68,6 +72,7 @@ fun LineMapViewServiceDetailCurrentStopRow(stationId: String) {
                 Text(
                     text = station.value.name,
                     fontSize = 18.sp,
+                    color = if (colorScheme) Color.Black else Color.White,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                 )

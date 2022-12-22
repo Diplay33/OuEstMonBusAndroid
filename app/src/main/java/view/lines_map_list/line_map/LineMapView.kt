@@ -1,5 +1,6 @@
 package view.lines_map_list.line_map
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.platform.LocalContext
@@ -7,6 +8,7 @@ import androidx.lifecycle.MutableLiveData
 import com.diplay.ouestmonbus.R
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.compose.*
 import model.DTO.Service
 import view.more_view.all_services_list.service_detail.bitmapDescriptor
@@ -20,8 +22,12 @@ fun LineMapView(
     isUserLocationShown: Boolean,
     userPosition: LatLng
 ) {
+    val colorScheme = !isSystemInDarkTheme()
     val mapProperties by remember {
-        mutableStateOf(MapProperties(isBuildingEnabled = true))
+        mutableStateOf(MapProperties(
+            isBuildingEnabled = true,
+            mapStyleOptions = if (colorScheme) null else MapStyleOptions(MapStyle.json)
+        ))
     }
     val mapUISettings by remember {
         mutableStateOf(MapUiSettings(compassEnabled = false, zoomControlsEnabled = false))

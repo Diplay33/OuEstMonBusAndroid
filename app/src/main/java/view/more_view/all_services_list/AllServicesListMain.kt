@@ -1,6 +1,8 @@
 package view.more_view.all_services_list
 
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
@@ -37,6 +39,7 @@ fun AllServicesListMain(
         mutableStateOf(Calendar.getInstance().time)
     }
     val formatter = SimpleDateFormat("HH:mm")
+    val colorScheme = !isSystemInDarkTheme()
 
     if(filteredServices.isEmpty()) {
         Services.getAllServices {
@@ -51,6 +54,7 @@ fun AllServicesListMain(
         Column(modifier = Modifier
             .fillMaxSize()
             .padding(padding)
+            .background(if (colorScheme) Color.White else Color.Black)
         ) {
             AllServicesListSearchBar(
                 query = state.query,

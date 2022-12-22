@@ -1,6 +1,7 @@
 package view.lines_map_list.line_map
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
@@ -39,6 +40,7 @@ fun LineMapViewServicesList(
     cameraPositionState: CameraPositionState
 ) {
     val formatter = SimpleDateFormat("HH:mm")
+    val colorScheme = !isSystemInDarkTheme()
 
     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
         .fillMaxWidth()
@@ -46,7 +48,7 @@ fun LineMapViewServicesList(
         Text(
             text = "Liste des véhicules",
             fontSize = 25.sp,
-            color = Color.Black,
+            color = if (colorScheme) Color.Black else Color.White,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .padding(start = 15.dp)
@@ -64,6 +66,7 @@ fun LineMapViewServicesList(
                 Icon(
                     imageVector = Icons.Rounded.MailOutline,
                     contentDescription = null,
+                    tint = if (colorScheme) Color.Black else Color.White,
                     modifier = Modifier
                         .padding(5.dp)
                         .size(30.dp)

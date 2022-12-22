@@ -1,6 +1,7 @@
 package view.more_view.all_services_list
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
@@ -27,13 +28,19 @@ fun AllServicesListTopBar(
     isLoading: MutableState<Boolean>,
     refreshDate: MutableState<Date>
 ) {
-    TopAppBar(backgroundColor = Color.White, elevation = 0.dp) {
+    val colorScheme = !isSystemInDarkTheme()
+
+    TopAppBar(
+        backgroundColor = if (colorScheme) Color.White else Color.Black,
+        elevation = 0.dp
+    ) {
         Row(modifier = Modifier
             .fillMaxWidth()
         ) {
             Icon(
                 imageVector = Icons.Rounded.ArrowBack,
                 contentDescription = null,
+                tint = if (colorScheme) Color.Black else Color.White,
                 modifier = Modifier
                     .clickable { navController.navigateUp() }
                     .size(30.dp)
@@ -44,10 +51,11 @@ fun AllServicesListTopBar(
                 .fillMaxWidth()
                 .align(Alignment.CenterVertically)
             ) {
-                Text("Liste des véhicules",
+                Text(
+                    text = "Liste des véhicules",
                     style = MaterialTheme.typography.h5,
                     textAlign = TextAlign.Center,
-                    color = Color.Black,
+                    color = if (colorScheme) Color.Black else Color.White,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .padding(horizontal = 15.dp)
@@ -63,6 +71,7 @@ fun AllServicesListTopBar(
                     Icon(
                         imageVector = Icons.Rounded.Refresh,
                         contentDescription = null,
+                        tint = if (colorScheme) Color.Black else Color.White,
                         modifier = Modifier
                             .clickable {
                                 isLoading.value = true

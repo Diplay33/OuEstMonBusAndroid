@@ -1,11 +1,13 @@
 package view.next_schedules
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -30,6 +32,7 @@ fun NextSchedulesHomeViewFavoritesGroup() {
     val isLoading = remember {
         mutableStateOf(false)
     }
+    val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect("a") {
         favoriteStopsSet.clear()
@@ -59,6 +62,7 @@ fun NextSchedulesHomeViewFavoritesGroup() {
                 text = "Arrêts favoris",
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
+                color = if (colorScheme) Color.Black else Color.White,
                 modifier = Modifier
                     .padding(start = 15.dp)
             )

@@ -3,6 +3,7 @@ package view.lines_map_list
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.DropdownMenu
@@ -56,6 +57,7 @@ fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Lin
     val storeDisplayNotifCount = StoreDisplayNotifCountParam(context)
     val isFavorite = storeFavLines.isFavorite.collectAsState(initial = false)
     val displayNotifCount = storeDisplayNotifCount.isEnabled.collectAsState(initial = false)
+    val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(rowLine) {
         servicesAreLoaded.value = false
@@ -85,6 +87,10 @@ fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Lin
     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
         .padding(vertical = 5.dp, horizontal = 15.dp)
         .background(
+            if (colorScheme) Color.Transparent else Color(0xff18191A),
+            shape = RoundedCornerShape(10.dp)
+        )
+        .background(
             colorResource(id = rowLine.lineColorResource).copy(alpha = 0.2f),
             shape = RoundedCornerShape(10.dp)
         )
@@ -111,8 +117,13 @@ fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Lin
                     .height(5.dp)
                 )
 
-                Text(rowLine.lineName, fontWeight = FontWeight.Bold, fontSize = 23.sp, modifier = Modifier
-                    .padding(horizontal = 10.dp)
+                Text(
+                    text = rowLine.lineName,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 23.sp,
+                    color = if (colorScheme) Color.Black else Color.White,
+                    modifier = Modifier
+                        .padding(horizontal = 10.dp)
                 )
 
                 Spacer(modifier = Modifier
@@ -146,7 +157,8 @@ fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Lin
                                 if (services.size == 1)
                                     "1 véhicule en service"
                                 else
-                                    services.size.toString() + " véhicules en service"
+                                    services.size.toString() + " véhicules en service",
+                            color = if (colorScheme) Color.Black else Color.White
                         )
                     }
                 }
@@ -172,13 +184,16 @@ fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Lin
                 Icon(
                     imageVector = Icons.Rounded.ArrowForward,
                     contentDescription = null,
+                    tint = if (colorScheme) Color.Black else Color.White
                 )
             }
         }
 
         DropdownMenu(
             expanded = menuShown.value,
-            onDismissRequest = { menuShown.value = false }
+            onDismissRequest = { menuShown.value = false },
+            modifier = Modifier
+                .background(if (colorScheme) Color.White else Color(0xff18191A))
         ) {
             if(isFavorite.value == true) {
                 DropdownMenuItem(onClick = {
@@ -190,16 +205,23 @@ fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Lin
                     menuShown.value = false
                 }) {
                     Row {
-                        Icon(imageVector = Icons.Rounded.Favorite, contentDescription = null, modifier = Modifier
-                            .size(30.dp)
+                        Icon(
+                            imageVector = Icons.Rounded.Favorite,
+                            contentDescription = null,
+                            tint = if (colorScheme) Color.Black else Color.White,
+                            modifier = Modifier
+                                .size(30.dp)
                         )
 
                         Spacer(modifier = Modifier
                             .width(5.dp)
                         )
 
-                        Text("Retirer des favoris", modifier = Modifier
-                            .align(Alignment.CenterVertically)
+                        Text(
+                            text = "Retirer des favoris",
+                            color = if (colorScheme) Color.Black else Color.White,
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically)
                         )
                     }
                 }
@@ -214,16 +236,23 @@ fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Lin
                     menuShown.value = false
                 }) {
                     Row {
-                        Icon(imageVector = Icons.Rounded.FavoriteBorder, contentDescription = null, modifier = Modifier
-                            .size(30.dp)
+                        Icon(
+                            imageVector = Icons.Rounded.FavoriteBorder,
+                            contentDescription = null,
+                            tint = if (colorScheme) Color.Black else Color.White,
+                            modifier = Modifier
+                                .size(30.dp)
                         )
 
                         Spacer(modifier = Modifier
                             .width(5.dp)
                         )
 
-                        Text("Ajouter aux favoris", modifier = Modifier
-                            .align(Alignment.CenterVertically)
+                        Text(
+                            text = "Ajouter aux favoris",
+                            color = if (colorScheme) Color.Black else Color.White,
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically)
                         )
                     }
                 }

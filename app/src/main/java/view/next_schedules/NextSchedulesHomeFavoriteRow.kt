@@ -3,6 +3,7 @@ package view.next_schedules
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -45,6 +46,7 @@ fun NextSchedulesHomeFavoriteRow(
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val storeFavStopsWithLine = StoreFavoriteStopsWithLine(context)
+    val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(station) {
         while(true) {
@@ -63,7 +65,7 @@ fun NextSchedulesHomeFavoriteRow(
         .padding(bottom = 20.dp)
         .fillMaxWidth()
         .background(
-            Color(0xffF5F5F5),
+            if (colorScheme) Color(0xffF5F5F5) else Color(0xff18191A),
             shape = RoundedCornerShape(10.dp)
         )
     ) {
@@ -78,6 +80,7 @@ fun NextSchedulesHomeFavoriteRow(
                     text = station.name,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
+                    color = if (colorScheme) Color.Black else Color.White,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                 )
@@ -94,7 +97,7 @@ fun NextSchedulesHomeFavoriteRow(
                         .padding(top = 10.dp)
                         .fillMaxWidth()
                         .background(
-                            Color.White,
+                            if (colorScheme) Color.White else Color(0xff18191A),
                             shape = RoundedCornerShape(10.dp)
                         )
                         .background(
@@ -122,6 +125,7 @@ fun NextSchedulesHomeFavoriteRow(
                                     text = line.lineName,
                                     fontSize = 18.sp,
                                     fontWeight = FontWeight.Bold,
+                                    color = if (colorScheme) Color.Black else Color.White,
                                     modifier = Modifier
                                         .align(Alignment.CenterVertically)
                                 )
@@ -140,7 +144,8 @@ fun NextSchedulesHomeFavoriteRow(
 
                                 Icon(
                                     imageVector = Icons.Rounded.MoreVert,
-                                    contentDescription = null
+                                    contentDescription = null,
+                                    tint = if (colorScheme) Color.Black else Color.White
                                 )
                             }
                         }
@@ -167,7 +172,9 @@ fun NextSchedulesHomeFavoriteRow(
 
                         DropdownMenu(
                             expanded = menuShown.value,
-                            onDismissRequest = { menuShown.value = false }
+                            onDismissRequest = { menuShown.value = false },
+                            modifier = Modifier
+                                .background(if (colorScheme) Color.White else Color(0xff18191A))
                         ) {
                             DropdownMenuItem(onClick = {
                                 scope.launch {
@@ -184,16 +191,23 @@ fun NextSchedulesHomeFavoriteRow(
                                 }
                             }) {
                                 Row {
-                                    Icon(imageVector = Icons.Rounded.Favorite, contentDescription = null, modifier = Modifier
-                                        .size(30.dp)
+                                    Icon(
+                                        imageVector = Icons.Rounded.Favorite,
+                                        contentDescription = null,
+                                        tint = if (colorScheme) Color.Black else Color.White,
+                                        modifier = Modifier
+                                            .size(30.dp)
                                     )
 
                                     Spacer(modifier = Modifier
                                         .width(5.dp)
                                     )
 
-                                    Text("Retirer des favoris", modifier = Modifier
-                                        .align(Alignment.CenterVertically)
+                                    Text(
+                                        text = "Retirer des favoris",
+                                        color = if (colorScheme) Color.Black else Color.White,
+                                        modifier = Modifier
+                                            .align(Alignment.CenterVertically)
                                     )
                                 }
                             }

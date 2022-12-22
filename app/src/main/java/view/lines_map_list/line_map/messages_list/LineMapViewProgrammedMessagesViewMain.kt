@@ -2,6 +2,7 @@ package view.lines_map_list.line_map.messages_list
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -31,6 +32,7 @@ fun LineMapViewProgrammedMessagesViewMain(line: Line, areMessagesDisplayed: Muta
     val areMessagesLoaded = remember {
         mutableStateOf(false)
     }
+    val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(line) {
         ProgrammedMessages.getProgrammedMessagesByLine(line.id.toString()) {
@@ -49,7 +51,7 @@ fun LineMapViewProgrammedMessagesViewMain(line: Line, areMessagesDisplayed: Muta
                 else -> "de la ${line.lineName}"
             },
             fontSize = 25.sp,
-            color = Color.Black,
+            color = if (colorScheme) Color.Black else Color.White,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .padding(start = 15.dp)
@@ -59,7 +61,7 @@ fun LineMapViewProgrammedMessagesViewMain(line: Line, areMessagesDisplayed: Muta
         Box(contentAlignment = Alignment.Center, modifier = Modifier
             .padding(end = 15.dp)
             .clip(CircleShape)
-            .background(Color.LightGray)
+            .background(if (colorScheme) Color.LightGray else Color(0xff18191A))
             .size(35.dp)
             .clickable {
                 areMessagesDisplayed.value = false
@@ -67,7 +69,8 @@ fun LineMapViewProgrammedMessagesViewMain(line: Line, areMessagesDisplayed: Muta
         ) {
             Icon(
                 imageVector = Icons.Rounded.Close,
-                contentDescription = null
+                contentDescription = null,
+                tint = if (colorScheme) Color.Black else Color.White
             )
         }
     }

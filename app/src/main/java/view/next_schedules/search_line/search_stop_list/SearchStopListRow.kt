@@ -2,6 +2,7 @@ package view.next_schedules.search_line.search_stop_list
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -33,6 +34,8 @@ fun SearchStopListRow(
     line: Line,
     pathDirection: String
 ) {
+    val colorScheme = !isSystemInDarkTheme()
+
     Box {
         Row(modifier = Modifier
             .padding(horizontal = 15.dp)
@@ -49,6 +52,10 @@ fun SearchStopListRow(
                 )
             }
             .background(
+                if (colorScheme) Color.Transparent else Color(0xff18191A),
+                shape = RoundedCornerShape(10.dp)
+            )
+            .background(
                 colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
                 shape = RoundedCornerShape(10.dp)
             )
@@ -64,6 +71,7 @@ fun SearchStopListRow(
                     text = stop.name,
                     fontSize = 18.sp,
                     textAlign = TextAlign.Left,
+                    color = if (colorScheme) Color.Black else Color.White,
                     modifier = Modifier
                         .fillMaxWidth(fraction = 0.9f)
                 )
@@ -71,6 +79,7 @@ fun SearchStopListRow(
                 Icon(
                     imageVector = Icons.Rounded.ArrowForward,
                     contentDescription = null,
+                    tint = if (colorScheme) Color.Black else Color.White,
                     modifier = Modifier
                         .align(Alignment.CenterVertically)
                 )
@@ -123,7 +132,7 @@ fun SearchStopListRow(
                 ) {
                     Box(modifier = Modifier
                         .clip(CircleShape)
-                        .background(Color.White)
+                        .background(if (colorScheme) Color.White else Color.Black)
                         .size(15.dp)
                     )
                 }

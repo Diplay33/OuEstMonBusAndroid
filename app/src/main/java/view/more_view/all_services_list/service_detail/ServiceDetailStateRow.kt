@@ -2,6 +2,7 @@ package view.more_view.all_services_list.service_detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
@@ -9,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -20,13 +22,14 @@ import kotlin.math.abs
 fun ServiceDetailStateRow(state: String, stateTime: Int) {
     val stateMinutes = (abs(stateTime) % 3600) / 60
     val stateSeconds = (abs(stateTime) % 3600) % 60
+    val colorScheme = !isSystemInDarkTheme()
 
     Row(modifier = Modifier
         .padding(horizontal = 15.dp)
         .height(45.dp)
         .fillMaxWidth()
         .background(
-            Color(0xffF5F5F5),
+            if (colorScheme) Color(0xffF5F5F5) else Color(0xff18191A),
             shape = RoundedCornerShape(10.dp)
         )
     ) {
@@ -37,6 +40,7 @@ fun ServiceDetailStateRow(state: String, stateTime: Int) {
             Image(
                 painter = painterResource(id = R.drawable.timer),
                 contentDescription = null,
+                colorFilter = ColorFilter.tint(if (colorScheme) Color.Black else Color.White),
                 modifier = Modifier
                     .size(20.dp)
                     .align(Alignment.CenterVertically)
