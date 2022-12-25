@@ -41,7 +41,12 @@ fun NextSchedulesHomeFavoriteView(
     }
     val indicatorOpacityState = if (animationState.value) 0.1f else 0.8f
     val indicatorOpacity by animateFloatAsState(targetValue = indicatorOpacityState)
-    val filteredNextSchedules = nextSchedules.filter { it.lineId == line.id }
+    val capFilteredNextSchedules = mutableListOf<NextSchedule>()
+    nextSchedules.forEach { ns ->
+        if(capFilteredNextSchedules.size < 5 && ns.lineId == line.id) {
+            capFilteredNextSchedules.add(ns)
+        }
+    }
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(line) {
@@ -76,7 +81,7 @@ fun NextSchedulesHomeFavoriteView(
             }
         }
         else {
-            if(filteredNextSchedules.isEmpty()) {
+            if(capFilteredNextSchedules.isEmpty()) {
                 Row(horizontalArrangement = Arrangement.Center, modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 8.dp)
@@ -89,7 +94,7 @@ fun NextSchedulesHomeFavoriteView(
                 }
             }
             else {
-                filteredNextSchedules.forEach { nextSchedule ->
+                capFilteredNextSchedules.forEach { nextSchedule ->
                     if(nextSchedule.getTimeLeft().toInt() >= 0) {
                         val destination = NextSchedulesDestinations.getDestinationFromRaw((nextSchedule.destination))
                         val displayedTime = nextSchedule.getTimeLeft()
@@ -195,7 +200,7 @@ fun NextSchedulesHomeFavoriteView(
                             }
                         }
 
-                        if(nextSchedule != filteredNextSchedules.last()) {
+                        if(nextSchedule != capFilteredNextSchedules.last()) {
                             Row {
                                 Spacer(modifier = Modifier
                                     .width(39.dp)

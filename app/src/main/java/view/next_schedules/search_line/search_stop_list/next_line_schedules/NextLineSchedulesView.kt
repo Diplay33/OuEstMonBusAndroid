@@ -29,6 +29,7 @@ import model.DTO.NextSchedule
 import model.DTO.NextSchedulesDestinations
 import com.diplay.ouestmonbus.R
 import kotlinx.coroutines.delay
+import model.DTO.NextSchedules
 
 @Composable
 fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoading: Boolean) {
@@ -38,6 +39,12 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoadi
     val indicatorOpacityState = if (animationState.value) 0.1f else 0.8f
     val indicatorOpacity by animateFloatAsState(targetValue = indicatorOpacityState)
     val colorScheme = !isSystemInDarkTheme()
+    val capFilteredNextSchedules = mutableListOf<NextSchedule>()
+    nextSchedules.forEach { ns ->
+        if(capFilteredNextSchedules.size < 5 && ns.lineId == line.id) {
+            capFilteredNextSchedules.add(ns)
+        }
+    }
 
     LaunchedEffect(line) {
         delay(1000)
@@ -103,11 +110,11 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoadi
                     shape = RoundedCornerShape(10.dp)
                 )
             ) {
-                nextSchedules.forEach { nextSchedule ->
+                capFilteredNextSchedules.forEach { nextSchedule ->
                     val destination = NextSchedulesDestinations.getDestinationFromRaw((nextSchedule.destination))
                     val displayedTime = nextSchedule.getTimeLeft()
 
-                    if(nextSchedule.lineId == line.id && nextSchedule.getTimeLeft().toInt() >= 0) {
+                    if(nextSchedule.getTimeLeft().toInt() >= 0) {
                         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 15.dp)
@@ -209,7 +216,7 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoadi
                             }
                         }
 
-                        if(nextSchedule != nextSchedules.last { it.lineId == line.id }) {
+                        if(nextSchedule != capFilteredNextSchedules.last()) {
                             Row {
                                 Spacer(modifier = Modifier
                                     .width(39.dp)

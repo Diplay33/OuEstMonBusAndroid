@@ -9,7 +9,5 @@ class NextSchedules {
                 callback(nextSchedules)
             }
         }
-
-        //fun get
     }
 }
