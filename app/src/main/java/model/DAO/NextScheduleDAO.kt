@@ -7,7 +7,7 @@ import org.json.JSONObject
 class NextScheduleDAO {
     companion object {
         fun getNextSchedulesByStationId(stationId: String, callback: (List<NextSchedule>) -> Unit) {
-            CallAPI.run("https://data.bordeaux-metropole.fr/geojson/process/saeiv_arret_passages?key=0234ABEFGH&datainputs={\"arret_id\":\"$stationId\",\"duration\":59}") { responseBody ->
+            CallAPI.run("https://data.bordeaux-metropole.fr/geojson/process/saeiv_arret_passages?key=0234ABEFGH&datainputs={\"arret_id\":\"$stationId\",\"duration\":60}") { responseBody ->
                 try {
                     val nextSchedules: MutableList<NextSchedule> = mutableListOf()
                     val welcomeJSONObject = JSONObject(responseBody)

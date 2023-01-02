@@ -20,11 +20,7 @@
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/model/DTO/Schedule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/DTO/Schedule.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/model/DTO/Schedules.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/DTO/Schedules.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/search_line/search_stop_list/next_line_schedules/NextLineSchedulesMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/search_line/search_stop_list/next_line_schedules/NextLineSchedulesMain.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/search_line/search_stop_list/next_line_schedules/NextLineSchedulesOverview.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/next_schedules/search_line/search_stop_list/next_line_schedules/NextLineSchedulesOverview.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/model/DAO/NextScheduleDAO.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/DAO/NextScheduleDAO.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
