@@ -52,8 +52,7 @@ fun NextLineSchedulesMain(
                 if(it.first().direction == pathDirection) {
                     paths.addAll(it)
 
-                    val formatter = SimpleDateFormat("yyyy-MM-dd")
-                    Schedules.getSchedulesByStationAndPathsAndDate(stopId.toString(), formatter.format(Date()), it) { values ->
+                    Schedules.getSchedulesByStationAndPathsAndDate(stopId.toString(), it) { values ->
                         schedules.addAll(values)
                     }
                 }

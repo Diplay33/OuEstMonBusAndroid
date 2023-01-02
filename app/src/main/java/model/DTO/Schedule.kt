@@ -7,8 +7,8 @@ class Schedule(val pathId: Int,
                val rawAppTime: String,
                val state: String
 ) {
-    fun getTime(): Date {
+    fun getTime(): Date? {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-        return dateFormat.parse(rawAppTime) ?: Date()
+        return if (rawAppTime == "") null else dateFormat.parse(rawAppTime)
     }
 }

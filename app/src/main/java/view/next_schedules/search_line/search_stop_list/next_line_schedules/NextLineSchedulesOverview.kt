@@ -2,6 +2,8 @@ package view.next_schedules.search_line.search_stop_list.next_line_schedules
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -22,6 +24,7 @@ import model.DTO.Schedules
 @Composable
 fun NextLineSchedulesOverview(schedules: List<Schedule>) {
     val colorScheme = !isSystemInDarkTheme()
+    val sortedSchedules: List<List<Schedule>> = Schedules.sortSchedulesByHour(schedules)
 
     Text(
         text = "Horaires",
@@ -33,8 +36,14 @@ fun NextLineSchedulesOverview(schedules: List<Schedule>) {
     )
 
     Column {
-        schedules.sortedBy { it.rawAppTime }.forEach { schedule ->
-            Text(schedule.pathId.toString() + schedule.rawAppTime)
+        sortedSchedules.forEach { schedules ->
+            schedules.forEach { schedule ->
+                Text(schedule.pathId.toString() + " " + schedule.rawAppTime)
+            }
+
+            Spacer(modifier = Modifier
+                .height(25.dp)
+            )
         }
     }
 }
