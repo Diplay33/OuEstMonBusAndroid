@@ -15,6 +15,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import model.DTO.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 @Composable
 fun NextLineSchedulesMain(
@@ -39,13 +41,24 @@ fun NextLineSchedulesMain(
         mutableStateOf(true)
     }
     val colorScheme = !isSystemInDarkTheme()
+    val schedules = remember {
+        mutableStateListOf<Schedule>()
+    }
 
     LaunchedEffect(stopName) {
         Paths.getOrderedPathsByLine(line.id) { returnedPaths ->
             paths.clear()
-            returnedPaths.map { if (it.first().direction == pathDirection) paths.addAll(it) }
-        }
+            returnedPaths.map {
+                if(it.first().direction == pathDirection) {
+                    paths.addAll(it)
 
+                    val formatter = SimpleDateFormat("yyyy-MM-dd")
+                    Schedules.getSchedulesByStationAndPathsAndDate(stopId.toString(), formatter.format(Date()), it) { values ->
+                        schedules.addAll(values)
+                    }
+                }
+            }
+        }
         while(true) {
             NextSchedules.getNextSchedulesByStationId(stopId ?: "") { returnedNextSchedules ->
                 nextSchedules.clear()
@@ -75,6 +88,12 @@ fun NextLineSchedulesMain(
                 )
 
                 NextLineSchedulesView(nextSchedules, line, isLoading.value)
+
+                Spacer(modifier = Modifier
+                    .height(30.dp)
+                )
+
+                NextLineSchedulesOverview(schedules)
             }
         }
     }
