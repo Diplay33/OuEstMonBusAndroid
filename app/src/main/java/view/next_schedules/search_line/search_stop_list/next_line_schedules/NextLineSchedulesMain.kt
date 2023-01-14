@@ -40,6 +40,9 @@ fun NextLineSchedulesMain(
     val isLoading = remember {
         mutableStateOf(true)
     }
+    val isSchedulesLoading = remember {
+        mutableStateOf(true)
+    }
     val colorScheme = !isSystemInDarkTheme()
     val schedules = remember {
         mutableStateListOf<Schedule>()
@@ -54,6 +57,7 @@ fun NextLineSchedulesMain(
 
                     Schedules.getSchedulesByStationAndPathsAndDate(stopId.toString(), it) { values ->
                         schedules.addAll(values)
+                        isSchedulesLoading.value = false
                     }
                 }
             }
@@ -92,7 +96,7 @@ fun NextLineSchedulesMain(
                     .height(30.dp)
                 )
 
-                NextLineSchedulesOverview(schedules)
+                NextLineSchedulesOverview(line, schedules, isSchedulesLoading.value)
             }
         }
     }
