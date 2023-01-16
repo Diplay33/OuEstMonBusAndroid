@@ -765,7 +765,7 @@ class VehicleData {
             /*SARL Evadys*/
             //Véhicules
             mapOf("id" to "60001", "parkId" to "0001", "brand" to "Inconnu", "model" to "MiniBus", "type" to "BUS", "operator" to "SARL Evadys"),
-            mapOf("id" to "60002", "parkId" to "0002", "brand" to "VEHIXEL", "model" to "VEHIXEL Cytios 4/32", "type" to "BUS", "operator" to "SARL Evadys"),
+            mapOf("id" to "60002", "parkId" to "0001", "brand" to "ROSERO", "model" to "ROSERO First FCLEI", "type" to "BUS", "operator" to "SARL Evadys"),
 
 
             /*Bordeaux River Cruise*/
