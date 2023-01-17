@@ -96,7 +96,8 @@ fun NextLineSchedulesMain(
                     .height(30.dp)
                 )
 
-                NextLineSchedulesOverview(line, schedules, isSchedulesLoading.value)
+                NextLineSchedulesButton(line, navController, stopId, stopName)
+                //NextLineSchedulesOverview(line, schedules, isSchedulesLoading.value)
             }
         }
     }

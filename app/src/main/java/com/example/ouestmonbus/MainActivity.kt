@@ -46,6 +46,7 @@ import view.next_schedules.NextSchedulesHomeViewMain
 import view.next_schedules.search_line.SearchLineViewMain
 import view.next_schedules.search_line.search_stop_list.SearchStopListMain
 import view.next_schedules.search_line.search_stop_list.next_line_schedules.NextLineSchedulesMain
+import view.next_schedules.search_line.search_stop_list.next_line_schedules.line_schedules.LineSchedulesMain
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -155,6 +156,23 @@ class MainActivity : ComponentActivity() {
                             stopId = entry.arguments?.getString("stopId"),
                             lineId = entry.arguments?.getString("lineId"),
                             pathDirection = entry.arguments?.getString("pathDirection")
+                        )
+                    }
+
+                    composable(
+                        route = ProchainsScreens.LineSchedules.route + "/{stopId}/{stopName}",
+                        arguments = listOf(
+                            navArgument("stopId") {
+                                type = NavType.StringType
+                                defaultValue = "0"
+                                nullable = true
+                            }
+                        )
+                    ) { entry ->
+                        LineSchedulesMain(
+                            navController = navController,
+                            stationId = entry.arguments?.getString("stopId"),
+                            stationName = entry.arguments?.getString("stopName")
                         )
                     }
 

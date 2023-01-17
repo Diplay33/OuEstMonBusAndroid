@@ -75,6 +75,8 @@ fun NextLineSchedulesOverview(line: Line, schedules: List<Schedule>, isLoading: 
             }
         }
         else {
+            //paths
+            /*
             Column(modifier = Modifier
                 .padding(horizontal = 15.dp)
                 .fillMaxWidth()
@@ -159,7 +161,7 @@ fun NextLineSchedulesOverview(line: Line, schedules: List<Schedule>, isLoading: 
                         }
                     }
                 }
-            }
+            }*/
         }
     }
 }
