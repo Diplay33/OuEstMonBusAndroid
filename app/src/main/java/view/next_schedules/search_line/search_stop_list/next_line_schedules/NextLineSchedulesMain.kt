@@ -55,7 +55,7 @@ fun NextLineSchedulesMain(
                 if(it.first().direction == pathDirection) {
                     paths.addAll(it)
 
-                    Schedules.getSchedulesByStationAndPathsAndDate(stopId.toString(), it) { values ->
+                    Schedules.getSchedulesByStationAndPaths(stopId.toString(), it) { values ->
                         schedules.addAll(values)
                         isSchedulesLoading.value = false
                     }
@@ -96,7 +96,7 @@ fun NextLineSchedulesMain(
                     .height(30.dp)
                 )
 
-                NextLineSchedulesButton(line, navController, stopId, stopName)
+                NextLineSchedulesButton(line, navController, stopId, stopName, pathDirection)
                 //NextLineSchedulesOverview(line, schedules, isSchedulesLoading.value)
             }
         }

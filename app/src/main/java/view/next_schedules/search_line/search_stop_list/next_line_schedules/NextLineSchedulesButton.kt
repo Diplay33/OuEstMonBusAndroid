@@ -26,7 +26,8 @@ fun NextLineSchedulesButton(
     line: Line,
     navController: NavController,
     stopId: String?,
-    stopName: String?
+    stopName: String?,
+    direction: String?
 ) {
     Row(
         horizontalArrangement = Arrangement.Center,
@@ -41,7 +42,12 @@ fun NextLineSchedulesButton(
             .height(45.dp)
             .clickable {
                 navController.navigate(
-                    ProchainsScreens.LineSchedules.withArgs(stopId ?: "", stopName ?: "")
+                    ProchainsScreens.LineSchedules.withArgs(
+                        stopId ?: "",
+                        stopName ?: "",
+                        line.id.toString(),
+                        direction ?: ""
+                    )
                 )
             }
     ) {

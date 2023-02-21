@@ -21,7 +21,7 @@ class Schedules {
             }
         }
 
-        fun getSchedulesByStationAndPathsAndDate(
+        fun getSchedulesByStationAndPaths(
             stationId: String,
             paths: List<Path>,
             callback: (List<Schedule>) -> Unit
