@@ -36,13 +36,18 @@ import view.Screens.CartesScreens
 
 
 @Composable
-fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Line>>, navController: NavController) {
-    val servicesAreLoaded = remember {
-        mutableStateOf(false)
+fun LinesMapListRow(
+    rowLine: Line,
+    linesByGroup: SnapshotStateList<ArrayList<Line>>,
+    navController: NavController,
+    services: MutableList<Service>,
+    isLoading: MutableState<Boolean>
+) {
+    val serviceCount = services.filter { it.lineId == rowLine.id }.size
+    val navetteTramServicesCount = remember {
+        mutableStateOf(0)
     }
-    val services = remember {
-        mutableStateListOf<Service>()
-    }
+    val isNavetteTram = rowLine.id == 132
     val programmedMessagesCount = remember {
         mutableStateOf(0)
     }
@@ -58,27 +63,16 @@ fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Lin
     val displayNotifCount = storeDisplayNotifCount.isEnabled.collectAsState(initial = false)
 
     LaunchedEffect(rowLine) {
-        servicesAreLoaded.value = false
         ProgrammedMessages.getNumberOfMessagesByLine(rowLine.id.toString()) { messagesCount ->
             programmedMessagesCount.value = messagesCount
         }
 
-        while(true) {
-            if(rowLine.id == 132) {
-                Services.getNavetteTramServices { returnedServices ->
-                    servicesAreLoaded.value = true
-                    services.clear()
-                    services.addAll(returnedServices)
-                }
+        if(rowLine.id == 132) {
+            isLoading.value = true
+            Services.getNavetteTramServices { returnedServices ->
+                navetteTramServicesCount.value = returnedServices.size
+                isLoading.value = false
             }
-            else {
-                Services.getServicesByLine(rowLine.id) { returnedServices ->
-                    servicesAreLoaded.value = true
-                    services.clear()
-                    services.addAll(returnedServices)
-                }
-            }
-            delay(20000)
         }
     }
 
@@ -122,15 +116,19 @@ fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Lin
                 Row(modifier = Modifier
                     .padding(horizontal = 10.dp)
                 ) {
-                    if(!servicesAreLoaded.value) {
+                    if(isLoading.value) {
                         Text("Chargement en cours...",
                             fontStyle = FontStyle.Italic,
                             color = Color.Gray
                         )
                     }
                     else {
-                        ColorIndicatorDot(if (services.isEmpty()) Color.Red else Color.Green,
-                            10.dp,
+                        ColorIndicatorDot(
+                            color = if ((if (isNavetteTram)
+                                navetteTramServicesCount.value
+                                else
+                                    serviceCount) == 0) Color.Red else Color.Green,
+                            size = 10.dp,
                             modifier = Modifier
                                 .align(Alignment.CenterVertically)
                         )
@@ -140,13 +138,17 @@ fun LinesMapListRow(rowLine: Line, linesByGroup: SnapshotStateList<ArrayList<Lin
                         )
 
                         Text(
-                            if (services.isEmpty())
-                                "Aucun véhicule en service"
+                            when(if (isNavetteTram)
+                                navetteTramServicesCount.value
                             else
-                                if (services.size == 1)
-                                    "1 véhicule en service"
-                                else
-                                    services.size.toString() + " véhicules en service"
+                                serviceCount) {
+                                0 -> "Aucun véhicule en service"
+                                1 -> "1 véhicule en service"
+                                else -> "${if (isNavetteTram) 
+                                    navetteTramServicesCount.value 
+                                else 
+                                    serviceCount} véhicules en service"
+                            }
                         )
                     }
                 }
