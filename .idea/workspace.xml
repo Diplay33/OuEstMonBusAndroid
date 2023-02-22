@@ -19,10 +19,7 @@
       <change beforePath="$PROJECT_DIR$/.gradle/7.5/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.5/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.5/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/model/DTO/Services.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/DTO/Services.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/LinesMapListGroup.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/LinesMapListGroup.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/LinesMapListMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/LinesMapListMain.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/LinesMapListRow.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/LinesMapListRow.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/line_map/LineMapViewMain.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/view/lines_map_list/line_map/LineMapViewMain.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
