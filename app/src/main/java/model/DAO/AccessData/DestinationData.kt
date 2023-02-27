@@ -127,6 +127,7 @@ class DestinationData {
             "Lycee V. Havel" to listOf("BÈGLES", "Lycée Vàclav Havel"),
             //M
             "Magonty" to listOf("PESSAC", "Magonty"),
+            "Mairie du Bouscat" to listOf("LE BOUSCAT", "Mairie"),
             "Malartic" to listOf("GRADIGNAN", "Malartic"),
             "Martignas Centre" to listOf("MARTIGNAS SUR JALLE", "Centre"),
             "Meriadeck" to listOf("BORDEAUX", "Mériadeck"),

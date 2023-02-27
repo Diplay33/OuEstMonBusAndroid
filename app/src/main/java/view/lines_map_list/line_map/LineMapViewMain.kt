@@ -103,7 +103,7 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
                         refreshDate.value = Calendar.getInstance().time
                     }
                 }
-                delay(2000)
+                delay(5000)
             }
         }
 
