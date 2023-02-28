@@ -30,7 +30,7 @@ fun LineSchedulesRow(line: Line, schedule: Schedule, path: Path) {
     val scheduleCalendar = Calendar.getInstance()
     scheduleCalendar.time = schedule.getTime() ?: Date()
     val minutes = scheduleCalendar.get(Calendar.MINUTE).toString()
-    val destination = PathDestinations.getDestinationFromPathName(path.name)
+    val destination = PathDestinations.getDestinationFromPathName(line.id, path.name)
 
     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
         .fillMaxWidth()

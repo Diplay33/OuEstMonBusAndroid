@@ -4,18 +4,26 @@ import model.DAO.AccessData.PathDestinationData
 
 class PathDestinations {
     companion object {
-        fun getDestinationFromPathName(destination: String): List<String> {
+        fun getDestinationFromPathName(lineId: Int, destination: String): List<String> {
             val reversedName = destination.reversed()
             var processedString = ""
             for(i in reversedName.indices) {
                 processedString += reversedName[i]
                 if(reversedName[i] == ' ' && reversedName[i + 1] == '-') { break }
             }
+            val finalString = processedString.trim().reversed()
 
-            PathDestinationData.destinations[processedString.trim().reversed()]?.let { values ->
-                return values
-            } ?: run {
-                return listOf()
+            when {
+                lineId == 62 && finalString == "Hippodrome" -> {
+                    return listOf("LE BOUSCAT", "Hippodrome", "")
+                }
+                else -> {
+                    PathDestinationData.destinations[finalString]?.let { values ->
+                        return values
+                    } ?: run {
+                        return listOf()
+                    }
+                }
             }
         }
     }
