@@ -18,9 +18,11 @@ class PathDestinationData {
             "Beausoleil" to listOf("GRADIGNAN", "Beausoleil", ""),
             "Berges De La Garonne" to listOf("BORDEAUX", "Berges de la Garonne", ""),
             "Bougnard" to listOf("PESSAC", "Bougnard", ""),
+            "Bouliac Centre Commercial" to listOf("BOULIAC", "Centre Commercial", ""),
             "Brandenburg" to listOf("BORDEAUX", "Brandenburg", ""),
             "Buttiniere" to listOf("LORMONT", "Buttinière", ""),
             //C
+            "Camping International" to listOf("BORDEAUX", "Camping International", ""),
             "Cantinolle" to listOf("EYSINES", "Cantinolle", ""),
             "Capc Musee D'Art Contemporain" to listOf("BORDEAUX", "CAPC Musée d'Art Contemporain", ""),
             "Cap de Bos" to listOf("PESSAC", "Cap de Bos", ""),
@@ -102,6 +104,7 @@ class PathDestinationData {
             "Pin Galant" to listOf("MERIGNAC", "Pin Galant", ""),
             "Piscine Chambéry" to listOf("VILLENAVE D'ORNON", "Piscine Chambéry", ""),
             "Place De La Bourse" to listOf("BORDEAUX", "Place de la Bourse", ""),
+            "Pont de la Maye" to listOf("VILLENAVE D'ORNON", "Pont de la Maye", ""),
             "Porte De Bourgogne" to listOf("BORDEAUX", "Porte de Bourgogne", ""),
             //Q
             "Quarante Journaux" to listOf("BORDEAUX", "Quarante Journaux", ""),
@@ -113,6 +116,7 @@ class PathDestinationData {
             "Quinsus" to listOf("AMBARÈS", "Quinsus", ""),
             "Quinsus via PA" to listOf("AMBARÈS", "Quinsus", "via Pont d'Aquitaine"),
             //R
+            "RPA Villa Nova" to listOf("VILLENAVE D'ORNON", "RPA Villa Nova", ""),
             "Rue Achard" to listOf("BORDEAUX", "Rue Achard", ""),
             //S
             "Saint-Augustin" to listOf("BORDEAUX", "Saint Augustin", ""),

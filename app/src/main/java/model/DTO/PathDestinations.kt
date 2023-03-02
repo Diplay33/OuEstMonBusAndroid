@@ -17,6 +17,9 @@ class PathDestinations {
                 lineId == 10 && finalString == "Hippodrome" -> {
                     return listOf("EYSINES", "Hippodrome", "")
                 }
+                lineId == 13 && finalString == "Les Pins" -> {
+                    return listOf("MERIGNAC", "Les Pins", "")
+                }
                 else -> {
                     PathDestinationData.destinations[finalString]?.let { values ->
                         return values
