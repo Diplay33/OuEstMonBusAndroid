@@ -14,8 +14,8 @@ class PathDestinations {
             val finalString = processedString.trim().reversed()
 
             when {
-                lineId == 62 && finalString == "Hippodrome" -> {
-                    return listOf("LE BOUSCAT", "Hippodrome", "")
+                lineId == 10 && finalString == "Hippodrome" -> {
+                    return listOf("EYSINES", "Hippodrome", "")
                 }
                 else -> {
                     PathDestinationData.destinations[finalString]?.let { values ->
