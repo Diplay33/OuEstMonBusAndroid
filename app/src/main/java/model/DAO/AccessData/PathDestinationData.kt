@@ -110,7 +110,6 @@ class PathDestinationData {
             "La Belle Etoile via COTEA" to listOf("BOULIAC", "La Belle Étoile", "via Avenue du Coteau"),
             "La Boétie" to listOf("LE TAILLAN", "La Boétie", ""),
             "La Boétie via HOTA" to listOf("LE TAILLAN", "La Boétie", "via Hontane"),
-            "La Boétie via HOTA HS 13/03" to listOf("LE TAILLAN", "La Boétie", "via Hontane"),
             "La Chênaie" to listOf("BASSENS", "La Chênaie", ""),
             "La Chênaie via CAT" to listOf("BASSENS", "La Chênaie", "via ESAT du GUA"),
             "La Cite Du Vin" to listOf("BORDEAUX", "La Cité du Vin", ""),
