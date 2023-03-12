@@ -131,6 +131,7 @@ class DestinationData {
             "Malartic" to listOf("GRADIGNAN", "Malartic"),
             "Martignas Centre" to listOf("MARTIGNAS SUR JALLE", "Centre"),
             "Meriadeck" to listOf("BORDEAUX", "Mériadeck"),
+            "Mérignac Arlac" to listOf("MERIGNAC", "Fontaine d'Arlac"),
             "Merignac Centre" to listOf("MERIGNAC", "Centre"),
             "Mérignac Centre" to listOf("MERIGNAC", "Centre"),
             "Mérignac Soleil" to listOf("MERIGNAC", "Soleil"),
