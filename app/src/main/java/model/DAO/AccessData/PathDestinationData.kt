@@ -190,7 +190,7 @@ class PathDestinationData {
             //Q
             "Quai Français" to listOf("BASSENS", "Quai Français", ""),
             "Quarante Journaux" to listOf("BORDEAUX", "Quarante Journaux", ""),
-            "Quatre Chemins" to listOf("MERIGNAC", "Quatre Chemins", ""),
+            "Quatre Chemins" to listOf("MERIGNAC", "4 Chemins", ""),
             "Quinconces" to listOf("BORDEAUX", "Quinconces", ""),
             "Quinconces Fleuve" to listOf("BORDEAUX", "Quinconces Fleuve", ""),
             "Quinconces (Jean Jaurès)" to listOf("BORDEAUX", "Quinconces (Jean Jaurès)", ""),

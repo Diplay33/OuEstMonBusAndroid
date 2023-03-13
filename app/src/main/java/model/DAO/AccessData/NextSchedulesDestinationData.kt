@@ -7,6 +7,7 @@ class NextSchedulesDestinationData {
             "5 Chemins" to listOf("LE HAILLAN", "5 Chemins"),
             //A
             "Aéroport" to listOf("MERIGNAC", "Aéroport"),
+            "Arches de l'Estey" to listOf("BÈGLES", "Arches de l'Estey"),
             "Arena" to listOf("FLOIRAC", "Arkéa Arena"),
             //B
             "Barbusse" to listOf("MERIGNAC", "Henri Barbusse"),
@@ -136,6 +137,7 @@ class NextSchedulesDestinationData {
             "Rue Achard" to listOf("BORDEAUX", "Rue Achard"),
             //Q
             "Quai Français" to listOf("BASSENS", "Quai Français"),
+            "Quatre Chemins" to listOf("MERIGNAC", "4 Chemins"),
             "Quinconces" to listOf("BORDEAUX", "Quinconces"),
             "Quinconces Fleuve" to listOf("BORDEAUX", "Quinconces Fleuve"),
             "Quinconces (Jean Jaurès)" to listOf("BORDEAUX", "Quinconces (Jean Jaurès)"),
