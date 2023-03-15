@@ -10,10 +10,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -25,6 +22,7 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import model.DTO.Line
 import model.DTO.Lines
+import model.DTO.Service
 import model.DTO.Services
 import view.lines_map_list.LinesMapListSearchBar
 import view.lines_map_list.LinesMapListSearchState
@@ -42,6 +40,12 @@ fun SearchLineViewMain(
         mutableStateListOf<List<Line>>()
     }
     val colorScheme = !isSystemInDarkTheme()
+    val allServices = remember {
+        mutableStateListOf<Service>()
+    }
+    val areServicesLoading = remember {
+        mutableStateOf(true)
+    }
 
     Scaffold(topBar = { SearchLineViewTopBar(navController) }) { padding ->
         Column(modifier = Modifier
@@ -62,6 +66,11 @@ fun SearchLineViewMain(
             LaunchedEffect(state.query.text) {
                 linesByGroup.clear()
                 linesByGroup.addAll(Lines.getLinesByGroup(context))
+                Services.getAllServices { values ->
+                    allServices.clear()
+                    allServices.addAll(values)
+                    areServicesLoading.value = false
+                }
 
                 state.searching = true
                 delay(100)
@@ -81,7 +90,9 @@ fun SearchLineViewMain(
                                 linesByGroup = linesByGroup,
                                 lines = lines,
                                 isFavorite = linesByGroup[0].containsAll(lines) && linesByGroup[0].isNotEmpty(),
-                                navController = navController
+                                navController = navController,
+                                allServices = allServices,
+                                areServicesLoading = areServicesLoading.value
                             )
                         }
                     }
@@ -102,7 +113,15 @@ fun SearchLineViewMain(
                 SearchDisplay.RESULTS -> {
                     LazyColumn {
                         items(state.searchResults) { line ->
-                            SearchLineViewRow(linesByGroup, line, navController)
+                            SearchLineViewRow(
+                                linesByGroup = linesByGroup,
+                                line = line,
+                                navController = navController,
+                                isLineInService = if (areServicesLoading.value)
+                                    null
+                                else
+                                    !allServices.none { it.lineId == line.id }
+                            )
                         }
 
                         item {

@@ -15,5 +15,9 @@ class ProgrammedMessages {
                 callback(programmedMessages)
             }
         }
+
+        fun getAllProgrammedMessages(callback: (List<ProgrammedMessage>) -> Unit) {
+            ProgrammedMessageDAO.getProgrammedMessages { callback(it) }
+        }
     }
 }
