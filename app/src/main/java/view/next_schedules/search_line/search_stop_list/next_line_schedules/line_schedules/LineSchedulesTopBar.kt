@@ -40,7 +40,7 @@ fun LineSchedulesTopBar(navController: NavController, stationName: String) {
                 Text(
                     text = stationName,
                     style = MaterialTheme.typography.h5,
-                    textAlign = TextAlign.Center,
+                    textAlign = TextAlign.Start,
                     color = Color.Black,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
