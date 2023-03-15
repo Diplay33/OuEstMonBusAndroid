@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import model.DTO.Line
+import model.DTO.ProgrammedMessage
 import model.DTO.Service
 
 @Composable
@@ -21,7 +22,8 @@ fun LinesMapListGroup(
     linesByGroup: SnapshotStateList<ArrayList<Line>>,
     navController: NavController,
     services: MutableList<Service>,
-    isLoading: MutableState<Boolean>
+    isLoading: MutableState<Boolean>,
+    programmedMessages: List<ProgrammedMessage>
 ) {
     Column(modifier = Modifier
         .padding(vertical = if(lines.isEmpty()) 0.dp else 10.dp)
@@ -33,7 +35,14 @@ fun LinesMapListGroup(
         }
 
         lines.forEach { line ->
-            LinesMapListRow(line, linesByGroup, navController, services, isLoading)
+            LinesMapListRow(
+                rowLine = line,
+                linesByGroup = linesByGroup,
+                navController = navController,
+                services = services,
+                isLoading = isLoading,
+                programmedMessagesCount = programmedMessages.filter { it.lineId == line.id }.size
+            )
         }
     }
 }

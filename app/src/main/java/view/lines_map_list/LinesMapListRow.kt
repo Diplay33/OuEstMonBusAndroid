@@ -41,16 +41,14 @@ fun LinesMapListRow(
     linesByGroup: SnapshotStateList<ArrayList<Line>>,
     navController: NavController,
     services: MutableList<Service>,
-    isLoading: MutableState<Boolean>
+    isLoading: MutableState<Boolean>,
+    programmedMessagesCount: Int
 ) {
     val serviceCount = services.filter { it.lineId == rowLine.id }.size
     val navetteTramServicesCount = remember {
         mutableStateOf(0)
     }
     val isNavetteTram = rowLine.id == 132
-    val programmedMessagesCount = remember {
-        mutableStateOf(0)
-    }
     val menuShown = remember {
         mutableStateOf(false)
     }
@@ -63,10 +61,6 @@ fun LinesMapListRow(
     val displayNotifCount = storeDisplayNotifCount.isEnabled.collectAsState(initial = false)
 
     LaunchedEffect(rowLine) {
-        ProgrammedMessages.getNumberOfMessagesByLine(rowLine.id.toString()) { messagesCount ->
-            programmedMessagesCount.value = messagesCount
-        }
-
         if(rowLine.id == 132) {
             isLoading.value = true
             while(true) {
@@ -162,11 +156,11 @@ fun LinesMapListRow(
             .fillMaxHeight()
             .align(Alignment.CenterVertically)
         ) {
-            if(programmedMessagesCount.value > 0 && displayNotifCount.value == true) {
+            if(programmedMessagesCount > 0 && displayNotifCount.value == true) {
                 Column(modifier = Modifier
                     .fillMaxHeight()
                 ) {
-                    NotificationCountBadge(count = programmedMessagesCount.value)
+                    NotificationCountBadge(count = programmedMessagesCount)
                 }
             }
 

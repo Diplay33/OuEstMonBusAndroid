@@ -15,10 +15,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
-import model.DTO.Line
-import model.DTO.Lines
-import model.DTO.Service
-import model.DTO.Services
+import model.DTO.*
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -32,6 +29,9 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
     }
     val isLoading = remember {
         mutableStateOf(true)
+    }
+    val programmedMessages = remember {
+        mutableStateListOf<ProgrammedMessage>()
     }
 
     Scaffold(topBar = { LinesMapListTopBar() }) { padding ->
@@ -52,6 +52,10 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
 
             LaunchedEffect(state.query.text) {
                 linesByGroup.addAll(Lines.getLinesByGroup(context))
+                ProgrammedMessages.getAllProgrammedMessages { values ->
+                    programmedMessages.clear()
+                    programmedMessages.addAll(values)
+                }
                 state.searching = true
                 delay(100)
                 state.searchResults = Lines.getLinesBySearchText(state.query.text)
@@ -77,7 +81,8 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
                                 linesByGroup = linesByGroup,
                                 navController = navController,
                                 services = allServices,
-                                isLoading = isLoading
+                                isLoading = isLoading,
+                                programmedMessages = programmedMessages
                             )
                         }
 
@@ -107,7 +112,10 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
                                 linesByGroup = linesByGroup,
                                 navController = navController,
                                 services = allServices,
-                                isLoading = isLoading
+                                isLoading = isLoading,
+                                programmedMessagesCount = programmedMessages
+                                    .filter { it.lineId == line.id }
+                                    .size
                             )
                         }
 
