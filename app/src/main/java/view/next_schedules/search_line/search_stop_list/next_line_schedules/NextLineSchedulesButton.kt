@@ -2,6 +2,7 @@ package view.next_schedules.search_line.search_stop_list.next_line_schedules
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
@@ -29,6 +30,8 @@ fun NextLineSchedulesButton(
     stopName: String?,
     direction: String?
 ) {
+    val colorScheme = !isSystemInDarkTheme()
+
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
@@ -36,7 +39,11 @@ fun NextLineSchedulesButton(
             .fillMaxWidth()
             .padding(horizontal = 15.dp)
             .background(
-                Color(0xffF5F5F5),
+                if (colorScheme) Color.Transparent else Color(0xff18191A),
+                shape = RoundedCornerShape(10.dp)
+            )
+            .background(
+                colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
                 shape = RoundedCornerShape(10.dp)
             )
             .height(45.dp)
