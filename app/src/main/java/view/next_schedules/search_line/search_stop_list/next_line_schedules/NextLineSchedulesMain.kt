@@ -40,13 +40,7 @@ fun NextLineSchedulesMain(
     val isLoading = remember {
         mutableStateOf(true)
     }
-    val isSchedulesLoading = remember {
-        mutableStateOf(true)
-    }
     val colorScheme = !isSystemInDarkTheme()
-    val schedules = remember {
-        mutableStateListOf<Schedule>()
-    }
 
     LaunchedEffect(stopName) {
         Paths.getOrderedPathsByLine(line.id) { returnedPaths ->
@@ -54,11 +48,6 @@ fun NextLineSchedulesMain(
             returnedPaths.map {
                 if(it.first().direction == pathDirection) {
                     paths.addAll(it)
-
-                    Schedules.getSchedulesByStationAndPaths(stopId.toString(), it) { values ->
-                        schedules.addAll(values)
-                        isSchedulesLoading.value = false
-                    }
                 }
             }
         }
