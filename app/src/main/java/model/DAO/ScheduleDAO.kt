@@ -12,7 +12,7 @@ class ScheduleDAO {
             pathId: Int,
             callback: (List<Schedule>) -> Unit
         ) {
-            CallAPI.run("https://data.bordeaux-metropole.fr/geojson/process/saeiv_arret_horaires?key=0234ABEFGH&datainputs={\"arret_id\":\"$stationId\",\"date\":\"$date\",\"chemin_gid\":$pathId}") { responseBody ->
+            CallAPI.run("https://data.bordeaux-metropole.fr/geojson/process/saeiv_arret_horaires?key=0234ABEFGH&datainputs={\"arret_id\":\"$stationId\",\"date\":\"$date\",\"chemin_gid\":$pathId}", retry = true) { responseBody ->
                 try {
                     val schedules: MutableList<Schedule> = mutableListOf()
                     val welcomeJSONObject = JSONObject(responseBody)

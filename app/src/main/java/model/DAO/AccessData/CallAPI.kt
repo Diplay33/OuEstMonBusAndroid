@@ -5,7 +5,7 @@ import java.io.IOException
 
 class CallAPI {
     companion object {
-        fun run(url: String, callback: (String) -> Unit) {
+        fun run(url: String, retry: Boolean = false, callback: (String) -> Unit) {
             val client = OkHttpClient()
             val request = Request.Builder()
                 .url(url)
@@ -14,6 +14,7 @@ class CallAPI {
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     e.printStackTrace()
+                    if(retry) { run(url) { callback(it) } }
                 }
 
                 override fun onResponse(call: Call, response: Response) {
