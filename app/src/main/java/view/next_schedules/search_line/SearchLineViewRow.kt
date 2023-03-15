@@ -43,7 +43,8 @@ import view.lines_map_list.ColorIndicatorDot
 fun SearchLineViewRow(
     linesByGroup: SnapshotStateList<List<Line>>,
     line: Line,
-    navController: NavController
+    navController: NavController,
+    isLineInService: Boolean?
 ) {
     val isCollapsed = remember {
         mutableStateOf(true)
@@ -61,22 +62,12 @@ fun SearchLineViewRow(
     val isLoading = remember {
         mutableStateOf(false)
     }
-    val isLineInService = remember {
-        mutableStateOf<Boolean?>(null)
-    }
     val menuShown = remember {
         mutableStateOf(false)
     }
     val context = LocalContext.current
     val storeFavLines = StoreFavoriteLines(context, line.id.toString())
     val isFavorite = storeFavLines.isFavorite.collectAsState(initial = false)
-
-    LaunchedEffect(line) {
-        isLineInService.value = null
-        Services.getServicesByLine(line.id) { services ->
-            isLineInService.value = services.isNotEmpty()
-        }
-    }
 
     Column(modifier = Modifier
         .padding(horizontal = 15.dp)
@@ -152,9 +143,9 @@ fun SearchLineViewRow(
                 Row(modifier = Modifier
                     .align(Alignment.CenterVertically)
                 ) {
-                    if(isLineInService.value != null) {
+                    if(isLineInService != null) {
                         ColorIndicatorDot(
-                            color = if (isLineInService.value == true)
+                            color = if (isLineInService == true)
                                 Color.Green
                             else
                                 Color.Red,

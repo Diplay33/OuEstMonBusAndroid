@@ -11,13 +11,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import model.DTO.Line
+import model.DTO.Service
 
 @Composable
 fun SearchLineViewGroup(
     linesByGroup: SnapshotStateList<List<Line>>,
     lines: List<Line>,
     isFavorite: Boolean,
-    navController: NavController
+    navController: NavController,
+    allServices: List<Service>,
+    areServicesLoading: Boolean
 ) {
     Column(modifier = Modifier
         .padding(vertical = if (lines.isEmpty()) 0.dp else 10.dp)
@@ -30,7 +33,15 @@ fun SearchLineViewGroup(
 
         lines.forEach { line ->
             if(line.id != 132) {
-                SearchLineViewRow(linesByGroup, line, navController)
+                SearchLineViewRow(
+                    linesByGroup = linesByGroup,
+                    line = line,
+                    navController = navController,
+                    isLineInService = if (areServicesLoading)
+                        null
+                    else
+                        !allServices.none { it.lineId == line.id }
+                )
             }
         }
     }
