@@ -82,22 +82,38 @@ fun LineSchedulesMain(
             }
         }
         else {
-            LazyColumn(modifier = Modifier
-                .padding(padding)
-            ) {
-                items(sortedSchedules.size) {groupIndex ->
-                    LineSchedulesGroup(
-                        schedules = sortedSchedules[groupIndex],
-                        line = line,
-                        paths = paths,
-                        collapsedGroupHandler = collapsedGroupHandler,
-                        groupIndex = groupIndex
+            if(schedules.isEmpty()) {
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    Text(
+                        text = "Aucun résultat à l'heure actuelle",
+                        fontSize = 18.sp,
+                        color = Color.Gray
                     )
-
-                    if(sortedSchedules[groupIndex] != sortedSchedules.last()) {
-                        Spacer(modifier = Modifier
-                            .height(30.dp)
+                }
+            }
+            else {
+                LazyColumn(modifier = Modifier
+                    .padding(padding)
+                ) {
+                    items(sortedSchedules.size) {groupIndex ->
+                        LineSchedulesGroup(
+                            schedules = sortedSchedules[groupIndex],
+                            line = line,
+                            paths = paths,
+                            collapsedGroupHandler = collapsedGroupHandler,
+                            groupIndex = groupIndex
                         )
+
+                        if(sortedSchedules[groupIndex] != sortedSchedules.last()) {
+                            Spacer(modifier = Modifier
+                                .height(30.dp)
+                            )
+                        }
                     }
                 }
             }
