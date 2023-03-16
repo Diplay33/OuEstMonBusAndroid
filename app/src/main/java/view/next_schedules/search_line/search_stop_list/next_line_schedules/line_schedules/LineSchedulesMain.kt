@@ -32,6 +32,12 @@ fun LineSchedulesMain(
         mutableStateListOf<Schedule>()
     }
     val sortedSchedules = Schedules.sortSchedulesByHour(schedules).filter { it.isNotEmpty() }
+    val notRealisedSchedules = sortedSchedules.filter { values ->
+        values.any { it.state != "REALISE" }
+    }
+    val displayMoreSchedules = remember {
+        mutableStateOf(false)
+    }
     val line = Lines.getLine(lineId)
     val collapsedGroupHandler: MutableList<Boolean> = sortedSchedules.map {
         false
@@ -82,7 +88,10 @@ fun LineSchedulesMain(
             }
         }
         else {
-            if(schedules.isEmpty()) {
+            if(if (displayMoreSchedules.value)
+                schedules.isEmpty()
+            else
+                notRealisedSchedules.isEmpty()) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
@@ -100,16 +109,25 @@ fun LineSchedulesMain(
                 LazyColumn(modifier = Modifier
                     .padding(padding)
                 ) {
-                    items(sortedSchedules.size) {groupIndex ->
+                    items(if (displayMoreSchedules.value)
+                        sortedSchedules.size
+                    else
+                        notRealisedSchedules.size) {groupIndex ->
                         LineSchedulesGroup(
-                            schedules = sortedSchedules[groupIndex],
+                            schedules = if (displayMoreSchedules.value)
+                                sortedSchedules[groupIndex]
+                            else
+                                notRealisedSchedules[groupIndex],
                             line = line,
                             paths = paths,
                             collapsedGroupHandler = collapsedGroupHandler,
                             groupIndex = groupIndex
                         )
 
-                        if(sortedSchedules[groupIndex] != sortedSchedules.last()) {
+                        if(if (displayMoreSchedules.value)
+                            sortedSchedules[groupIndex] != sortedSchedules.last()
+                        else
+                            notRealisedSchedules[groupIndex] != notRealisedSchedules.last()) {
                             Spacer(modifier = Modifier
                                 .height(30.dp)
                             )
