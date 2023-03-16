@@ -2,7 +2,6 @@ package view.next_schedules.search_line.search_stop_list.next_line_schedules.lin
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
@@ -10,12 +9,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import model.DTO.*
-import java.util.*
 
 @Composable
 fun LineSchedulesMain(
@@ -32,7 +29,7 @@ fun LineSchedulesMain(
         mutableStateListOf<Schedule>()
     }
     val sortedSchedules = Schedules.sortSchedulesByHour(schedules).filter { it.isNotEmpty() }
-    val notRealisedSchedules = sortedSchedules.filter { values ->
+    val notRealizedSchedules = sortedSchedules.filter { values ->
         values.any { it.state != "REALISE" }
     }
     val displayMoreSchedules = remember {
@@ -91,7 +88,7 @@ fun LineSchedulesMain(
             if(if (displayMoreSchedules.value)
                 schedules.isEmpty()
             else
-                notRealisedSchedules.isEmpty()) {
+                notRealizedSchedules.isEmpty()) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center,
@@ -112,12 +109,12 @@ fun LineSchedulesMain(
                     items(if (displayMoreSchedules.value)
                         sortedSchedules.size
                     else
-                        notRealisedSchedules.size) {groupIndex ->
+                        notRealizedSchedules.size) { groupIndex ->
                         LineSchedulesGroup(
                             schedules = if (displayMoreSchedules.value)
                                 sortedSchedules[groupIndex]
                             else
-                                notRealisedSchedules[groupIndex],
+                                notRealizedSchedules[groupIndex],
                             line = line,
                             paths = paths,
                             collapsedGroupHandler = collapsedGroupHandler,
@@ -127,7 +124,7 @@ fun LineSchedulesMain(
                         if(if (displayMoreSchedules.value)
                             sortedSchedules[groupIndex] != sortedSchedules.last()
                         else
-                            notRealisedSchedules[groupIndex] != notRealisedSchedules.last()) {
+                            notRealizedSchedules[groupIndex] != notRealizedSchedules.last()) {
                             Spacer(modifier = Modifier
                                 .height(30.dp)
                             )
