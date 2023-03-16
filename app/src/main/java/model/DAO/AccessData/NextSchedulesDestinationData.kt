@@ -128,6 +128,7 @@ class NextSchedulesDestinationData {
             "Place Ravezies" to listOf("LE BOUSCAT", "Place Ravezies"),
             "Pont de la Maye" to listOf("VILLENAVE D'ORNON", "Pont de la Maye"),
             "Porte de Bourgogne" to listOf("BORDEAUX", "Porte de Bourgogne"),
+            "Porte De Bourgogne" to listOf("BORDEAUX", "Porte de Bourgogne"),
             "Préfecture" to listOf("BORDEAUX", "Préfecture"),
             //R
             "René Coty" to listOf("AMBARÈS", "René Coty"),
