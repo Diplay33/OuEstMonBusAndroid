@@ -47,8 +47,8 @@ fun LineSchedulesMain(
                 if(value.first().direction == direction) {
                     paths.addAll(value)
 
-                    Schedules.getSchedulesByStationAndPaths(stationId ?: "", value) {
-                        schedules.addAll(it)
+                    Schedules.getSchedulesByStationAndPaths(stationId ?: "", value) { values ->
+                        schedules.addAll(values.filter { it.state != "ANNULE" })
                         isLoading.value = false
                     }
                 }
