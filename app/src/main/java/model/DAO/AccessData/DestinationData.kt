@@ -150,6 +150,7 @@ class DestinationData {
             "Parc Des Expos" to listOf("BORDEAUX", "Parc des Expositions"),
             "Peixotto" to listOf("TALENCE", "Peixotto"),
             "Pelouse de Douet" to listOf("BORDEAUX", "Pelouse de Douet"),
+            "Pessac Bougnard" to listOf("PESSAC", "Bougnard"),
             "Pessac Centre" to listOf("PESSAC", "Centre"),
             "Peychotte" to listOf("MERIGNAC", "Peychotte"),
             "Phare" to listOf("MERIGNAC", "Phare"),
