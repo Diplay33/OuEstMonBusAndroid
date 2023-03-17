@@ -96,7 +96,10 @@ fun LineSchedulesMain(
                         .fillMaxSize()
                 ) {
                     Text(
-                        text = "Aucun résultat à l'heure actuelle",
+                        text = if (notRealizedSchedules.isEmpty() && sortedSchedules.isNotEmpty())
+                            "Le service est terminé"
+                        else
+                            "Aucun résultat à l'heure actuelle",
                         fontSize = 18.sp,
                         color = Color.Gray
                     )
