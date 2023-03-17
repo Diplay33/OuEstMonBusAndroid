@@ -28,6 +28,7 @@ class ScheduleDAO {
                                 Schedule(
                                     pathId = propertiesJSONObject.getInt("rs_sv_chem_l"),
                                     rawAppTime = propertiesJSONObject.getString("hor_app"),
+                                    rawRealTime = propertiesJSONObject.getString("hor_real"),
                                     state = propertiesJSONObject.getString("etat")
                                 )
                             )

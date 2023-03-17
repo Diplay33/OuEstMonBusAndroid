@@ -43,7 +43,7 @@ class Schedules {
             val sortedSchedules: MutableList<List<Schedule>> = mutableListOf()
 
             var tempSchedules: MutableList<Schedule> = mutableListOf()
-            var lastSchedule = Schedule(0, "2023-01-02T06:00:04", "")
+            var lastSchedule = Schedule(0, "2023-01-02T06:00:04", "", "")
 
             schedules.sortedBy { it.getTime() }.forEach { schedule ->
                 if(schedule.getTime() != null) {

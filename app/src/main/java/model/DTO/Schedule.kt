@@ -5,6 +5,7 @@ import java.util.*
 
 class Schedule(val pathId: Int,
                val rawAppTime: String,
+               val rawRealTime: String?,
                val state: String
 ) {
     fun getTime(): Date? {

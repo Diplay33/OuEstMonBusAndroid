@@ -30,7 +30,7 @@ fun LineSchedulesMain(
     }
     val sortedSchedules = Schedules.sortSchedulesByHour(schedules).filter { it.isNotEmpty() }
     val notRealizedSchedules = sortedSchedules.filter { values ->
-        values.any { it.state != "REALISE" }
+        values.any { it.state != "REALISE" && it.rawRealTime == "null" }
     }
     val displayMoreSchedules = remember {
         mutableStateOf(false)
