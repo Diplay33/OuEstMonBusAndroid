@@ -9,10 +9,9 @@ class ScheduleDAO {
         fun getSchedulesByStationAndPathAndDate(
             stationId: String,
             date: String,
-            pathId: Int,
             callback: (List<Schedule>) -> Unit
         ) {
-            CallAPI.run("https://data.bordeaux-metropole.fr/geojson/process/saeiv_arret_horaires?key=0234ABEFGH&datainputs={\"arret_id\":\"$stationId\",\"date\":\"$date\",\"chemin_gid\":$pathId}", retry = true) { responseBody ->
+            CallAPI.run("https://data.bordeaux-metropole.fr/geojson/process/saeiv_arret_horaires?key=0234ABEFGH&datainputs={\"arret_id\":\"$stationId\",\"date\":\"$date\"}", retry = true) { responseBody ->
                 try {
                     val schedules: MutableList<Schedule> = mutableListOf()
                     val welcomeJSONObject = JSONObject(responseBody)
@@ -24,14 +23,19 @@ class ScheduleDAO {
                             val propertiesJSONObject =
                                 featuresJSONObject.getJSONObject("properties")
 
-                            schedules.add(
-                                Schedule(
-                                    pathId = propertiesJSONObject.getInt("rs_sv_chem_l"),
-                                    rawAppTime = propertiesJSONObject.getString("hor_app"),
-                                    rawRealTime = propertiesJSONObject.getString("hor_real"),
-                                    state = propertiesJSONObject.getString("etat")
+                            try {
+                                schedules.add(
+                                    Schedule(
+                                        pathId = propertiesJSONObject.getInt("rs_sv_chem_l"),
+                                        rawAppTime = propertiesJSONObject.getString("hor_app"),
+                                        rawRealTime = propertiesJSONObject.getString("hor_real"),
+                                        state = propertiesJSONObject.getString("etat")
+                                    )
                                 )
-                            )
+                            }
+                            catch(e: Exception) {
+                                println("Error during decoding process: $e")
+                            }
                         }
                     }
                     catch(e: Exception) {

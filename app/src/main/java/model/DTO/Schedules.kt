@@ -2,21 +2,17 @@ package model.DTO
 
 import android.icu.util.Calendar
 import model.DAO.ScheduleDAO
-import java.text.SimpleDateFormat
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
-import java.util.Date
 
 class Schedules {
     companion object {
-        fun getSchedulesByStationAndPathAndDate(
+        private fun getSchedulesByStationAndDate(
             stationId: String,
             date: String,
-            pathId: Int,
             callback: (List<Schedule>) -> Unit
         ) {
-            ScheduleDAO.getSchedulesByStationAndPathAndDate(stationId, date, pathId) { schedules ->
+            ScheduleDAO.getSchedulesByStationAndPathAndDate(stationId, date) { schedules ->
                 callback(schedules)
             }
         }
@@ -28,13 +24,11 @@ class Schedules {
         ) {
             val localDate = LocalDate.now()
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-            paths.forEach { path ->
-                getSchedulesByStationAndPathAndDate(stationId, formatter.format(localDate), path.id) { schedules ->
-                    callback(schedules)
+            getSchedulesByStationAndDate(stationId, formatter.format(localDate)) { schedules ->
+                callback(schedules.filter { value -> paths.map { it.id }.contains(value.pathId) })
 
-                    getSchedulesByStationAndPathAndDate(stationId, formatter.format(localDate.plusDays(1)), path.id) {
-                        callback(it)
-                    }
+                getSchedulesByStationAndDate(stationId, formatter.format(localDate.plusDays(1))) { values ->
+                    callback(values.filter { value -> paths.map { it.id }.contains(value.pathId) })
                 }
             }
         }
