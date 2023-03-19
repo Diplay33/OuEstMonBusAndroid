@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
@@ -123,50 +124,53 @@ fun LineSchedulesMain(
                 LazyColumn(modifier = Modifier
                     .padding(padding)
                 ) {
-                    item {
-                        Row(
-                            horizontalArrangement = Arrangement.Center,
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 15.dp)
-                                .background(
-                                    if (colorScheme) Color.Transparent else Color(0xff18191A),
-                                    shape = RoundedCornerShape(10.dp)
-                                )
-                                .background(
-                                    colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
-                                    shape = RoundedCornerShape(10.dp)
-                                )
-                                .height(45.dp)
-                                .clickable {
-                                    println("Display more schedules")
-                                }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Rounded.ArrowForward,
-                                contentDescription = null,
-                                tint = colorResource(id = line.lineColorResource),
+                    if(sortedSchedules.count() > notRealizedSchedules.count()
+                        && !displayMoreSchedules.value) {
+                        item {
+                            Row(
+                                horizontalArrangement = Arrangement.Center,
+                                verticalAlignment = Alignment.CenterVertically,
                                 modifier = Modifier
-                                    .size(25.dp)
-                                    .rotate(-90f)
-                            )
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 15.dp)
+                                    .background(
+                                        if (colorScheme) Color.Transparent else Color(0xff18191A),
+                                        shape = RoundedCornerShape(10.dp)
+                                    )
+                                    .background(
+                                        colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+                                        shape = RoundedCornerShape(10.dp)
+                                    )
+                                    .height(45.dp)
+                                    .clickable {
+                                        displayMoreSchedules.value = !displayMoreSchedules.value
+                                    }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Rounded.ArrowForward,
+                                    contentDescription = null,
+                                    tint = colorResource(id = line.lineColorResource),
+                                    modifier = Modifier
+                                        .size(25.dp)
+                                        .rotate(-90f)
+                                )
+
+                                Spacer(modifier = Modifier
+                                    .width(10.dp)
+                                )
+
+                                Text(
+                                    text = "Afficher les résultats précédents",
+                                    fontWeight = FontWeight.Bold,
+                                    fontSize = 18.sp,
+                                    color = colorResource(id = line.lineColorResource)
+                                )
+                            }
 
                             Spacer(modifier = Modifier
-                                .width(10.dp)
-                            )
-
-                            Text(
-                                text = "Afficher les résultats précédents",
-                                fontWeight = FontWeight.Bold,
-                                fontSize = 18.sp,
-                                color = colorResource(id = line.lineColorResource)
+                                .height(30.dp)
                             )
                         }
-
-                        Spacer(modifier = Modifier
-                            .height(30.dp)
-                        )
                     }
 
                     items(if (displayMoreSchedules.value)
