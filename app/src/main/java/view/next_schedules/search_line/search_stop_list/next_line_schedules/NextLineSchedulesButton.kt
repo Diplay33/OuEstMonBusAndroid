@@ -61,7 +61,10 @@ fun NextLineSchedulesButton(
         Icon(
             painter = painterResource(id = R.drawable.timer),
             contentDescription = null,
-            tint = colorResource(id = line.lineColorResource),
+            tint = if (colorScheme)
+                colorResource(id = line.lineColorResource)
+            else
+                Color.White,
             modifier = Modifier
                 .size(25.dp)
         )
@@ -74,7 +77,10 @@ fun NextLineSchedulesButton(
             text = "Afficher les horaires",
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
-            color = colorResource(id = line.lineColorResource)
+            color = if (colorScheme)
+                colorResource(id = line.lineColorResource)
+            else
+                Color.White
         )
     }
 }

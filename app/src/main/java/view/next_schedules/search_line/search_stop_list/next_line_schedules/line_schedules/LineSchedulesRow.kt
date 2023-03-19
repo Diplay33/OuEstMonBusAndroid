@@ -103,6 +103,7 @@ fun LineSchedulesRow(line: Line, schedule: Schedule, path: Path) {
         Text(
             text = "${scheduleCalendar.get(Calendar.HOUR_OF_DAY)}h${if (minutes.count() < 2) "0${minutes}" else minutes}",
             fontSize = 18.sp,
+            color = if(colorScheme) Color.Black else Color.White,
             fontWeight = FontWeight.Bold,
             modifier = Modifier
                 .align(Alignment.CenterVertically)

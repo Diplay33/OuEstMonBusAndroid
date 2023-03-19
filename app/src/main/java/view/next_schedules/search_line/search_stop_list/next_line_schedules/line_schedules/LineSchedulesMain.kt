@@ -77,124 +77,135 @@ fun LineSchedulesMain(
     Scaffold(
         topBar = { LineSchedulesTopBar(navController, stationName ?: "Arrêt inconnu") }
     ) { padding ->
-        if(isLoading.value) {
-            Column(verticalArrangement = Arrangement.Center, modifier = Modifier
-                .fillMaxSize()
-            ) {
-                CircularProgressIndicator(modifier = Modifier
-                    .size(25.dp)
-                    .align(Alignment.CenterHorizontally)
-                )
-
-                Spacer(modifier = Modifier
-                    .height(10.dp)
-                )
-
-                Text(
-                    text = "Chargement en cours...",
-                    fontSize = 18.sp,
-                    color = Color.Gray,
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                )
-            }
-        }
-        else {
-            if(if (displayMoreSchedules.value)
-                schedules.isEmpty()
-            else
-                notRealizedSchedules.isEmpty()) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center,
-                    modifier = Modifier
-                        .fillMaxSize()
+        Box(modifier = Modifier
+            .fillMaxSize()
+            .background(if (colorScheme) Color.White else Color.Black)
+        ) {
+            if(isLoading.value) {
+                Column(verticalArrangement = Arrangement.Center, modifier = Modifier
+                    .fillMaxSize()
                 ) {
+                    CircularProgressIndicator(modifier = Modifier
+                        .size(25.dp)
+                        .align(Alignment.CenterHorizontally)
+                    )
+
+                    Spacer(modifier = Modifier
+                        .height(10.dp)
+                    )
+
                     Text(
-                        text = if (notRealizedSchedules.isEmpty() && sortedSchedules.isNotEmpty())
-                            "Le service est terminé"
-                        else
-                            "Aucun résultat à l'heure actuelle",
+                        text = "Chargement en cours...",
                         fontSize = 18.sp,
-                        color = Color.Gray
+                        color = Color.Gray,
+                        modifier = Modifier
+                            .align(Alignment.CenterHorizontally)
                     )
                 }
             }
             else {
-                LazyColumn(modifier = Modifier
-                    .padding(padding)
-                ) {
-                    if(sortedSchedules.count() > notRealizedSchedules.count()
-                        && !displayMoreSchedules.value) {
-                        item {
-                            Row(
-                                horizontalArrangement = Arrangement.Center,
-                                verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 15.dp)
-                                    .background(
-                                        if (colorScheme) Color.Transparent else Color(0xff18191A),
-                                        shape = RoundedCornerShape(10.dp)
-                                    )
-                                    .background(
-                                        colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
-                                        shape = RoundedCornerShape(10.dp)
-                                    )
-                                    .height(45.dp)
-                                    .clickable {
-                                        displayMoreSchedules.value = !displayMoreSchedules.value
-                                    }
-                            ) {
-                                Icon(
-                                    imageVector = Icons.Rounded.ArrowForward,
-                                    contentDescription = null,
-                                    tint = colorResource(id = line.lineColorResource),
+                if(if (displayMoreSchedules.value)
+                        schedules.isEmpty()
+                    else
+                        notRealizedSchedules.isEmpty()) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center,
+                        modifier = Modifier
+                            .fillMaxSize()
+                    ) {
+                        Text(
+                            text = if (notRealizedSchedules.isEmpty() && sortedSchedules.isNotEmpty())
+                                "Le service est terminé"
+                            else
+                                "Aucun résultat à l'heure actuelle",
+                            fontSize = 18.sp,
+                            color = Color.Gray
+                        )
+                    }
+                }
+                else {
+                    LazyColumn(modifier = Modifier
+                        .padding(padding)
+                    ) {
+                        if(sortedSchedules.count() > notRealizedSchedules.count()
+                            && !displayMoreSchedules.value) {
+                            item {
+                                Row(
+                                    horizontalArrangement = Arrangement.Center,
+                                    verticalAlignment = Alignment.CenterVertically,
                                     modifier = Modifier
-                                        .size(25.dp)
-                                        .rotate(-90f)
-                                )
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 15.dp)
+                                        .background(
+                                            if (colorScheme) Color.Transparent else Color(0xff18191A),
+                                            shape = RoundedCornerShape(10.dp)
+                                        )
+                                        .background(
+                                            colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+                                            shape = RoundedCornerShape(10.dp)
+                                        )
+                                        .height(45.dp)
+                                        .clickable {
+                                            displayMoreSchedules.value = !displayMoreSchedules.value
+                                        }
+                                ) {
+                                    Icon(
+                                        imageVector = Icons.Rounded.ArrowForward,
+                                        contentDescription = null,
+                                        tint = if (colorScheme)
+                                            colorResource(id = line.lineColorResource)
+                                        else
+                                            Color.White,
+                                        modifier = Modifier
+                                            .size(25.dp)
+                                            .rotate(-90f)
+                                    )
+
+                                    Spacer(modifier = Modifier
+                                        .width(10.dp)
+                                    )
+
+                                    Text(
+                                        text = "Afficher les résultats précédents",
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 18.sp,
+                                        color = if (colorScheme)
+                                            colorResource(id = line.lineColorResource)
+                                        else
+                                            Color.White
+                                    )
+                                }
 
                                 Spacer(modifier = Modifier
-                                    .width(10.dp)
-                                )
-
-                                Text(
-                                    text = "Afficher les résultats précédents",
-                                    fontWeight = FontWeight.Bold,
-                                    fontSize = 18.sp,
-                                    color = colorResource(id = line.lineColorResource)
+                                    .height(30.dp)
                                 )
                             }
-
-                            Spacer(modifier = Modifier
-                                .height(30.dp)
-                            )
                         }
-                    }
 
-                    items(if (displayMoreSchedules.value)
-                        sortedSchedules.size
-                    else
-                        notRealizedSchedules.size) { groupIndex ->
-                        LineSchedulesGroup(
-                            schedules = if (displayMoreSchedules.value)
-                                sortedSchedules[groupIndex]
-                            else
-                                notRealizedSchedules[groupIndex],
-                            line = line,
-                            paths = paths,
-                            collapsedGroupHandler = collapsedGroupHandler,
-                            groupIndex = groupIndex
-                        )
-
-                        if(if (displayMoreSchedules.value)
-                            sortedSchedules[groupIndex] != sortedSchedules.last()
+                        items(if (displayMoreSchedules.value)
+                            sortedSchedules.size
                         else
-                            notRealizedSchedules[groupIndex] != notRealizedSchedules.last()) {
-                            Spacer(modifier = Modifier
-                                .height(30.dp)
+                            notRealizedSchedules.size) { groupIndex ->
+                            LineSchedulesGroup(
+                                schedules = if (displayMoreSchedules.value)
+                                    sortedSchedules[groupIndex]
+                                else
+                                    notRealizedSchedules[groupIndex],
+                                line = line,
+                                paths = paths,
+                                collapsedGroupHandler = collapsedGroupHandler,
+                                groupIndex = groupIndex
                             )
+
+                            if(if (displayMoreSchedules.value)
+                                    sortedSchedules[groupIndex] != sortedSchedules.last()
+                                else
+                                    notRealizedSchedules[groupIndex] != notRealizedSchedules.last()) {
+                                Spacer(modifier = Modifier
+                                    .height(30.dp)
+                                )
+                            }
                         }
                     }
                 }

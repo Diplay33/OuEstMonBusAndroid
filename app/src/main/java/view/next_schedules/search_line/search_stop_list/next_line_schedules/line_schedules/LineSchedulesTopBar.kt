@@ -1,6 +1,7 @@
 package view.next_schedules.search_line.search_stop_list.next_line_schedules.line_schedules
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -19,14 +20,19 @@ import androidx.navigation.NavController
 
 @Composable
 fun LineSchedulesTopBar(navController: NavController, stationName: String) {
-    TopAppBar(backgroundColor = Color.White, elevation = 0.dp) {
+    val colorScheme = !isSystemInDarkTheme()
+
+    TopAppBar(
+        backgroundColor = if (colorScheme) Color.White else Color.Black,
+        elevation = 0.dp
+    ) {
         Row(modifier = Modifier
             .fillMaxWidth()
         ) {
             Icon(
                 imageVector = Icons.Rounded.ArrowBack,
                 contentDescription = null,
-                tint = Color.Black,
+                tint = if (colorScheme) Color.Black else Color.White,
                 modifier = Modifier
                     .clickable { navController.navigateUp() }
                     .size(30.dp)
@@ -41,7 +47,7 @@ fun LineSchedulesTopBar(navController: NavController, stationName: String) {
                     text = stationName,
                     style = MaterialTheme.typography.h5,
                     textAlign = TextAlign.Start,
-                    color = Color.Black,
+                    color = if (colorScheme) Color.Black else Color.White,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
                         .padding(horizontal = 15.dp)
