@@ -53,8 +53,8 @@ fun LineSchedulesMain(
     val collapsedGroupHandler: MutableList<Boolean> = sortedSchedules.map {
         false
     }.toMutableList()
-    val isLoading = remember {
-        mutableStateOf(true)
+    val loadingCount = remember {
+        mutableStateOf(0)
     }
     val colorScheme = !isSystemInDarkTheme()
 
@@ -67,7 +67,7 @@ fun LineSchedulesMain(
 
                     Schedules.getSchedulesByStationAndPaths(stationId ?: "", value) { values ->
                         schedules.addAll(values.filter { it.state != "ANNULE" })
-                        isLoading.value = false
+                        loadingCount.value += 1
                     }
                 }
             }
@@ -81,7 +81,7 @@ fun LineSchedulesMain(
             .fillMaxSize()
             .background(if (colorScheme) Color.White else Color.Black)
         ) {
-            if(isLoading.value) {
+            if(loadingCount.value < 2) {
                 Column(verticalArrangement = Arrangement.Center, modifier = Modifier
                     .fillMaxSize()
                 ) {
