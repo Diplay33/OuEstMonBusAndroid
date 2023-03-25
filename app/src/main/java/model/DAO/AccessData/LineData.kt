@@ -89,7 +89,7 @@ class LineData {
             Line(120, "Spécifique 95", R.drawable.specifique_95, R.color.specifique, ListGroup.LIGNEAUTRES),
             Line(121, "Spécifique 96", R.drawable.specifique_96, R.color.specifique, ListGroup.LIGNEAUTRES),
             Line(128, "Navette Arena", R.drawable.navette_arena, R.color.navette_arena, ListGroup.LIGNESPECIALE),
-            Line(127, "Navette Stade", R.drawable.navette_stade, R.color.navette_stade, ListGroup.LIGNESPECIALE),
+            Line(124, "Navette Stade", R.drawable.navette_stade, R.color.navette_stade, ListGroup.LIGNESPECIALE),
             Line(132, "Navette Tram", R.drawable.navette_tram, R.color.navette_tram, ListGroup.LIGNESPECIALE),
             Line(130, "BatCUB", R.drawable.batcub, R.color.batcub, ListGroup.LIGNESPECIALE),
             )
