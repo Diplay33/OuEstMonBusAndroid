@@ -135,13 +135,19 @@ fun NextLineSchedulesTopBar(
                     isDialogShown.value = false
                 },
                 title = {
-                    Text("Nombre maximum d'arrêts en favori atteint")
+                    Text(
+                        text = "Nombre maximum d'arrêts en favori atteint",
+                        color = if (colorScheme) Color.Black else Color.White
+                    )
                 },
                 text = {
-                    Text("Le nombre maximum d'arrêts en favori (10) a été atteint, veuillez " +
+                    Text(
+                        text ="Le nombre maximum d'arrêts en favori (10) a été atteint, veuillez " +
                             "en supprimer pour pouvoir ajouter celui-ci. Si d'autres lignes " +
                             "passent par cet arrêt, vous pourrez cependant ajouter ces autres " +
-                            "lignes en favori avec cet arrêt.")
+                            "lignes en favori avec cet arrêt.",
+                        color = if (colorScheme) Color.Black else Color.White
+                    )
                 },
                 confirmButton = {
                     Button(
@@ -151,7 +157,8 @@ fun NextLineSchedulesTopBar(
                     ) {
                         Text("OK")
                     }
-                }
+                },
+                backgroundColor = if (colorScheme) Color.White else Color(0xff18191A)
             )
         }
     }
