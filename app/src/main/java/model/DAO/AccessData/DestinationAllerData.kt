@@ -5,7 +5,7 @@ class DestinationAllerData {
         val destinations: Map<Int, List<List<String>>> = mapOf(
             //Tram A
             59 to listOf(
-                listOf("MERIGNAC", "Pin Galant"),
+                listOf("MERIGNAC", "Aéroport"),
                 listOf("LE HAILLAN", "Rostand")
             ),
             //Tram B
@@ -24,7 +24,7 @@ class DestinationAllerData {
                 listOf("EYSINES", "Hippodrome")
             ),
             //Lianes 1
-            1 to listOf(listOf("MERIGNAC", "Aéroport")),
+            1 to listOf(listOf("MERIGNAC", "Centre")),
             //Lianes 2
             2 to listOf(listOf("LE TAILLAN", "La Boétie")),
             //Lianes 3
