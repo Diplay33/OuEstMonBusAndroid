@@ -616,7 +616,7 @@ class VehicleData {
 
             //IRISBUS Crossway LE
             mapOf("id" to "93208", "parkId" to "113208", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
-            mapOf("id" to "93210", "parkId" to "113210", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "932xx", "parkId" to "113210", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
             mapOf("id" to "93211", "parkId" to "113211", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
             mapOf("id" to "93212", "parkId" to "113212", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
             mapOf("id" to "93213", "parkId" to "113213", "brand" to "IRISBUS", "model" to "IRISBUS Crossway LE", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
@@ -671,6 +671,7 @@ class VehicleData {
             mapOf("id" to "97004", "parkId" to "107004", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
             mapOf("id" to "97006", "parkId" to "107006", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
             mapOf("id" to "97007", "parkId" to "107007", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "93210", "parkId" to "130078", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
 
             //HeuliezBus Access'BUS GX 127 L
             mapOf("id" to "97014", "parkId" to "087014", "brand" to "HeuliezBus", "model" to "HeuliezBus Access'BUS GX 127 L", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
@@ -680,7 +681,7 @@ class VehicleData {
             mapOf("id" to "99045", "parkId" to "069045", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C1", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
 
             //MercedesBenz Citaro C2 NGT
-            mapOf("id" to "77005", "parkId" to "169069", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 NGT", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "77005", "parkId" to "160969", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 NGT", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
 
 
             /*TRANSDEV Citram Aquitaine*/
