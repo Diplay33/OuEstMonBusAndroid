@@ -28,7 +28,15 @@ class Schedules {
                 callback(schedules.filter { value -> paths.map { it.id }.contains(value.pathId) })
 
                 getSchedulesByStationAndDate(stationId, formatter.format(localDate.plusDays(1))) { values ->
-                    callback(values.filter { value -> paths.map { it.id }.contains(value.pathId) })
+                    callback(
+                        values
+                            .filter { value -> paths.map { it.id }.contains(value.pathId) }
+                            .filter { value ->
+                                val cal = Calendar.getInstance()
+                                cal.time = value.getTime()
+                                cal.get(Calendar.HOUR_OF_DAY) <= 4
+                            }
+                    )
                 }
             }
         }
