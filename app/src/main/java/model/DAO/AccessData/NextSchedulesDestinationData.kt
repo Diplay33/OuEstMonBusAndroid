@@ -7,6 +7,7 @@ class NextSchedulesDestinationData {
             "5 Chemins" to listOf("LE HAILLAN", "5 Chemins"),
             //A
             "Aéroport" to listOf("MERIGNAC", "Aéroport"),
+            "Aeroport" to listOf("MERIGNAC", "Aéroport"),
             "Arches de l'Estey" to listOf("BÈGLES", "Arches de l'Estey"),
             "Arena" to listOf("FLOIRAC", "Arkéa Arena"),
             //B

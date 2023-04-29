@@ -10,6 +10,7 @@ class DestinationData {
             //A
             "Achard" to listOf("BORDEAUX", "Rue Achard"),
             "Aéroport" to listOf("MERIGNAC", "Aéroport"),
+            "Aeroport" to listOf("MERIGNAC", "Aéroport"),
             "Alfred De Vigny" to listOf("MERIGNAC", "Alfred de Vigny"),
             "Arena" to listOf("FLOIRAC", "Arkéa Arena"),
             //B
