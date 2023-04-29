@@ -8,7 +8,6 @@ class PathDestinationData {
             "5 Chemins via THALES" to listOf("LE HAILLAN", "5 Chemins", "via Thalès"),
             //A
             "Aéroport" to listOf("MERIGNAC", "Aéroport", ""),
-            "Aeroport" to listOf("MERIGNAC", "Aéroport", ""),
             "Alfred De Vigny" to listOf("MERIGNAC", "Alfred de Vigny", ""),
             "Arena" to listOf("FLOIRAC", "Arkéa Arena", ""),
             //B
