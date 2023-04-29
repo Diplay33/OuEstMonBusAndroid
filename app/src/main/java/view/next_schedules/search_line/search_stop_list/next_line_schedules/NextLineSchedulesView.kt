@@ -129,8 +129,7 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoadi
                                         .offset(x = (-7).dp)
                                 )
 
-                                //TODO: temp ternary expression due to API returning null when it's airport for tram a
-                                if(destination.isEmpty() && nextSchedule.destination != "null") {
+                                if(destination.isEmpty()) {
                                     Text(
                                         text = nextSchedule.destination,
                                         fontSize = 18.sp,
@@ -145,10 +144,7 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoadi
                                         .padding(vertical = 3.dp)
                                     ) {
                                         Text(
-                                            text = if (nextSchedule.lineId == 59 && nextSchedule.destination == "null")
-                                                "MERIGNAC"
-                                            else
-                                                destination.first(),
+                                            text = destination.first(),
                                             fontSize = 13.sp,
                                             color = Color.Gray,
                                             modifier = Modifier
@@ -156,10 +152,7 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoadi
                                         )
 
                                         Text(
-                                            text = if (nextSchedule.lineId == 59 && nextSchedule.destination == "null")
-                                                "Aéroport"
-                                            else
-                                                destination.last(),
+                                            text = destination.last(),
                                             fontSize = 18.sp,
                                             color = if (colorScheme) Color.Black else Color.White,
                                             modifier = Modifier

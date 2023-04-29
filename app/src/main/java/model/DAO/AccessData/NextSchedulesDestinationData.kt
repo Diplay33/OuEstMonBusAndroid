@@ -7,7 +7,6 @@ class NextSchedulesDestinationData {
             "5 Chemins" to listOf("LE HAILLAN", "5 Chemins"),
             //A
             "Aéroport" to listOf("MERIGNAC", "Aéroport"),
-            "Aeroport" to listOf("MERIGNAC", "Aéroport"),
             "Arches de l'Estey" to listOf("BÈGLES", "Arches de l'Estey"),
             "Arena" to listOf("FLOIRAC", "Arkéa Arena"),
             //B
@@ -106,6 +105,7 @@ class NextSchedulesDestinationData {
             "Magonty" to listOf("PESSAC", "Magonty"),
             "Malartic" to listOf("GRADIGNAN", "Malartic"),
             "Martignas Centre" to listOf("MARTIGNAS SUR JALLE", "Centre"),
+            "Merignac Aeroport" to listOf("MERIGNAC", "Aéroport"),
             "Merignac Centre" to listOf("MERIGNAC", "Centre"),
             "Mérignac Centre" to listOf("MERIGNAC", "Centre"),
             "Mérignac Soleil" to listOf("MERIGNAC", "Soleil"),
