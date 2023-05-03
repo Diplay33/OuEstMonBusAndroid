@@ -73,7 +73,11 @@ fun SearchStopListMain(
                     returnedPaths.map { if (it.first().direction == pathDirection) paths.addAll(it) }
 
                     Stations.getSortedStationsByPaths(paths) { returnedStations ->
-                        stops.addAll(returnedStations)
+                        returnedStations.forEach { station ->  
+                            if(!stops.map { it.stationId }.contains(station.stationId)) {
+                                stops.add(station)
+                            }
+                        }
                         isLoading.value = false
                     }
                 }
@@ -83,7 +87,7 @@ fun SearchStopListMain(
                 state.searching = false
             }
             state.searchResults = Stations.filterStationsBySearchText(
-                stations = stops.distinctBy { it.stationId }.sortedBy { it.name },
+                stations = stops.sortedBy { it.name },
                 searchText = state.query.text
             )
 
@@ -122,10 +126,10 @@ fun SearchStopListMain(
                             }
                         }
                         else {
-                            stops.distinctBy { it.stationId }.sortedBy { it.name }.forEach { stop ->
+                            stops.sortedBy { it.name }.forEach { stop ->
                                 SearchStopListRow(
                                     stop = stop,
-                                    stops = stops.distinctBy { it.stationId }.sortedBy { it.name },
+                                    stops = stops.sortedBy { it.name },
                                     navController = navController,
                                     line = line,
                                     pathDirection = pathDirection ?: "ALLER"
