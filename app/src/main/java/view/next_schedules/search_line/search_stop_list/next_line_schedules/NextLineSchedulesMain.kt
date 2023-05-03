@@ -85,8 +85,13 @@ fun NextLineSchedulesMain(
                     .height(30.dp)
                 )
 
+                NextLineSchedulesMap(stopId)
+
+                Spacer(modifier = Modifier
+                    .height(30.dp)
+                )
+
                 NextLineSchedulesButton(line, navController, stopId, stopName, pathDirection)
-                //NextLineSchedulesOverview(line, schedules, isSchedulesLoading.value)
             }
         }
     }
