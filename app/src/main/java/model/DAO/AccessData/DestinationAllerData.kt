@@ -211,7 +211,7 @@ class DestinationAllerData {
             //Navette Arena
             128 to listOf(listOf("FLOIRAC", "Arkéa Arena")),
             //Navette Stade
-            127 to listOf(listOf("BORDEAUX", "Stade Matmut Atlantique")),
+            124 to listOf(listOf("BORDEAUX", "Stade Matmut Atlantique")),
             //BatCUB
             130 to listOf(listOf("LORMONT", "Bas"))
         )

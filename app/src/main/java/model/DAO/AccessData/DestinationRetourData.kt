@@ -191,7 +191,7 @@ class DestinationRetourData {
             //Navette Arena
             128 to listOf(listOf("BORDEAUX", "Porte de Bourgogne")),
             //Navette Stade
-            127 to listOf(listOf("BORDEAUX", "Brandenburg")),
+            124 to listOf(listOf("CENON", "Gare")),
             //BatCUB
             130 to listOf(listOf("BORDEAUX", "Stalingrad"))
         )
