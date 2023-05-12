@@ -43,7 +43,10 @@ fun LinesMapListRow(
     navController: NavController,
     services: MutableList<Service>,
     isLoading: MutableState<Boolean>,
-    programmedMessagesCount: Int
+    programmedMessagesCount: Int,
+    clickRowLine: Boolean,
+    index: Int = 0,
+    searchText: MutableState<String> = mutableStateOf("")
 ) {
     val serviceCount = services.filter { it.lineId == rowLine.id }.size
     val navetteTramServicesCount = remember {
@@ -91,7 +94,14 @@ fun LinesMapListRow(
                 onPress = { },
                 onDoubleTap = { },
                 onLongPress = { menuShown.value = true },
-                onTap = { navController.navigate(CartesScreens.HelloWorld.withArgs(rowLine.id.toString())) }
+                onTap = {
+                    if(clickRowLine) {
+                        navController.navigate(CartesScreens.HelloWorld.withArgs(rowLine.id.toString()))
+                    }
+                    else {
+                        navController.navigate(CartesScreens.HelloWorld.withArgs(Lines.getLinesBySearchText(text = searchText.value)[index].id.toString()))
+                    }
+                }
             )
         }
     ) {

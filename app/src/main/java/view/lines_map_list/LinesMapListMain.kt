@@ -37,6 +37,12 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
     val programmedMessages = remember {
         mutableStateListOf<ProgrammedMessage>()
     }
+    val searchText = remember {
+        mutableStateOf("")
+    }
+    val index = remember {
+        mutableStateOf(0)
+    }
 
     Scaffold(topBar = { LinesMapListTopBar() }) { padding ->
         Column(
@@ -55,7 +61,20 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
                 focused = state.focused
             )
 
+            LaunchedEffect("") {
+                while(true) {
+                    Services.getAllServices {
+                        allServices.clear()
+                        allServices.addAll(it)
+                        isLoading.value = false
+                    }
+                    delay(30000)
+                }
+            }
+
             LaunchedEffect(state.query.text) {
+                searchText.value = state.query.text
+                index.value = 0
                 linesByGroup.addAll(Lines.getLinesByGroup(context))
                 ProgrammedMessages.getAllProgrammedMessages { values ->
                     programmedMessages.clear()
@@ -65,15 +84,6 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
                 delay(100)
                 state.searchResults = Lines.getLinesBySearchText(state.query.text)
                 state.searching = false
-
-                while(true) {
-                    Services.getAllServices {
-                        allServices.clear()
-                        allServices.addAll(it)
-                        isLoading.value = false
-                    }
-                    delay(30000)
-                }
             }
 
             when(state.searchDisplay) {
@@ -126,8 +136,13 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
                                 isLoading = isLoading,
                                 programmedMessagesCount = programmedMessages
                                     .filter { it.lineId == line.id }
-                                    .size
+                                    .size,
+                                clickRowLine = false,
+                                searchText = searchText,
+                                index = index.value
                             )
+
+                            index.value += 1
                         }
 
                         item {

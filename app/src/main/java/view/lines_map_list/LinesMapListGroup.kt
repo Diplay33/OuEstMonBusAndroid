@@ -50,7 +50,8 @@ fun LinesMapListGroup(
                 navController = navController,
                 services = services,
                 isLoading = isLoading,
-                programmedMessagesCount = programmedMessages.filter { it.lineId == line.id }.size
+                programmedMessagesCount = programmedMessages.filter { it.lineId == line.id }.size,
+                clickRowLine = true
             )
         }
     }
