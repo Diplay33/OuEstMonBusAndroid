@@ -24,19 +24,25 @@ class Schedules {
         ) {
             val localDate = LocalDate.now()
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+            val isTBNight = paths.map { it.id }.contains(49363) || paths.map { it.id }.contains(49364)
             getSchedulesByStationAndDate(stationId, formatter.format(localDate)) { schedules ->
                 callback(schedules.filter { value -> paths.map { it.id }.contains(value.pathId) })
 
                 getSchedulesByStationAndDate(stationId, formatter.format(localDate.plusDays(1))) { values ->
-                    callback(
-                        values
-                            .filter { value -> paths.map { it.id }.contains(value.pathId) }
-                            .filter { value ->
-                                val cal = Calendar.getInstance()
-                                cal.time = value.getTime()
-                                cal.get(Calendar.HOUR_OF_DAY) <= 4
-                            }
-                    )
+                    if(!isTBNight) {
+                        callback(
+                            values
+                                .filter { value -> paths.map { it.id }.contains(value.pathId) }
+                                .filter { value ->
+                                    val cal = Calendar.getInstance()
+                                    cal.time = value.getTime()
+                                    cal.get(Calendar.HOUR_OF_DAY) <= 4
+                                }
+                        )
+                    }
+                    else {
+                        callback(emptyList())
+                    }
                 }
             }
         }
