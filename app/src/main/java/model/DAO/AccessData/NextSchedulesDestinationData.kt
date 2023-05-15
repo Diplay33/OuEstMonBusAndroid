@@ -106,6 +106,7 @@ class NextSchedulesDestinationData {
             "Magonty" to listOf("PESSAC", "Magonty"),
             "Malartic" to listOf("GRADIGNAN", "Malartic"),
             "Martignas Centre" to listOf("MARTIGNAS SUR JALLE", "Centre"),
+            "Mériadeck" to listOf("BORDEAUX", "Mériadeck"),
             "Merignac Aeroport" to listOf("MERIGNAC", "Aéroport"),
             "Merignac Centre" to listOf("MERIGNAC", "Centre"),
             "Mérignac Centre" to listOf("MERIGNAC", "Centre"),
