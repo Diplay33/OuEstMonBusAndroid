@@ -157,6 +157,7 @@ class PathDestinationData {
             "Merignac Aeroport" to listOf("MERIGNAC", "Aéroport", ""),
             "Merignac Centre" to listOf("MERIGNAC", "Centre", ""),
             "Mérignac Centre" to listOf("MERIGNAC", "Centre", ""),
+            "Mérignac Centre (René Coty)" to listOf("MERIGNAC", "René Coty", ""),
             "Mérignac Soleil" to listOf("MERIGNAC", "Soleil", ""),
             "Montaigne-Montesquieu" to listOf("PESSAC", "Montaigne Montesquieu", ""),
             "Musee D'Aquitaine" to listOf("BORDEAUX", "Musée d'Aquitaine", ""),

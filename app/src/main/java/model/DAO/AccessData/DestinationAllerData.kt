@@ -24,7 +24,7 @@ class DestinationAllerData {
                 listOf("EYSINES", "Hippodrome")
             ),
             //Lianes 1
-            1 to listOf(listOf("MERIGNAC", "Centre")),
+            1 to listOf(listOf("MERIGNAC", "René Coty")),
             //Lianes 2
             2 to listOf(listOf("LE TAILLAN", "La Boétie")),
             //Lianes 3
