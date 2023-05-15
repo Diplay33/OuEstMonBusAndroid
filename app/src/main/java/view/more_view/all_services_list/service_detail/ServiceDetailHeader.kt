@@ -76,10 +76,7 @@ fun ServiceDetailHeader(line: Line, destination: List<String>) {
                 ) {
                     if(destination.first() != "") {
                         Text(
-                            text = if (destination.last() == "Les Pins" && line.id == 9)
-                                "MARTIGNAS SUR JALLE"
-                            else
-                                destination.first(),
+                            text = destination.first(),
                             fontSize = 13.sp,
                             color = Color.Gray,
                             modifier = Modifier

@@ -27,7 +27,7 @@ import view.Screens.PlusScreens
 @Composable
 fun AllServicesListRow(service: Service, navController: NavController) {
     val line = Lines.getLine(service.lineId.toString())
-    val destination = Destinations.getDestinationFromRaw(service.destination)
+    val destination = Destinations.getDestinationFromRaw(service.destination, service.lineId)
     val colorScheme = !isSystemInDarkTheme()
 
     Row(modifier = Modifier
@@ -98,10 +98,7 @@ fun AllServicesListRow(service: Service, navController: NavController) {
                     Column {
                         if(destination.first() != "") {
                             Text(
-                                text = if (service.destination == "Les Pins" && service.lineId == 9)
-                                    "MARTIGNAS SUR JALLE"
-                                else
-                                    destination.first(),
+                                text = destination.first(),
                                 fontSize = 13.sp,
                                 color = Color.Gray,
                                 modifier = Modifier

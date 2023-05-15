@@ -29,10 +29,10 @@ import model.DTO.Service
 fun LineMapViewServicesListRow(
     service: Service,
     selectedService: MutableState<Service?>,
-    cameraPositionState: CameraPositionState
+    cameraPositionState: CameraPositionState,
 ) {
     val line = Lines.getLine(service.lineId.toString())
-    val destination = Destinations.getDestinationFromRaw(service.destination)
+    val destination = Destinations.getDestinationFromRaw(service.destination, service.lineId)
     val colorScheme = !isSystemInDarkTheme()
 
     Row(modifier = Modifier
@@ -77,10 +77,7 @@ fun LineMapViewServicesListRow(
                 Column {
                     if(destination.first() != "") {
                         Text(
-                            text = if (service.destination == "Les Pins" && service.lineId == 9)
-                                "MARTIGNAS SUR JALLE"
-                            else
-                                destination.first(),
+                            text = destination.first(),
                             fontSize = 13.sp,
                             color = Color.Gray,
                             modifier = Modifier

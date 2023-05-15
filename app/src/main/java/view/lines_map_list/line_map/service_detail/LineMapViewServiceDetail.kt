@@ -80,7 +80,7 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>) {
         item {
             ServiceDetailHeader(
                 line = Lines.getLine(line.id.toString()),
-                destination = Destinations.getDestinationFromRaw(service.destination)
+                destination = Destinations.getDestinationFromRaw(service.destination, service.lineId)
             )
 
             Spacer(modifier = Modifier

@@ -41,7 +41,7 @@ fun ServiceDetailMain(
         ) {
             ServiceDetailHeader(
                 line = line,
-                destination = Destinations.getDestinationFromRaw(destination ?: "")
+                destination = Destinations.getDestinationFromRaw(destination ?: "", line.id)
             )
 
             Spacer(modifier = Modifier
