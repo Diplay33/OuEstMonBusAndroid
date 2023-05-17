@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import model.DTO.*
+import view.next_schedules.search_line.search_stop_list.next_line_schedules.line_schedules.NextLineSchedulesSchdlGroup
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -85,8 +86,7 @@ fun NextLineSchedulesMain(
                     .height(30.dp)
                 )
 
-                NextLineSchedulesButton(line, navController, stopId, stopName, pathDirection)
-                //NextLineSchedulesOverview(line, schedules, isSchedulesLoading.value)
+                NextLineSchedulesSchdlGroup(navController, line, stopId, stopName, pathDirection)
             }
         }
     }
