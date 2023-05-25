@@ -717,6 +717,12 @@ class VehicleData {
             //MercedesBenz Citaro C2 NGT
             mapOf("id" to "77005", "parkId" to "160969", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 NGT", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
 
+            //MercedesBenz Citaro C2 NGT
+            mapOf("id" to "89012", "parkId" to "239012", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "89013", "parkId" to "239013", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "89014", "parkId" to "239014", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "89015", "parkId" to "239015", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+
 
             /*TRANSDEV Citram Aquitaine*/
             //IRISBUS Crossway LE
