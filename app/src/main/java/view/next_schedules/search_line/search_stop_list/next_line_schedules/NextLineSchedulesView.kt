@@ -111,7 +111,7 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoadi
                 )
             ) {
                 capFilteredNextSchedules.forEach { nextSchedule ->
-                    val destination = NextSchedulesDestinations.getDestinationFromRaw((nextSchedule.destination))
+                    val destination = NextSchedulesDestinations.getDestinationFromRaw(line.id, nextSchedule.destination)
                     val displayedTime = nextSchedule.getTimeLeft()
 
                     if(nextSchedule.getTimeLeft().toInt() >= 0) {

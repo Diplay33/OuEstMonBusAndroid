@@ -96,7 +96,7 @@ fun NextSchedulesHomeFavoriteView(
             else {
                 capFilteredNextSchedules.forEach { nextSchedule ->
                     if(nextSchedule.getTimeLeft().toInt() >= 0) {
-                        val destination = NextSchedulesDestinations.getDestinationFromRaw((nextSchedule.destination))
+                        val destination = NextSchedulesDestinations.getDestinationFromRaw(line.id, nextSchedule.destination)
                         val displayedTime = nextSchedule.getTimeLeft()
 
                         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier

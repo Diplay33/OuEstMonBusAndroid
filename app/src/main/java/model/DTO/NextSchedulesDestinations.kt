@@ -4,9 +4,12 @@ import model.DAO.AccessData.NextSchedulesDestinationData
 
 class NextSchedulesDestinations {
     companion object {
-        fun getDestinationFromRaw(destination: String): List<String> {
+        fun getDestinationFromRaw(lineId: Int, destination: String): List<String> {
             NextSchedulesDestinationData.destinations[destination]?.let { values ->
-                return values
+                when {
+                    lineId == 1 && destination == "René Coty" -> return listOf("MERIGNAC", "René Coty")
+                    else -> return values
+                }
             } ?: run {
                 return listOf()
             }
