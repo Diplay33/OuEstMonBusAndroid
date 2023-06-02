@@ -20,16 +20,10 @@ import com.diplay.ouestmonbus.R
 @Composable
 fun MoreViewContactTwitterRow() {
     val uriHandler = LocalUriHandler.current
-    val colorScheme = !isSystemInDarkTheme()
 
     Row(modifier = Modifier
-        .padding(horizontal = 15.dp)
         .height(45.dp)
         .fillMaxWidth()
-        .background(
-            if (colorScheme) Color(0xffF5F5F5) else Color(0xff18191A),
-            shape = RoundedCornerShape(10.dp)
-        )
     ) {
         Row(modifier = Modifier
             .padding(horizontal = 15.dp)

@@ -1,6 +1,10 @@
 package view.more_view
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -12,21 +16,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
 fun MoreViewContactMailRow() {
+    val context = LocalContext.current
     val colorScheme = !isSystemInDarkTheme()
 
     Row(modifier = Modifier
-        .padding(horizontal = 15.dp)
         .height(45.dp)
         .fillMaxWidth()
-        .background(
-            if (colorScheme) Color(0xffF5F5F5) else Color(0xff18191A),
-            shape = RoundedCornerShape(10.dp)
-        )
     ) {
         Row(modifier = Modifier
             .padding(horizontal = 15.dp)
@@ -46,10 +47,21 @@ fun MoreViewContactMailRow() {
             )
 
             Text(
-                text = "À venir",
+                text = "ouestmonbusoff@gmail.com",
                 fontSize = 18.sp,
-                color = if (colorScheme) Color.Black else Color.White
+                color = Color.Blue,
+                modifier = Modifier
+                    .clickable {
+                        context.sendMail(to = "ouestmonbusoff@gmail.com")
+                    }
             )
         }
     }
+}
+
+fun Context.sendMail(to: String) {
+    val intent = Intent(Intent.ACTION_SENDTO).apply {
+        data = Uri.parse("mailto:$to")
+    }
+    startActivity(intent)
 }
