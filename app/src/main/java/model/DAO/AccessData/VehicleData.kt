@@ -726,7 +726,12 @@ class VehicleData {
             mapOf("id" to "89020", "parkId" to "239020", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
             mapOf("id" to "89022", "parkId" to "239022", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
             mapOf("id" to "89023", "parkId" to "239023", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "89024", "parkId" to "239024", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
             mapOf("id" to "89025", "parkId" to "239025", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "89026", "parkId" to "239026", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "89036", "parkId" to "239036", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "89038", "parkId" to "239038", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "89040", "parkId" to "239040", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
 
 
             /*TRANSDEV Citram Aquitaine*/
