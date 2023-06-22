@@ -174,6 +174,7 @@ class DestinationData {
             "Quinc. Fleuve" to listOf("BORDEAUX", "Quinconces Fleuve"),
             "Quinc Jean Jaurès" to listOf("BORDEAUX", "Quinconces (Jean Jaurès)"),
             "Quinconces" to listOf("BORDEAUX", "Quinconces"),
+            "Quinconces Munich" to listOf("BORDEAUX", "Quinconces Munich"),
             "Quinsus" to listOf("AMBARÈS", "Quinsus"),
             //R
             "Ravezies" to listOf("LE BOUSCAT", "Place Ravezies"),
