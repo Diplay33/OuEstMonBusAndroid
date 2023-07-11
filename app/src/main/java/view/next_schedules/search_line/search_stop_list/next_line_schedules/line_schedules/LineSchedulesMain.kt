@@ -34,7 +34,8 @@ fun LineSchedulesMain(
     stationId: String?,
     stationName: String?,
     lineId: String?,
-    direction: String?
+    direction: String?,
+    selectedDate: String?
 ) {
     val paths = remember {
         mutableStateListOf<Path>()
@@ -54,7 +55,7 @@ fun LineSchedulesMain(
         false
     }.toMutableList()
     val loadingCount = remember {
-        mutableStateOf(0)
+        mutableIntStateOf(0)
     }
     val colorScheme = !isSystemInDarkTheme()
 
@@ -67,7 +68,7 @@ fun LineSchedulesMain(
 
                     Schedules.getSchedulesByStationAndPaths(stationId ?: "", value) { values ->
                         schedules.addAll(values.filter { it.state != "ANNULE" })
-                        loadingCount.value += 1
+                        loadingCount.intValue += 1
                     }
                 }
             }
@@ -81,7 +82,7 @@ fun LineSchedulesMain(
             .fillMaxSize()
             .background(if (colorScheme) Color.White else Color.Black)
         ) {
-            if(loadingCount.value < 2) {
+            if(loadingCount.intValue < 2) {
                 Column(verticalArrangement = Arrangement.Center, modifier = Modifier
                     .fillMaxSize()
                 ) {

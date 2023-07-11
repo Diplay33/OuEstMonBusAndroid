@@ -4,20 +4,14 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import model.DTO.*
-import view.next_schedules.search_line.search_stop_list.next_line_schedules.line_schedules.NextLineSchedulesSchdlGroup
-import java.text.SimpleDateFormat
-import java.util.*
 
 @Composable
 fun NextLineSchedulesMain(

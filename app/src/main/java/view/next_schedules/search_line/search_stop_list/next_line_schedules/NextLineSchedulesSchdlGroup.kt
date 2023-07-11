@@ -1,20 +1,16 @@
-package view.next_schedules.search_line.search_stop_list.next_line_schedules.line_schedules
+package view.next_schedules.search_line.search_stop_list.next_line_schedules
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.DatePicker
-import androidx.compose.material3.DatePickerColors
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
-import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -29,7 +25,6 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.window.DialogProperties
 import androidx.navigation.NavController
 import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.datetime.date.DatePickerDefaults
@@ -93,7 +88,7 @@ fun NextLineSchedulesSchdlGroup(
         }
     }
 
-    NextLineSchedulesButton(line, navController, stopId, stopName, pathDirection)
+    NextLineSchedulesButton(line, navController, stopId, stopName, pathDirection, selectedDate)
 
     MaterialDialog(
         dialogState = dateDialogState,

@@ -21,6 +21,7 @@ import com.diplay.ouestmonbus.R
 import model.DTO.Line
 import model.DTO.Station
 import view.Screens.ProchainsScreens
+import java.time.LocalDate
 
 @Composable
 fun NextLineSchedulesButton(
@@ -28,7 +29,8 @@ fun NextLineSchedulesButton(
     navController: NavController,
     stopId: String?,
     stopName: String?,
-    direction: String?
+    direction: String?,
+    selectedDate: LocalDate
 ) {
     val colorScheme = !isSystemInDarkTheme()
 
@@ -53,7 +55,8 @@ fun NextLineSchedulesButton(
                         stopId ?: "",
                         stopName ?: "",
                         line.id.toString(),
-                        direction ?: ""
+                        direction ?: "",
+                        selectedDate.toString()
                     )
                 )
             }

@@ -160,7 +160,7 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable(
-                        route = ProchainsScreens.LineSchedules.route + "/{stopId}/{stopName}/{lineId}/{direction}",
+                        route = ProchainsScreens.LineSchedules.route + "/{stopId}/{stopName}/{lineId}/{direction}/{selectedDate}",
                         arguments = listOf(
                             navArgument("stopId") {
                                 type = NavType.StringType
@@ -174,7 +174,8 @@ class MainActivity : ComponentActivity() {
                             stationId = entry.arguments?.getString("stopId"),
                             stationName = entry.arguments?.getString("stopName"),
                             lineId = entry.arguments?.getString("lineId"),
-                            direction = entry.arguments?.getString("direction")
+                            direction = entry.arguments?.getString("direction"),
+                            selectedDate = entry.arguments?.getString("selectedDate")
                         )
                     }
 
