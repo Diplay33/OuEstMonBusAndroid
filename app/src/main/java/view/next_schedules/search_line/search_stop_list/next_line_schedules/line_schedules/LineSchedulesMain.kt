@@ -18,12 +18,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import model.DTO.*
 import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 @Composable
 fun LineSchedulesMain(
@@ -55,6 +58,7 @@ fun LineSchedulesMain(
         mutableIntStateOf(0)
     }
     val selectedDateValue = LocalDate.parse(selectedDate)
+    val formatter = DateTimeFormatter.ofPattern("EEEE d MMMM", Locale.FRENCH)
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(stationId) {
@@ -183,6 +187,25 @@ fun LineSchedulesMain(
                                 Spacer(modifier = Modifier
                                     .height(30.dp)
                                 )
+                            }
+                        }
+                        else {
+                            item {
+                                Row(
+                                    horizontalArrangement = Arrangement.Start,
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 15.dp)
+                                ) {
+                                    Text(
+                                        text = formatter
+                                            .format(selectedDateValue)
+                                            .replaceFirstChar { it.uppercase() },
+                                        fontWeight = FontWeight.Bold,
+                                        fontSize = 18.sp
+                                    )
+                                }
                             }
                         }
 
