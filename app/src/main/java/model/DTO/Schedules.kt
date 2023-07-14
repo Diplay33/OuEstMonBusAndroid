@@ -17,18 +17,26 @@ class Schedules {
             }
         }
 
-        fun getSchedulesByStationAndPaths(
+        fun getSchedulesByStationAndPathsForDate(
             stationId: String,
+            lineId: Int,
             paths: List<Path>,
+            date: LocalDate,
             callback: (List<Schedule>) -> Unit
         ) {
-            val localDate = LocalDate.now()
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-            val isTBNight = paths.map { it.id }.contains(49363) || paths.map { it.id }.contains(49364)
-            getSchedulesByStationAndDate(stationId, formatter.format(localDate)) { schedules ->
-                callback(schedules.filter { value -> paths.map { it.id }.contains(value.pathId) })
+            val isTBNight = lineId == 41
 
-                getSchedulesByStationAndDate(stationId, formatter.format(localDate.plusDays(1))) { values ->
+            getSchedulesByStationAndDate(stationId, formatter.format(date)) { schedules ->
+                callback(schedules
+                    .filter { value -> paths.map { it.id }.contains(value.pathId) }
+                    .filter { value ->
+                        val cal = Calendar.getInstance()
+                        cal.time = value.getTime()
+                        if (isTBNight) true else cal.get(Calendar.HOUR_OF_DAY) > 3
+                    })
+
+                getSchedulesByStationAndDate(stationId, formatter.format(date.plusDays(1))) { values ->
                     if(!isTBNight) {
                         callback(
                             values
@@ -36,7 +44,7 @@ class Schedules {
                                 .filter { value ->
                                     val cal = Calendar.getInstance()
                                     cal.time = value.getTime()
-                                    cal.get(Calendar.HOUR_OF_DAY) <= 4
+                                    cal.get(Calendar.HOUR_OF_DAY) < 4
                                 }
                         )
                     }

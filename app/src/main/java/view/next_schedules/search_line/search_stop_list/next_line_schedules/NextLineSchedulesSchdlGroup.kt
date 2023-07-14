@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
@@ -31,11 +30,9 @@ import com.vanpra.composematerialdialogs.datetime.date.DatePickerDefaults
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
 import model.DTO.Line
-import view.next_schedules.search_line.search_stop_list.next_line_schedules.NextLineSchedulesButton
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NextLineSchedulesSchdlGroup(
     navController: NavController,
@@ -108,7 +105,7 @@ fun NextLineSchedulesSchdlGroup(
                 dateInactiveTextColor = if (colorScheme) Color.Black else Color.White
             ),
             allowedDateValidator = {
-                it.isBefore(LocalDate.now().plusDays(15)) && it.isAfter(LocalDate.now().minusDays(1))
+                it.isBefore(LocalDate.now().plusDays(14)) && it.isAfter(LocalDate.now().minusDays(1))
             }
         ) {
             selectedDate = it

@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
@@ -19,14 +18,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.diplay.ouestmonbus.R
 import model.DTO.*
-import view.Screens.ProchainsScreens
+import java.time.LocalDate
 
 @Composable
 fun LineSchedulesMain(
@@ -57,6 +54,7 @@ fun LineSchedulesMain(
     val loadingCount = remember {
         mutableIntStateOf(0)
     }
+    val selectedDateValue = LocalDate.parse(selectedDate)
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(stationId) {
@@ -66,7 +64,11 @@ fun LineSchedulesMain(
                 if(value.first().direction == direction) {
                     paths.addAll(value)
 
-                    Schedules.getSchedulesByStationAndPaths(stationId ?: "", value) { values ->
+                    Schedules.getSchedulesByStationAndPathsForDate(
+                        stationId = stationId ?: "",
+                        paths = value,
+                        lineId = (lineId ?: "0").toInt(),
+                        date = selectedDateValue ?: LocalDate.now()) { values ->
                         schedules.addAll(values.filter { it.state != "ANNULE" })
                         loadingCount.intValue += 1
                     }
