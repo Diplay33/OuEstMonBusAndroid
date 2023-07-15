@@ -40,6 +40,9 @@ fun AllServicesListMain(
     }
     val formatter = SimpleDateFormat("HH:mm")
     val colorScheme = !isSystemInDarkTheme()
+    val totalServicesCount = remember {
+        mutableIntStateOf(0)
+    }
 
     if(filteredServices.isEmpty()) {
         Services.getAllServices {
@@ -47,6 +50,7 @@ fun AllServicesListMain(
             filteredServices.addAll(Services.filterServicesByVehicle(it))
             isLoading.value = false
             refreshDate.value = Calendar.getInstance().time
+            totalServicesCount.intValue = it.count()
         }
     }
 
@@ -82,11 +86,8 @@ fun AllServicesListMain(
                     LazyColumn(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
                         .fillMaxWidth()
                     ) {
-                        var servicesCount = 0
                         items(state.searchResults.size) { groupIndex ->
                             if(state.searchResults[groupIndex].isNotEmpty()) {
-                                servicesCount += state.searchResults[groupIndex].size
-
                                 AllServicesListGroup(
                                     services = state.searchResults[groupIndex],
                                     navController = navController,
@@ -99,10 +100,10 @@ fun AllServicesListMain(
                         item {
                             if(!isLoading.value) {
                                 Text(
-                                    text = when(servicesCount) {
+                                    text = when(totalServicesCount.intValue) {
                                         0 -> "Aucun véhicule en circulation"
                                         1 -> "1 véhicule en circulation"
-                                        else -> "$servicesCount véhicules en circulation"
+                                        else -> "${totalServicesCount.value} véhicules en circulation"
                                     },
                                     color = Color.Gray,
                                     fontSize = 18.sp
