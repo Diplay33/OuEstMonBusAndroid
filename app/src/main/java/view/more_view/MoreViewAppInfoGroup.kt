@@ -27,7 +27,7 @@ fun MoreViewAppInfoGroup() {
         )
 
         Text(
-            text = "Cette application n'est pas affiliée à TBM," +
+            text = "Cette application n'est ni affiliée à TBM," +
                 " ni à Keolis Bordeaux Métropole Mobilités. \n Toutes les" +
                 " mentions (Lianes, Corol, Citéis, etc) sont des" +
                 " marques appartenants à Keolis.",
