@@ -612,7 +612,7 @@ class VehicleData {
             mapOf("id" to "99140", "parkId" to "159140", "brand" to "HeuliezBus", "model" to "HeuliezBus GX 337", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
             mapOf("id" to "99141", "parkId" to "159141", "brand" to "HeuliezBus", "model" to "HeuliezBus GX 337", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
             mapOf("id" to "99142", "parkId" to "159142", "brand" to "HeuliezBus", "model" to "HeuliezBus GX 337", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
-            mapOf("id" to "99143", "parkId" to "159143", "brand" to "HeuliezBus", "model" to "HeuliezBus GX 337", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
+            mapOf("id" to "79143", "parkId" to "159143", "brand" to "HeuliezBus", "model" to "HeuliezBus GX 337", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
             mapOf("id" to "99144", "parkId" to "159144", "brand" to "HeuliezBus", "model" to "HeuliezBus GX 337", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
             mapOf("id" to "99145", "parkId" to "159145", "brand" to "HeuliezBus", "model" to "HeuliezBus GX 337", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
             mapOf("id" to "79012", "parkId" to "169012", "brand" to "HeuliezBus", "model" to "HeuliezBus GX 337", "type" to "BUS", "operator" to "Keolis Gironde/Cars de Bordeaux"),
@@ -740,6 +740,7 @@ class VehicleData {
             mapOf("id" to "89040", "parkId" to "239040", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde"),
             mapOf("id" to "89048", "parkId" to "239048", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde"),
             mapOf("id" to "89049", "parkId" to "239049", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde"),
+            mapOf("id" to "89058", "parkId" to "239058", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde"),
 
             //MercedesBenz Citaro K C2 HYB
             mapOf("id" to "87023", "parkId" to "237023", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro K C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde"),
