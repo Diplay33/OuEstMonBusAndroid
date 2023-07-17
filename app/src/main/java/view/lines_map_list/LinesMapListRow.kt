@@ -113,11 +113,9 @@ fun LinesMapListRow(
                 .padding(vertical = 4.dp)
             )
 
-            Column {
-                Spacer(modifier = Modifier
-                    .height(5.dp)
-                )
-
+            Column(modifier = Modifier
+                .align(Alignment.CenterVertically)
+            ) {
                 Text(
                     text = rowLine.lineName,
                     fontWeight = FontWeight.Bold,
@@ -128,7 +126,7 @@ fun LinesMapListRow(
                 )
 
                 Spacer(modifier = Modifier
-                    .height(2.dp)
+                    .height(4.dp)
                 )
 
                 Row(modifier = Modifier

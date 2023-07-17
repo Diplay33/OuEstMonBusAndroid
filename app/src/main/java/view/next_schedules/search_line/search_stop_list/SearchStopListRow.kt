@@ -74,6 +74,7 @@ fun SearchStopListRow(
                     color = if (colorScheme) Color.Black else Color.White,
                     modifier = Modifier
                         .fillMaxWidth(fraction = 0.9f)
+                        .align(Alignment.CenterVertically)
                 )
 
                 Icon(
