@@ -80,6 +80,12 @@ fun NextLineSchedulesMain(
                     .height(30.dp)
                 )
 
+                NextLineSchedulesMap(stopId)
+
+                Spacer(modifier = Modifier
+                    .height(30.dp)
+                )
+
                 NextLineSchedulesSchdlGroup(navController, line, stopId, stopName, pathDirection)
             }
         }
