@@ -137,6 +137,7 @@ class DestinationData {
             "Merignac Centre" to listOf("MERIGNAC", "Centre"),
             "Mérignac Centre" to listOf("MERIGNAC", "Centre"),
             "Mérignac Soleil" to listOf("MERIGNAC", "Soleil"),
+            "Mérignac Soleil 1" to listOf("MERIGNAC", "Soleil (Porte 1)"),
             "Monbalon 2" to listOf("PESSAC", "Monbalon 2"),
             "Montaigne" to listOf("PESSAC", "Montaigne Montesquieu"),
             "Morlette" to listOf("CENON", "La Morlette"),
