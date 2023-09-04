@@ -45,7 +45,7 @@ class LineData {
             Line(83, "Ligne 53", R.drawable.ligne_53, R.color.ligne_d, ListGroup.LIGNEDIRECTE),
             Line(44, "Ligne 55", R.drawable.ligne_55, R.color.ligne_d, ListGroup.LIGNEDIRECTE),
             Line(85, "Ligne 57", R.drawable.ligne_57, R.color.ligne_d, ListGroup.LIGNEDIRECTE),
-            Line(58, "TBNight", R.drawable.tbnight, R.color.tbnight, ListGroup.TBNIGHT),
+            Line(41, "TBNight", R.drawable.tbnight, R.color.tbnight, ListGroup.TBNIGHT),
             Line(88, "Ligne 60", R.drawable.ligne_60, R.color.ligne_l, ListGroup.LIGNELOCALE2),
             Line(89, "Ligne 61", R.drawable.ligne_61, R.color.ligne_l, ListGroup.LIGNELOCALE2),
             Line(49, "Ligne 64", R.drawable.ligne_64, R.color.ligne_l, ListGroup.LIGNELOCALE2),
@@ -73,10 +73,10 @@ class LineData {
             Line(57, "Ligne 87", R.drawable.ligne_87, R.color.ligne_l, ListGroup.LIGNELOCALE2),
             Line(109, "Ligne 89", R.drawable.ligne_89, R.color.ligne_l, ListGroup.LIGNELOCALE2),
             Line(110, "Ligne 90", R.drawable.ligne_90, R.color.ligne_l, ListGroup.LIGNELOCALE2),
-            Line(128, "Navette Arena", R.drawable.navette_arena, R.color.navette_arena, ListGroup.LIGNESPECIALES),
-            Line(127, "Navette Stade", R.drawable.navette_stade, R.color.navette_stade, ListGroup.LIGNESPECIALES),
-            Line(132, "Navette Tram", R.drawable.navette_tram, R.color.navette_tram, ListGroup.LIGNESPECIALES),
-            Line(130, "BatCUB", R.drawable.batcub, R.color.batcub, ListGroup.LIGNESPECIALES),
+            Line(118, "Navette Arena", R.drawable.navette_arena, R.color.navette_arena, ListGroup.LIGNESPECIALES),
+            Line(117, "Navette Stade", R.drawable.navette_stade, R.color.navette_stade, ListGroup.LIGNESPECIALES),
+            Line(203, "Navette Tram", R.drawable.navette_tram, R.color.navette_tram, ListGroup.LIGNESPECIALES),
+            Line(119, "BatCUB", R.drawable.batcub, R.color.batcub, ListGroup.LIGNESPECIALES),
             )
     }
 }

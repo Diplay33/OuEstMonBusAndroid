@@ -13,110 +13,22 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="853b1dde-6ba6-4f74-bc27-81c49f9b99f7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/assetWizardSettings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/deploymentTargetDropDown.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_53.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_60.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_61.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_65.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_66.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_69.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_75.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/navette_arena.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/drawable/tbnight.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.0/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.0/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/checksums/md5-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/8.0/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/checksums/sha1-checksums.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.0/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.0/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.0/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.0/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.0/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.0/fileHashes/resourceHashesCache.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/model/DAO/AccessData/DestinationAllerData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/DAO/AccessData/DestinationAllerData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/model/DAO/AccessData/DestinationData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/DAO/AccessData/DestinationData.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/model/DAO/AccessData/DestinationRetourData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/DAO/AccessData/DestinationRetourData.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/model/DAO/AccessData/LineData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/DAO/AccessData/LineData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/model/DTO/Line.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/DTO/Line.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/model/DTO/Lines.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/DTO/Lines.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/citeis_40.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/citeis_41.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_70.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/citeis_42.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/citeis_43.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/citeis_44.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/citeis_45.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/citeis_46.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/citeis_63.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/citeis_72.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_72.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/citeis_89.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_89.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/corol_31.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_31.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/corol_32.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_32.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/corol_33.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_33.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/corol_34.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_34.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/corol_35.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_35.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/corol_36.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/corol_37.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_37.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/corol_38.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_38.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/corol_39.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_39.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/flexo_49.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/flexo_50.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/flexo_51.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_51.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/flexo_52.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_52.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/flexo_54.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/flexo_55.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_55.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/flexo_57.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_57.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/flexo_68.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/flexo_bouliac.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_10.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_11.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_15.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_15.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_16.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_16.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_2.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_4.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_5.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_5.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_7.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_7.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_8.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_8.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_9.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/lianes_9.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_20.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_20.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_21.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_21.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_22.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_22.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_23.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_23.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_24.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_24.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_25.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_25.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_26.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_26.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_27.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_27.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_28.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_28.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_29.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_29.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_30.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_30.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_64.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_64.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_67.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_67.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_71.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_71.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_73.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_73.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_76.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_76.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_80.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_80.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_83.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_83.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_84.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_84.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_87.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_87.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_90.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_90.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_91.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_92.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_93.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/navette_arena.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/specifique_74.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_74.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/specifique_77.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_77.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/specifique_78.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_78.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/specifique_79.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_79.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/specifique_81.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_81.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/specifique_82.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_82.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/specifique_85.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_85.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/specifique_86.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/ligne_86.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/specifique_88.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/specifique_94.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/specifique_95.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/specifique_96.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/tbnight.jpeg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -198,7 +110,10 @@
     "RunOnceActivity.cidr.known.project.marker": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "SHOW_ALL_PROCESSES": "false",
-    "cidr.known.project.marker": "true"
+    "cidr.known.project.marker": "true",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2"
   },
   "keyToStringList": {
     "ExportApk.BuildVariants": [
