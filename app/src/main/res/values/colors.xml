@@ -3,21 +3,17 @@
     <color name="black">#FF000000</color>
     <color name="light_grey">#DEDEDE</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="lianes">#0C8ACC</color>
     <color name="tram_a">#831F82</color>
     <color name="tram_b">#DA003E</color>
     <color name="tram_c">#D35098</color>
     <color name="tram_d">#9260A0</color>
-    <color name="ligne_p">#EF8023</color>
-    <color name="corol">#EF8023</color>
-    <color name="citeis">#7B9A40</color>
-    <color name="flexo">#7B9A40</color>
-    <color name="flexo_nuit">#292358</color>
-    <color name="tbnight">#102F49</color>
-    <color name="ligne_u">#7B9A40</color>
-    <color name="specifique">#7B9A40</color>
     <color name="navette_arena">#C02C87</color>
     <color name="navette_stade">#E01443</color>
     <color name="navette_tram">#9DBE44</color>
     <color name="batcub">#0BBBEF</color>
+    <color name="lianes">#00B1E6</color>
+    <color name="ligne_p">#00A787</color>
+    <color name="ligne_l">#7AB51D</color>
+    <color name="ligne_d">#4B4B4D</color>
+    <color name="tbnight">#0D324B</color>
 </resources>
