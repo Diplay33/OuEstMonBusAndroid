@@ -41,13 +41,12 @@ class Lines {
                     ListGroup.TRAM -> linesByGroup[1].add(line)
                     ListGroup.LIANES -> linesByGroup[2].add(line)
                     ListGroup.LIGNEPRINCIPALE -> linesByGroup[3].add(line)
-                    ListGroup.COROL -> linesByGroup[4].add(line)
-                    ListGroup.CITEIS -> linesByGroup[5].add(line)
-                    ListGroup.FLEXO49 -> linesByGroup[6].add(line)
-                    ListGroup.LIGNENUIT -> linesByGroup[7].add(line)
-                    ListGroup.LIGNEAUTRES -> linesByGroup[8].add(line)
-                    ListGroup.LIGNESPECIALE -> linesByGroup[9].add(line)
-                    ListGroup.EVENEMENT -> linesByGroup[10].add(line)
+                    ListGroup.LIGNELOCALE1 -> linesByGroup[4].add(line)
+                    ListGroup.LIGNEDIRECTE -> linesByGroup[5].add(line)
+                    ListGroup.TBNIGHT -> linesByGroup[6].add(line)
+                    ListGroup.LIGNELOCALE2 -> linesByGroup[7].add(line)
+                    ListGroup.LIGNESPECIALES -> linesByGroup[8].add(line)
+                    ListGroup.EVENEMENT -> linesByGroup[9].add(line)
                 }
             }
 
@@ -79,7 +78,7 @@ class Lines {
                         lineName = "Navette Tram",
                         lineImageResource = R.drawable.navette_tram,
                         lineColorResource = R.color.navette_tram,
-                        listGroup = ListGroup.LIGNESPECIALE)
+                        listGroup = ListGroup.LIGNESPECIALES)
                 }
             }
             return getEmptyLine()
@@ -91,7 +90,7 @@ class Lines {
                 lineName = "Ligne inconnue",
                 lineImageResource = R.drawable.question_mark_box,
                 lineColorResource = R.color.light_grey,
-                listGroup = ListGroup.LIGNEAUTRES
+                listGroup = ListGroup.LIGNELOCALE2
             )
         }
     }
