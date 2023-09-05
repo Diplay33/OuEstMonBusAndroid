@@ -8,7 +8,7 @@ class Destinations {
             when {
                 lineId == 1 && destination == "René Coty" ->
                     return listOf("MERIGNAC", "René Coty")
-                lineId == 9 && destination == "Les Pins" ->
+                lineId == 63 && destination == "Les Pins" ->
                     return listOf("MARTIGNAS SUR JALLE", "Les Pins")
                 else ->
                     DestinationData.destinations[destination]?.let { values ->
