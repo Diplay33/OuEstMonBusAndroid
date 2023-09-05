@@ -102,7 +102,7 @@ class DestinationRetourData {
             //Ligne 57
             85 to listOf(listOf("BASSENS/CARBON BLANC", "La Gardette")),
             //TBNight
-            41 to listOf(listOf("BORDEAUX", "Base sous-marine")),
+            46 to listOf(listOf("BORDEAUX", "Base sous-marine")),
             //Ligne 60
             88 to listOf(listOf("BORDEAUX", "Stalingrad")),
             //Ligne 61

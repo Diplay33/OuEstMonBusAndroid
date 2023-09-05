@@ -25,7 +25,7 @@ class Schedules {
             callback: (List<Schedule>) -> Unit
         ) {
             val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-            val isTBNight = lineId == 41
+            val isTBNight = lineId == 46
 
             getSchedulesByStationAndDate(stationId, formatter.format(date)) { schedules ->
                 callback(schedules

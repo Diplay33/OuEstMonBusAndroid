@@ -110,7 +110,7 @@ class DestinationAllerData {
             //Ligne 57
             85 to listOf(listOf("AMBARÈS", "Centre")),
             //TBNight
-            41 to listOf(listOf("GRADIGNAN", "Village 5")),
+            46 to listOf(listOf("GRADIGNAN", "Village 5")),
             //Ligne 60
             88 to listOf(listOf("BASSENS", "La Chênaie")),
             //Ligne 61

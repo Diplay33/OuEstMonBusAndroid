@@ -41,7 +41,7 @@ fun SearchLineViewGroup(
         }
 
         lines.forEach { line ->
-            if(line.id != 132) {
+            if(line.lineName != "Navette Tram") {
                 SearchLineViewRow(
                     linesByGroup = linesByGroup,
                     line = line,
