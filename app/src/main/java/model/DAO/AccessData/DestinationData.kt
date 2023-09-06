@@ -12,6 +12,7 @@ class DestinationData {
             "Aéroport" to listOf("MERIGNAC", "Aéroport"),
             "Aeroport" to listOf("MERIGNAC", "Aéroport"),
             "Alfred De Vigny" to listOf("MERIGNAC", "Alfred de Vigny"),
+            "Ambarès Centre" to listOf("AMBARÈS", "Centre"),
             "Arena" to listOf("FLOIRAC", "Arkéa Arena"),
             //B
             "BA 106 (terminus)" to listOf("MERIGNAC", "BA 106"),
@@ -26,6 +27,7 @@ class DestinationData {
             "Belle Rive" to listOf("SAINT LOUIS DE MONTFERRAND", "Belle Rive"),
             "Berge De Garonne" to listOf("BORDEAUX", "Berges de la Garonne"),
             "Berges de Garonne" to listOf("BORDEAUX", "Berges de la Garonne"),
+            "Bernatet" to listOf("AMBARÈS", "Bernatet"),
             "Blanquefort" to listOf("BLANQUEFORT", "Gare"),
             "Bougnard" to listOf("PESSAC", "Bougnard"),
             "Bouliac Ccial" to listOf("BOULIAC", "Centre Commercial"),
@@ -46,8 +48,10 @@ class DestinationData {
             "Centre Commercial" to listOf("BORDEAUX", "Centre Commercial du Lac"),
             "Centre-Forum" to listOf("TALENCE", "Forum"),
             "Château Rouquey" to listOf("MERIGNAC", "Château Rouquey"),
+            "Chemin du Sourd" to listOf("CARBON BLANC", "Chemin du Sourd"),
             "Cimetière Interco" to listOf("MERIGNAC", "Cimetière Intercommunal"),
             "Claveau" to listOf("BORDEAUX", "Claveau"),
+            "Collège Chambéry" to listOf("VILLENAVE D'ORNON", "Collège Chambéry"),
             "Collège C Massé" to listOf("AMBARÈS", "Collège Claude Massé"),
             "Coll Emile Zola" to listOf("LE HAILLAN", "Collège Émile Zola"),
             "Coll Simone Veil" to listOf("CARBON BLANC", "Collège Simone Veil"),
@@ -97,6 +101,7 @@ class DestinationData {
             "Hôpital Suburbain" to listOf("LE BOUSCAT", "Hôpital Suburbain"),
             "Hop. Pellegrin" to listOf("BORDEAUX", "Hôpital Pellegrin"),
             //I
+            "IMA" to listOf("MERIGNAC", "IMA"),
             "Iris" to listOf("LORMONT", "Iris"),
             "Issac" to listOf("SAINT MÉDARD EN JALLES", "Issac"),
             //J
@@ -134,6 +139,7 @@ class DestinationData {
             "Mairie du Bouscat" to listOf("LE BOUSCAT", "Mairie"),
             "Malartic" to listOf("GRADIGNAN", "Malartic"),
             "Martignas Centre" to listOf("MARTIGNAS SUR JALLE", "Centre"),
+            "Max Linder" to listOf("AMBARÈS", "Max Linder"),
             "Meriadeck" to listOf("BORDEAUX", "Mériadeck"),
             "Mériadeck" to listOf("BORDEAUX", "Mériadeck"),
             "Mérignac Arlac" to listOf("MERIGNAC", "Fontaine d'Arlac"),
@@ -192,6 +198,7 @@ class DestinationData {
             //S
             "Saint Augustin" to listOf("BORDEAUX", "Saint Augustin"),
             "Saint-Exupéry" to listOf("BLANQUEFORT", "Saint Exupéry"),
+            "Salengro" to listOf("BÈGLES", "Salengro"),
             "Souge" to listOf("MARTIGNAS SUR JALLE", "Souge"),
             "Stade Matmut" to listOf("BORDEAUX", "Stade Matmut Atlantique"),
             "Stade Municipal" to listOf("LE TAILLAN", "Stade Municipal"),
@@ -212,9 +219,11 @@ class DestinationData {
             "Victoire Pasteur" to listOf("BORDEAUX", "Victoire"),
             "Village 5" to listOf("GRADIGNAN", "Village 5"),
             "Villenave Bourg" to listOf("VILLENAVE D'ORNON", "Bourg"),
+            "Villenave Gare" to listOf("VILLENAVE D'ORNON", "Gare"),
             "Villepreux" to listOf("SAINT AUBIN", "Villepreux"),
             "Virecourt" to listOf("ARTIGUES PRÈS BORDEAUX", "Virecourt"),
             //Z
+            "ZA Magellan" to listOf("PESSAC", "ZA Magellan"),
             "ZA Picot" to listOf("SAINT MÉDARD EN JALLES", "ZA Picot"),
             "Zone de Fret" to listOf("BRUGES", "Zone de Fret")
         )
