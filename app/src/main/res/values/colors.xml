@@ -12,8 +12,8 @@
     <color name="navette_tram">#9DBE44</color>
     <color name="batcub">#0BBBEF</color>
     <color name="lianes">#00B1E6</color>
-    <color name="ligne_p">#00A787</color>
-    <color name="ligne_l">#7AB51D</color>
-    <color name="ligne_d">#4B4B4D</color>
+    <color name="principale">#00A787</color>
+    <color name="locale">#7AB51D</color>
+    <color name="directe">#4B4B4D</color>
     <color name="tbnight">#0D324B</color>
 </resources>
