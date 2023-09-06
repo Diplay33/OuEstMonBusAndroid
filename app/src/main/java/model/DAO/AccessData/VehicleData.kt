@@ -753,6 +753,7 @@ class VehicleData {
             mapOf("id" to "89094", "parkId" to "239094", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde"),
             mapOf("id" to "89105", "parkId" to "239105", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde"),
             mapOf("id" to "89106", "parkId" to "239106", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde"),
+            mapOf("id" to "89123", "parkId" to "239123", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde"),
 
             //MercedesBenz Citaro K C2 HYB
             mapOf("id" to "87022", "parkId" to "237022", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro K C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde"),
