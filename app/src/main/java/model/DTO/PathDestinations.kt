@@ -17,10 +17,10 @@ class PathDestinations {
                 lineId == 10 && finalString == "Hippodrome" -> {
                     return listOf("EYSINES", "Hippodrome", "")
                 }
-                lineId == 13 || lineId == 28 || lineId == 32 && finalString == "Les Pins" -> {
+                lineId == 16 || lineId == 28 && finalString == "Les Pins" -> {
                     return listOf("MERIGNAC", "Les Pins", "")
                 }
-                lineId == 105 || lineId == 111 && finalString == "Lycée Sud Médoc" -> {
+                lineId == 105 && finalString == "Lycée Sud Médoc" -> {
                     return listOf("LE TAILLAN", "Lycée Sud Médoc", "")
                 }
                 else -> {

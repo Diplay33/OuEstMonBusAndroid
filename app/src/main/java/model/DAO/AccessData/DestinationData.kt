@@ -59,6 +59,7 @@ class DestinationData {
             "Cracovie" to listOf("BORDEAUX", "Cracovie"),
             //D
             "Délestage TyF" to listOf("ARTIGUES PRÈS BORDEAUX", "Tout y Faut"),
+            "Doyen Brus" to listOf("PESSAC", "Doyen Brus"),
             "Dravemont" to listOf("FLOIRAC", "Dravemont"),
             "Du Roy" to listOf("AMBARÈS", "Du Roy"),
             //E
@@ -96,7 +97,7 @@ class DestinationData {
             "Haillan Rostand" to listOf("LE HAILLAN", "Rostand"),
             "Haillan-Rostand" to listOf("LE HAILLAN", "Rostand"),
             "Henri Barbusse" to listOf("MERIGNAC", "Henri Barbusse"),
-            "Hippodrome" to listOf("EYSINES", "Hippodrome"),
+            "Hippodrome" to listOf("LE BOUSCAT", "Hippodrome"),
             "Hôpital Pellegrin" to listOf("BORDEAUX", "Hôpital Pellegrin"),
             "Hôpital Suburbain" to listOf("LE BOUSCAT", "Hôpital Suburbain"),
             "Hop. Pellegrin" to listOf("BORDEAUX", "Hôpital Pellegrin"),

@@ -2,14 +2,16 @@ package model.DAO.AccessData
 
 class NextSchedulesDestinationData {
     companion object {
-        val destinations: Map<String, List<String>> = mapOf( 
+        val destinations: Map<String, List<String>> = mapOf(
             //5
             "5 Chemins" to listOf("LE HAILLAN", "5 Chemins"),
             //A
             "Aéroport" to listOf("MERIGNAC", "Aéroport"),
+            "Ambarès Centre" to listOf("AMBARÈS", "Centre"),
             "Arches de l'Estey" to listOf("BÈGLES", "Arches de l'Estey"),
             "Arena" to listOf("FLOIRAC", "Arkéa Arena"),
             //B
+            "BA 106 (terminus)" to listOf("MERIGNAC", "BA 106"),
             "Barbusse" to listOf("MERIGNAC", "Henri Barbusse"),
             "Barrière d'Ornano" to listOf("BORDEAUX", "Barrière d'Ornano"),
             "Base sous-marine" to listOf("BORDEAUX", "Base sous-marine"),
@@ -19,9 +21,11 @@ class NextSchedulesDestinationData {
             "Beausoleil" to listOf("GRADIGNAN", "Beausoleil"),
             "Belle Rive" to listOf("SAINT LOUIS DE MONTFERRAND", "Belle Rive"),
             "Berges De La Garonne" to listOf("BORDEAUX", "Berges de la Garonne"),
+            "Bernatet" to listOf("AMBARÈS", "Bernatet"),
             "Bougnard" to listOf("PESSAC", "Bougnard"),
             "Bouliac Centre Commercial" to listOf("BOULIAC", "Centre Commercial"),
             "Brandenburg" to listOf("BORDEAUX", "Brandenburg"),
+            "Brulatour" to listOf("BORDEAUX", "Brulatour"),
             "Buttinière" to listOf("LORMONT", "Buttinière"),
             //C
             "Camille Jullian" to listOf("BORDEAUX", "Lycée Camille Jullian"),
@@ -34,9 +38,12 @@ class NextSchedulesDestinationData {
             "Cenon Gare" to listOf("CENON", "Gare"),
             "Centre Commercial du Lac" to listOf("BORDEAUX", "Centre Commercial du Lac"),
             "Château Rouquey" to listOf("MERIGNAC", "Château Rouquey"),
+            "Chemin du Sourd" to listOf("CARBON BLANC", "Chemin du Sourd"),
             "Cimetière Intercommunal" to listOf("MERIGNAC", "Cimetière Intercommunal"),
             "Claveau" to listOf("BORDEAUX", "Claveau"),
+            "Collège Chambéry" to listOf("VILLENAVE D'ORNON", "Collège Chambéry"),
             "Collège Claude Massé" to listOf("AMBARÈS", "Collège Claude Massé"),
+            "Collège Emile Zola" to listOf("LE HAILLAN", "Collège Émile Zola"),
             "Courréjean" to listOf("VILLENAVE D'ORNON", "Courréjean"),
             "Cracovie" to listOf("BORDEAUX", "Cracovie"),
             //D
@@ -54,8 +61,10 @@ class NextSchedulesDestinationData {
             "France Alouette" to listOf("PESSAC", "France Alouette"),
             "Frankton" to listOf("BLANQUEFORT", "Frankton"),
             //G
+            "Galaxie" to listOf("SAINT MÉDARD EN JALLES", "Galaxie"),
             "Galin" to listOf("BORDEAUX", "Galin"),
             "Gambetta" to listOf("BORDEAUX", "Gambetta"),
+            "Gambetta Mériadeck" to listOf("BORDEAUX", "Gambetta Mériadeck"),
             "Gare De Begles" to listOf("BÈGLES", "Gare"),
             "Gare De Blanquefort" to listOf("BLANQUEFORT", "Gare"),
             "Gare de Bruges" to listOf("BRUGES", "Gare"),
@@ -66,11 +75,12 @@ class NextSchedulesDestinationData {
             "Gradignan Centre" to listOf("GRADIGNAN", "Centre"),
             "Grand Parc" to listOf("BORDEAUX", "Grand Parc"),
             //H
-            "Hippodrome" to listOf("EYSINES", "Hippodrome"),
+            "Hippodrome" to listOf("LE BOUSCAT", "Hippodrome"),
             "Hopital Pellegrin" to listOf("BORDEAUX", "Hôpital Pellegrin"),
             "Hôpital Pellegrin" to listOf("BORDEAUX", "Hôpital Pellegrin"),
             "Hôpital Suburbain" to listOf("LE BOUSCAT", "Hôpital Surburbain"),
             //I
+            "IMA" to listOf("MERIGNAC", "IMA"),
             "Iris" to listOf("LORMONT", "Iris"),
             "Issac" to listOf("SAINT MÉDARD EN JALLES", "Issac"),
             //J
@@ -80,6 +90,7 @@ class NextSchedulesDestinationData {
             "La Boétie" to listOf("LE TAILLAN", "La Boétie"),
             "La Chênaie" to listOf("BASSENS", "La Chênaie"),
             "La Cite Du Vin" to listOf("BORDEAUX", "La Cité du Vin"),
+            "La Cité du Vin" to listOf("BORDEAUX", "La Cité du Vin"),
             "La Gardette - Bassens - Carbon-Blanc" to listOf("BASSENS/CARBON BLANC", "La Gardette"),
             "La Gardette (Bassens - Carbon Blanc)" to listOf("BASSENS/CARBON BLANC", "La Gardette"),
             "La Mouline" to listOf("CARBON BLANC", "Mouline"),
@@ -106,6 +117,7 @@ class NextSchedulesDestinationData {
             "Magonty" to listOf("PESSAC", "Magonty"),
             "Malartic" to listOf("GRADIGNAN", "Malartic"),
             "Martignas Centre" to listOf("MARTIGNAS SUR JALLE", "Centre"),
+            "Max Linder" to listOf("AMBARÈS", "Max Linder"),
             "Mériadeck" to listOf("BORDEAUX", "Mériadeck"),
             "Merignac Aeroport" to listOf("MERIGNAC", "Aéroport"),
             "Merignac Centre" to listOf("MERIGNAC", "Centre"),
@@ -120,6 +132,7 @@ class NextSchedulesDestinationData {
             "Parabelle" to listOf("AMBARÈS", "Parabelle"),
             "Parc des Expositions" to listOf("BORDEAUX", "Parc des Expositions"),
             "Parc Des Expositions - Nouveau Stade" to listOf("BORDEAUX", "Parc des Expositions"),
+            "Patinoire" to listOf("BORDEAUX", "Patinoire"),
             "Peixotto" to listOf("TALENCE", "Peixotto"),
             "Pelouse de Douet" to listOf("BORDEAUX", "Pelouse de Douet"),
             "Pessac Centre" to listOf("PESSAC", "Centre"),
@@ -134,6 +147,7 @@ class NextSchedulesDestinationData {
             "Porte de Bourgogne" to listOf("BORDEAUX", "Porte de Bourgogne"),
             "Porte De Bourgogne" to listOf("BORDEAUX", "Porte de Bourgogne"),
             "Préfecture" to listOf("BORDEAUX", "Préfecture"),
+            "Pyrénées" to listOf("VILLENAVE D'ORNON", "Pyrénées"),
             //R
             "René Coty" to listOf("AMBARÈS", "René Coty"),
             "République" to listOf("BORDEAUX", "République"),
@@ -148,8 +162,10 @@ class NextSchedulesDestinationData {
             "Quinconces (Jean Jaurès)" to listOf("BORDEAUX", "Quinconces (Jean Jaurès)"),
             "Quinsus" to listOf("AMBARÈS", "Quinsus"),
             //S
+            "Salengro" to listOf("BÈGLES", "Salengro"),
             "Souge" to listOf("MARTIGNAS SUR JALLE", "Souge"),
             "Stade Matmut Atlantique" to listOf("BORDEAUX", "Stade Matmut Atlantique"),
+            "Stade Municipal" to listOf("LE TAILLAN", "Stade Municipal"),
             "Stade Ornon" to listOf("GRADIGNAN", "Stade Ornon"),
             "Stalingrad" to listOf("BORDEAUX", "Stalingrad"),
             "Stalingrad (Parlier)" to listOf("BORDEAUX", "Stalingrad"),
@@ -169,10 +185,12 @@ class NextSchedulesDestinationData {
             "Victoire (Pasteur)" to listOf("BORDEAUX", "Victoire"),
             "Village 5" to listOf("GRADIGNAN", "Village 5"),
             "Villenave Bourg" to listOf("VILLENAVE D'ORNON", "Bourg"),
+            "Villenave Gare" to listOf("VILLENAVE D'ORNON", "Gare"),
             "Villenave Pyrénées" to listOf("VILLENAVE D'ORNON", "Pyrénées"),
             "Villepreux" to listOf("SAINT AUBIN", "Villepreux"),
             "Virecourt" to listOf("ARTIGUES PRÈS BORDEAUX", "Virecourt"),
             //Z
+            "ZA Magellan" to listOf("PESSAC", "ZA Magellan"),
             "ZA Picot" to listOf("SAINT MÉDARD EN JALLES", "ZA Picot"),
             "Zone de Fret" to listOf("BRUGES", "Zone de Fret")
         )

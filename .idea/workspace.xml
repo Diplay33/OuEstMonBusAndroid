@@ -21,8 +21,9 @@
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/model/DAO/AccessData/LineData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/DAO/AccessData/LineData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/model/DAO/AccessData/DestinationData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/DAO/AccessData/DestinationData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/model/DAO/AccessData/NextSchedulesDestinationData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/DAO/AccessData/NextSchedulesDestinationData.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/model/DAO/AccessData/PathDestinationData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/model/DAO/AccessData/PathDestinationData.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
