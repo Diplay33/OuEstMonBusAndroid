@@ -7,22 +7,31 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
+import com.google.maps.android.compose.Marker
+import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.launch
+import model.DTO.NSchedulesMapMarker
+import model.DTO.NSchedulesMapMarkerType
+import model.DTO.NSchedulesMapMarkers
+import model.DTO.NextSchedule
 import model.DTO.Station
 import model.DTO.Stations
 import view.lines_map_list.line_map.MapStyle
+import view.more_view.all_services_list.service_detail.bitmapDescriptor
 
 @Composable
 fun NextLineSchedulesMap(stopId: String?) {
@@ -42,6 +51,9 @@ fun NextLineSchedulesMap(stopId: String?) {
         )
     }
     val scope = rememberCoroutineScope()
+    val mapMarkers = remember {
+        mutableStateListOf<NSchedulesMapMarker>()
+    }
 
     LaunchedEffect(stopId) {
         Stations.getStationByStationId(stopId ?: "") {
@@ -50,6 +62,10 @@ fun NextLineSchedulesMap(stopId: String?) {
                     LatLng(it.latitude, it.longitude), 12.5f
                 )
                 station.value = it
+            }
+
+            NSchedulesMapMarkers.retrieveVehicles {
+                mapMarkers.add(NSchedulesMapMarker(NSchedulesMapMarkerType.STOP, it, null))
             }
         }
     }
@@ -62,6 +78,19 @@ fun NextLineSchedulesMap(stopId: String?) {
         properties = mapProperties,
         cameraPositionState = cameraPositionState
     ) {
-
+        mapMarkers.forEach { marker ->
+            when(marker.type) {
+                NSchedulesMapMarkerType.STOP ->
+                    marker.stop?.let { stop ->
+                        Marker(
+                            state = MarkerState(position = LatLng(stop.latitude, stop.longitude)),
+                            icon = BitmapDescriptorFactory.defaultMarker(),
+                            title = stop.name
+                        )
+                    }
+                NSchedulesMapMarkerType.VEHICLE ->
+                    println("MapMarkerVehicle")
+            }
+        }
     }
 }
