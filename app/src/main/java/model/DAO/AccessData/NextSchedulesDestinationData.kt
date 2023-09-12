@@ -66,6 +66,7 @@ class NextSchedulesDestinationData {
             "Gambetta" to listOf("BORDEAUX", "Gambetta"),
             "Gambetta Mériadeck" to listOf("BORDEAUX", "Gambetta Mériadeck"),
             "Gare De Begles" to listOf("BÈGLES", "Gare"),
+            "Gare de Blanquefort" to listOf("BLANQUEFORT", "Gare"),
             "Gare De Blanquefort" to listOf("BLANQUEFORT", "Gare"),
             "Gare de Bruges" to listOf("BRUGES", "Gare"),
             "Gare Routière" to listOf("SAINT MÉDARD EN JALLES", "Gare Routière"),
