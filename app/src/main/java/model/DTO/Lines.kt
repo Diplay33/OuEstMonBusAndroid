@@ -70,11 +70,9 @@ class Lines {
                 if(line.id.toString() == lineId) {
                     return line
                 }
-                else if((lineId?.toInt() in 132..164) ||
-                    (lineId?.toInt() in 166..182) ||
-                    (lineId?.toInt() in 186..199)) {
+                else if(lineId?.toInt() in 123..198) {
                     return Line(
-                        id = 132,
+                        id = 123,
                         lineName = "Navette Tram",
                         lineImageResource = R.drawable.navette_tram,
                         lineColorResource = R.color.navette_tram,

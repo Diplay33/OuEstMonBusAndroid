@@ -49,9 +49,9 @@ class DestinationAllerData {
             //Ligne 20
             20 to listOf(listOf("MERIGNAC", "Cimetière Intercommunal")),
             //Ligne 21
-            611 to listOf(listOf("GRADIGNAN", "Beausoleil")),
+            64 to listOf(listOf("GRADIGNAN", "Beausoleil")),
             //Ligne 22
-            621 to listOf(listOf("PAREMPUYRE", "Fontanieu")),
+            65 to listOf(listOf("PAREMPUYRE", "Fontanieu")),
             //Ligne 23
             21 to listOf(listOf("LE BOUSCAT", "Hippodrome")),
             //Ligne 24
@@ -62,18 +62,18 @@ class DestinationAllerData {
                 listOf("BOULIAC", "La Belle Étoile")
             ),
             //Ligne 26
-            63 to listOf(listOf("MARTIGNAS SUR JALLE", "Les Pins")),
+            66 to listOf(listOf("MARTIGNAS SUR JALLE", "Les Pins")),
             //Ligne 27
             24 to listOf(listOf("LORMONT", "Buttinière")),
             //Ligne 28
             25 to listOf(listOf("BORDEAUX", "Galin")),
             //Ligne 29
-            64 to listOf(
+            67 to listOf(
                 listOf("AMBARÈS", "Bernatet"),
                 listOf("SAINT LOUIS DE MONTFERRAND", "Belle Rive")
             ),
             //Ligne 30
-            65 to listOf(listOf("SAINT MÉDARD EN JALLES", "Galaxie")),
+            68 to listOf(listOf("SAINT MÉDARD EN JALLES", "Galaxie")),
             //Lianes 31
             26 to listOf(
                 listOf("GRADIGNAN", "Beausoleil"),
@@ -82,7 +82,7 @@ class DestinationAllerData {
             //Ligne 32
             27 to listOf(listOf("BOULIAC", "Centre Commercial")),
             //Ligne 33
-            66 to listOf(listOf("BORDEAUX", "Cracovie")),
+            69 to listOf(listOf("BORDEAUX", "Cracovie")),
             //Ligne 34
             28 to listOf(listOf("MERIGNAC", "Les Pins")),
             //Lianes 35
@@ -93,9 +93,9 @@ class DestinationAllerData {
                 listOf("SAINT AUBIN", "Villepreux")
             ),
             //Ligne 38
-            68 to listOf(listOf("BLANQUEFORT", "Caychac")),
+            70 to listOf(listOf("BLANQUEFORT", "Caychac")),
             //Lianes 39
-            69 to listOf(
+            71 to listOf(
                 listOf("EYSINES", "Cantinolle"),
                 listOf("SAINT MÉDARD EN JALLES", "ZA Picot")
             ),

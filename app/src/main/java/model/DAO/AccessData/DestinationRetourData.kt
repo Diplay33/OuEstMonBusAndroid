@@ -46,9 +46,9 @@ class DestinationRetourData {
             //Ligne 20
             20 to listOf(listOf("BORDEAUX", "Brulatour")),
             //Ligne 21
-            611 to listOf(listOf("TALENCE", "Peixotto")),
+            64 to listOf(listOf("TALENCE", "Peixotto")),
             //Ligne 22
-            621 to listOf(listOf("BLANQUEFORT", "Frankton")),
+            65 to listOf(listOf("BLANQUEFORT", "Frankton")),
             //Ligne 23
             21 to listOf(listOf("BÈGLES", "Rives d'Arcins")),
             //Ligne 24
@@ -56,15 +56,15 @@ class DestinationRetourData {
             //Ligne 25
             23 to listOf(listOf("BORDEAUX", "La Cité du Vin")),
             //Ligne 26
-            63 to listOf(listOf("MERIGNAC", "Lycée Daguin")),
+            66 to listOf(listOf("MERIGNAC", "Lycée Daguin")),
             //Ligne 27
             24 to listOf(listOf("LE BOUSCAT", "Place Ravezies")),
             //Ligne 28
             25 to listOf(listOf("BORDEAUX", "Stalingrad")),
             //Ligne 29
-            64 to listOf(listOf("BASSENS/CARBON BLANC", "La Gardette")),
+            67 to listOf(listOf("BASSENS/CARBON BLANC", "La Gardette")),
             //Ligne 30
-            65 to listOf(
+            68 to listOf(
                 listOf("MERIGNAC", "BA 106"),
                 listOf("PESSAC", "Centre")
             ),
@@ -77,7 +77,7 @@ class DestinationRetourData {
             //Ligne 32
             27 to listOf(listOf("BORDEAUX", "Brandenburg")),
             //Ligne 33
-            66 to listOf(listOf("MERIGNAC", "Aéroport")),
+            69 to listOf(listOf("MERIGNAC", "Aéroport")),
             //Ligne 34
             28 to listOf(listOf("PESSAC", "Unitec")),
             //Lianes 35
@@ -85,9 +85,9 @@ class DestinationRetourData {
             //Ligne 37
             31 to listOf(listOf("BORDEAUX", "Parc des Expositions")),
             //Ligne 38
-            68 to listOf(listOf("MERIGNAC", "Phare")),
+            70 to listOf(listOf("MERIGNAC", "Phare")),
             //Lianes 39
-            69 to listOf(
+            71 to listOf(
                 listOf("PESSAC", "Cité Photonique"),
                 listOf("VILLENAVE D'ORNON", "Pyrénées")
             ),
