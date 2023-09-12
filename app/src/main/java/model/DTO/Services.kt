@@ -22,9 +22,7 @@ class Services {
             ServiceDAO.getAllServices { services ->
                 val navetteTramServices = ArrayList<Service>()
                 services.forEach { service ->
-                    if((service.lineId in 132..164) ||
-                        (service.lineId in 166..182) ||
-                        (service.lineId in 186..199)) {
+                    if(service.lineId in 123..198) {
                         navetteTramServices.add(service)
                     }
                 }

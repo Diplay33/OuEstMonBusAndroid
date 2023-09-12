@@ -52,7 +52,7 @@ fun LinesMapListRow(
     val navetteTramServicesCount = remember {
         mutableStateOf(0)
     }
-    val isNavetteTram = rowLine.id == 132
+    val isNavetteTram = rowLine.id == 123
     val menuShown = remember {
         mutableStateOf(false)
     }
@@ -66,7 +66,7 @@ fun LinesMapListRow(
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(rowLine) {
-        if(rowLine.id == 132) {
+        if(rowLine.id == 123) {
             isLoading.value = true
             while(true) {
                 Services.getNavetteTramServices { returnedServices ->
