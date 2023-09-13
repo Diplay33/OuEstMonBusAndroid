@@ -80,7 +80,7 @@ fun NextLineSchedulesMain(
                     .height(30.dp)
                 )
 
-                NextLineSchedulesMap(stopId)
+                NextLineSchedulesMap(stopId, line)
 
                 Spacer(modifier = Modifier
                     .height(30.dp)
