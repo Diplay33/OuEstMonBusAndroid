@@ -203,7 +203,8 @@ fun LineSchedulesMain(
                                             .format(selectedDateValue)
                                             .replaceFirstChar { it.uppercase() },
                                         fontWeight = FontWeight.Bold,
-                                        fontSize = 18.sp
+                                        fontSize = 18.sp,
+                                        color = if (colorScheme) Color.Black else Color.White,
                                     )
                                 }
                             }
