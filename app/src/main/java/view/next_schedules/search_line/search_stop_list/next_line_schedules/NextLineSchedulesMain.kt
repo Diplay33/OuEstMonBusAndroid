@@ -22,9 +22,6 @@ fun NextLineSchedulesMain(
     pathDirection: String?
 ) {
     val line = Lines.getLine(lineId)
-    val nextSchedules = remember {
-        mutableStateListOf<NextSchedule>()
-    }
     val paths = remember {
         mutableStateListOf<Path>()
     }
@@ -36,6 +33,18 @@ fun NextLineSchedulesMain(
         mutableStateOf(true)
     }
     val colorScheme = !isSystemInDarkTheme()
+    val mapMarkers = remember {
+        mutableStateListOf<NSchedulesMapMarker>()
+    }
+    val capFilteredNextSchedules = remember {
+        mutableStateListOf<NextSchedule>()
+    }
+    val station = remember {
+        mutableStateOf<Station?>(null)
+    }
+    val stationMarker = remember {
+        mutableStateOf(NSchedulesMapMarker(NSchedulesMapMarkerType.STOP, null, null))
+    }
 
     LaunchedEffect(stopName) {
         Paths.getOrderedPathsByLine(line.id) { returnedPaths ->
@@ -46,11 +55,25 @@ fun NextLineSchedulesMain(
                 }
             }
         }
+        Stations.getStationByStationId(stopId ?: "") {
+            station.value = it
+            stationMarker.value = NSchedulesMapMarker(NSchedulesMapMarkerType.STOP, it, null)
+            mapMarkers.add(stationMarker.value)
+        }
         while(true) {
             NextSchedules.getNextSchedulesByStationId(stopId ?: "") { returnedNextSchedules ->
-                nextSchedules.clear()
-                nextSchedules.addAll(returnedNextSchedules)
+                capFilteredNextSchedules.clear()
+                returnedNextSchedules.forEach { ns ->
+                    if(capFilteredNextSchedules.size < 5 && ns.lineId == line.id) {
+                        capFilteredNextSchedules.add(ns)
+                    }
+                }
                 isLoading.value = false
+
+                NSchedulesMapMarkers.retrieveVehicles(line.id, capFilteredNextSchedules.map { it.vehicleId ?: 0 }) { vehicles ->
+                    mapMarkers.clear()
+                    mapMarkers.addAll(vehicles + listOf(stationMarker.value))
+                }
             }
             delay(10000)
         }
@@ -74,13 +97,13 @@ fun NextLineSchedulesMain(
                     .height(30.dp)
                 )
 
-                NextLineSchedulesView(nextSchedules, line, isLoading.value)
+                NextLineSchedulesView(capFilteredNextSchedules, line, isLoading.value)
 
                 Spacer(modifier = Modifier
                     .height(30.dp)
                 )
 
-                NextLineSchedulesMap(stopId, line)
+                NextLineSchedulesMap(station.value, line, mapMarkers)
 
                 Spacer(modifier = Modifier
                     .height(30.dp)

@@ -39,12 +39,6 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoadi
     val indicatorOpacityState = if (animationState.value) 0.1f else 0.8f
     val indicatorOpacity by animateFloatAsState(targetValue = indicatorOpacityState)
     val colorScheme = !isSystemInDarkTheme()
-    val capFilteredNextSchedules = mutableListOf<NextSchedule>()
-    nextSchedules.forEach { ns ->
-        if(capFilteredNextSchedules.size < 5 && ns.lineId == line.id) {
-            capFilteredNextSchedules.add(ns)
-        }
-    }
 
     LaunchedEffect(line) {
         delay(1000)
@@ -110,7 +104,7 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoadi
                     shape = RoundedCornerShape(10.dp)
                 )
             ) {
-                capFilteredNextSchedules.forEach { nextSchedule ->
+                nextSchedules.forEach { nextSchedule ->
                     val destination = NextSchedulesDestinations.getDestinationFromRaw(line.id, nextSchedule.destination)
                     val displayedTime = nextSchedule.getTimeLeft()
 
@@ -216,7 +210,7 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoadi
                             }
                         }
 
-                        if(nextSchedule != capFilteredNextSchedules.last()) {
+                        if(nextSchedule != nextSchedules.last()) {
                             Row {
                                 Spacer(modifier = Modifier
                                     .width(39.dp)
