@@ -108,7 +108,7 @@ fun NextLineSchedulesMap(station: Station?, line: Line, mapMarkers: List<NSchedu
 
 private fun setCustomMapServiceIcon(parkId: String, colorScheme: Boolean, context: Context, vectorResId: Int): BitmapDescriptor? {
     val drawable = ContextCompat.getDrawable(context, vectorResId) ?: return null
-    drawable.setBounds(10, 50, 80, 120)
+    drawable.setBounds(if (parkId.length <= 4) 8 else 30, 50, if (parkId.length <= 4) 79 else 101, 121)
     val textPaint = Paint().apply {
         color = if (colorScheme) Color.BLACK else Color.WHITE
         textAlign = Paint.Align.CENTER
