@@ -72,6 +72,7 @@ class NextSchedulesDestinationData {
             "Gare Routière" to listOf("SAINT MÉDARD EN JALLES", "Gare Routière"),
             "Gare St Jean" to listOf("BORDEAUX", "Gare Saint Jean"),
             "Gare St Jean (arrêt de Descente)" to listOf("BORDEAUX", "Gare Saint Jean"),
+            "Gare St Jean (Hall 3)" to listOf("BORDEAUX", "Gare Saint Jean — Hall 3"),
             "G. Fauré" to listOf("BORDEAUX", "Gabriel Fauré"),
             "Gradignan Centre" to listOf("GRADIGNAN", "Centre"),
             "Grand Parc" to listOf("BORDEAUX", "Grand Parc"),
