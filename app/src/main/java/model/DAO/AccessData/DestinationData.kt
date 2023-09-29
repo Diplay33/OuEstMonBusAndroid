@@ -41,6 +41,7 @@ class DestinationData {
             "Camping Internat" to listOf("BORDEAUX", "Camping International"),
             "Candau" to listOf("PESSAC", "Candau"),
             "Cantinolle" to listOf("EYSINES", "Cantinolle"),
+            "Capc Musee D'Art" to listOf("BORDEAUX", "CAPC Musée d'Art Contemporain"),
             "Cap de Bos" to listOf("PESSAC", "Cap de Bos"),
             "Carle Vernet" to listOf("BORDEAUX", "Carle Vernet"),
             "Caychac" to listOf("BLANQUEFORT", "Caychac"),
