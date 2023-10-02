@@ -1,16 +1,26 @@
 package view.next_schedules.search_line.search_stop_list.next_line_schedules
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.Path
+import android.graphics.Path.Direction
+import android.icu.text.RelativeDateTimeFormatter
 import android.util.DisplayMetrics
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.AlertDialog
+import androidx.compose.material.Button
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -19,10 +29,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.diplay.ouestmonbus.R
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
@@ -57,6 +69,18 @@ fun NextLineSchedulesMap(station: Station?, line: Line, mapMarkers: List<NSchedu
     }
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
+    val isErrorDialogShown = remember {
+        mutableStateOf(false)
+    }
+    val launcher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) {}
+    val isUserLocationShown = remember {
+        mutableStateOf(false)
+    }
+    val userPosition = remember {
+        mutableStateOf(LatLng(44.838670, -0.578620))
+    }
 
     LaunchedEffect(station) {
         scope.launch {
@@ -66,6 +90,81 @@ fun NextLineSchedulesMap(station: Station?, line: Line, mapMarkers: List<NSchedu
                 )
             }
         }
+
+        //Get location permission
+        if (ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            val fusedLocationProviderClient =
+                LocationServices.getFusedLocationProviderClient(context)
+
+            try {
+                val locationResult = fusedLocationProviderClient.lastLocation
+                locationResult.addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val lastKnownLocation = task.result
+
+                        if (lastKnownLocation != null) {
+                            userPosition.value = LatLng(
+                                lastKnownLocation.latitude,
+                                lastKnownLocation.longitude
+                            )
+                            isUserLocationShown.value = true
+                        } else {
+                            isErrorDialogShown.value = true
+                            Log.d(
+                                "USER_LOCATION_ERROR",
+                                "Error during getting user position process"
+                            )
+                        }
+                    } else {
+                        isErrorDialogShown.value = true
+                        Log.d(
+                            "USER_LOCATION_ERROR",
+                            "Error during getting user position process"
+                        )
+                    }
+                }
+            }
+            catch(e: SecurityException) {
+                print("Error: $e")
+            }
+        } else {
+            launcher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+    }
+
+    if(isErrorDialogShown.value) {
+        AlertDialog(
+            onDismissRequest = {
+                isErrorDialogShown.value = false
+            },
+            title = {
+                Text(
+                    text = "Erreur",
+                    color = if (colorScheme) Color.Black else Color.White
+                )
+            },
+            text = {
+                Text(
+                    text = "Une erreur s'est produite lors de la récupération de votre position, " +
+                            "veuillez réessayer",
+                    color = if (colorScheme) Color.Black else Color.White
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        isErrorDialogShown.value = false
+                    }
+                ) {
+                    Text("OK")
+                }
+            },
+            backgroundColor = if (colorScheme) androidx.compose.ui.graphics.Color.White else androidx.compose.ui.graphics.Color.Black
+        )
     }
 
     GoogleMap(
@@ -102,6 +201,13 @@ fun NextLineSchedulesMap(station: Station?, line: Line, mapMarkers: List<NSchedu
                     }
             }
         }
+
+        if(isUserLocationShown.value) {
+            Marker(
+                state = MarkerState(position = userPosition.value),
+                icon = setCustomMapULocationIcon()
+            )
+        }
     }
 }
 
@@ -110,7 +216,7 @@ private fun setCustomMapServiceIcon(parkId: String, colorScheme: Boolean, contex
     val drawable = ContextCompat.getDrawable(context, vectorResId) ?: return null
     drawable.setBounds(if (parkId.length <= 4) 8 else 30, 50, if (parkId.length <= 4) 79 else 101, 121)
     val textPaint = Paint().apply {
-        color = if (colorScheme) Color.BLACK else Color.WHITE
+        color = if (colorScheme) android.graphics.Color.BLACK else android.graphics.Color.WHITE
         textAlign = Paint.Align.CENTER
         textSize = 38.dp.value
         isFakeBoldText = true
@@ -165,7 +271,7 @@ val paintTextWhite = Paint().apply {
     strokeCap = Paint.Cap.ROUND
     strokeJoin = Paint.Join.ROUND
     isAntiAlias = true
-    color = Color.WHITE
+    color = android.graphics.Color.WHITE
     textAlign = Paint.Align.CENTER
     strokeWidth = 6.dp.value
     textSize = 38.dp.value
@@ -176,7 +282,7 @@ val paintBlackFill = Paint().apply {
     strokeCap = Paint.Cap.ROUND
     strokeJoin = Paint.Join.ROUND
     isAntiAlias = true
-    color = Color.DKGRAY
+    color = android.graphics.Color.DKGRAY
     style = Paint.Style.FILL
     textAlign = Paint.Align.CENTER
     textSize = 5.dp.value
@@ -192,4 +298,27 @@ fun paintOutline(colorResource: Int, context: Context): Paint {
         color = convertedColor
         strokeWidth = 2.dp.value
     }
+}
+
+private fun setCustomMapULocationIcon(): BitmapDescriptor {
+    val path = Path()
+    path.addCircle(22.5F, 22.5F, 20F, Direction.CW)
+
+    val bm = Bitmap.createBitmap(45, 45 , Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(bm)
+    canvas.drawPath(path, paintBlueFill)
+    canvas.drawPath(path, paintWhiteOutline)
+    return BitmapDescriptorFactory.fromBitmap(bm)
+}
+
+val paintBlueFill = Paint().apply {
+    color = android.graphics.Color.BLUE
+}
+
+val paintWhiteOutline = Paint().apply {
+    style = Paint.Style.STROKE
+    strokeCap = Paint.Cap.ROUND
+    strokeJoin = Paint.Join.ROUND
+    color = android.graphics.Color.LTGRAY
+    strokeWidth = 5.dp.value
 }

@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
+import android.graphics.Path
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -71,7 +72,7 @@ fun LineMapView(
         if(isUserLocationShown) {
             Marker(
                 state = MarkerState(position = userPosition),
-                title = "Ma position"
+                icon = setCustomMapULocationIcon()
             )
         }
     }
@@ -103,4 +104,27 @@ private fun setCustomMapServiceIcon(parkId: String, colorScheme: Boolean, contex
     canvas.drawText(parkId, xText, yText, textPaint)
     drawable.draw(canvas)
     return BitmapDescriptorFactory.fromBitmap(bm)
+}
+
+private fun setCustomMapULocationIcon(): BitmapDescriptor {
+    val path = Path()
+    path.addCircle(22.5F, 22.5F, 20F, Path.Direction.CW)
+
+    val bm = Bitmap.createBitmap(45, 45 , Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(bm)
+    canvas.drawPath(path, paintBlueFill)
+    canvas.drawPath(path, paintWhiteOutline)
+    return BitmapDescriptorFactory.fromBitmap(bm)
+}
+
+val paintBlueFill = Paint().apply {
+    color = android.graphics.Color.BLUE
+}
+
+val paintWhiteOutline = Paint().apply {
+    style = Paint.Style.STROKE
+    strokeCap = Paint.Cap.ROUND
+    strokeJoin = Paint.Join.ROUND
+    color = android.graphics.Color.LTGRAY
+    strokeWidth = 5.dp.value
 }
