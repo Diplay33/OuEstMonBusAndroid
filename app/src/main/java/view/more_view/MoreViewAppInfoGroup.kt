@@ -19,7 +19,7 @@ fun MoreViewAppInfoGroup() {
         .padding(horizontal = 15.dp)
     ) {
         Text(
-            text ="©Jacques HU",
+            text ="©2022 - 2023 Jacques HU",
             fontSize = 18.sp,
             color = Color.Gray,
             fontWeight = FontWeight.Bold,
@@ -28,9 +28,7 @@ fun MoreViewAppInfoGroup() {
 
         Text(
             text = "Cette application n'est ni affiliée à TBM," +
-                " ni à Keolis Bordeaux Métropole Mobilités. \n Toutes les" +
-                " mentions (Lianes, Corol, Citéis, etc) sont des" +
-                " marques appartenants à Keolis.",
+                " ni à Keolis Bordeaux Métropole Mobilités.",
             fontSize = 18.sp,
             color = Color.LightGray,
             textAlign = TextAlign.Center

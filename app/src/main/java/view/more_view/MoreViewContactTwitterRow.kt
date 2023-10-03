@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -20,6 +21,7 @@ import com.diplay.ouestmonbus.R
 @Composable
 fun MoreViewContactTwitterRow() {
     val uriHandler = LocalUriHandler.current
+    val colorScheme = !isSystemInDarkTheme()
 
     Row(modifier = Modifier
         .height(45.dp)
@@ -29,9 +31,16 @@ fun MoreViewContactTwitterRow() {
             .padding(horizontal = 15.dp)
             .align(Alignment.CenterVertically)
         ) {
-            Image(painterResource(id = R.drawable.twitter), contentDescription = null, modifier = Modifier
-                .size(20.dp)
-                .align(Alignment.CenterVertically)
+            Image(
+                painter = painterResource(id = R.drawable.x),
+                contentDescription = null,
+                colorFilter = ColorFilter.tint(if (colorScheme)
+                    Color.Black
+                else
+                    Color.White),
+                modifier = Modifier
+                    .size(20.dp)
+                    .align(Alignment.CenterVertically)
             )
 
             Spacer(modifier = Modifier
@@ -43,7 +52,7 @@ fun MoreViewContactTwitterRow() {
                 color = Color.Blue,
                 modifier = Modifier
                     .clickable {
-                        uriHandler.openUri("https://twitter.com/diplay3311")
+                        uriHandler.openUri("https://x.com/diplay3311")
                     }
             )
         }
