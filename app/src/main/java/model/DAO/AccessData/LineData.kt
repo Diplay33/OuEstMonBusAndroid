@@ -73,10 +73,11 @@ class LineData {
             Line(57, "Locale 87", R.drawable.ligne_87, R.color.locale, ListGroup.LIGNELOCALE2),
             Line(109, "Locale 89", R.drawable.ligne_89, R.color.locale, ListGroup.LIGNELOCALE2),
             Line(110, "Locale 90", R.drawable.ligne_90, R.color.locale, ListGroup.LIGNELOCALE2),
+            Line(79, "Flex'Artigues", R.drawable.flex_artigues, R.color.flex, ListGroup.LIGNELOCALE2),
             Line(118, "Navette Arena", R.drawable.navette_arena, R.color.navette_arena, ListGroup.LIGNESPECIALES),
             Line(117, "Navette Stade", R.drawable.navette_stade, R.color.navette_stade, ListGroup.LIGNESPECIALES),
             Line(123, "Navette Tram", R.drawable.navette_tram, R.color.navette_tram, ListGroup.LIGNESPECIALES),
-            Line(119, "BatCUB", R.drawable.batcub, R.color.batcub, ListGroup.LIGNESPECIALES),
-            )
+            Line(119, "BatCUB", R.drawable.batcub, R.color.batcub, ListGroup.LIGNESPECIALES)
+        )
     }
 }
