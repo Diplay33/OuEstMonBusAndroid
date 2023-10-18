@@ -16,37 +16,22 @@ class Lines {
         }
 
         fun getLinesByGroup(context: Context): ArrayList<ArrayList<Line>> {
-            val linesByGroup: ArrayList<ArrayList<Line>> = arrayListOf(
-                arrayListOf(),
-                arrayListOf(),
-                arrayListOf(),
-                arrayListOf(),
-                arrayListOf(),
-                arrayListOf(),
-                arrayListOf(),
-                arrayListOf(),
-                arrayListOf(),
-                arrayListOf(),
-                arrayListOf()
-            )
+            val lines = LineDAO.getLines()
+            val listGroupSet = lines.map { it.listGroup }.toSet().toList()
+            val linesByGroup: ArrayList<ArrayList<Line>> = ArrayList(listGroupSet.map { arrayListOf() })
+            linesByGroup.add(arrayListOf())
 
-            LineDAO.getLines().forEach { line ->
+            lines.forEach { line ->
                 runBlocking(Dispatchers.IO) {
                     if(StoreFavoriteLines(context, line.id.toString()).isFavorite.first()!!) {
                         linesByGroup[0].add(line)
                     }
                 }
 
-                when(line.listGroup) {
-                    ListGroup.TRAM -> linesByGroup[1].add(line)
-                    ListGroup.LIANES -> linesByGroup[2].add(line)
-                    ListGroup.LIGNEPRINCIPALE -> linesByGroup[3].add(line)
-                    ListGroup.LIGNELOCALE1 -> linesByGroup[4].add(line)
-                    ListGroup.LIGNEDIRECTE -> linesByGroup[5].add(line)
-                    ListGroup.TBNIGHT -> linesByGroup[6].add(line)
-                    ListGroup.LIGNELOCALE2 -> linesByGroup[7].add(line)
-                    ListGroup.LIGNESPECIALES -> linesByGroup[8].add(line)
-                    ListGroup.EVENEMENT -> linesByGroup[9].add(line)
+                for(i in 0 until listGroupSet.count()) {
+                    if(line.listGroup == listGroupSet[i]) {
+                        linesByGroup[i + 1].add(line)
+                    }
                 }
             }
 
@@ -76,7 +61,7 @@ class Lines {
                         lineName = "Navette Tram",
                         lineImageResource = R.drawable.navette_tram,
                         lineColorResource = R.color.navette_tram,
-                        listGroup = ListGroup.LIGNESPECIALES)
+                        listGroup = "Spéciales")
                 }
             }
             return getEmptyLine()
@@ -88,7 +73,7 @@ class Lines {
                 lineName = "Ligne inconnue",
                 lineImageResource = R.drawable.question_mark_box,
                 lineColorResource = R.color.light_grey,
-                listGroup = ListGroup.LIGNELOCALE2
+                listGroup = "Locale 2"
             )
         }
     }
