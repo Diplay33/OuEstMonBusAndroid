@@ -6,6 +6,8 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -88,10 +90,11 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
 
             when(state.searchDisplay) {
                 SearchDisplay.INITIALRESULTS -> {
-                    LazyColumn(modifier = Modifier
+                    Column(modifier = Modifier
                         .background(if (colorScheme) Color.White else Color.Black)
+                        .verticalScroll(rememberScrollState())
                     ) {
-                        items(linesByGroup) { lines ->
+                        linesByGroup.forEach { lines ->
                             LinesMapListGroup(
                                 lines = lines,
                                 isFavorite = linesByGroup[0].containsAll(lines) && linesByGroup[0].isNotEmpty(),
@@ -103,11 +106,9 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
                             )
                         }
 
-                        item {
-                            Spacer(modifier = Modifier
-                                .height(50.dp)
-                            )
-                        }
+                        Spacer(modifier = Modifier
+                            .height(50.dp)
+                        )
                     }
                 }
 
