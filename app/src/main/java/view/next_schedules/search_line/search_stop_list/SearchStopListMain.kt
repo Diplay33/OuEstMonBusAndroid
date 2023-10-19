@@ -39,16 +39,19 @@ fun SearchStopListMain(
     val paths = remember {
         mutableStateListOf<Path>()
     }
-    val destinations = if (pathDirection == "ALLER")
-        DestinationsAller.getDestinationAllerOfLine(line.id)
-    else
-        DestinationsRetour.getDestinationRetourOfLine(line.id)
     val stops = remember {
         mutableStateListOf<Station>()
     }
     val isLoading = remember {
         mutableStateOf(true)
     }
+    val pathDirectionState = remember {
+        mutableStateOf(pathDirection ?: "")
+    }
+    val destinations = if (pathDirectionState.value == "ALLER")
+        DestinationsAller.getDestinationAllerOfLine(line.id)
+    else
+        DestinationsRetour.getDestinationRetourOfLine(line.id)
     val colorScheme = !isSystemInDarkTheme()
 
     Scaffold(topBar = { SearchStopListTopBar(navController) }) { padding ->
@@ -67,10 +70,10 @@ fun SearchStopListMain(
                 focused = state.focused
             )
 
-            LaunchedEffect(state.query.text) {
+            LaunchedEffect(state.query.text, pathDirectionState.value) {
                 Paths.getOrderedPathsByLine(lineId?.toInt() ?: 0) { returnedPaths ->
                     paths.clear()
-                    returnedPaths.map { if (it.first().direction == pathDirection) paths.addAll(it) }
+                    returnedPaths.map { if (it.first().direction == pathDirectionState.value) paths.addAll(it) }
 
                     Stations.getSortedStationsByPaths(paths) { returnedStations ->
                         returnedStations.forEach { station ->  
@@ -97,7 +100,7 @@ fun SearchStopListMain(
                         .verticalScroll(rememberScrollState())
                         .fillMaxWidth()
                     ) {
-                        SearchStopListHeader(line, paths, destinations)
+                        SearchStopListHeader(line, paths, destinations, pathDirectionState, isLoading, stops)
 
                         Spacer(modifier = Modifier
                             .height(30.dp)
@@ -132,7 +135,7 @@ fun SearchStopListMain(
                                     stops = stops.sortedBy { it.name },
                                     navController = navController,
                                     line = line,
-                                    pathDirection = pathDirection ?: "ALLER"
+                                    pathDirection = pathDirectionState.value
                                 )
                             }
                         }
@@ -160,7 +163,7 @@ fun SearchStopListMain(
                         .verticalScroll(rememberScrollState())
                         .fillMaxWidth()
                     ) {
-                        SearchStopListHeader(line, paths, destinations)
+                        SearchStopListHeader(line, paths, destinations, pathDirectionState, isLoading, stops)
 
                         Spacer(modifier = Modifier
                             .height(30.dp)
@@ -195,7 +198,7 @@ fun SearchStopListMain(
                                     stops = state.searchResults,
                                     navController = navController,
                                     line = line,
-                                    pathDirection = pathDirection ?: ""
+                                    pathDirection = pathDirectionState.value
                                 )
                             }
 
