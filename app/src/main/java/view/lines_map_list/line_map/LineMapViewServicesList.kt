@@ -28,6 +28,7 @@ import view.lines_map_list.NotificationCountBadge
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import kotlin.math.abs
 
 @Composable
 fun LineMapViewServicesList(
@@ -41,6 +42,7 @@ fun LineMapViewServicesList(
 ) {
     val formatter = SimpleDateFormat("HH:mm")
     val colorScheme = !isSystemInDarkTheme()
+    val lateAverage = if (services.isEmpty()) 0 else services.map { it.stateTime }.reduce { x, y -> x + y } / services.count()
 
     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
         .fillMaxWidth()
@@ -115,6 +117,12 @@ fun LineMapViewServicesList(
                 )
 
                 Text(
+                    text = "Retard moyen sur la ligne : ${lateAverageFormatter(lateAverage)}",
+                    color = Color.Gray,
+                    fontSize = 18.sp
+                )
+
+                Text(
                     text = "Dernière actualisation à ${formatter.format(refreshDate)}",
                     color = Color.Gray,
                     fontSize = 18.sp
@@ -122,4 +130,15 @@ fun LineMapViewServicesList(
             }
         }
     }
+}
+
+fun lateAverageFormatter(lateAverage: Int): String {
+    val computedValue = if (lateAverage < 0) 0 else lateAverage
+    var returnString = ""
+    if(computedValue > 59) {
+        returnString = "${(computedValue % 3600) / 60}min"
+    }
+    val computedSecValue = (computedValue % 3600) % 60
+    returnString += "$computedSecValue" + if (returnString.isEmpty()) if(computedSecValue < 2) " seconde" else " secondes" else ""
+    return returnString
 }
