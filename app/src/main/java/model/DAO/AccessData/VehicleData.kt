@@ -798,8 +798,10 @@ class VehicleData {
 
             /*SARL Evadys*/
             //Véhicules
-            mapOf("id" to "60001", "parkId" to "0001", "brand" to "DIETRICH Véhicules", "model" to "City 29", "type" to "BUS", "operator" to "SARL Evadys"),
-            mapOf("id" to "60002", "parkId" to "0002", "brand" to "ROSERO", "model" to "ROSERO First FCLEI", "type" to "BUS", "operator" to "SARL Evadys"),
+            mapOf("id" to "60001", "parkId" to "0909", "brand" to "DIETRICH Véhicules", "model" to "DIETRICH Véhicules City 29", "type" to "BUS", "operator" to "SARL Evadys"),
+            mapOf("id" to "60002", "parkId" to "0413", "brand" to "ROSERO", "model" to "ROSERO First FCLEI", "type" to "BUS", "operator" to "SARL Evadys"),
+            mapOf("id" to "68202", "parkId" to "202", "brand" to "ISUZU", "model" to "ISUZU Novociti Life", "type" to "BUS", "operator" to "SARL Evadys"),
+            mapOf("id" to "68204", "parkId" to "204", "brand" to "ISUZU", "model" to "ISUZU Novociti Life", "type" to "BUS", "operator" to "SARL Evadys"),
 
 
             /*Bordeaux River Cruise*/
