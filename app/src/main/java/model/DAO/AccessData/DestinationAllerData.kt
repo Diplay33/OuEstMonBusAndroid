@@ -100,7 +100,7 @@ class DestinationAllerData {
                 listOf("SAINT MÉDARD EN JALLES", "ZA Picot")
             ),
             //Ligne 51
-            81 to listOf(listOf("MERIGNAC", "IMA")),
+            81 to listOf(listOf("MARTIGNAS SUR JALLE", "Collège Aliénor d'Aquitaine")),
             //Ligne 52
             82 to listOf(listOf("PAREMPUYRE", "Fontanieu")),
             //Ligne 53

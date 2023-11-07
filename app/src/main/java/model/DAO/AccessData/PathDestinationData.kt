@@ -169,6 +169,7 @@ class PathDestinationData {
             "Malartic" to listOf("GRADIGNAN", "Malartic", ""),
             "Martignas Centre" to listOf("MARTIGNAS SUR JALLE", "Centre", ""),
             "Max Linder" to listOf("AMBARÈS", "Max Linder", ""),
+            "MÉCA" to listOf("BORDEAUX", "MÉCA", ""),
             "Meriadeck" to listOf("BORDEAUX", "Mériadeck", ""),
             "Mériadeck" to listOf("BORDEAUX", "Mériadeck", ""),
             "Merignac Aeroport" to listOf("MERIGNAC", "Aéroport", ""),
