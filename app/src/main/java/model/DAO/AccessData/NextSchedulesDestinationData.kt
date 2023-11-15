@@ -41,6 +41,7 @@ class NextSchedulesDestinationData {
             "Chemin du Sourd" to listOf("CARBON BLANC", "Chemin du Sourd"),
             "Cimetière Intercommunal" to listOf("MERIGNAC", "Cimetière Intercommunal"),
             "Claveau" to listOf("BORDEAUX", "Claveau"),
+            "Collège Aliénor d'Aquitaine" to listOf("MARTIGNAS SUR JALLE", "Collège Aliénor d'Aquitaine"),
             "Collège Chambéry" to listOf("VILLENAVE D'ORNON", "Collège Chambéry"),
             "Collège Claude Massé" to listOf("AMBARÈS", "Collège Claude Massé"),
             "Collège Emile Zola" to listOf("LE HAILLAN", "Collège Émile Zola"),
