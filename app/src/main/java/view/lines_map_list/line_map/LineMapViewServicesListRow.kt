@@ -66,7 +66,7 @@ fun LineMapViewServicesListRow(
                     fontWeight = FontWeight.Bold,
                     color = if (colorScheme) Color.Black else Color.White,
                     modifier = Modifier
-                        .width(if (service.vehicle.parkId.count() == 4) 46.dp else 68.dp)
+                        .width(if (service.vehicle.parkId.count() <= 4) 46.dp else 68.dp)
                         .align(Alignment.CenterVertically)
                 )
 
