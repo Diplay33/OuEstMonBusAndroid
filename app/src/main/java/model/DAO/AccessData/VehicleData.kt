@@ -802,7 +802,8 @@ class VehicleData {
             mapOf("id" to "60002", "parkId" to "0413", "brand" to "ROSERO", "model" to "ROSERO First FCLEI", "type" to "BUS", "operator" to "SARL Evadys"),
             mapOf("id" to "68201", "parkId" to "0515", "brand" to "ISUZU", "model" to "ISUZU Novociti Life", "type" to "BUS", "operator" to "SARL Evadys"),
             mapOf("id" to "68202", "parkId" to "0149", "brand" to "ISUZU", "model" to "ISUZU Novociti Life", "type" to "BUS", "operator" to "SARL Evadys"),
-            mapOf("id" to "68204", "parkId" to "204", "brand" to "ISUZU", "model" to "ISUZU Novociti Life", "type" to "BUS", "operator" to "SARL Evadys"),
+            mapOf("id" to "68203", "parkId" to "0236", "brand" to "ISUZU", "model" to "ISUZU Novociti Life", "type" to "BUS", "operator" to "SARL Evadys"),
+            mapOf("id" to "68204", "parkId" to "0528", "brand" to "ISUZU", "model" to "ISUZU Novociti Life", "type" to "BUS", "operator" to "SARL Evadys"),
 
 
             /*Bordeaux River Cruise*/
