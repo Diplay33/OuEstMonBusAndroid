@@ -804,7 +804,12 @@ class VehicleData {
             mapOf("id" to "68202", "parkId" to "0149", "brand" to "ISUZU", "model" to "ISUZU Novociti Life", "type" to "BUS", "operator" to "SARL Evadys"),
             mapOf("id" to "68203", "parkId" to "0236", "brand" to "ISUZU", "model" to "ISUZU Novociti Life", "type" to "BUS", "operator" to "SARL Evadys"),
             mapOf("id" to "68204", "parkId" to "0528", "brand" to "ISUZU", "model" to "ISUZU Novociti Life", "type" to "BUS", "operator" to "SARL Evadys"),
-            mapOf("id" to "62703", "parkId" to "0962", "brand" to "IVECO Bus", "model" to "IVECO Bus Urbanway 12", "type" to "BUS", "operator" to "SARL Evadys"),
+            mapOf("id" to "68205", "parkId" to "0972", "brand" to "ISUZU", "model" to "ISUZU Citibus", "type" to "BUS", "operator" to "SARL Evadys"),
+            mapOf("id" to "65701", "parkId" to "0321", "brand" to "ISUZU", "model" to "ISUZU Citiport 12", "type" to "BUS", "operator" to "SARL Evadys"),
+            mapOf("id" to "65702", "parkId" to "0763", "brand" to "ISUZU", "model" to "ISUZU Citiport 12", "type" to "BUS", "operator" to "SARL Evadys"),
+            mapOf("id" to "62703", "parkId" to "0252", "brand" to "ISUZU", "model" to "ISUZU Citiport 12", "type" to "BUS", "operator" to "SARL Evadys"),
+            //4th citiport 12
+            mapOf("id" to "65703", "parkId" to "0962", "brand" to "IVECO Bus", "model" to "IVECO Bus Urbanway 12", "type" to "BUS", "operator" to "SARL Evadys"),
 
 
             /*Bordeaux River Cruise*/
