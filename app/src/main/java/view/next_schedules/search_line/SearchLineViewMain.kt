@@ -65,7 +65,7 @@ fun SearchLineViewMain(
 
             LaunchedEffect(state.query.text) {
                 linesByGroup.clear()
-                linesByGroup.addAll(Lines.getLinesByGroup(context))
+                linesByGroup.addAll(Lines.getLinesByGroup(context, true))
                 Services.getAllServices { values ->
                     allServices.clear()
                     allServices.addAll(values)
@@ -74,7 +74,7 @@ fun SearchLineViewMain(
 
                 state.searching = true
                 delay(100)
-                state.searchResults = Lines.getLinesBySearchText(state.query.text)
+                state.searchResults = Lines.getLinesBySearchText(state.query.text, true)
                 state.searching = false
             }
 

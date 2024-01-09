@@ -11,12 +11,12 @@ import java.text.Normalizer
 
 class Lines {
     companion object {
-        fun getAllLines(): List<Line> {
-            return LineDAO.getLines()
+        fun getAllLines(forSchedule: Boolean = false): List<Line> {
+            return LineDAO.getLines().filter { if (forSchedule) it.id != 123 && it.id !in 72..79 else true }
         }
 
-        fun getLinesByGroup(context: Context): ArrayList<ArrayList<Line>> {
-            val lines = LineDAO.getLines()
+        fun getLinesByGroup(context: Context, forSchedule: Boolean = false): ArrayList<ArrayList<Line>> {
+            val lines = getAllLines(forSchedule)
             val listGroupSet = lines.map { it.listGroup }.toSet().toList()
             val linesByGroup: ArrayList<ArrayList<Line>> = ArrayList(listGroupSet.map { arrayListOf() })
             linesByGroup.add(arrayListOf())
@@ -38,14 +38,14 @@ class Lines {
             return linesByGroup
         }
 
-        fun getLinesBySearchText(text: String): List<Line> {
+        fun getLinesBySearchText(text: String, forSchedule: Boolean = false): List<Line> {
             val REGEX_UNACCENT = "\\p{InCombiningDiacriticalMarks}+".toRegex()
             fun CharSequence.unaccent(): String {
                 val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
                 return REGEX_UNACCENT.replace(temp, "")
             }
 
-            return LineDAO.getLines().filter { line ->
+            return getAllLines(forSchedule).filter { line ->
                 line.lineName.lowercase().unaccent().contains(text.trim().lowercase().unaccent())
             }
         }

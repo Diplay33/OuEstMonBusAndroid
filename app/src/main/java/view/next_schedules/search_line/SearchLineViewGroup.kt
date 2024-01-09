@@ -41,17 +41,15 @@ fun SearchLineViewGroup(
         }
 
         lines.forEach { line ->
-            if(line.lineName != "Navette Tram" && line.lineName != "Flex'Artigues") {
-                SearchLineViewRow(
-                    linesByGroup = linesByGroup,
-                    line = line,
-                    navController = navController,
-                    isLineInService = if (areServicesLoading)
-                        null
-                    else
-                        !allServices.none { it.lineId == line.id }
-                )
-            }
+            SearchLineViewRow(
+                linesByGroup = linesByGroup,
+                line = line,
+                navController = navController,
+                isLineInService = if (areServicesLoading)
+                    null
+                else
+                    !allServices.none { it.lineId == line.id }
+            )
         }
     }
 }
