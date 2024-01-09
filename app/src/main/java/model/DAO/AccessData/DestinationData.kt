@@ -13,6 +13,7 @@ class DestinationData {
             "Aeroport" to listOf("MERIGNAC", "Aéroport"),
             "Alfred De Vigny" to listOf("MERIGNAC", "Alfred de Vigny"),
             "Ambarès Centre" to listOf("AMBARÈS", "Centre"),
+            "André Ricard" to listOf("BORDEAUX", "André Ricard"),
             "Arena" to listOf("FLOIRAC", "Arkéa Arena"),
             //B
             "BA 106 (terminus)" to listOf("MERIGNAC", "BA 106"),
@@ -43,6 +44,7 @@ class DestinationData {
             "Cantinolle" to listOf("EYSINES", "Cantinolle"),
             "Capc Musee D'Art" to listOf("BORDEAUX", "CAPC Musée d'Art Contemporain"),
             "Cap de Bos" to listOf("PESSAC", "Cap de Bos"),
+            "Capelle" to listOf("BORDEAUX", "Capelle"),
             "Carle Vernet" to listOf("BORDEAUX", "Carle Vernet"),
             "Caychac" to listOf("BLANQUEFORT", "Caychac"),
             "Cenon Gare" to listOf("CENON", "Gare"),
@@ -66,6 +68,7 @@ class DestinationData {
             "Du Roy" to listOf("AMBARÈS", "Du Roy"),
             //E
             "Ecoparc" to listOf("BLANQUEFORT", "Ecoparc"),
+            "Ernest Renan" to listOf("BORDEAUX", "Ernest Renan"),
             "Escarraguel" to listOf("AMBÈS", "Escarraguel"),
             "Eysines Centre" to listOf("EYSINES", "Centre"),
             //F
@@ -81,6 +84,7 @@ class DestinationData {
             "Frères Portmann" to listOf("BORDEAUX", "Frères Portmann"),
             //G
             "Galaxie" to listOf("SAINT MÉDARD EN JALLES", "Galaxie"),
+            "Galerie Tatry" to listOf("BORDEAUX", "Galerie Tatry"),
             "Galin" to listOf("BORDEAUX", "Galin"),
             "Galin Terminus" to listOf("BORDEAUX", "Galin"),
             "Gambetta" to listOf("BORDEAUX", "Gambetta"),
@@ -119,6 +123,7 @@ class DestinationData {
             "La Gardette" to listOf("BASSENS/CARBON BLANC", "La Gardette"),
             "Landegrand" to listOf("PAREMPUYRE", "Landegrand"),
             "La Renney" to listOf("BLANQUEFORT", "La Renney"),
+            "Lartigue" to listOf("BORDEAUX", "Lartigue"),
             "Lauriers" to listOf("LORMONT", "Lauriers"),
             "Le Grand Caillou" to listOf("EYSINES", "Le Grand Caillou"),
             "Le Plateau" to listOf("EYSINES", "Le Plateau"),
