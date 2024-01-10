@@ -90,14 +90,13 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
 
             when(state.searchDisplay) {
                 SearchDisplay.INITIALRESULTS -> {
-                    Column(modifier = Modifier
+                    LazyColumn(modifier = Modifier
                         .background(if (colorScheme) Color.White else Color.Black)
-                        .verticalScroll(rememberScrollState())
                     ) {
-                        linesByGroup.forEach { lines ->
+                        items(linesByGroup.size) { index ->
                             LinesMapListGroup(
-                                lines = lines,
-                                isFavorite = linesByGroup[0].containsAll(lines) && linesByGroup[0].isNotEmpty(),
+                                lines = linesByGroup[index],
+                                isFavorite = linesByGroup[0].containsAll(linesByGroup[index]) && linesByGroup[0].isNotEmpty(),
                                 linesByGroup = linesByGroup,
                                 navController = navController,
                                 services = allServices,
@@ -106,9 +105,11 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
                             )
                         }
 
-                        Spacer(modifier = Modifier
-                            .height(50.dp)
-                        )
+                        item {
+                            Spacer(modifier = Modifier
+                                .height(50.dp)
+                            )
+                        }
                     }
                 }
 
