@@ -34,6 +34,7 @@ class DestinationData {
             "Bouliac Ccial" to listOf("BOULIAC", "Centre Commercial"),
             "Bourgogne" to listOf("BORDEAUX", "Porte de Bourgogne"),
             "Brandenburg" to listOf("BORDEAUX", "Brandenburg"),
+            "Bre Pessac (bvd)" to listOf("BORDEAUX", "Barrière de Pessac"),
             "Brulatour" to listOf("BORDEAUX", "Brulatour"),
             "Buttinière" to listOf("LORMONT", "Buttinière"),
             //C
