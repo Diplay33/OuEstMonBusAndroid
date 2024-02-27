@@ -166,6 +166,7 @@ class NextSchedulesDestinationData {
             "Quinconces (Jean Jaurès)" to listOf("BORDEAUX", "Quinconces (Jean Jaurès)"),
             "Quinsus" to listOf("AMBARÈS", "Quinsus"),
             //S
+            "Saint-Nicolas" to listOf("BORDEAUX", "Saint Nicolas"),
             "Salengro" to listOf("BÈGLES", "Salengro"),
             "Souge" to listOf("MARTIGNAS SUR JALLE", "Souge"),
             "Stade Matmut Atlantique" to listOf("BORDEAUX", "Stade Matmut Atlantique"),
