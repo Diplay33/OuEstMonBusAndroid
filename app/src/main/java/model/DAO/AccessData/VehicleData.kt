@@ -247,10 +247,6 @@ class VehicleData {
             mapOf("id" to "2343", "parkId" to "2343", "brand" to "IVECO Bus", "model" to "IVECO Bus Urbanway 18 CNG", "type" to "BUS", "operator" to "Keolis Bordeaux Métropole Mobilités"),
             mapOf("id" to "2344", "parkId" to "2344", "brand" to "IVECO Bus", "model" to "IVECO Bus Urbanway 18 CNG", "type" to "BUS", "operator" to "Keolis Bordeaux Métropole Mobilités"),
 
-            //DIETRICH Véhicules City 23
-            mapOf("id" to "1898", "parkId" to "1898", "brand" to "DIETRICH Véhicules", "model" to "DIETRICH Véhicules City 23", "type" to "BUS", "operator" to "Keolis Bordeaux Métropole Mobilités"),
-            mapOf("id" to "1899", "parkId" to "1899", "brand" to "DIETRICH Véhicules", "model" to "DIETRICH Véhicules City 23", "type" to "BUS", "operator" to "Keolis Bordeaux Métropole Mobilités"),
-
             //MAN Lion's City A21 CNG
             mapOf("id" to "1501", "parkId" to "1501", "brand" to "MAN", "model" to "MAN Lion's City A21 CNG", "type" to "BUS", "operator" to "Keolis Bordeaux Métropole Mobilités"),
             mapOf("id" to "1502", "parkId" to "1502", "brand" to "MAN", "model" to "MAN Lion's City A21 CNG", "type" to "BUS", "operator" to "Keolis Bordeaux Métropole Mobilités"),
@@ -670,7 +666,7 @@ class VehicleData {
             mapOf("id" to "99023", "parkId" to "109023", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde"),
             mapOf("id" to "99024", "parkId" to "109024", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde"),
             mapOf("id" to "99025", "parkId" to "109025", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde"),
-            mapOf("id" to "99150", "parkId" to "109150", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde"),
+            mapOf("id" to "99150", "parkId" to "109018", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde"),
             mapOf("id" to "99151", "parkId" to "109151", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde"),
             mapOf("id" to "99160", "parkId" to "109160", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde"),
             mapOf("id" to "99161", "parkId" to "109161", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro O530 Facelift", "type" to "BUS", "operator" to "Keolis Gironde"),
@@ -794,6 +790,10 @@ class VehicleData {
             mapOf("id" to "86858", "parkId" to "6858", "brand" to "IVECO Bus", "model" to "IVECO Bus Crossway LE City", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
             mapOf("id" to "86859", "parkId" to "6859", "brand" to "IVECO Bus", "model" to "IVECO Bus Crossway LE City", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
             mapOf("id" to "86860", "parkId" to "6860", "brand" to "IVECO Bus", "model" to "IVECO Bus Crossway LE City", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+
+            //DIETRICH Véhicules City 23
+            mapOf("id" to "1898", "parkId" to "8605", "brand" to "DIETRICH Véhicules", "model" to "DIETRICH Véhicules City 23", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "1899", "parkId" to "8604", "brand" to "DIETRICH Véhicules", "model" to "DIETRICH Véhicules City 23", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
 
 
             /*SARL Evadys*/
