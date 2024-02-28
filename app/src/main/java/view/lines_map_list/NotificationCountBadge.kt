@@ -31,7 +31,7 @@ fun NotificationCountBadge(count: Int) {
             color = Color.White,
             modifier = Modifier
                 .align(Alignment.Center)
-                .padding(bottom = 2.dp)
+                .padding(bottom = 1.dp)
         )
     }
 }
