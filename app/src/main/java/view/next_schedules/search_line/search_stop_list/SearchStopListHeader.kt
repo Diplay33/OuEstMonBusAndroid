@@ -2,18 +2,25 @@ package view.next_schedules.search_line.search_stop_list
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.DropdownMenu
+import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.PlayArrow
+import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -24,17 +31,26 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import model.DTO.DestinationsAller
+import model.DTO.DestinationsRetour
 import model.DTO.Line
 import model.DTO.Path
+import model.DTO.Station
 
 @Composable
 fun SearchStopListHeader(
     line: Line,
     paths: List<Path>,
-    destinations: List<List<String>> = listOf()
+    destinations: List<List<String>> = listOf(),
+    pathDirectionState: MutableState<String>,
+    isLoading: MutableState<Boolean>,
+    stops: SnapshotStateList<Station>
 ) {
     val destinationsSet = remember {
         mutableSetOf<String>()
+    }
+    val headerMenuShown = remember {
+        mutableStateOf(false)
     }
     paths.forEach { destinationsSet.add(it.getDestinationName()) }
     val colorScheme = !isSystemInDarkTheme()
@@ -91,6 +107,7 @@ fun SearchStopListHeader(
                         Color(0xff18191A).copy(alpha = 0.4f),
                     shape = RoundedCornerShape(10.dp)
                 )
+                .clickable { headerMenuShown.value = true }
                 .padding(start = 15.dp)
                 .padding(vertical = 2.dp)
                 .fillMaxWidth()
@@ -130,10 +147,11 @@ fun SearchStopListHeader(
                                     if(destination != destinationsSet.last()) {
                                         Box(modifier = Modifier
                                             .clip(RectangleShape)
-                                            .background(if (colorScheme)
-                                                Color.LightGray
-                                            else
-                                                Color.Gray
+                                            .background(
+                                                if (colorScheme)
+                                                    Color.LightGray
+                                                else
+                                                    Color.Gray
                                             )
                                             .fillMaxWidth()
                                             .height(1.dp)
@@ -169,10 +187,11 @@ fun SearchStopListHeader(
                                 if(destination != destinations.last()) {
                                     Box(modifier = Modifier
                                         .clip(RectangleShape)
-                                        .background(if (colorScheme)
-                                            Color.LightGray
-                                        else
-                                            Color.Gray
+                                        .background(
+                                            if (colorScheme)
+                                                Color.LightGray
+                                            else
+                                                Color.Gray
                                         )
                                         .fillMaxWidth()
                                         .height(1.dp)
@@ -182,7 +201,42 @@ fun SearchStopListHeader(
                         }
                     }
                 }
+
+                DropdownMenu(
+                    expanded = headerMenuShown.value,
+                    onDismissRequest = { headerMenuShown.value = false },
+                    modifier = Modifier
+                        .background(if (colorScheme) Color.White else Color(0xff18191A))
+                ) {
+                    DropdownMenuItem(onClick = {
+                        pathDirectionState.value = if (pathDirectionState.value == "ALLER")
+                            "RETOUR"
+                        else
+                            "ALLER"
+                        headerMenuShown.value = false
+                        isLoading.value = true
+                        stops.clear()
+                    }) {
+                        Row {
+                            Icon(
+                                imageVector = Icons.Rounded.Refresh,
+                                contentDescription = null,
+                                tint = if (colorScheme) Color.Black else Color.White,
+                                modifier = Modifier
+                                    .align(Alignment.CenterVertically)
+                                    .offset(x = (-7).dp)
+                            )
+
+                            Text(
+                                text = "Changer de direction",
+                                fontSize = 18.sp,
+                                color = if (colorScheme) Color.Black else Color.White
+                            )
+                        }
+                    }
+                }
             }
+
 
             Spacer(modifier = Modifier
                 .height(15.dp)

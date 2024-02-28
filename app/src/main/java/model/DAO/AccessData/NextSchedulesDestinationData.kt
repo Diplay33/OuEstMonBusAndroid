@@ -41,6 +41,7 @@ class NextSchedulesDestinationData {
             "Chemin du Sourd" to listOf("CARBON BLANC", "Chemin du Sourd"),
             "Cimetière Intercommunal" to listOf("MERIGNAC", "Cimetière Intercommunal"),
             "Claveau" to listOf("BORDEAUX", "Claveau"),
+            "Collège Aliénor d'Aquitaine" to listOf("MARTIGNAS SUR JALLE", "Collège Aliénor d'Aquitaine"),
             "Collège Chambéry" to listOf("VILLENAVE D'ORNON", "Collège Chambéry"),
             "Collège Claude Massé" to listOf("AMBARÈS", "Collège Claude Massé"),
             "Collège Emile Zola" to listOf("LE HAILLAN", "Collège Émile Zola"),
@@ -120,6 +121,7 @@ class NextSchedulesDestinationData {
             "Malartic" to listOf("GRADIGNAN", "Malartic"),
             "Martignas Centre" to listOf("MARTIGNAS SUR JALLE", "Centre"),
             "Max Linder" to listOf("AMBARÈS", "Max Linder"),
+            "MÉCA" to listOf("BORDEAUX", "MÉCA"),
             "Mériadeck" to listOf("BORDEAUX", "Mériadeck"),
             "Merignac Aeroport" to listOf("MERIGNAC", "Aéroport"),
             "Merignac Centre" to listOf("MERIGNAC", "Centre"),
@@ -164,6 +166,7 @@ class NextSchedulesDestinationData {
             "Quinconces (Jean Jaurès)" to listOf("BORDEAUX", "Quinconces (Jean Jaurès)"),
             "Quinsus" to listOf("AMBARÈS", "Quinsus"),
             //S
+            "Saint-Nicolas" to listOf("BORDEAUX", "Saint Nicolas"),
             "Salengro" to listOf("BÈGLES", "Salengro"),
             "Souge" to listOf("MARTIGNAS SUR JALLE", "Souge"),
             "Stade Matmut Atlantique" to listOf("BORDEAUX", "Stade Matmut Atlantique"),

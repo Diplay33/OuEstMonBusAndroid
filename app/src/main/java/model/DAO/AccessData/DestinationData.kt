@@ -13,6 +13,7 @@ class DestinationData {
             "Aeroport" to listOf("MERIGNAC", "Aéroport"),
             "Alfred De Vigny" to listOf("MERIGNAC", "Alfred de Vigny"),
             "Ambarès Centre" to listOf("AMBARÈS", "Centre"),
+            "André Ricard" to listOf("BORDEAUX", "André Ricard"),
             "Arena" to listOf("FLOIRAC", "Arkéa Arena"),
             //B
             "BA 106 (terminus)" to listOf("MERIGNAC", "BA 106"),
@@ -33,6 +34,7 @@ class DestinationData {
             "Bouliac Ccial" to listOf("BOULIAC", "Centre Commercial"),
             "Bourgogne" to listOf("BORDEAUX", "Porte de Bourgogne"),
             "Brandenburg" to listOf("BORDEAUX", "Brandenburg"),
+            "Bre Pessac (bvd)" to listOf("BORDEAUX", "Barrière de Pessac"),
             "Brulatour" to listOf("BORDEAUX", "Brulatour"),
             "Buttinière" to listOf("LORMONT", "Buttinière"),
             //C
@@ -43,6 +45,7 @@ class DestinationData {
             "Cantinolle" to listOf("EYSINES", "Cantinolle"),
             "Capc Musee D'Art" to listOf("BORDEAUX", "CAPC Musée d'Art Contemporain"),
             "Cap de Bos" to listOf("PESSAC", "Cap de Bos"),
+            "Capelle" to listOf("BORDEAUX", "Capelle"),
             "Carle Vernet" to listOf("BORDEAUX", "Carle Vernet"),
             "Caychac" to listOf("BLANQUEFORT", "Caychac"),
             "Cenon Gare" to listOf("CENON", "Gare"),
@@ -54,6 +57,7 @@ class DestinationData {
             "Claveau" to listOf("BORDEAUX", "Claveau"),
             "Collège Chambéry" to listOf("VILLENAVE D'ORNON", "Collège Chambéry"),
             "Collège C Massé" to listOf("AMBARÈS", "Collège Claude Massé"),
+            "Coll Aliénor Aq" to listOf("MARTIGNAS SUR JALLE", "Collège Aliénor d'Aquitaine"),
             "Coll Emile Zola" to listOf("LE HAILLAN", "Collège Émile Zola"),
             "Coll Simone Veil" to listOf("CARBON BLANC", "Collège Simone Veil"),
             "Courréjean" to listOf("VILLENAVE D'ORNON", "Courréjean"),
@@ -65,6 +69,7 @@ class DestinationData {
             "Du Roy" to listOf("AMBARÈS", "Du Roy"),
             //E
             "Ecoparc" to listOf("BLANQUEFORT", "Ecoparc"),
+            "Ernest Renan" to listOf("BORDEAUX", "Ernest Renan"),
             "Escarraguel" to listOf("AMBÈS", "Escarraguel"),
             "Eysines Centre" to listOf("EYSINES", "Centre"),
             //F
@@ -80,6 +85,7 @@ class DestinationData {
             "Frères Portmann" to listOf("BORDEAUX", "Frères Portmann"),
             //G
             "Galaxie" to listOf("SAINT MÉDARD EN JALLES", "Galaxie"),
+            "Galerie Tatry" to listOf("BORDEAUX", "Galerie Tatry"),
             "Galin" to listOf("BORDEAUX", "Galin"),
             "Galin Terminus" to listOf("BORDEAUX", "Galin"),
             "Gambetta" to listOf("BORDEAUX", "Gambetta"),
@@ -118,6 +124,7 @@ class DestinationData {
             "La Gardette" to listOf("BASSENS/CARBON BLANC", "La Gardette"),
             "Landegrand" to listOf("PAREMPUYRE", "Landegrand"),
             "La Renney" to listOf("BLANQUEFORT", "La Renney"),
+            "Lartigue" to listOf("BORDEAUX", "Lartigue"),
             "Lauriers" to listOf("LORMONT", "Lauriers"),
             "Le Grand Caillou" to listOf("EYSINES", "Le Grand Caillou"),
             "Le Plateau" to listOf("EYSINES", "Le Plateau"),
@@ -142,6 +149,7 @@ class DestinationData {
             "Malartic" to listOf("GRADIGNAN", "Malartic"),
             "Martignas Centre" to listOf("MARTIGNAS SUR JALLE", "Centre"),
             "Max Linder" to listOf("AMBARÈS", "Max Linder"),
+            "MECA" to listOf("BORDEAUX", "MÉCA"),
             "Meriadeck" to listOf("BORDEAUX", "Mériadeck"),
             "Mériadeck" to listOf("BORDEAUX", "Mériadeck"),
             "Mérignac Arlac" to listOf("MERIGNAC", "Fontaine d'Arlac"),
