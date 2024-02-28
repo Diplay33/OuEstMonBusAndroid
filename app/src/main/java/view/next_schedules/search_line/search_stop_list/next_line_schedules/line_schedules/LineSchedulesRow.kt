@@ -35,6 +35,7 @@ fun LineSchedulesRow(line: Line, schedule: Schedule, path: Path) {
     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
         .fillMaxWidth()
         .padding(horizontal = 15.dp)
+        .padding(vertical = 3.dp)
     ) {
         Row {
             Image(
@@ -80,6 +81,8 @@ fun LineSchedulesRow(line: Line, schedule: Schedule, path: Path) {
                         modifier = Modifier
                             .offset(y = 2.dp)
                     )
+
+                    Spacer(modifier = Modifier.height(3.dp))
 
                     Text(
                         text = destination[1],

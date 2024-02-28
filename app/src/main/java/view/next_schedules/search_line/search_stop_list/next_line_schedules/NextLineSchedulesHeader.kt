@@ -154,6 +154,8 @@ fun NextLineSchedulesHeader(
                                             .offset(y = 2.dp)
                                     )
 
+                                    Spacer(modifier = Modifier.height(3.dp))
+
                                     Text(
                                         text = destination.last(),
                                         fontSize = 18.sp,

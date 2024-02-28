@@ -61,6 +61,7 @@ fun MoreViewAllServicesRow(navController: NavController) {
             color = Color.Gray,
             modifier = Modifier
                 .padding(horizontal = 30.dp)
+                .padding(top = 3.dp)
         )
     }
 }

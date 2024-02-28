@@ -21,6 +21,7 @@ fun MoreViewSettingsGroup() {
         color = if (colorScheme) Color.Black else Color.White,
         modifier = Modifier
             .padding(start = 15.dp)
+            .padding(bottom = 3.dp)
     )
 
     MoreViewSettingsDisplayNotifCountRow()
