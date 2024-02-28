@@ -54,9 +54,12 @@ fun NextLineSchedulesSchdlGroup(
     val dateDialogState = rememberMaterialDialogState()
     val colorScheme = !isSystemInDarkTheme()
 
-    Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
-        .fillMaxWidth()
-        .padding(15.dp)
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(15.dp)
     ) {
         Text(
             text = "Horaires",

@@ -35,6 +35,7 @@ fun ServiceDetailHeader(line: Line, destination: List<String>) {
             color = colorResource(line.lineColorResource).copy(alpha = 0.2f),
             shape = RoundedCornerShape(10.dp)
         )
+        .padding(vertical = 3.dp)
     ) {
         Image(
             painter = painterResource(id = line.lineImageResource),
@@ -82,6 +83,8 @@ fun ServiceDetailHeader(line: Line, destination: List<String>) {
                             modifier = Modifier
                                 .offset(y = if (destination.first() == "") 0.dp else 2.dp)
                         )
+
+                        Spacer(modifier = Modifier.height(3.dp))
                     }
 
                     Text(

@@ -55,6 +55,7 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoadi
         color = if (colorScheme) Color.Black else Color.White,
         modifier = Modifier
             .padding(horizontal = 15.dp)
+            .padding(bottom = 3.dp)
     )
 
     if(isLoading) {
@@ -144,6 +145,8 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoadi
                                             modifier = Modifier
                                                 .offset(y = 2.dp)
                                         )
+
+                                        Spacer(modifier = Modifier.height(3.dp))
 
                                         Text(
                                             text = destination.last(),

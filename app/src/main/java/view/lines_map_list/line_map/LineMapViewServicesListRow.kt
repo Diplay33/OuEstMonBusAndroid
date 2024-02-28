@@ -83,6 +83,8 @@ fun LineMapViewServicesListRow(
                             modifier = Modifier
                                 .offset(y = if (destination.first() == "") 0.dp else 2.dp)
                         )
+
+                        Spacer(modifier = Modifier.height(3.dp))
                     }
 
                     Text(
