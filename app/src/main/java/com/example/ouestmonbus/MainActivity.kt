@@ -3,6 +3,13 @@ package com.diplay.ouestmonbus
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.slideIn
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
@@ -88,6 +95,12 @@ class MainActivity : ComponentActivity() {
                 NavHost(
                     navController = navController,
                     startDestination = BottomNavigationScreens.Cartes.route,
+                    enterTransition = { fadeIn(animationSpec = tween(300)) },
+                    exitTransition = { scaleOut(targetScale = 1.2f) },
+                    popEnterTransition = {
+                        fadeOut(animationSpec = tween(300))
+                        scaleIn(initialScale = 1.2f) },
+                    popExitTransition = { fadeOut(animationSpec = tween(300)) },
                     modifier = Modifier
                         .padding(it)
                 ) {
