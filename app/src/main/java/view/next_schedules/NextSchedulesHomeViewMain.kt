@@ -30,7 +30,7 @@ fun NextSchedulesHomeViewMain(navController: NavController) {
                     .height(30.dp)
                 )
 
-                NextSchedulesHomeViewFavoritesGroup()
+                NextSchedulesHomeViewFavoritesGroup(navController)
             }
         }
     }

@@ -12,6 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import model.DTO.Lines
 import model.DTO.Station
@@ -19,7 +20,7 @@ import model.DTO.Stations
 import model.preferences_data_store.StoreFavoriteStopsWithLine
 
 @Composable
-fun NextSchedulesHomeViewFavoritesGroup() {
+fun NextSchedulesHomeViewFavoritesGroup(navController: NavController) {
     val favoriteStopsWithLine = remember {
         mutableStateMapOf<String, List<String>>()
     }
@@ -83,6 +84,7 @@ fun NextSchedulesHomeViewFavoritesGroup() {
                 Column {
                     favoriteStopsSet.distinctBy { it.stationId }.sortedBy { it.name }.forEach { station ->
                         NextSchedulesHomeFavoriteRow(
+                            navController = navController,
                             station = station,
                             lines = Lines.getAllLines().filter { line ->
                                 favoriteStopsWithLine[line.id.toString()]?.contains(station.stationId) ?: false

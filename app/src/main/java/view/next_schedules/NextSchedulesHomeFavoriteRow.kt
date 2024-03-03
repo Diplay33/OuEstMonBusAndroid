@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.FavoriteBorder
+import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -25,14 +26,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import model.DTO.*
 import model.preferences_data_store.StoreFavoriteStopsWithLine
+import view.Screens.ProchainsScreens
 import view.next_schedules.search_line.search_stop_list.next_line_schedules.NextLineSchedulesView
 
 @Composable
 fun NextSchedulesHomeFavoriteRow(
+    navController: NavController,
     station: Station,
     lines: List<Line>,
     favoriteStopsSet: MutableList<Station>
@@ -205,6 +209,36 @@ fun NextSchedulesHomeFavoriteRow(
 
                                     Text(
                                         text = "Retirer des favoris",
+                                        color = if (colorScheme) Color.Black else Color.White,
+                                        modifier = Modifier
+                                            .align(Alignment.CenterVertically)
+                                    )
+                                }
+                            }
+
+                            DropdownMenuItem(onClick = {
+                                navController.navigate(ProchainsScreens.FavoriteStopDetail.withArgs(
+                                    station.stationId,
+                                    station.name,
+                                    line.id.toString(),
+
+                                ))
+                            }) {
+                                Row {
+                                    Icon(
+                                        imageVector = Icons.Rounded.Info,
+                                        contentDescription = null,
+                                        tint = if (colorScheme) Color.Black else Color.White,
+                                        modifier = Modifier
+                                            .size(30.dp)
+                                    )
+
+                                    Spacer(modifier = Modifier
+                                        .width(5.dp)
+                                    )
+
+                                    Text(
+                                        text = "Afficher plus de détails",
                                         color = if (colorScheme) Color.Black else Color.White,
                                         modifier = Modifier
                                             .align(Alignment.CenterVertically)

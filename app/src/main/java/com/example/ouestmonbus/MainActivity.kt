@@ -50,6 +50,7 @@ import view.more_view.MoreViewMain
 import view.more_view.all_services_list.AllServicesListMain
 import view.more_view.all_services_list.service_detail.ServiceDetailMain
 import view.next_schedules.NextSchedulesHomeViewMain
+import view.next_schedules.favorite_stop_detail.FavoriteStopDetailMain
 import view.next_schedules.search_line.SearchLineViewMain
 import view.next_schedules.search_line.search_stop_list.SearchStopListMain
 import view.next_schedules.search_line.search_stop_list.next_line_schedules.NextLineSchedulesMain
@@ -129,6 +130,24 @@ class MainActivity : ComponentActivity() {
                     //Prochains Passages screen
                     composable(BottomNavigationScreens.Prochains.route) {
                         NextSchedulesHomeViewMain(navController)
+                    }
+
+                    composable(
+                        route = ProchainsScreens.FavoriteStopDetail.route + "/{stopId}/{stopName}/{lineId}",
+                        arguments = listOf(
+                            navArgument("stopId") {
+                                type = NavType.StringType
+                                defaultValue = "0"
+                                nullable = true
+                            }
+                        )
+                    ) { entry ->
+                        FavoriteStopDetailMain(
+                            navController = navController,
+                            stopId = entry.arguments?.getString("stopId"),
+                            stopName = entry.arguments?.getString("stopName"),
+                            lineId = entry.arguments?.getString("lineId")
+                        )
                     }
 
                     composable(ProchainsScreens.SearchLineView.route) {
