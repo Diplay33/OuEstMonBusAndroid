@@ -3,6 +3,7 @@ package view.next_schedules.search_line.search_stop_list.next_line_schedules
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -28,11 +29,19 @@ import model.DTO.Line
 import model.DTO.NextSchedule
 import model.DTO.NextSchedulesDestinations
 import com.diplay.ouestmonbus.R
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.CameraPositionState
 import kotlinx.coroutines.delay
 import model.DTO.NextSchedules
 
 @Composable
-fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoading: Boolean) {
+fun NextLineSchedulesView(
+    nextSchedules: List<NextSchedule>,
+    line: Line,
+    isLoading: Boolean,
+    focusedVehicle: MutableState<Int?>
+) {
     val animationState = remember {
         mutableStateOf(false)
     }
@@ -113,6 +122,7 @@ fun NextLineSchedulesView(nextSchedules: List<NextSchedule>, line: Line, isLoadi
                         Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 15.dp)
+                            .clickable { focusedVehicle.value = nextSchedule.vehicleId }
                         ) {
                             Row {
                                 Icon(

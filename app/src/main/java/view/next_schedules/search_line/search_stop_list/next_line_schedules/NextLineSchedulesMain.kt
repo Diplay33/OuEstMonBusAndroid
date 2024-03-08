@@ -10,6 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.delay
 import model.DTO.*
 
@@ -44,6 +47,14 @@ fun NextLineSchedulesMain(
     }
     val stationMarker = remember {
         mutableStateOf(NSchedulesMapMarker(NSchedulesMapMarkerType.STOP, null, null))
+    }
+    val cameraPositionState = rememberCameraPositionState {
+        position = CameraPosition.fromLatLngZoom(
+            LatLng(44.838670, -0.578620), 10.8f
+        )
+    }
+    val focusedVehicle = remember {
+        mutableStateOf<Int?>(null)
     }
 
     LaunchedEffect(stopName) {
@@ -97,13 +108,13 @@ fun NextLineSchedulesMain(
                     .height(30.dp)
                 )
 
-                NextLineSchedulesView(capFilteredNextSchedules, line, isLoading.value)
+                NextLineSchedulesView(capFilteredNextSchedules, line, isLoading.value, focusedVehicle)
 
                 Spacer(modifier = Modifier
                     .height(30.dp)
                 )
 
-                NextLineSchedulesMap(station.value, line, mapMarkers)
+                NextLineSchedulesMap(station.value, line, mapMarkers, focusedVehicle)
 
                 Spacer(modifier = Modifier
                     .height(30.dp)

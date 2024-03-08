@@ -23,6 +23,7 @@ import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -40,6 +41,7 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
+import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
@@ -50,11 +52,17 @@ import kotlinx.coroutines.launch
 import model.DTO.Line
 import model.DTO.NSchedulesMapMarker
 import model.DTO.NSchedulesMapMarkerType
+import model.DTO.Service
 import model.DTO.Station
 import view.lines_map_list.line_map.MapStyle
 
 @Composable
-fun NextLineSchedulesMap(station: Station?, line: Line, mapMarkers: List<NSchedulesMapMarker>) {
+fun NextLineSchedulesMap(
+    station: Station?,
+    line: Line,
+    mapMarkers: List<NSchedulesMapMarker>,
+    focusedVehicle: MutableState<Int?>
+) {
     val colorScheme = !isSystemInDarkTheme()
     val mapProperties by remember {
         mutableStateOf(MapProperties(
@@ -81,37 +89,48 @@ fun NextLineSchedulesMap(station: Station?, line: Line, mapMarkers: List<NSchedu
     val userPosition = remember {
         mutableStateOf(LatLng(44.838670, -0.578620))
     }
+    val isFirstLaunch = remember {
+        mutableStateOf(false)
+    }
 
-    LaunchedEffect(station) {
-        scope.launch {
-            station?.let {
-                cameraPositionState.position = CameraPosition.fromLatLngZoom(
-                    LatLng(it.latitude, it.longitude), 12.5f
-                )
+    LaunchedEffect(station, focusedVehicle.value) {
+        if(isFirstLaunch.value) {
+            scope.launch {
+                station?.let {
+                    cameraPositionState.position = CameraPosition.fromLatLngZoom(
+                        LatLng(it.latitude, it.longitude), 12.5f
+                    )
+                }
             }
-        }
 
-        //Get location permission
-        if (ContextCompat.checkSelfPermission(
-                context,
-                Manifest.permission.ACCESS_FINE_LOCATION
-            ) == PackageManager.PERMISSION_GRANTED
-        ) {
-            val fusedLocationProviderClient =
-                LocationServices.getFusedLocationProviderClient(context)
+            //Get location permission
+            if (ContextCompat.checkSelfPermission(
+                    context,
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                val fusedLocationProviderClient =
+                    LocationServices.getFusedLocationProviderClient(context)
 
-            try {
-                val locationResult = fusedLocationProviderClient.lastLocation
-                locationResult.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val lastKnownLocation = task.result
+                try {
+                    val locationResult = fusedLocationProviderClient.lastLocation
+                    locationResult.addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            val lastKnownLocation = task.result
 
-                        if (lastKnownLocation != null) {
-                            userPosition.value = LatLng(
-                                lastKnownLocation.latitude,
-                                lastKnownLocation.longitude
-                            )
-                            isUserLocationShown.value = true
+                            if (lastKnownLocation != null) {
+                                userPosition.value = LatLng(
+                                    lastKnownLocation.latitude,
+                                    lastKnownLocation.longitude
+                                )
+                                isUserLocationShown.value = true
+                            } else {
+                                isErrorDialogShown.value = true
+                                Log.d(
+                                    "USER_LOCATION_ERROR",
+                                    "Error during getting user position process"
+                                )
+                            }
                         } else {
                             isErrorDialogShown.value = true
                             Log.d(
@@ -119,20 +138,31 @@ fun NextLineSchedulesMap(station: Station?, line: Line, mapMarkers: List<NSchedu
                                 "Error during getting user position process"
                             )
                         }
-                    } else {
-                        isErrorDialogShown.value = true
-                        Log.d(
-                            "USER_LOCATION_ERROR",
-                            "Error during getting user position process"
+                    }
+                }
+                catch(e: SecurityException) {
+                    print("Error: $e")
+                }
+            } else {
+                launcher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+            }
+        }
+        else {
+            scope.launch {
+                focusedVehicle.value?.let { vehicleId ->
+                    var focusedService: Service? = null
+                    mapMarkers.filter { it.service != null }.map { it.service }.forEach {
+                        if(it?.vehicleId == vehicleId) {
+                            focusedService = it
+                        }
+                    }
+                    focusedService?.let {
+                        cameraPositionState.position = CameraPosition.fromLatLngZoom(
+                            LatLng(it.latitude, it.longitude), 15.5f
                         )
                     }
                 }
             }
-            catch(e: SecurityException) {
-                print("Error: $e")
-            }
-        } else {
-            launcher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
     }
 
