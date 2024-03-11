@@ -161,6 +161,7 @@ fun NextLineSchedulesMap(
                             LatLng(it.latitude, it.longitude), 15.5f
                         )
                     }
+                    focusedVehicle.value = null
                 }
             }
         }
