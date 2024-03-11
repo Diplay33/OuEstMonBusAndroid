@@ -158,7 +158,7 @@ fun NextLineSchedulesMap(
                     }
                     focusedService?.let {
                         cameraPositionState.position = CameraPosition.fromLatLngZoom(
-                            LatLng(it.latitude, it.longitude), 15.5f
+                            LatLng(it.latitude, it.longitude), 14.4f
                         )
                     }
                     focusedVehicle.value = null
