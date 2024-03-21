@@ -11,7 +11,7 @@ class NextSchedulesDestinations {
                     else -> return values
                 }
             } ?: run {
-                return listOf()
+                return listOf("", "Destination inconnue")
             }
         }
     }
