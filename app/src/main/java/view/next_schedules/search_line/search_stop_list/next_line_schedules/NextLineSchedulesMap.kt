@@ -8,15 +8,12 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Path
 import android.graphics.Path.Direction
-import android.icu.text.RelativeDateTimeFormatter
-import android.util.DisplayMetrics
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.AlertDialog
 import androidx.compose.material.Button
@@ -34,6 +31,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavController
 import com.diplay.ouestmonbus.R
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.BitmapDescriptor
@@ -41,10 +39,8 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
-import com.google.maps.android.compose.CameraPositionState
 import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
-import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
@@ -54,6 +50,7 @@ import model.DTO.NSchedulesMapMarker
 import model.DTO.NSchedulesMapMarkerType
 import model.DTO.Service
 import model.DTO.Station
+import view.Screens.ProchainsScreens
 import view.lines_map_list.line_map.MapStyle
 
 @Composable
@@ -61,7 +58,8 @@ fun NextLineSchedulesMap(
     station: Station?,
     line: Line,
     mapMarkers: List<NSchedulesMapMarker>,
-    focusedVehicle: MutableState<Int?>
+    focusedVehicle: MutableState<Int?>,
+    navController: NavController
 ) {
     val colorScheme = !isSystemInDarkTheme()
     val mapProperties by remember {
@@ -227,7 +225,18 @@ fun NextLineSchedulesMap(
                                 "Tram D" -> R.drawable.map_logo_tram
                                 "BatCUB" -> R.drawable.map_logo_ferry
                                 else -> R.drawable.map_logo_bus
-                            })
+                            }),
+                            onClick = {
+                                navController.navigate(
+                                    ProchainsScreens.NextScheduleDetails.withArgs(
+                                        service.vehicleId.toString(),
+                                        station?.stationId.toString(),
+                                        station?.name ?: "Arrêt inconnu",
+                                        line.id.toString()
+                                    )
+                                )
+                                true
+                            }
                         )
                     }
             }

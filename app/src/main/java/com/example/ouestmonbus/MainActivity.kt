@@ -3,24 +3,17 @@ package com.diplay.ouestmonbus
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
-import androidx.compose.animation.slideIn
-import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
@@ -55,6 +48,7 @@ import view.next_schedules.search_line.SearchLineViewMain
 import view.next_schedules.search_line.search_stop_list.SearchStopListMain
 import view.next_schedules.search_line.search_stop_list.next_line_schedules.NextLineSchedulesMain
 import view.next_schedules.search_line.search_stop_list.next_line_schedules.line_schedules.LineSchedulesMain
+import view.next_schedules.search_line.search_stop_list.next_line_schedules.next_schedule_details.NextScheduleDetailsMain
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -188,6 +182,19 @@ class MainActivity : ComponentActivity() {
                             stopId = entry.arguments?.getString("stopId"),
                             lineId = entry.arguments?.getString("lineId"),
                             pathDirection = entry.arguments?.getString("pathDirection")
+                        )
+                    }
+
+                    composable(
+                        route = ProchainsScreens.NextScheduleDetails.route + "/{vehicleId}/{stopId}/{stopName}/{lineId}",
+                        arguments = listOf()
+                    ) { entry ->
+                        NextScheduleDetailsMain(
+                            navController = navController,
+                            vehicleId = entry.arguments?.getString("vehicleId"),
+                            stopId = entry.arguments?.getString("stopId"),
+                            stopName = entry.arguments?.getString("stopName"),
+                            lineId = entry.arguments?.getString("lineId")
                         )
                     }
 

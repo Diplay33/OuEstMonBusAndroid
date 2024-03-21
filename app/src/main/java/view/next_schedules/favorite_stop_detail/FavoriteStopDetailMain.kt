@@ -144,7 +144,7 @@ fun FavoriteStopDetailMain(
                     .height(30.dp)
                 )
 
-                NextLineSchedulesMap(station.value, line, mapMarkers, focusedVehicle)
+                NextLineSchedulesMap(station.value, line, mapMarkers, focusedVehicle, navController)
 
                 Spacer(modifier = Modifier
                     .height(30.dp)

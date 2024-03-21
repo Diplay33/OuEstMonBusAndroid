@@ -30,6 +30,10 @@ class Services {
             }
         }
 
+        fun getServiceByVehicleId(vehicleId: Int, callback: (Service?) -> Unit) {
+            ServiceDAO.getServiceByVehicleId(vehicleId) { callback(it) }
+        }
+
         /*fun getServicesSortedByVehicle(callback: (ArrayList<Service>) -> Unit) {
             ServiceDAO.getAllServices { services ->
                 val returnServices = arrayListOf<Service>()
