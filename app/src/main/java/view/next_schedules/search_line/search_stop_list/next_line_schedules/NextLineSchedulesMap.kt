@@ -88,7 +88,7 @@ fun NextLineSchedulesMap(
         mutableStateOf(LatLng(44.838670, -0.578620))
     }
     val isFirstLaunch = remember {
-        mutableStateOf(false)
+        mutableStateOf(true)
     }
 
     LaunchedEffect(station, focusedVehicle.value) {
@@ -98,6 +98,7 @@ fun NextLineSchedulesMap(
                     cameraPositionState.position = CameraPosition.fromLatLngZoom(
                         LatLng(it.latitude, it.longitude), 12.5f
                     )
+                    isFirstLaunch.value = false
                 }
             }
 
