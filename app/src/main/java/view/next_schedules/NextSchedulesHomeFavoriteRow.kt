@@ -181,6 +181,36 @@ fun NextSchedulesHomeFavoriteRow(
                                 .background(if (colorScheme) Color.White else Color(0xff18191A))
                         ) {
                             DropdownMenuItem(onClick = {
+                                navController.navigate(ProchainsScreens.FavoriteStopDetail.withArgs(
+                                    station.stationId,
+                                    station.name,
+                                    line.id.toString(),
+
+                                    ))
+                            }) {
+                                Row {
+                                    Icon(
+                                        imageVector = Icons.Rounded.Info,
+                                        contentDescription = null,
+                                        tint = if (colorScheme) Color.Black else Color.White,
+                                        modifier = Modifier
+                                            .size(30.dp)
+                                    )
+
+                                    Spacer(modifier = Modifier
+                                        .width(5.dp)
+                                    )
+
+                                    Text(
+                                        text = "Afficher plus de détails",
+                                        color = if (colorScheme) Color.Black else Color.White,
+                                        modifier = Modifier
+                                            .align(Alignment.CenterVertically)
+                                    )
+                                }
+                            }
+
+                            DropdownMenuItem(onClick = {
                                 scope.launch {
                                     storeFavStopsWithLine.removeFavoriteStopForLine(
                                         lineId = line.id.toString(),
@@ -209,36 +239,6 @@ fun NextSchedulesHomeFavoriteRow(
 
                                     Text(
                                         text = "Retirer des favoris",
-                                        color = if (colorScheme) Color.Black else Color.White,
-                                        modifier = Modifier
-                                            .align(Alignment.CenterVertically)
-                                    )
-                                }
-                            }
-
-                            DropdownMenuItem(onClick = {
-                                navController.navigate(ProchainsScreens.FavoriteStopDetail.withArgs(
-                                    station.stationId,
-                                    station.name,
-                                    line.id.toString(),
-
-                                ))
-                            }) {
-                                Row {
-                                    Icon(
-                                        imageVector = Icons.Rounded.Info,
-                                        contentDescription = null,
-                                        tint = if (colorScheme) Color.Black else Color.White,
-                                        modifier = Modifier
-                                            .size(30.dp)
-                                    )
-
-                                    Spacer(modifier = Modifier
-                                        .width(5.dp)
-                                    )
-
-                                    Text(
-                                        text = "Afficher plus de détails",
                                         color = if (colorScheme) Color.Black else Color.White,
                                         modifier = Modifier
                                             .align(Alignment.CenterVertically)
