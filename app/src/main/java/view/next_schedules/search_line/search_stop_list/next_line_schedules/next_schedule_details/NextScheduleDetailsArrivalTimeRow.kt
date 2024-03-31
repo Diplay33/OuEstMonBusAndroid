@@ -130,8 +130,11 @@ fun NextScheduleDetailsArrivalTimeRow(
                 .align(Alignment.CenterVertically)
             ) {
                 Text(
-                    text = if (nextSchedule.value?.getTimeLeft()?.toInt() == 0)
-                        "proche"
+                    text = if (nextSchedule.value?.getTimeLeft()?.toInt()!! < 1)
+                        if (nextSchedule.value?.getTimeLeft()!!.toInt() < 0)
+                            "- min"
+                        else
+                            "proche"
                     else
                         "${nextSchedule.value?.getTimeLeft() ?: 0} min",
                     fontWeight = FontWeight.Bold,
