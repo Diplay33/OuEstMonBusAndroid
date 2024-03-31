@@ -161,7 +161,7 @@ fun NextScheduleDetailsArrivalTimeRow(
             },
             text = {
                 Text(
-                    text = "Le ${vehicle.model} n°${vehicle.parkId} a dépassé l'arrêt $stopName",
+                    text = "${getPronounDependingOn(vehicle.model.first()) + vehicle.model} n°${vehicle.parkId} a dépassé l'arrêt $stopName",
                     color = if (colorScheme) Color.Black else Color.White
                 )
             },
@@ -177,5 +177,16 @@ fun NextScheduleDetailsArrivalTimeRow(
             },
             backgroundColor = if (colorScheme) Color.White else Color.Black
         )
+    }
+}
+
+fun getPronounDependingOn(firstLetter: Char): String {
+    return if (isVowel(firstLetter)) "L'" else "Le "
+}
+
+fun isVowel(c: Char): Boolean {
+    return when (c.lowercaseChar()) {
+        'a', 'e', 'i', 'o', 'u' -> true
+        else -> false
     }
 }
