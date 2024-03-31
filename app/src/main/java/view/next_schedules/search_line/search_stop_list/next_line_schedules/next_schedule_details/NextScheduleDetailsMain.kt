@@ -61,7 +61,8 @@ fun NextScheduleDetailsMain(
                 NextScheduleDetailsArrivalTimeRow(
                     stopName = stopName ?: "Arrêt inconnu",
                     stopId = stopId ?: "",
-                    vehicleId = vehicle.id
+                    vehicleId = vehicle.id,
+                    navController = navController
                 )
 
                 Spacer(modifier = Modifier
