@@ -24,6 +24,7 @@ import model.DTO.Lines
 import model.DTO.Service
 import view.lines_map_list.line_map.service_detail.LineMapViewServiceDetailCurrentStopRow
 import view.more_view.all_services_list.service_detail.*
+import java.util.Date
 
 @Composable
 fun LineMapViewServiceDetail(selectedService: MutableState<Service?>) {
@@ -37,7 +38,8 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>) {
         destination = "",
         latitude = 0.0,
         longitude = 0.0,
-        currentStop = 0
+        currentStop = 0,
+        timestamp = Date()
     )
     val line = Lines.getLine(service.lineId.toString())
     val colorScheme = !isSystemInDarkTheme()

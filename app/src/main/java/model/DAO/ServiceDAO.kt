@@ -3,9 +3,14 @@ package model.DAO
 import model.DAO.AccessData.CallAPI
 import model.DTO.Service
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.TimeZone
 
 class ServiceDAO {
     companion object {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX")
+
         fun getAllServices(callback: (ArrayList<Service>) -> Unit) {
             CallAPI.run("https://data.bordeaux-metropole.fr/geojson?key=0234ABEFGH&typename=sv_vehic_p") { responseBody ->
                 val services: ArrayList<Service> = arrayListOf()
@@ -24,6 +29,7 @@ class ServiceDAO {
                         else
                             featuresJSONObject.getJSONObject("geometry").getJSONArray("coordinates").getDouble(0)
                         val propertiesJSONObject = featuresJSONObject.getJSONObject("properties")
+                        dateFormat.timeZone = TimeZone.getTimeZone("UTC")
                         services.add(Service(
                             id = propertiesJSONObject.getInt("gid"),
                             vehicleId = propertiesJSONObject.getInt("gid"),
@@ -37,7 +43,8 @@ class ServiceDAO {
                             currentStop = if (propertiesJSONObject.isNull("rs_sv_arret_p_actu"))
                                 0
                             else
-                                propertiesJSONObject.getInt("rs_sv_arret_p_actu")
+                                propertiesJSONObject.getInt("rs_sv_arret_p_actu"),
+                            timestamp = dateFormat.parse(propertiesJSONObject.getString("mdate")) ?: Date()
                         ))
                     }
                 }
@@ -67,6 +74,7 @@ class ServiceDAO {
                         else
                             featuresJSONObject.getJSONObject("geometry").getJSONArray("coordinates").getDouble(0)
                         val propertiesJSONObject = featuresJSONObject.getJSONObject("properties")
+                        dateFormat.timeZone = TimeZone.getTimeZone("UTC")
                         services.add(Service(
                             id = propertiesJSONObject.getInt("gid"),
                             vehicleId = propertiesJSONObject.getInt("gid"),
@@ -80,7 +88,8 @@ class ServiceDAO {
                             currentStop = if (propertiesJSONObject.isNull("rs_sv_arret_p_actu"))
                                 0
                             else
-                                propertiesJSONObject.getInt("rs_sv_arret_p_actu")
+                                propertiesJSONObject.getInt("rs_sv_arret_p_actu"),
+                            timestamp = dateFormat.parse(propertiesJSONObject.getString("mdate")) ?: Date()
                         ))
                     }
                 }
@@ -108,6 +117,7 @@ class ServiceDAO {
                         0.0
                     else
                         featuresJSONObject.getJSONObject("geometry").getJSONArray("coordinates").getDouble(0)
+                    dateFormat.timeZone = TimeZone.getTimeZone("UTC")
                     callback(
                         Service(
                             id = propertiesJSONObject.getInt("gid"),
@@ -122,7 +132,8 @@ class ServiceDAO {
                             currentStop = if (propertiesJSONObject.isNull("rs_sv_arret_p_actu"))
                                 0
                             else
-                                propertiesJSONObject.getInt("rs_sv_arret_p_actu")
+                                propertiesJSONObject.getInt("rs_sv_arret_p_actu"),
+                            timestamp = dateFormat.parse(propertiesJSONObject.getString("mdate")) ?: Date()
                         )
                     )
                 }

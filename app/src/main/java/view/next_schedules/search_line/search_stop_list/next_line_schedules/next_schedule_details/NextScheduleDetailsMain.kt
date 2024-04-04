@@ -1,16 +1,24 @@
 package view.next_schedules.search_line.search_stop_list.next_line_schedules.next_schedule_details
 
+import android.icu.util.Calendar
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import model.DTO.Destinations
@@ -26,6 +34,10 @@ import view.more_view.all_services_list.service_detail.ServiceDetailOperatorRow
 import view.more_view.all_services_list.service_detail.ServiceDetailSpeedRow
 import view.more_view.all_services_list.service_detail.ServiceDetailStateRow
 import view.more_view.all_services_list.service_detail.ServiceDetailVehicleRow
+import java.time.format.DateTimeFormatter
+import java.util.Date
+import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.minutes
 
 @Composable
 fun NextScheduleDetailsMain(
@@ -38,8 +50,9 @@ fun NextScheduleDetailsMain(
     val vehicle = Vehicles.getVehicleById(vehicleId.toString())
     val line = Lines.getLine(lineId)
     val service = remember {
-        mutableStateOf(Service(0, 0, 0, 0, "", 0, "", 0.0, 0.0, 0))
+        mutableStateOf(Service(0, 0, 0, 0, "", 0, "", 0.0, 0.0, 0, timestamp = Date()))
     }
+    val cal = Calendar.getInstance()
 
     LaunchedEffect(vehicle) {
         while(true) {
@@ -106,7 +119,31 @@ fun NextScheduleDetailsMain(
                 )
 
                 ServiceDetailStateRow(service.value.state, service.value.stateTime)
+
+                Spacer(modifier = Modifier
+                    .height(15.dp)
+                )
+
+                Row(horizontalArrangement = Arrangement.Center, modifier = Modifier
+                    .padding(horizontal = 15.dp)
+                    .fillMaxWidth()
+                ) {
+                    cal.time = service.value.timestamp
+
+                    Text(
+                        text = "Horodatage des données : " +
+                            "${addZeroToOneDigitNbIfNeeded(cal.get(Calendar.HOUR_OF_DAY))}:" +
+                            addZeroToOneDigitNbIfNeeded(cal.get(Calendar.MINUTE)) + ":" +
+                            addZeroToOneDigitNbIfNeeded(cal.get(Calendar.SECOND)),
+                        color = Color.Gray,
+                        fontSize = 18.sp
+                    )
+                }
             }
         }
     }
+}
+
+fun addZeroToOneDigitNbIfNeeded(value: Int): String {
+    return if (value.toString().count() == 1) "0$value" else value.toString()
 }
