@@ -93,6 +93,12 @@ fun NextScheduleDetailsMain(
                     .height(30.dp)
                 )
 
+                NextSchedulesDetailsMap(service.value)
+
+                Spacer(modifier = Modifier
+                    .height(30.dp)
+                )
+
                 ServiceDetailSpeedRow(service.value.currentSpeed)
 
                 Spacer(modifier = Modifier
