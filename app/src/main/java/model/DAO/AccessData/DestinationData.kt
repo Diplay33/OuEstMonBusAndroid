@@ -12,6 +12,7 @@ class DestinationData {
             "Aéroport" to listOf("MERIGNAC", "Aéroport"),
             "Aeroport" to listOf("MERIGNAC", "Aéroport"),
             "Alfred De Vigny" to listOf("MERIGNAC", "Alfred de Vigny"),
+            "Alouette" to listOf("PESSAC", "France Alouette"),
             "Ambarès Centre" to listOf("AMBARÈS", "Centre"),
             "André Ricard" to listOf("BORDEAUX", "André Ricard"),
             "Arena" to listOf("FLOIRAC", "Arkéa Arena"),
