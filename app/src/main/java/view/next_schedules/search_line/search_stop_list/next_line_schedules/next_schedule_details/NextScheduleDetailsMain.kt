@@ -1,9 +1,12 @@
 package view.next_schedules.search_line.search_stop_list.next_line_schedules.next_schedule_details
 
 import android.icu.util.Calendar
+import androidx.compose.foundation.background
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -53,6 +56,7 @@ fun NextScheduleDetailsMain(
         mutableStateOf(Service(0, 0, 0, 0, "", 0, "", 0.0, 0.0, 0, timestamp = Date()))
     }
     val cal = Calendar.getInstance()
+    val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(vehicle) {
         while(true) {
@@ -69,6 +73,8 @@ fun NextScheduleDetailsMain(
     ) }) { padding ->
         LazyColumn(modifier = Modifier
             .padding(padding)
+            .fillMaxHeight()
+            .background(if (colorScheme) Color.White else Color.Black)
         ) {
             item {
                 NextScheduleDetailsArrivalTimeRow(
