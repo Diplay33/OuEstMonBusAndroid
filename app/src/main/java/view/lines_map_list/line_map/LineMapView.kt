@@ -10,6 +10,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.MutableLiveData
@@ -20,17 +21,18 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.compose.*
+import model.DTO.Line
 import model.DTO.Service
-import view.more_view.all_services_list.service_detail.bitmapDescriptor
 
 @Composable
 fun LineMapView(
     services: SnapshotStateList<Service>,
-    lineName: String,
+    line: Line,
     selectedService: MutableState<Service?>,
     cameraPositionState: CameraPositionState,
     isUserLocationShown: Boolean,
-    userPosition: LatLng
+    userPosition: LatLng,
+    pathsCoordinates: SnapshotStateList<List<LatLng>>
 ) {
     val colorScheme = !isSystemInDarkTheme()
     val mapProperties by remember {
@@ -42,7 +44,7 @@ fun LineMapView(
     val mapUISettings by remember {
         mutableStateOf(MapUiSettings(compassEnabled = false, zoomControlsEnabled = false))
     }
-
+    
     GoogleMap(
         properties = mapProperties,
         cameraPositionState = cameraPositionState,
@@ -51,7 +53,7 @@ fun LineMapView(
         services.forEach { service ->
             Marker(
                 state = MarkerState(position = LatLng(service.latitude, service.longitude)),
-                icon = setCustomMapServiceIcon(service.vehicle.parkId, colorScheme, LocalContext.current, vectorResId = when(lineName) {
+                icon = setCustomMapServiceIcon(service.vehicle.parkId, colorScheme, LocalContext.current, vectorResId = when(line.lineName) {
                     "Tram A" -> R.drawable.map_logo_tram
                     "Tram B" -> R.drawable.map_logo_tram
                     "Tram C" -> R.drawable.map_logo_tram
@@ -74,6 +76,10 @@ fun LineMapView(
                 state = MarkerState(position = userPosition),
                 icon = setCustomMapULocationIcon()
             )
+        }
+
+        pathsCoordinates.forEach { coordinates ->
+            Polyline(points = coordinates, color = colorResource(id = line.lineColorResource))
         }
     }
 }

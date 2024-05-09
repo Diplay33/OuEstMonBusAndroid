@@ -21,6 +21,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.delay
 import model.DTO.Lines
+import model.DTO.Path
+import model.DTO.Paths
 import model.DTO.ProgrammedMessages
 import model.DTO.Service
 import model.DTO.Services
@@ -56,6 +58,9 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
     val userPosition = remember {
         mutableStateOf(LatLng(44.838670, -0.578620))
     }
+    val pathsCoordinates = remember {
+        mutableStateListOf<List<LatLng>>()
+    }
     val colorScheme = !isSystemInDarkTheme()
 
     BottomSheetScaffold(
@@ -85,6 +90,17 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
             ProgrammedMessages.getNumberOfMessagesByLine(line.id.toString()) { count ->
                 programmedMessagesCount.value = count
             }
+            Paths.getOrderedPathsByLine(line.id, true) { paths ->
+                paths.forEach { backAndForthPaths ->
+                    backAndForthPaths.forEach { path ->
+                        pathsCoordinates.addAll(
+                            path.coordinates.map { coordinates ->
+                                coordinates.map { LatLng(it[1], it[0]) }
+                            }
+                        )
+                    }
+                }
+            }
 
             while(true) {
                 if(lineId == "123") {
@@ -112,11 +128,12 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
         ) {
             LineMapView(
                 services = services,
-                lineName = line.lineName,
+                line = line,
                 selectedService = selectedService,
                 cameraPositionState = cameraPositionState,
                 isUserLocationShown = isUserLocationShown.value,
-                userPosition = userPosition.value
+                userPosition = userPosition.value,
+                pathsCoordinates = pathsCoordinates
             )
 
             LineMapViewTopBar(navController, line, isUserLocationShown, cameraPositionState, userPosition)

@@ -6,8 +6,12 @@ import org.json.JSONObject
 
 class PathDAO {
     companion object {
-        fun getPathsByLine(lineId: Int, callback: (List<Path>) -> Unit) {
-            CallAPI.run("https://data.bordeaux-metropole.fr/geojson/features/sv_chem_l?key=0234ABEFGH&filter={\"rs_sv_ligne_a\":$lineId,\"principal\":true}&attributes=[\"gid\",\"libelle\",\"sens\"]") { responseBody ->
+        fun getPathsByLine(lineId: Int, withCoordinates: Boolean, callback: (List<Path>) -> Unit) {
+            var url = "https://data.bordeaux-metropole.fr/geojson/features/sv_chem_l?key=0234ABEFGH&filter={\"rs_sv_ligne_a\":$lineId,\"principal\":true}"
+            if(!withCoordinates) {
+                url += "&attributes=[\"gid\",\"libelle\",\"sens\"]"
+            }
+            CallAPI.run(url) { responseBody ->
                 val paths: MutableList<Path> = mutableListOf()
                 val welcomeJSONObject = JSONObject(responseBody)
                 val featuresJSONArray = welcomeJSONObject.getJSONArray("features")
@@ -16,12 +20,47 @@ class PathDAO {
                     for(i in 0 until featuresJSONArray.length()) {
                         val featuresJSONObject = featuresJSONArray.getJSONObject(i)
                         val propertiesJSONObject = featuresJSONObject.getJSONObject("properties")
+                        val coordinates = mutableListOf<List<List<Double>>>()
+
+                        if(withCoordinates) {
+                            val geometryJSONObject = featuresJSONObject.getJSONObject("geometry")
+                            val coordinatesJSONArray = geometryJSONObject.getJSONArray("coordinates")
+
+                            try {
+                                val pathArray = mutableListOf<List<Double>>()
+                                for(j in 0 until coordinatesJSONArray.length()) {
+                                    pathArray.add(
+                                        listOf(
+                                            coordinatesJSONArray.getJSONArray(j).getDouble(0),
+                                            coordinatesJSONArray.getJSONArray(j).getDouble(1)
+                                        )
+                                    )
+                                }
+                                coordinates.add(pathArray)
+                            }
+                            catch(_: Exception) {
+                                for(j in 0 until coordinatesJSONArray.length()) {
+                                    val pathArray = mutableListOf<List<Double>>()
+                                    val tempArray = coordinatesJSONArray.getJSONArray(j)
+                                    for(k in 0 until tempArray.length()) {
+                                        pathArray.add(
+                                            listOf(
+                                                tempArray.getJSONArray(k).getDouble(0),
+                                                tempArray.getJSONArray(k).getDouble(1)
+                                            )
+                                        )
+                                    }
+                                    coordinates.add(pathArray)
+                                }
+                            }
+                        }
 
                         paths.add(
                             Path(
                                 id = propertiesJSONObject.getInt("gid"),
                                 name = propertiesJSONObject.getString("libelle"),
-                                direction = propertiesJSONObject.getString("sens")
+                                direction = propertiesJSONObject.getString("sens"),
+                                coordinates = coordinates
                             )
                         )
                     }
@@ -49,7 +88,8 @@ class PathDAO {
                             Path(
                                 id = propertiesJSONObject.getInt("gid"),
                                 name = propertiesJSONObject.getString("libelle"),
-                                direction = propertiesJSONObject.getString("sens")
+                                direction = propertiesJSONObject.getString("sens"),
+                                coordinates = listOf()
                             )
                         )
                     }
