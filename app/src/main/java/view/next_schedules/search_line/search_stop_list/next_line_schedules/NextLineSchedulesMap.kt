@@ -25,10 +25,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
@@ -43,6 +45,7 @@ import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
+import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.launch
 import model.DTO.Line
@@ -59,7 +62,8 @@ fun NextLineSchedulesMap(
     line: Line,
     mapMarkers: List<NSchedulesMapMarker>,
     focusedVehicle: MutableState<Int?>,
-    navController: NavController
+    navController: NavController,
+    pathsCoordinates: SnapshotStateList<List<LatLng>>
 ) {
     val colorScheme = !isSystemInDarkTheme()
     val mapProperties by remember {
@@ -248,6 +252,10 @@ fun NextLineSchedulesMap(
                 state = MarkerState(position = userPosition.value),
                 icon = setCustomMapULocationIcon()
             )
+        }
+
+        pathsCoordinates.forEach { coordinates ->
+            Polyline(points = coordinates, color = colorResource(id = line.lineColorResource))
         }
     }
 }

@@ -72,13 +72,11 @@ fun FavoriteStopDetailMain(
     val pathDirection = remember {
         mutableStateOf("")
     }
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(
-            LatLng(44.838670, -0.578620), 10.8f
-        )
-    }
     val focusedVehicle = remember {
         mutableStateOf<Int?>(null)
+    }
+    val pathsCoordinates = remember {
+        mutableStateListOf<List<LatLng>>()
     }
 
     LaunchedEffect(stopName) {
@@ -123,6 +121,20 @@ fun FavoriteStopDetailMain(
         }
     }
 
+    LaunchedEffect(pathDirection.value) {
+        if(pathDirection.value != "") {
+            Paths.getOrderedPathsByLine(line.id, true) { returnedPaths ->
+                returnedPaths[if (pathDirection.value == "ALLER") 0 else 1].forEach { path ->
+                    pathsCoordinates.addAll(
+                        path.coordinates.map { coordinates ->
+                            coordinates.map { LatLng(it[1], it[0]) }
+                        }
+                    )
+                }
+            }
+        }
+    }
+
     Scaffold(topBar = {
         NextLineSchedulesTopBar(navController, stopId.toString(), stopName.toString(), line)
     }) { padding ->
@@ -144,7 +156,7 @@ fun FavoriteStopDetailMain(
                     .height(30.dp)
                 )
 
-                NextLineSchedulesMap(station.value, line, mapMarkers, focusedVehicle, navController)
+                NextLineSchedulesMap(station.value, line, mapMarkers, focusedVehicle, navController, pathsCoordinates)
 
                 Spacer(modifier = Modifier
                     .height(30.dp)
