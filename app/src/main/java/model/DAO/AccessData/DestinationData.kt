@@ -106,6 +106,7 @@ class DestinationData {
             "Haillan-Rostand" to listOf("LE HAILLAN", "Rostand"),
             "Henri Barbusse" to listOf("MERIGNAC", "Henri Barbusse"),
             "Hippodrome" to listOf("LE BOUSCAT", "Hippodrome"),
+            "Hôp Haut Lévêque" to listOf("PESSAC", "Hôpital Haut Lévêque"),
             "Hôpital Pellegrin" to listOf("BORDEAUX", "Hôpital Pellegrin"),
             "Hôpital Suburbain" to listOf("LE BOUSCAT", "Hôpital Suburbain"),
             "Hop. Pellegrin" to listOf("BORDEAUX", "Hôpital Pellegrin"),

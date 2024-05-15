@@ -79,6 +79,8 @@ class NextSchedulesDestinationData {
             "Grand Parc" to listOf("BORDEAUX", "Grand Parc"),
             //H
             "Hippodrome" to listOf("LE BOUSCAT", "Hippodrome"),
+            "Hopital Haut Leveque" to listOf("PESSAC", "Hôpital Haut Lévêque"),
+            "Hôpital Haut Lévêque" to listOf("PESSAC", "Hôpital Haut Lévêque"),
             "Hopital Pellegrin" to listOf("BORDEAUX", "Hôpital Pellegrin"),
             "Hôpital Pellegrin" to listOf("BORDEAUX", "Hôpital Pellegrin"),
             "Hôpital Suburbain" to listOf("LE BOUSCAT", "Hôpital Surburbain"),
