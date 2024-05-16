@@ -44,6 +44,7 @@ class ServiceDAO {
                                 0
                             else
                                 propertiesJSONObject.getInt("rs_sv_arret_p_actu"),
+                            path = propertiesJSONObject.getInt("rs_sv_chem_l"),
                             timestamp = dateFormat.parse(propertiesJSONObject.getString("mdate")) ?: Date()
                         ))
                     }
@@ -89,6 +90,7 @@ class ServiceDAO {
                                 0
                             else
                                 propertiesJSONObject.getInt("rs_sv_arret_p_actu"),
+                            path = propertiesJSONObject.getInt("rs_sv_chem_l"),
                             timestamp = dateFormat.parse(propertiesJSONObject.getString("mdate")) ?: Date()
                         ))
                     }
@@ -133,6 +135,7 @@ class ServiceDAO {
                                 0
                             else
                                 propertiesJSONObject.getInt("rs_sv_arret_p_actu"),
+                            path = propertiesJSONObject.getInt("rs_sv_chem_l"),
                             timestamp = dateFormat.parse(propertiesJSONObject.getString("mdate")) ?: Date()
                         )
                     )

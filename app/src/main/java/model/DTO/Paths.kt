@@ -47,5 +47,9 @@ class Paths {
                 }
             }
         }
+
+        fun getPath(id: Int, withCoordinates: Boolean, callback: (Path?) -> Unit) {
+            PathDAO.getPath(id, withCoordinates) { callback(it) }
+        }
     }
 }

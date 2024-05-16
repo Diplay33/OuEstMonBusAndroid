@@ -12,6 +12,7 @@ class Service (val id: Int,
                val latitude: Double,
                val longitude: Double,
                val currentStop: Int,
+               val path: Int,
                val timestamp: Date,
                var vehicle: Vehicle = Vehicles.getVehicleById(vehicleId.toString())
 )

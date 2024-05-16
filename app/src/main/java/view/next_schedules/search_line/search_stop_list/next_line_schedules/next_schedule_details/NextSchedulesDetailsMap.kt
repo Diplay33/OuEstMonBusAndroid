@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -27,6 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,8 +41,11 @@ import com.google.maps.android.compose.MapProperties
 import com.google.maps.android.compose.MapUiSettings
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
+import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 import model.DTO.Lines
+import model.DTO.Path
+import model.DTO.Paths
 import model.DTO.Service
 import model.DTO.Station
 import model.DTO.Stations
@@ -77,6 +82,9 @@ fun NextSchedulesDetailsMap(service: Service) {
     val currentStationId = remember {
         mutableIntStateOf(0)
     }
+    val pathCoordinates = remember {
+        mutableStateListOf<List<LatLng>>()
+    }
 
     LaunchedEffect(service) {
         cameraPositionState.position = CameraPosition.fromLatLngZoom(LatLng(service.latitude + 0.0005, service.longitude), 15.5f)
@@ -84,6 +92,16 @@ fun NextSchedulesDetailsMap(service: Service) {
         if(service.currentStop != currentStationId.intValue) {
             Stations.getStationById(service.currentStop.toString()) { station.value = it }
             currentStationId.intValue = service.currentStop
+        }
+
+        Paths.getPath(service.path, true) { returnedPath ->
+            returnedPath?.let { nonNullPath ->
+                pathCoordinates.addAll(
+                    nonNullPath.coordinates.map { coordinates ->
+                        coordinates.map { LatLng(it[1], it[0]) }
+                    }
+                )
+            }
         }
     }
 
@@ -112,6 +130,10 @@ fun NextSchedulesDetailsMap(service: Service) {
                         else -> R.drawable.map_logo_bus
                     })
                 )
+
+                pathCoordinates.forEach { coordinates ->
+                    Polyline(points = coordinates, color = colorResource(id = line.lineColorResource))
+                }
             }
         }
 

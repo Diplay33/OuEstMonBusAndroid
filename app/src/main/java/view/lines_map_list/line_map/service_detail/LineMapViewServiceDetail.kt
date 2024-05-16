@@ -39,6 +39,7 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>) {
         latitude = 0.0,
         longitude = 0.0,
         currentStop = 0,
+        path = 0,
         timestamp = Date()
     )
     val line = Lines.getLine(service.lineId.toString())
