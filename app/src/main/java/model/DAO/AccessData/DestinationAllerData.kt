@@ -23,6 +23,11 @@ class DestinationAllerData {
                 listOf("EYSINES", "Cantinolle"),
                 listOf("EYSINES", "Hippodrome")
             ),
+            //Bus Express G
+            199 to listOf(
+                listOf("SAINT AUBIN", "Villepreux"),
+                listOf("SAINT MÉDARD EN JALLES", "Issac")
+            ),
             //Lianes 1
             1 to listOf(listOf("MERIGNAC", "Beaudésert")),
             //Lianes 2
