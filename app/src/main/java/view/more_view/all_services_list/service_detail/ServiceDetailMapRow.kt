@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -23,12 +24,20 @@ import androidx.core.content.ContextCompat
 import com.diplay.ouestmonbus.R
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.compose.*
+import model.DTO.Line
+import model.DTO.Paths
 import model.DTO.Station
 import model.DTO.Stations
 import view.lines_map_list.line_map.MapStyle
 
 @Composable
-fun ServiceDetailMapRow(lineName: String, stationId: String, latitude: Double, longitude: Double) {
+fun ServiceDetailMapRow(
+    line: Line,
+    stationId: String,
+    latitude: Double,
+    longitude: Double,
+    pathId: String?
+) {
     val colorScheme = !isSystemInDarkTheme()
     val cameraPositionState = rememberCameraPositionState {
         position = CameraPosition.fromLatLngZoom(LatLng(latitude + 0.0005, longitude), 15.5f)
@@ -52,14 +61,27 @@ fun ServiceDetailMapRow(lineName: String, stationId: String, latitude: Double, l
             rotationGesturesEnabled = false
         ))
     }
+    val pathCoordinates = remember {
+        mutableStateListOf<List<LatLng>>()
+    }
 
-    LaunchedEffect(lineName) {
+    LaunchedEffect(line.lineName) {
         if(stationId == "") {
             station.value = Station(0, "", "Arrêt inconnu",  0.0, 0.0)
         }
         else {
             Stations.getStationById(stationId) { returnedStation ->
                 station.value = returnedStation
+            }
+        }
+
+        Paths.getPath(pathId?.toInt() ?: 0, true) { returnedPath ->
+            returnedPath?.let { nonNullPath ->
+                pathCoordinates.addAll(
+                    nonNullPath.coordinates.map { coordinates ->
+                        coordinates.map { LatLng(it[1], it[0]) }
+                    }
+                )
             }
         }
     }
@@ -80,7 +102,7 @@ fun ServiceDetailMapRow(lineName: String, stationId: String, latitude: Double, l
             ) {
                 Marker(
                     state = MarkerState(position = LatLng(latitude, longitude)),
-                    icon = bitmapDescriptor(LocalContext.current, when(lineName) {
+                    icon = bitmapDescriptor(LocalContext.current, when(line.lineName) {
                         "Tram A" -> R.drawable.map_logo_tram
                         "Tram B" -> R.drawable.map_logo_tram
                         "Tram C" -> R.drawable.map_logo_tram
@@ -89,6 +111,10 @@ fun ServiceDetailMapRow(lineName: String, stationId: String, latitude: Double, l
                         else -> R.drawable.map_logo_bus
                     })
                 )
+
+                pathCoordinates.forEach { coordinates ->
+                    Polyline(points = coordinates, color = colorResource(id = line.lineColorResource))
+                }
             }
         }
 

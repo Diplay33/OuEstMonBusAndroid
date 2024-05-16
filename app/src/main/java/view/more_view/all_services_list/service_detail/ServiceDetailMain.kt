@@ -26,7 +26,8 @@ fun ServiceDetailMain(
     longitude: String?,
     currentSpeed: String?,
     state: String?,
-    stateTime: String?
+    stateTime: String?,
+    pathId: String?
 ) {
     val line = Lines.getLine(lineId)
     val vehicle = Vehicles.getVehicleById(vehicleId ?: "")
@@ -61,10 +62,11 @@ fun ServiceDetailMain(
             )
 
             ServiceDetailMapRow(
-                lineName = line.lineName,
+                line = line,
                 stationId = stationId ?: "",
                 latitude = latitude?.toDouble() ?: 0.0,
-                longitude = longitude?.toDouble() ?: 0.0
+                longitude = longitude?.toDouble() ?: 0.0,
+                pathId = pathId
             )
 
             Spacer(modifier = Modifier

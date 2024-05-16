@@ -59,7 +59,8 @@ fun AllServicesListRow(service: Service, navController: NavController) {
                     service.currentStop.toString(),
                     service.currentSpeed.toString(),
                     service.state,
-                    service.stateTime.toString()
+                    service.stateTime.toString(),
+                    service.path.toString()
                 ))
             }
         ) {
