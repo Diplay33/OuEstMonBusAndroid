@@ -110,7 +110,7 @@ class DestinationRetourData {
             //Ligne 61
             89 to listOf(listOf("BORDEAUX", "Jardin Botanique")),
             //Ligne 64
-            49 to listOf(listOf("ARTIGUES PRÈS BORDEAUX", "Le Poteau")),
+            49 to listOf(listOf("LORMONT", "Buttinière")),
             //Ligne 65
             92 to listOf(listOf("BORDEAUX", "Stalingrad")),
             //Ligne 66

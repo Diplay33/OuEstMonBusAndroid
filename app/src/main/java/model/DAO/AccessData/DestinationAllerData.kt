@@ -121,7 +121,7 @@ class DestinationAllerData {
             //Ligne 61
             89 to listOf(listOf("AMBÈS", "Escarraguel")),
             //Ligne 64
-            49 to listOf(listOf("LORMONT", "Buttinière")),
+            49 to listOf(listOf("ARTIGUES PRÈS BORDEAUX", "Fontderode")),
             //Ligne 65
             92 to listOf(listOf("ARTIGUES PRÈS BORDEAUX", "Tout Y Faut")),
             //Ligne 66
