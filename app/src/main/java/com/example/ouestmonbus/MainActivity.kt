@@ -29,7 +29,11 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.diplay.ouestmonbus.ui.theme.OùEstMonBusTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import model.DTO.LineR
+import model.DTO.LinesR
 import model.preferences_data_store.StoreDisplayNotifCountParam
 import model.preferences_data_store.StoreFirstLaunch
 import view.BottomNavigationBar
@@ -83,6 +87,24 @@ class MainActivity : ComponentActivity() {
             else{
                 systemUiController.setSystemBarsColor(
                     color = Color(0xff18191A)
+                )
+            }
+
+            CoroutineScope(Dispatchers.IO).launch {
+                LinesR.addLineR(
+                    LineR(
+                        network = "tbm",
+                        id = 59,
+                        name = "Tram A",
+                        type = "Tram A",
+                        section = 0,
+                        physicalType = "tram",
+                        imageUrl = "",
+                        colorHex = "#831F82",
+                        isNest = false,
+                        showSchedules = true,
+                        createdAt = ""
+                    )
                 )
             }
 
