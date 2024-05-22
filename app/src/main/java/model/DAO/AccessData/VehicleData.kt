@@ -771,7 +771,7 @@ class VehicleData {
             mapOf("id" to "", "parkId" to "0003", "brand" to "MAN", "model" to "MAN Lion's City 12G EfficientHybrid", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
             mapOf("id" to "", "parkId" to "0004", "brand" to "MAN", "model" to "MAN Lion's City 12G EfficientHybrid", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
             mapOf("id" to "80005", "parkId" to "0005", "brand" to "MAN", "model" to "MAN Lion's City 12G EfficientHybrid", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
-            mapOf("id" to "", "parkId" to "0006", "brand" to "MAN", "model" to "MAN Lion's City 12G EfficientHybrid", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "80006", "parkId" to "0006", "brand" to "MAN", "model" to "MAN Lion's City 12G EfficientHybrid", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
             mapOf("id" to "", "parkId" to "0007", "brand" to "MAN", "model" to "MAN Lion's City 12G EfficientHybrid", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
             mapOf("id" to "80008", "parkId" to "0008", "brand" to "MAN", "model" to "MAN Lion's City 12G EfficientHybrid", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
 
