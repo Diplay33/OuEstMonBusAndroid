@@ -709,6 +709,7 @@ class VehicleData {
             mapOf("id" to "99042", "parkId" to "249042", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde"),
             mapOf("id" to "99043", "parkId" to "249043", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde"),
             mapOf("id" to "99045", "parkId" to "249045", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde"),
+            mapOf("id" to "99047", "parkId" to "249047", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde"),
             mapOf("id" to "99048", "parkId" to "249048", "brand" to "MercedesBenz", "model" to "MercedesBenz Citaro C2 HYB", "type" to "BUS", "operator" to "Keolis Gironde"),
 
             //MercedesBenz Citaro K C2 HYB
@@ -772,7 +773,7 @@ class VehicleData {
             mapOf("id" to "", "parkId" to "0004", "brand" to "MAN", "model" to "MAN Lion's City 12G EfficientHybrid", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
             mapOf("id" to "80005", "parkId" to "0005", "brand" to "MAN", "model" to "MAN Lion's City 12G EfficientHybrid", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
             mapOf("id" to "80006", "parkId" to "0006", "brand" to "MAN", "model" to "MAN Lion's City 12G EfficientHybrid", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
-            mapOf("id" to "", "parkId" to "0007", "brand" to "MAN", "model" to "MAN Lion's City 12G EfficientHybrid", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "80007", "parkId" to "0007", "brand" to "MAN", "model" to "MAN Lion's City 12G EfficientHybrid", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
             mapOf("id" to "80008", "parkId" to "0008", "brand" to "MAN", "model" to "MAN Lion's City 12G EfficientHybrid", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
 
 
