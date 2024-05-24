@@ -26,8 +26,6 @@ class DestinationRetourData {
             1 to listOf(listOf("BORDEAUX", "République")),
             //Lianes 2
             2 to listOf(listOf("BORDEAUX", "Quinconces")),
-            //Lianes 3
-            3 to listOf(listOf("BORDEAUX", "Quinconces")),
             //Lianes 4
             4 to listOf(listOf("BORDEAUX", "Palais de Justice")),
             //Lianes 5
