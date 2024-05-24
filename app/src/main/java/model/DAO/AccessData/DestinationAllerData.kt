@@ -32,11 +32,6 @@ class DestinationAllerData {
             1 to listOf(listOf("MERIGNAC", "Beaudésert")),
             //Lianes 2
             2 to listOf(listOf("LE TAILLAN", "La Boétie")),
-            //Lianes 3
-            3 to listOf(
-                listOf("SAINT MÉDARD EN JALLES", "Issac"),
-                listOf("SAINT AUBIN", "Villepreux")
-            ),
             //Lianes 4
             4 to listOf(listOf("PESSAC", "Cap de Bos")),
             //Lianes 5
