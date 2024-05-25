@@ -8,6 +8,7 @@ data class LineR (
     var id: Int,
     var name: String,
     var type: String,
+    var index: Int,
     var section: Int,
     var physicalType: String,
     var imageUrl: String,

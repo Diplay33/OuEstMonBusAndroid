@@ -91,21 +91,22 @@ class MainActivity : ComponentActivity() {
             }
 
             CoroutineScope(Dispatchers.IO).launch {
-                LinesR.addLineR(
+                /*LinesR.addLineR(
                     LineR(
                         network = "tbm",
-                        id = 59,
-                        name = "Tram A",
-                        type = "Tram A",
-                        section = 0,
-                        physicalType = "tram",
+                        id = 117,
+                        name = "Navette Stade",
+                        type = "Navette Stade",
+                        index = 75,
+                        section = 8,
+                        physicalType = "bus",
                         imageUrl = "",
-                        colorHex = "#831F82",
+                        colorHex = "#E01443",
                         isNest = false,
                         showSchedules = true,
                         createdAt = ""
                     )
-                )
+                )*/
             }
 
             Scaffold(bottomBar = { BottomNavigationBar(navController, bottomNavigationItems) } ) {
