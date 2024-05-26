@@ -78,6 +78,9 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
                 searchText.value = state.query.text
                 index.value = 0
                 linesByGroup.addAll(Lines.getLinesByGroup(context))
+                LinesR.getAllLinesBySection(context) { lines ->
+                    lines.forEach { println("HAA" + it) }
+                }
                 ProgrammedMessages.getAllProgrammedMessages { values ->
                     programmedMessages.clear()
                     programmedMessages.addAll(values)

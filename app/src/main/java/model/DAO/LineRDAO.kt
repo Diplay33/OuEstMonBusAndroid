@@ -10,7 +10,7 @@ import model.DTO.LineR
 @Dao
 interface LineRDAO {
     @Query("SELECT * FROM LineR")
-    fun getAllLinesR(): LiveData<List<LineR>>
+    fun getAllLinesR(): List<LineR>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun addLineR(lineR: LineR)
