@@ -1,6 +1,5 @@
 package view.lines_map_list
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -21,13 +20,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import model.DTO.*
@@ -38,8 +38,8 @@ import view.Screens.CartesScreens
 
 @Composable
 fun LinesMapListRow(
-    rowLine: Line,
-    linesByGroup: SnapshotStateList<ArrayList<Line>>,
+    rowLine: LineR,
+    linesByGroup: SnapshotStateList<List<LineR>>,
     navController: NavController,
     services: MutableList<Service>,
     isLoading: MutableState<Boolean>,
@@ -85,7 +85,7 @@ fun LinesMapListRow(
             shape = RoundedCornerShape(10.dp)
         )
         .background(
-            colorResource(id = rowLine.lineColorResource).copy(alpha = 0.2f),
+            Color(android.graphics.Color.parseColor(rowLine.colorHex)).copy(alpha = 0.2f),
             shape = RoundedCornerShape(10.dp)
         )
         .fillMaxWidth()
@@ -99,7 +99,11 @@ fun LinesMapListRow(
                         navController.navigate(CartesScreens.HelloWorld.withArgs(rowLine.id.toString()))
                     }
                     else {
-                        navController.navigate(CartesScreens.HelloWorld.withArgs(Lines.getLinesBySearchText(text = searchText.value)[index].id.toString()))
+                        LinesR.getLinesBySearchText(searchText.value) {
+                            scope.launch {
+                                navController.navigate(CartesScreens.HelloWorld.withArgs(it[index].id.toString()))
+                            }
+                        }
                     }
                 }
             )
@@ -108,16 +112,22 @@ fun LinesMapListRow(
         Row(modifier = Modifier
             .padding(start = 15.dp)
         ) {
-            Image(painterResource(id = rowLine.lineImageResource), contentDescription = null, modifier = Modifier
-                .size(70.dp)
-                .padding(vertical = 4.dp)
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(rowLine.imageUrl)
+                    .decoderFactory(SvgDecoder.Factory())
+                    .build(),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(70.dp)
+                    .padding(vertical = 4.dp)
             )
 
             Column(modifier = Modifier
                 .align(Alignment.CenterVertically)
             ) {
                 Text(
-                    text = rowLine.lineName,
+                    text = rowLine.name,
                     fontWeight = FontWeight.Bold,
                     fontSize = 23.sp,
                     color = if (colorScheme) Color.Black else Color.White,
@@ -206,8 +216,10 @@ fun LinesMapListRow(
                 DropdownMenuItem(onClick = {
                     scope.launch {
                         storeFavLines.removeFromFavorites(rowLine.id.toString())
-                        linesByGroup.clear()
-                        linesByGroup.addAll(Lines.getLinesByGroup(context))
+                        LinesR.getAllLinesBySection(context) {
+                            linesByGroup.clear()
+                            linesByGroup.addAll(it)
+                        }
                     }
                     menuShown.value = false
                 }) {
@@ -237,8 +249,10 @@ fun LinesMapListRow(
                 DropdownMenuItem(onClick = {
                     scope.launch {
                         storeFavLines.saveFavoriteLine(rowLine.id.toString())
-                        linesByGroup.clear()
-                        linesByGroup.addAll(Lines.getLinesByGroup(context))
+                        LinesR.getAllLinesBySection(context) {
+                            linesByGroup.clear()
+                            linesByGroup.addAll(it)
+                        }
                     }
                     menuShown.value = false
                 }) {

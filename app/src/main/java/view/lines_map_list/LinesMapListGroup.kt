@@ -14,14 +14,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import model.DTO.Line
+import model.DTO.LineR
 import model.DTO.ProgrammedMessage
 import model.DTO.Service
 
 @Composable
 fun LinesMapListGroup(
-    lines: ArrayList<Line>,
+    lines: List<LineR>,
     isFavorite: Boolean,
-    linesByGroup: SnapshotStateList<ArrayList<Line>>,
+    linesByGroup: SnapshotStateList<List<LineR>>,
     navController: NavController,
     services: MutableList<Service>,
     isLoading: MutableState<Boolean>,

@@ -90,25 +90,6 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
-            CoroutineScope(Dispatchers.IO).launch {
-                /*LinesR.addLineR(
-                    LineR(
-                        network = "tbm",
-                        id = 117,
-                        name = "Navette Stade",
-                        type = "Navette Stade",
-                        index = 75,
-                        section = 8,
-                        physicalType = "bus",
-                        imageUrl = "",
-                        colorHex = "#E01443",
-                        isNest = false,
-                        showSchedules = true,
-                        createdAt = ""
-                    )
-                )*/
-            }
-
             Scaffold(bottomBar = { BottomNavigationBar(navController, bottomNavigationItems) } ) {
                 NavHost(
                     navController = navController,

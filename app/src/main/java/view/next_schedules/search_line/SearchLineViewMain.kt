@@ -22,6 +22,7 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import model.DTO.Line
 import model.DTO.Lines
+import model.DTO.LinesR
 import model.DTO.Service
 import model.DTO.Services
 import view.lines_map_list.LinesMapListSearchBar
@@ -74,7 +75,9 @@ fun SearchLineViewMain(
 
                 state.searching = true
                 delay(100)
-                state.searchResults = Lines.getLinesBySearchText(state.query.text, true)
+                LinesR.getLinesBySearchText(state.query.text) {
+                    state.searchResults = it
+                }
                 state.searching = false
             }
 
@@ -115,7 +118,7 @@ fun SearchLineViewMain(
                         items(state.searchResults) { line ->
                             SearchLineViewRow(
                                 linesByGroup = linesByGroup,
-                                line = line,
+                                line = Lines.getLine(line.id.toString()),
                                 navController = navController,
                                 isLineInService = if (areServicesLoading.value)
                                     null

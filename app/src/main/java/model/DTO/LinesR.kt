@@ -11,11 +11,13 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import model.preferences_data_store.StoreFavoriteLines
+import java.text.Normalizer
 
 class LinesR {
     companion object {
         val lineRDAO = MainApplication.appDatabase.getLineRDAO()
 
+        //MARK: - Multiple
         fun getAllLines(): List<LineR> {
             return lineRDAO.getAllLinesR()
         }
@@ -44,6 +46,22 @@ class LinesR {
                 callback(linesBySection)
             }
         }
+
+        fun getLinesBySearchText(searchText: String, callback: (List<LineR>) -> Unit) {
+            CoroutineScope(Dispatchers.IO).launch {
+                val REGEX_UNACCENT = "\\p{InCombiningDiacriticalMarks}+".toRegex()
+                fun CharSequence.unaccent(): String {
+                    val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
+                    return REGEX_UNACCENT.replace(temp, "")
+                }
+
+                callback(lineRDAO.getAllLinesR().filter { line ->
+                    line.name.lowercase().unaccent().contains(searchText.trim().lowercase().unaccent())
+                })
+            }
+        }
+
+        //MARK: - Single
 
         //TO REMOVE
         fun addLineR(lineR: LineR) {

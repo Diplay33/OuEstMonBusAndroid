@@ -6,8 +6,6 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -26,8 +24,8 @@ import model.DTO.*
 @Composable
 fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), navController: NavController) {
     val context = LocalContext.current
-    val linesByGroup = remember {
-        mutableStateListOf<ArrayList<Line>>()
+    val linesBySection = remember {
+        mutableStateListOf<List<LineR>>()
     }
     val colorScheme = !isSystemInDarkTheme()
     val allServices = remember {
@@ -77,9 +75,8 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
             LaunchedEffect(state.query.text) {
                 searchText.value = state.query.text
                 index.value = 0
-                linesByGroup.addAll(Lines.getLinesByGroup(context))
                 LinesR.getAllLinesBySection(context) { lines ->
-                    lines.forEach { println("HAA" + it) }
+                    linesBySection.addAll(lines)
                 }
                 ProgrammedMessages.getAllProgrammedMessages { values ->
                     programmedMessages.clear()
@@ -87,7 +84,9 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
                 }
                 state.searching = true
                 delay(100)
-                state.searchResults = Lines.getLinesBySearchText(state.query.text)
+                LinesR.getLinesBySearchText(state.query.text) {
+                    state.searchResults = it
+                }
                 state.searching = false
             }
 
@@ -96,11 +95,11 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
                     LazyColumn(modifier = Modifier
                         .background(if (colorScheme) Color.White else Color.Black)
                     ) {
-                        items(linesByGroup.size) { index ->
+                        items(linesBySection.size) { index ->
                             LinesMapListGroup(
-                                lines = linesByGroup[index],
-                                isFavorite = linesByGroup[0].containsAll(linesByGroup[index]) && linesByGroup[0].isNotEmpty(),
-                                linesByGroup = linesByGroup,
+                                lines = linesBySection[index],
+                                isFavorite = linesBySection[0].containsAll(linesBySection[index]) && linesBySection[0].isNotEmpty(),
+                                linesByGroup = linesBySection,
                                 navController = navController,
                                 services = allServices,
                                 isLoading = isLoading,
@@ -135,7 +134,7 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
                         items(state.searchResults) { line ->
                             LinesMapListRow(
                                 rowLine = line,
-                                linesByGroup = linesByGroup,
+                                linesByGroup = linesBySection,
                                 navController = navController,
                                 services = allServices,
                                 isLoading = isLoading,
