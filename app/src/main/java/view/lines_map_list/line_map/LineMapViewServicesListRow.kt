@@ -10,7 +10,10 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,7 +25,9 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.CameraPositionState
 import model.DTO.Destinations
+import model.DTO.LineR
 import model.DTO.Lines
+import model.DTO.LinesR
 import model.DTO.Service
 
 @Composable
@@ -31,9 +36,15 @@ fun LineMapViewServicesListRow(
     selectedService: MutableState<Service?>,
     cameraPositionState: CameraPositionState,
 ) {
-    val line = Lines.getLine(service.lineId.toString())
+    val line = remember {
+        mutableStateOf<LineR?>(null)
+    }
     val destination = Destinations.getDestinationFromRaw(service.destination, service.lineId)
     val colorScheme = !isSystemInDarkTheme()
+
+    LaunchedEffect(service) {
+        LinesR.getLine(service.lineId) { line.value = it }
+    }
 
     Row(modifier = Modifier
         .padding(horizontal = 15.dp)
@@ -46,7 +57,10 @@ fun LineMapViewServicesListRow(
                 shape = RoundedCornerShape(10.dp)
             )
             .background(
-                color = colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+                color = if (line.value == null)
+                    Color.Transparent
+                else
+                    Color(android.graphics.Color.parseColor(line.value?.colorHex)).copy(alpha = 0.2f),
                 shape = RoundedCornerShape(10.dp)
             )
             .padding(horizontal = 15.dp)

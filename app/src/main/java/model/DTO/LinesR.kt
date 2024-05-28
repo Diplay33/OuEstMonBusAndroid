@@ -62,6 +62,28 @@ class LinesR {
         }
 
         //MARK: - Single
+        fun getLine(id: Int, callback: (LineR) -> Unit) {
+            CoroutineScope(Dispatchers.IO).launch {
+                callback(lineRDAO.getLine(id) ?: getEmptyLine())
+            }
+        }
+
+        fun getEmptyLine(): LineR {
+            return LineR(
+                network = "",
+                id = 0,
+                name = "Ligne inconnue",
+                type = "",
+                index = 0,
+                section = 0,
+                physicalType = "",
+                imageUrl = "",
+                colorHex = "#FFFFFF",
+                isNest = false,
+                showSchedules = false,
+                createdAt = ""
+            )
+        }
 
         //TO REMOVE
         fun addLineR(lineR: LineR) {

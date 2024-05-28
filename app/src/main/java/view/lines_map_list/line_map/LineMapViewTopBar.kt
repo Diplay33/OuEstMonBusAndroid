@@ -34,11 +34,12 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.CameraPositionState
 import model.DTO.Line
+import model.DTO.LineR
 
 @Composable
 fun LineMapViewTopBar(
     navController: NavController,
-    line: Line,
+    line: LineR?,
     isUserLocationShown: MutableState<Boolean>,
     cameraPositionState: CameraPositionState,
     userPosition: MutableState<LatLng>
@@ -137,14 +138,17 @@ fun LineMapViewTopBar(
             )
 
             Text(
-                text = line.lineName,
+                text = line?.name ?: "",
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
                 color = Color.White,
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
                     .background(
-                        color = colorResource(id = line.lineColorResource),
+                        color = if (line == null)
+                            Color.Transparent
+                        else
+                            Color(android.graphics.Color.parseColor(line.colorHex)),
                         shape = RoundedCornerShape(10.dp)
                     )
                     .padding(7.dp)

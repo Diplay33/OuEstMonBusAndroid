@@ -20,7 +20,9 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.delay
+import model.DTO.LineR
 import model.DTO.Lines
+import model.DTO.LinesR
 import model.DTO.Path
 import model.DTO.Paths
 import model.DTO.ProgrammedMessages
@@ -31,7 +33,9 @@ import java.util.*
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun LineMapViewMain(navController: NavController, lineId: String?) {
-    val line = Lines.getLine(lineId)
+    val line = remember {
+        mutableStateOf<LineR?>(null)
+    }
     val services = remember {
         mutableStateListOf<Service>()
     }
@@ -71,7 +75,7 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
                 isLoading = isLoading.value,
                 refreshDate = refreshDate.value,
                 selectedService = selectedService,
-                line = line,
+                line = line.value,
                 cameraPositionState = cameraPositionState
             )
         },
@@ -86,11 +90,12 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
         ),
         backgroundColor = if (colorScheme) Color.White else Color.Black
     ) { padding ->
-        LaunchedEffect(line) {
-            ProgrammedMessages.getNumberOfMessagesByLine(line.id.toString()) { count ->
+        LaunchedEffect(lineId) {
+            LinesR.getLine((lineId ?: "0").toInt()) { line.value = it }
+            ProgrammedMessages.getNumberOfMessagesByLine(line.value?.id.toString()) { count ->
                 programmedMessagesCount.value = count
             }
-            Paths.getOrderedPathsByLine(line.id, true) { paths ->
+            Paths.getOrderedPathsByLine(line.value?.id ?: 0, true) { paths ->
                 paths.forEach { backAndForthPaths ->
                     backAndForthPaths.forEach { path ->
                         pathsCoordinates.addAll(
@@ -112,7 +117,7 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
                     }
                 }
                 else {
-                    Services.getServicesByLine(line.id) { returnedServices ->
+                    Services.getServicesByLine(line.value?.id ?: 0) { returnedServices ->
                         services.clear()
                         services.addAll(returnedServices)
                         isLoading.value = false
@@ -128,7 +133,7 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
         ) {
             LineMapView(
                 services = services,
-                line = line,
+                line = line.value,
                 selectedService = selectedService,
                 cameraPositionState = cameraPositionState,
                 isUserLocationShown = isUserLocationShown.value,
@@ -136,7 +141,7 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
                 pathsCoordinates = pathsCoordinates
             )
 
-            LineMapViewTopBar(navController, line, isUserLocationShown, cameraPositionState, userPosition)
+            LineMapViewTopBar(navController, line.value, isUserLocationShown, cameraPositionState, userPosition)
         }
     }
 }

@@ -21,11 +21,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import model.DTO.Line
+import model.DTO.LineR
 import model.DTO.ProgrammedMessage
 import model.DTO.ProgrammedMessages
 
 @Composable
-fun LineMapViewProgrammedMessagesViewMain(line: Line, areMessagesDisplayed: MutableState<Boolean>) {
+fun LineMapViewProgrammedMessagesViewMain(line: LineR?, areMessagesDisplayed: MutableState<Boolean>) {
     val programmedMessages = remember {
         mutableStateListOf<ProgrammedMessage>()
     }
@@ -35,7 +36,7 @@ fun LineMapViewProgrammedMessagesViewMain(line: Line, areMessagesDisplayed: Muta
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(line) {
-        ProgrammedMessages.getProgrammedMessagesByLine(line.id.toString()) {
+        ProgrammedMessages.getProgrammedMessagesByLine(line?.id.toString()) {
             programmedMessages.clear()
             programmedMessages.addAll(it)
             areMessagesLoaded.value = true
@@ -46,9 +47,9 @@ fun LineMapViewProgrammedMessagesViewMain(line: Line, areMessagesDisplayed: Muta
         .fillMaxWidth()
     ) {
         Text(
-            text = "Messages " + when(line.lineName) {
-                "BatCUB", "Tram A", "Tram B", "Tram C", "Tram D" -> "du ${line.lineName}"
-                else -> "de la ${line.lineName}"
+            text = "Messages " + when(line?.name) {
+                "BatCUB", "Tram A", "Tram B", "Tram C", "Tram D" -> "du ${line.name}"
+                else -> "de la ${line?.name}"
             },
             fontSize = 25.sp,
             color = if (colorScheme) Color.Black else Color.White,

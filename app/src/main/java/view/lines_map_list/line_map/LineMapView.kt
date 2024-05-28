@@ -22,12 +22,13 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.compose.*
 import model.DTO.Line
+import model.DTO.LineR
 import model.DTO.Service
 
 @Composable
 fun LineMapView(
     services: SnapshotStateList<Service>,
-    line: Line,
+    line: LineR?,
     selectedService: MutableState<Service?>,
     cameraPositionState: CameraPositionState,
     isUserLocationShown: Boolean,
@@ -53,7 +54,7 @@ fun LineMapView(
         services.forEach { service ->
             Marker(
                 state = MarkerState(position = LatLng(service.latitude, service.longitude)),
-                icon = setCustomMapServiceIcon(service.vehicle.parkId, colorScheme, LocalContext.current, vectorResId = when(line.lineName) {
+                icon = setCustomMapServiceIcon(service.vehicle.parkId, colorScheme, LocalContext.current, vectorResId = when(line?.name) {
                     "Tram A" -> R.drawable.map_logo_tram
                     "Tram B" -> R.drawable.map_logo_tram
                     "Tram C" -> R.drawable.map_logo_tram
@@ -79,7 +80,13 @@ fun LineMapView(
         }
 
         pathsCoordinates.forEach { coordinates ->
-            Polyline(points = coordinates, color = colorResource(id = line.lineColorResource))
+            Polyline(
+                points = coordinates,
+                color = if (line != null)
+                    androidx.compose.ui.graphics.Color(Color.parseColor(line.colorHex))
+                else
+                    androidx.compose.ui.graphics.Color.Transparent
+            )
         }
     }
 }
