@@ -27,12 +27,13 @@ import androidx.compose.ui.unit.sp
 import com.diplay.ouestmonbus.R
 import kotlinx.coroutines.delay
 import model.DTO.Line
+import model.DTO.LineR
 import model.DTO.NextSchedule
 import model.DTO.NextSchedulesDestinations
 
 @Composable
 fun NextSchedulesHomeFavoriteView(
-    line: Line,
+    line: LineR,
     nextSchedules: List<NextSchedule>,
     isLoading: Boolean
 ) {
@@ -65,7 +66,7 @@ fun NextSchedulesHomeFavoriteView(
             shape = RoundedCornerShape(10.dp)
         )
         .background(
-            colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+            Color(android.graphics.Color.parseColor(line.colorHex)).copy(alpha = 0.2f),
             shape = RoundedCornerShape(10.dp)
         )
     ) {
@@ -152,7 +153,7 @@ fun NextSchedulesHomeFavoriteView(
                                 .align(Alignment.CenterVertically)
                                 .size(35.dp)
                                 .background(
-                                    colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+                                    Color(android.graphics.Color.parseColor(line.colorHex)).copy(alpha = 0.2f),
                                     shape = RoundedCornerShape(10.dp)
                                 )
                             ) {

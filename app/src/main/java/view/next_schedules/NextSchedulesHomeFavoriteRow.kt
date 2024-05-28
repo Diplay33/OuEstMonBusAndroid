@@ -27,6 +27,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import model.DTO.*
@@ -38,7 +41,7 @@ import view.next_schedules.search_line.search_stop_list.next_line_schedules.Next
 fun NextSchedulesHomeFavoriteRow(
     navController: NavController,
     station: Station,
-    lines: List<Line>,
+    lines: List<LineR>,
     favoriteStopsSet: MutableList<Station>
 ) {
     val nextSchedules = remember {
@@ -105,7 +108,8 @@ fun NextSchedulesHomeFavoriteRow(
                             shape = RoundedCornerShape(10.dp)
                         )
                         .background(
-                            colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+                            Color(android.graphics.Color.parseColor(line.colorHex))
+                                .copy(alpha = 0.2f),
                             shape = RoundedCornerShape(10.dp)
                         )
                     ) {
@@ -114,8 +118,11 @@ fun NextSchedulesHomeFavoriteRow(
                             .padding(horizontal = 15.dp)
                         ) {
                             Row {
-                                Image(
-                                    painter = painterResource(id = line.lineImageResource),
+                                AsyncImage(
+                                    model = ImageRequest.Builder(LocalContext.current)
+                                        .data(line.imageUrl)
+                                        .decoderFactory(SvgDecoder.Factory())
+                                        .build(),
                                     contentDescription = null,
                                     modifier = Modifier
                                         .size(40.dp)
@@ -126,7 +133,7 @@ fun NextSchedulesHomeFavoriteRow(
                                 )
 
                                 Text(
-                                    text = line.lineName,
+                                    text = line.name,
                                     fontSize = 18.sp,
                                     fontWeight = FontWeight.Bold,
                                     color = if (colorScheme) Color.Black else Color.White,
@@ -157,7 +164,8 @@ fun NextSchedulesHomeFavoriteRow(
                         Row(modifier = Modifier
                             .fillMaxWidth()
                             .background(
-                                colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+                                Color(android.graphics.Color.parseColor(line.colorHex))
+                                    .copy(alpha = 0.2f),
                                 shape = RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp)
                             )
                         ) {

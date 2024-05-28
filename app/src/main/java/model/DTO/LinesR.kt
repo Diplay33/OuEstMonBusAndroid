@@ -18,8 +18,10 @@ class LinesR {
         val lineRDAO = MainApplication.appDatabase.getLineRDAO()
 
         //MARK: - Multiple
-        fun getAllLines(): List<LineR> {
-            return lineRDAO.getAllLinesR()
+        fun getAllLines(callback: (List<LineR>) -> Unit) {
+            CoroutineScope(Dispatchers.IO).launch {
+                callback(lineRDAO.getAllLinesR())
+            }
         }
 
         fun getAllLinesBySection(context: Context, callback: (List<List<LineR>>) -> Unit) {

@@ -14,7 +14,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
+import model.DTO.LineR
 import model.DTO.Lines
+import model.DTO.LinesR
 import model.DTO.Station
 import model.DTO.Stations
 import model.preferences_data_store.StoreFavoriteStopsWithLine
@@ -33,20 +35,26 @@ fun NextSchedulesHomeViewFavoritesGroup(navController: NavController) {
     val isLoading = remember {
         mutableStateOf(false)
     }
+    val lines = remember {
+        mutableStateListOf<LineR>()
+    }
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect("a") {
         favoriteStopsSet.clear()
 
-        Lines.getAllLines().forEach { line ->
-            scope.launch {
-                storeFavStopsWithLine.getFavoriteStopsForLine(line.id.toString()) { set ->
-                    favoriteStopsWithLine[line.id.toString()] = set.toList()
-                    set.forEach { stationId ->
-                        isLoading.value = true
-                        Stations.getStationByStationId(stationId) { station ->
-                            favoriteStopsSet.add(station)
-                            isLoading.value = false
+        LinesR.getAllLines { allLines ->
+            lines.addAll(allLines)
+            allLines.forEach { line ->
+                scope.launch {
+                    storeFavStopsWithLine.getFavoriteStopsForLine(line.id.toString()) { set ->
+                        favoriteStopsWithLine[line.id.toString()] = set.toList()
+                        set.forEach { stationId ->
+                            isLoading.value = true
+                            Stations.getStationByStationId(stationId) { station ->
+                                favoriteStopsSet.add(station)
+                                isLoading.value = false
+                            }
                         }
                     }
                 }
@@ -86,7 +94,7 @@ fun NextSchedulesHomeViewFavoritesGroup(navController: NavController) {
                         NextSchedulesHomeFavoriteRow(
                             navController = navController,
                             station = station,
-                            lines = Lines.getAllLines().filter { line ->
+                            lines = lines.filter { line ->
                                 favoriteStopsWithLine[line.id.toString()]?.contains(station.stationId) ?: false
                             },
                             favoriteStopsSet = favoriteStopsSet
