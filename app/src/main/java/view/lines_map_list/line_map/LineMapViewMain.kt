@@ -14,8 +14,8 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.delay
-import model.DTO.LineR
-import model.DTO.LinesR
+import model.DTO.Line
+import model.DTO.Lines
 import model.DTO.Paths
 import model.DTO.ProgrammedMessages
 import model.DTO.Service
@@ -26,7 +26,7 @@ import java.util.*
 @Composable
 fun LineMapViewMain(navController: NavController, lineId: String?) {
     val line = remember {
-        mutableStateOf<LineR?>(null)
+        mutableStateOf<Line?>(null)
     }
     val services = remember {
         mutableStateListOf<Service>()
@@ -83,7 +83,7 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
         backgroundColor = if (colorScheme) Color.White else Color.Black
     ) { padding ->
         LaunchedEffect(lineId) {
-            LinesR.getLine((lineId ?: "0").toInt()) { line.value = it }
+            Lines.getLine((lineId ?: "0").toInt()) { line.value = it }
             ProgrammedMessages.getNumberOfMessagesByLine(line.value?.id.toString()) { count ->
                 programmedMessagesCount.value = count
             }

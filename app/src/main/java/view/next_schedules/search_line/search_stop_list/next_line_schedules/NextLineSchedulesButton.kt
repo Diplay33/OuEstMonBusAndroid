@@ -17,13 +17,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.diplay.ouestmonbus.R
-import model.DTO.LineR
+import model.DTO.Line
 import view.Screens.ProchainsScreens
 import java.time.LocalDate
 
 @Composable
 fun NextLineSchedulesButton(
-    line: LineR?,
+    line: Line?,
     navController: NavController,
     stopId: String?,
     stopName: String?,

@@ -110,11 +110,11 @@ class Services {
                 return REGEX_UNACCENT.replace(temp, "")
             }
 
-            LinesR.getAllLines { allLines ->
+            Lines.getAllLines { allLines ->
                 callback(
                     services.map { servicesSection ->
                         servicesSection.filter { service ->
-                            val line = allLines.firstOrNull { it.id == service.lineId } ?: LinesR.getEmptyLine()
+                            val line = allLines.firstOrNull { it.id == service.lineId } ?: Lines.getEmptyLine()
                             service.vehicle.parkId.contains(text.trim()) || line.name.lowercase().unaccent().contains(text.lowercase().unaccent().trim())
                         }
                     }

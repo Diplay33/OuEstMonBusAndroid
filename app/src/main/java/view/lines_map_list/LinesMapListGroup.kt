@@ -13,15 +13,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import model.DTO.LineR
+import model.DTO.Line
 import model.DTO.ProgrammedMessage
 import model.DTO.Service
 
 @Composable
 fun LinesMapListGroup(
-    lines: List<LineR>,
+    lines: List<Line>,
     isFavorite: Boolean,
-    linesByGroup: SnapshotStateList<List<LineR>>,
+    linesByGroup: SnapshotStateList<List<Line>>,
     navController: NavController,
     services: MutableList<Service>,
     isLoading: MutableState<Boolean>,

@@ -15,8 +15,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import model.DTO.Destinations
-import model.DTO.LineR
-import model.DTO.LinesR
+import model.DTO.Line
+import model.DTO.Lines
 import model.DTO.Vehicles
 
 @Composable
@@ -34,13 +34,13 @@ fun ServiceDetailMain(
     pathId: String?
 ) {
     val line = remember {
-        mutableStateOf<LineR?>(null)
+        mutableStateOf<Line?>(null)
     }
     val vehicle = Vehicles.getVehicleById(vehicleId ?: "")
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(lineId) {
-        LinesR.getLine(lineId?.toInt() ?: 0) { line.value = it }
+        Lines.getLine(lineId?.toInt() ?: 0) { line.value = it }
     }
 
     Scaffold(topBar = { ServiceDetailTopBar(vehicle.parkId, navController) }) { padding ->

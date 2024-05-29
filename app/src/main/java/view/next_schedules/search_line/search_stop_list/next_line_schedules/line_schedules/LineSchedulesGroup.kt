@@ -26,7 +26,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
-import model.DTO.LineR
+import model.DTO.Line
 import model.DTO.Path
 import model.DTO.Schedule
 import java.util.*
@@ -34,7 +34,7 @@ import java.util.*
 @Composable
 fun LineSchedulesGroup(
     schedules: List<Schedule>,
-    line: LineR?,
+    line: Line?,
     paths: List<Path>,
     collapsedGroupHandler: MutableList<Boolean>,
     groupIndex: Int

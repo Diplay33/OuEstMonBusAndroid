@@ -17,8 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -51,7 +49,7 @@ fun LineSchedulesMain(
         mutableStateOf(false)
     }
     val line = remember {
-        mutableStateOf<LineR?>(null)
+        mutableStateOf<Line?>(null)
     }
     val collapsedGroupHandler: MutableList<Boolean> = sortedSchedules.map {
         false
@@ -64,7 +62,7 @@ fun LineSchedulesMain(
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(stationId) {
-        LinesR.getLine(lineId?.toInt() ?: 0) { line.value = it }
+        Lines.getLine(lineId?.toInt() ?: 0) { line.value = it }
         Paths.getOrderedAllPathsByLine(lineId?.toInt() ?: 0) { returnedPaths ->
             paths.clear()
             returnedPaths.map { value ->

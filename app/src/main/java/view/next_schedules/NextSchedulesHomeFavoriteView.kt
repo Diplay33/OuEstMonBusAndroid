@@ -25,13 +25,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.diplay.ouestmonbus.R
 import kotlinx.coroutines.delay
-import model.DTO.LineR
+import model.DTO.Line
 import model.DTO.NextSchedule
 import model.DTO.NextSchedulesDestinations
 
 @Composable
 fun NextSchedulesHomeFavoriteView(
-    line: LineR,
+    line: Line,
     nextSchedules: List<NextSchedule>,
     isLoading: Boolean
 ) {

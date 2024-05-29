@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import com.google.maps.android.compose.CameraPositionState
-import model.DTO.LineR
+import model.DTO.Line
 import model.DTO.Service
 import view.lines_map_list.line_map.messages_list.LineMapViewProgrammedMessagesViewMain
 import view.lines_map_list.line_map.service_detail.LineMapViewServiceDetail
@@ -27,7 +27,7 @@ fun LineMapViewBottomSheet(
     isLoading: Boolean,
     refreshDate: Date,
     selectedService: MutableState<Service?>,
-    line: LineR?,
+    line: Line?,
     cameraPositionState: CameraPositionState
 ) {
     val areMessagesDisplayed = remember {

@@ -1,36 +1,33 @@
 package model.DTO
 
 import android.content.Context
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.Observer
 import com.diplay.ouestmonbus.MainApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import model.preferences_data_store.StoreFavoriteLines
 import java.text.Normalizer
 
-class LinesR {
+class Lines {
     companion object {
-        private val lineRDAO = MainApplication.appDatabase.getLineRDAO()
+        private val lineDAO = MainApplication.appDatabase.getLineDAO()
 
         //MARK: - Multiple
-        fun getAllLines(callback: (List<LineR>) -> Unit) {
+        fun getAllLines(callback: (List<Line>) -> Unit) {
             CoroutineScope(Dispatchers.IO).launch {
-                callback(lineRDAO.getAllLinesR())
+                callback(lineDAO.getAllLinesR())
             }
         }
 
-        fun getAllLinesBySection(context: Context, forSchedules: Boolean = false, callback: (List<List<LineR>>) -> Unit) {
+        fun getAllLinesBySection(context: Context, forSchedules: Boolean = false, callback: (List<List<Line>>) -> Unit) {
             CoroutineScope(Dispatchers.IO).launch {
-                val lines = if (forSchedules) lineRDAO.getAllLinesRForSchedules()
+                val lines = if (forSchedules) lineDAO.getAllLinesRForSchedules()
                 else
-                    lineRDAO.getAllLinesR()
+                    lineDAO.getAllLinesR()
                 val listSectionSet = lines.map { it.section }.toSet().toList()
-                val linesBySection: ArrayList<ArrayList<LineR>> = ArrayList(listSectionSet.map { arrayListOf() })
+                val linesBySection: ArrayList<ArrayList<Line>> = ArrayList(listSectionSet.map { arrayListOf() })
                 linesBySection.add(arrayListOf())
 
                 lines.forEach { line ->
@@ -51,7 +48,7 @@ class LinesR {
             }
         }
 
-        fun getLinesBySearchText(searchText: String, callback: (List<LineR>) -> Unit) {
+        fun getLinesBySearchText(searchText: String, callback: (List<Line>) -> Unit) {
             CoroutineScope(Dispatchers.IO).launch {
                 val REGEX_UNACCENT = "\\p{InCombiningDiacriticalMarks}+".toRegex()
                 fun CharSequence.unaccent(): String {
@@ -59,21 +56,21 @@ class LinesR {
                     return REGEX_UNACCENT.replace(temp, "")
                 }
 
-                callback(lineRDAO.getAllLinesR().filter { line ->
+                callback(lineDAO.getAllLinesR().filter { line ->
                     line.name.lowercase().unaccent().contains(searchText.trim().lowercase().unaccent())
                 })
             }
         }
 
         //MARK: - Single
-        fun getLine(id: Int, callback: (LineR) -> Unit) {
+        fun getLine(id: Int, callback: (Line) -> Unit) {
             CoroutineScope(Dispatchers.IO).launch {
-                callback(lineRDAO.getLine(id) ?: getEmptyLine())
+                callback(lineDAO.getLine(id) ?: getEmptyLine())
             }
         }
 
-        fun getEmptyLine(): LineR {
-            return LineR(
+        fun getEmptyLine(): Line {
+            return Line(
                 network = "",
                 id = 0,
                 name = "Ligne inconnue",
@@ -90,8 +87,8 @@ class LinesR {
         }
 
         //TO REMOVE
-        fun addLineR(lineR: LineR) {
-            lineRDAO.addLineR(lineR)
+        fun addLine(line: Line) {
+            lineDAO.addLine(line)
         }
     }
 }

@@ -19,13 +19,13 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.maps.android.compose.*
-import model.DTO.LineR
+import model.DTO.Line
 import model.DTO.Service
 
 @Composable
 fun LineMapView(
     services: SnapshotStateList<Service>,
-    line: LineR?,
+    line: Line?,
     selectedService: MutableState<Service?>,
     cameraPositionState: CameraPositionState,
     isUserLocationShown: Boolean,

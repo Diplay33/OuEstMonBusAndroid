@@ -23,7 +23,7 @@ import androidx.core.content.ContextCompat
 import com.diplay.ouestmonbus.R
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.compose.*
-import model.DTO.LineR
+import model.DTO.Line
 import model.DTO.Paths
 import model.DTO.Station
 import model.DTO.Stations
@@ -31,7 +31,7 @@ import view.lines_map_list.line_map.MapStyle
 
 @Composable
 fun ServiceDetailMapRow(
-    line: LineR?,
+    line: Line?,
     stationId: String,
     latitude: Double,
     longitude: Double,

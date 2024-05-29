@@ -3,7 +3,7 @@ package model.DTO
 import androidx.room.Entity
 
 @Entity(primaryKeys = ["network", "id"])
-data class LineR (
+data class Line (
     var network: String,
     var id: Int,
     var name: String,

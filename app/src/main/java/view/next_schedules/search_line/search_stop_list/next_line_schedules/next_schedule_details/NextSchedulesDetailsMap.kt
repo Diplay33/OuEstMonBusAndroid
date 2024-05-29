@@ -42,7 +42,7 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
-import model.DTO.LineR
+import model.DTO.Line
 import model.DTO.Paths
 import model.DTO.Service
 import model.DTO.Station
@@ -51,7 +51,7 @@ import view.lines_map_list.line_map.MapStyle
 import view.more_view.all_services_list.service_detail.bitmapDescriptor
 
 @Composable
-fun NextSchedulesDetailsMap(service: Service, line: LineR?) {
+fun NextSchedulesDetailsMap(service: Service, line: Line?) {
     val colorScheme = !isSystemInDarkTheme()
     val mapProperties by remember {
         mutableStateOf(MapProperties(

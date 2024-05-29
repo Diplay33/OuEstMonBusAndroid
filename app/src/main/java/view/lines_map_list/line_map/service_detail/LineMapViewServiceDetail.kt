@@ -20,13 +20,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import model.DTO.Destinations
-import model.DTO.LineR
+import model.DTO.Line
 import model.DTO.Service
 import view.more_view.all_services_list.service_detail.*
 import java.util.Date
 
 @Composable
-fun LineMapViewServiceDetail(selectedService: MutableState<Service?>, line: LineR?) {
+fun LineMapViewServiceDetail(selectedService: MutableState<Service?>, line: Line?) {
     val service = selectedService.value ?: Service(
         id = 0,
         vehicleId = 0,

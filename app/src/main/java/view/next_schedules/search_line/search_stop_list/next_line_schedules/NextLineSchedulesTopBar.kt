@@ -18,7 +18,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
-import model.DTO.LineR
+import model.DTO.Line
 import model.preferences_data_store.StoreFavoriteStopsWithLine
 
 @Composable
@@ -26,7 +26,7 @@ fun NextLineSchedulesTopBar(
     navController: NavController,
     stopId: String,
     stopName: String,
-    line: LineR?
+    line: Line?
 ) {
     val colorScheme = !isSystemInDarkTheme()
 

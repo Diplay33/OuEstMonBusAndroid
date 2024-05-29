@@ -25,7 +25,7 @@ import model.DTO.*
 fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), navController: NavController) {
     val context = LocalContext.current
     val linesBySection = remember {
-        mutableStateListOf<List<LineR>>()
+        mutableStateListOf<List<Line>>()
     }
     val colorScheme = !isSystemInDarkTheme()
     val allServices = remember {
@@ -75,14 +75,14 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
             LaunchedEffect(state.query.text) {
                 searchText.value = state.query.text
                 index.value = 0
-                LinesR.getAllLinesBySection(context) { linesBySection.addAll(it) }
+                Lines.getAllLinesBySection(context) { linesBySection.addAll(it) }
                 ProgrammedMessages.getAllProgrammedMessages { values ->
                     programmedMessages.clear()
                     programmedMessages.addAll(values)
                 }
                 state.searching = true
                 delay(100)
-                LinesR.getLinesBySearchText(state.query.text) { state.searchResults = it }
+                Lines.getLinesBySearchText(state.query.text) { state.searchResults = it }
                 state.searching = false
             }
 

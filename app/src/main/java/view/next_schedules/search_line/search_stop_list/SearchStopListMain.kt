@@ -10,11 +10,9 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -36,7 +34,7 @@ fun SearchStopListMain(
     state: SearchStopListSearchState = rememberSearchState()
 ) {
     val line = remember {
-        mutableStateOf<LineR?>(null)
+        mutableStateOf<Line?>(null)
     }
     val paths = remember {
         mutableStateListOf<Path>()
@@ -97,7 +95,7 @@ fun SearchStopListMain(
             )
 
             LaunchedEffect(lineId) {
-                LinesR.getLine(lineId?.toInt() ?: 0) { line.value = it }
+                Lines.getLine(lineId?.toInt() ?: 0) { line.value = it }
             }
 
             when(state.searchDisplay) {

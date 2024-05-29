@@ -30,13 +30,13 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
-import model.DTO.LineR
+import model.DTO.Line
 import model.DTO.Path
 import model.DTO.Station
 
 @Composable
 fun SearchStopListHeader(
-    line: LineR?,
+    line: Line?,
     paths: List<Path>,
     destinations: List<List<String>> = listOf(),
     pathDirectionState: MutableState<String>,

@@ -24,8 +24,8 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.CameraPositionState
 import model.DTO.Destinations
-import model.DTO.LineR
-import model.DTO.LinesR
+import model.DTO.Line
+import model.DTO.Lines
 import model.DTO.Service
 
 @Composable
@@ -35,13 +35,13 @@ fun LineMapViewServicesListRow(
     cameraPositionState: CameraPositionState,
 ) {
     val line = remember {
-        mutableStateOf<LineR?>(null)
+        mutableStateOf<Line?>(null)
     }
     val destination = Destinations.getDestinationFromRaw(service.destination, service.lineId)
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(service) {
-        LinesR.getLine(service.lineId) { line.value = it }
+        Lines.getLine(service.lineId) { line.value = it }
     }
 
     Row(modifier = Modifier

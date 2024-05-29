@@ -1,6 +1,5 @@
 package view.next_schedules
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -9,20 +8,15 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.Favorite
-import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -35,13 +29,12 @@ import kotlinx.coroutines.launch
 import model.DTO.*
 import model.preferences_data_store.StoreFavoriteStopsWithLine
 import view.Screens.ProchainsScreens
-import view.next_schedules.search_line.search_stop_list.next_line_schedules.NextLineSchedulesView
 
 @Composable
 fun NextSchedulesHomeFavoriteRow(
     navController: NavController,
     station: Station,
-    lines: List<LineR>,
+    lines: List<Line>,
     favoriteStopsSet: MutableList<Station>
 ) {
     val nextSchedules = remember {

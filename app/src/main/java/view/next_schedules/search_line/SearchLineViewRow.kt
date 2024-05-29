@@ -3,9 +3,7 @@ package view.next_schedules.search_line
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
@@ -16,37 +14,31 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.FavoriteBorder
-import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import kotlinx.coroutines.launch
-import model.DAO.AccessData.DestinationAllerData
 import model.DTO.*
 import model.preferences_data_store.StoreFavoriteLines
 import view.lines_map_list.ColorIndicatorDot
 
 @Composable
 fun SearchLineViewRow(
-    linesByGroup: SnapshotStateList<List<LineR>>,
-    line: LineR,
+    linesByGroup: SnapshotStateList<List<Line>>,
+    line: Line,
     navController: NavController,
     isLineInService: Boolean?
 ) {
@@ -242,7 +234,7 @@ fun SearchLineViewRow(
                 DropdownMenuItem(onClick = {
                     scope.launch {
                         storeFavLines.removeFromFavorites(line.id.toString())
-                        LinesR.getAllLinesBySection(context, true) {
+                        Lines.getAllLinesBySection(context, true) {
                             linesByGroup.clear()
                             linesByGroup.addAll(it)
                         }
@@ -275,7 +267,7 @@ fun SearchLineViewRow(
                 DropdownMenuItem(onClick = {
                     scope.launch {
                         storeFavLines.saveFavoriteLine(line.id.toString())
-                        LinesR.getAllLinesBySection(context, true) {
+                        Lines.getAllLinesBySection(context, true) {
                             linesByGroup.clear()
                             linesByGroup.addAll(it)
                         }

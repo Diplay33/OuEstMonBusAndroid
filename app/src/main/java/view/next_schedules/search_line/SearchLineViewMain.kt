@@ -20,8 +20,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
-import model.DTO.LineR
-import model.DTO.LinesR
+import model.DTO.Line
+import model.DTO.Lines
 import model.DTO.Service
 import model.DTO.Services
 import view.lines_map_list.LinesMapListSearchBar
@@ -37,7 +37,7 @@ fun SearchLineViewMain(
 ) {
     val context = LocalContext.current
     val linesBySection = remember {
-        mutableStateListOf<List<LineR>>()
+        mutableStateListOf<List<Line>>()
     }
     val colorScheme = !isSystemInDarkTheme()
     val allServices = remember {
@@ -65,7 +65,7 @@ fun SearchLineViewMain(
 
             LaunchedEffect(state.query.text) {
                 linesBySection.clear()
-                LinesR.getAllLinesBySection(context, true) { linesBySection.addAll(it) }
+                Lines.getAllLinesBySection(context, true) { linesBySection.addAll(it) }
                 Services.getAllServices { values ->
                     allServices.clear()
                     allServices.addAll(values)
@@ -74,7 +74,7 @@ fun SearchLineViewMain(
 
                 state.searching = true
                 delay(100)
-                LinesR.getLinesBySearchText(state.query.text) {
+                Lines.getLinesBySearchText(state.query.text) {
                     state.searchResults = it
                 }
                 state.searching = false

@@ -25,7 +25,7 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import model.DTO.LineR
+import model.DTO.Line
 
 enum class SearchDisplay {
     INITIALRESULTS, RESULTS, NORESULT
@@ -36,7 +36,7 @@ class LinesMapListSearchState(
     query: TextFieldValue,
     focused: Boolean,
     searching: Boolean,
-    searchResults: List<LineR>
+    searchResults: List<Line>
 ) {
     var query by mutableStateOf(query)
     var focused by mutableStateOf(focused)
@@ -62,7 +62,7 @@ fun rememberSearchState(
     query: TextFieldValue = TextFieldValue(""),
     focused: Boolean = false,
     searching: Boolean = false,
-    searchResults: List<LineR> = emptyList()
+    searchResults: List<Line> = emptyList()
 ): LinesMapListSearchState {
     return remember {
         LinesMapListSearchState(

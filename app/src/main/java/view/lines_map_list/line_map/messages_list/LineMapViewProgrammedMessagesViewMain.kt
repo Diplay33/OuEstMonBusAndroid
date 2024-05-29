@@ -20,12 +20,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import model.DTO.LineR
+import model.DTO.Line
 import model.DTO.ProgrammedMessage
 import model.DTO.ProgrammedMessages
 
 @Composable
-fun LineMapViewProgrammedMessagesViewMain(line: LineR?, areMessagesDisplayed: MutableState<Boolean>) {
+fun LineMapViewProgrammedMessagesViewMain(line: Line?, areMessagesDisplayed: MutableState<Boolean>) {
     val programmedMessages = remember {
         mutableStateListOf<ProgrammedMessage>()
     }

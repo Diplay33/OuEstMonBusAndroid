@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import model.DTO.Destinations
-import model.DTO.LineR
-import model.DTO.LinesR
+import model.DTO.Line
+import model.DTO.Lines
 import model.DTO.Service
 import model.DTO.Services
 import model.DTO.Vehicles
@@ -46,7 +46,7 @@ fun NextScheduleDetailsMain(
 ) {
     val vehicle = Vehicles.getVehicleById(vehicleId.toString())
     val line = remember {
-        mutableStateOf<LineR?>(null)
+        mutableStateOf<Line?>(null)
     }
     val service = remember {
         mutableStateOf(Service(0, 0, 0, 0, "", 0, "", 0.0, 0.0, 0, 0, timestamp = Date()))
@@ -55,7 +55,7 @@ fun NextScheduleDetailsMain(
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(vehicle) {
-        LinesR.getLine(lineId?.toInt() ?: 0) { line.value = it }
+        Lines.getLine(lineId?.toInt() ?: 0) { line.value = it }
         while(true) {
             Services.getServiceByVehicleId(vehicle.id) {
                 it?.let { value -> service.value = value }

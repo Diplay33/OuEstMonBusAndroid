@@ -20,7 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import model.DTO.LineR
+import model.DTO.Line
 import model.DTO.Station
 import view.Screens.ProchainsScreens
 
@@ -29,7 +29,7 @@ fun SearchStopListRow(
     stop: Station,
     stops: List<Station>,
     navController: NavController,
-    line: LineR?,
+    line: Line?,
     pathDirection: String
 ) {
     val colorScheme = !isSystemInDarkTheme()

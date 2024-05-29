@@ -10,9 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.delay
 import model.DTO.*
 
@@ -25,7 +23,7 @@ fun NextLineSchedulesMain(
     pathDirection: String?
 ) {
     val line = remember {
-        mutableStateOf<LineR?>(null)
+        mutableStateOf<Line?>(null)
     }
     val paths = remember {
         mutableStateListOf<Path>()
@@ -58,7 +56,7 @@ fun NextLineSchedulesMain(
     }
 
     LaunchedEffect(lineId) {
-        LinesR.getLine(lineId?.toInt() ?: 0) { line.value = it }
+        Lines.getLine(lineId?.toInt() ?: 0) { line.value = it }
     }
 
     LaunchedEffect(stopName, line.value) {

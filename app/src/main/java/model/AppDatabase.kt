@@ -2,13 +2,13 @@ package model
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import model.DAO.LineRDAO
-import model.DTO.LineR
+import model.DAO.LineDAO
+import model.DTO.Line
 
-@Database(entities = [LineR::class], version = 1)
+@Database(entities = [Line::class], version = 2)
 abstract class AppDatabase: RoomDatabase() {
     companion object {
         const val NAME = "APP_DB"
     }
-    abstract fun getLineRDAO(): LineRDAO
+    abstract fun getLineDAO(): LineDAO
 }

@@ -17,14 +17,14 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
-import model.DTO.LineR
+import model.DTO.Line
 import model.DTO.Path
 import model.DTO.PathDestinations
 import model.DTO.Schedule
 import java.util.*
 
 @Composable
-fun LineSchedulesRow(line: LineR?, schedule: Schedule, path: Path) {
+fun LineSchedulesRow(line: Line?, schedule: Schedule, path: Path) {
     val colorScheme = !isSystemInDarkTheme()
     val scheduleCalendar = Calendar.getInstance()
     scheduleCalendar.time = schedule.getTime() ?: Date()

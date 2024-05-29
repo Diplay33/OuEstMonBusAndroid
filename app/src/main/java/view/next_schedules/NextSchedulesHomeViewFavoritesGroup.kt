@@ -14,8 +14,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
-import model.DTO.LineR
-import model.DTO.LinesR
+import model.DTO.Line
+import model.DTO.Lines
 import model.DTO.Station
 import model.DTO.Stations
 import model.preferences_data_store.StoreFavoriteStopsWithLine
@@ -35,14 +35,14 @@ fun NextSchedulesHomeViewFavoritesGroup(navController: NavController) {
         mutableStateOf(false)
     }
     val lines = remember {
-        mutableStateListOf<LineR>()
+        mutableStateListOf<Line>()
     }
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect("a") {
         favoriteStopsSet.clear()
 
-        LinesR.getAllLines { allLines ->
+        Lines.getAllLines { allLines ->
             lines.addAll(allLines)
             allLines.forEach { line ->
                 scope.launch {

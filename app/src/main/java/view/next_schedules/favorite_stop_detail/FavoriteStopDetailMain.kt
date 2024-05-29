@@ -21,8 +21,8 @@ import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.delay
 import model.DTO.DestinationsAller
 import model.DTO.DestinationsRetour
-import model.DTO.LineR
-import model.DTO.LinesR
+import model.DTO.Line
+import model.DTO.Lines
 import model.DTO.NSchedulesMapMarker
 import model.DTO.NSchedulesMapMarkerType
 import model.DTO.NSchedulesMapMarkers
@@ -47,7 +47,7 @@ fun FavoriteStopDetailMain(
 ) {
     val colorScheme = !isSystemInDarkTheme()
     val line = remember {
-        mutableStateOf<LineR?>(null)
+        mutableStateOf<Line?>(null)
     }
     val paths = remember {
         mutableStateListOf<Path>()
@@ -81,7 +81,7 @@ fun FavoriteStopDetailMain(
     }
 
     LaunchedEffect(stopName, line.value) {
-        LinesR.getLine((lineId ?: "0").toInt()) { line.value = it }
+        Lines.getLine((lineId ?: "0").toInt()) { line.value = it }
         line.value?.let { line ->
             Paths.getOrderedPathsByLine(line.id) { orderedPaths ->
                 orderedPaths.forEach { returnedPaths ->

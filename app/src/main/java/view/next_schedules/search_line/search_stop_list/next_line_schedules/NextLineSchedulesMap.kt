@@ -47,7 +47,7 @@ import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.launch
-import model.DTO.LineR
+import model.DTO.Line
 import model.DTO.NSchedulesMapMarker
 import model.DTO.NSchedulesMapMarkerType
 import model.DTO.Service
@@ -58,7 +58,7 @@ import view.lines_map_list.line_map.MapStyle
 @Composable
 fun NextLineSchedulesMap(
     station: Station?,
-    line: LineR?,
+    line: Line?,
     mapMarkers: List<NSchedulesMapMarker>,
     focusedVehicle: MutableState<Int?>,
     navController: NavController,

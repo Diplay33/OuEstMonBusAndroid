@@ -19,10 +19,10 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
-import model.DTO.LineR
+import model.DTO.Line
 
 @Composable
-fun ServiceDetailHeader(line: LineR?, destination: List<String>) {
+fun ServiceDetailHeader(line: Line?, destination: List<String>) {
     val colorScheme = !isSystemInDarkTheme()
 
     Row(modifier = Modifier

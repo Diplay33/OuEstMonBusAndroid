@@ -28,14 +28,14 @@ import com.vanpra.composematerialdialogs.MaterialDialog
 import com.vanpra.composematerialdialogs.datetime.date.DatePickerDefaults
 import com.vanpra.composematerialdialogs.datetime.date.datepicker
 import com.vanpra.composematerialdialogs.rememberMaterialDialogState
-import model.DTO.LineR
+import model.DTO.Line
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
 @Composable
 fun NextLineSchedulesSchdlGroup(
     navController: NavController,
-    line: LineR?,
+    line: Line?,
     stopId: String?,
     stopName: String?,
     pathDirection: String?

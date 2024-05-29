@@ -28,12 +28,12 @@ import model.DTO.NextSchedule
 import model.DTO.NextSchedulesDestinations
 import com.diplay.ouestmonbus.R
 import kotlinx.coroutines.delay
-import model.DTO.LineR
+import model.DTO.Line
 
 @Composable
 fun NextLineSchedulesView(
     nextSchedules: List<NextSchedule>,
-    line: LineR?,
+    line: Line?,
     isLoading: Boolean,
     focusedVehicle: MutableState<Int?>
 ) {

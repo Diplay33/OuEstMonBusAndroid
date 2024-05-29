@@ -31,12 +31,12 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.CameraPositionState
-import model.DTO.LineR
+import model.DTO.Line
 
 @Composable
 fun LineMapViewTopBar(
     navController: NavController,
-    line: LineR?,
+    line: Line?,
     isUserLocationShown: MutableState<Boolean>,
     cameraPositionState: CameraPositionState,
     userPosition: MutableState<LatLng>

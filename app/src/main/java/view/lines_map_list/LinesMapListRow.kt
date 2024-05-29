@@ -38,8 +38,8 @@ import view.Screens.CartesScreens
 
 @Composable
 fun LinesMapListRow(
-    rowLine: LineR,
-    linesByGroup: SnapshotStateList<List<LineR>>,
+    rowLine: Line,
+    linesByGroup: SnapshotStateList<List<Line>>,
     navController: NavController,
     services: MutableList<Service>,
     isLoading: MutableState<Boolean>,
@@ -99,7 +99,7 @@ fun LinesMapListRow(
                         navController.navigate(CartesScreens.HelloWorld.withArgs(rowLine.id.toString()))
                     }
                     else {
-                        LinesR.getLinesBySearchText(searchText.value) {
+                        Lines.getLinesBySearchText(searchText.value) {
                             scope.launch {
                                 navController.navigate(CartesScreens.HelloWorld.withArgs(it[index].id.toString()))
                             }
@@ -216,7 +216,7 @@ fun LinesMapListRow(
                 DropdownMenuItem(onClick = {
                     scope.launch {
                         storeFavLines.removeFromFavorites(rowLine.id.toString())
-                        LinesR.getAllLinesBySection(context) {
+                        Lines.getAllLinesBySection(context) {
                             linesByGroup.clear()
                             linesByGroup.addAll(it)
                         }
@@ -249,7 +249,7 @@ fun LinesMapListRow(
                 DropdownMenuItem(onClick = {
                     scope.launch {
                         storeFavLines.saveFavoriteLine(rowLine.id.toString())
-                        LinesR.getAllLinesBySection(context) {
+                        Lines.getAllLinesBySection(context) {
                             linesByGroup.clear()
                             linesByGroup.addAll(it)
                         }
