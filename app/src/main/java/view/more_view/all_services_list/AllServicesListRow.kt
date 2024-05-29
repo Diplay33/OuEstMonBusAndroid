@@ -12,6 +12,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,15 +25,24 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 import model.DTO.*
 import view.Screens.PlusScreens
 import view.more_view.sendMail
 
 @Composable
 fun AllServicesListRow(service: Service, navController: NavController) {
-    val line = Lines.getLine(service.lineId.toString())
+    val line = remember {
+        mutableStateOf<LineR?>(null)
+    }
     val destination = Destinations.getDestinationFromRaw(service.destination, service.lineId)
     val colorScheme = !isSystemInDarkTheme()
+
+    LaunchedEffect(service) {
+        LinesR.getLine(service.lineId) { line.value = it }
+    }
 
     Row(modifier = Modifier
         .padding(horizontal = 15.dp)
@@ -43,31 +55,39 @@ fun AllServicesListRow(service: Service, navController: NavController) {
                 shape = RoundedCornerShape(10.dp)
             )
             .background(
-                color = colorResource(line.lineColorResource).copy(alpha = 0.2f),
+                color = if (line.value == null)
+                    Color.Transparent
+                else
+                    Color(android.graphics.Color.parseColor(line.value?.colorHex)).copy(alpha = 0.2f),
                 shape = RoundedCornerShape(10.dp)
             )
             .padding(horizontal = 15.dp)
             .padding(top = 7.dp, bottom = if (destination.first() == "") 7.dp else 5.dp)
             .fillMaxWidth()
             .clickable {
-                navController.navigate(PlusScreens.ServiceDetail.withArgs(
-                    line.id.toString(),
-                    service.vehicleId.toString(),
-                    service.destination,
-                    service.latitude.toString(),
-                    service.longitude.toString(),
-                    service.currentStop.toString(),
-                    service.currentSpeed.toString(),
-                    service.state,
-                    service.stateTime.toString(),
-                    service.path.toString()
-                ))
+                navController.navigate(
+                    PlusScreens.ServiceDetail.withArgs(
+                        line.value?.id.toString(),
+                        service.vehicleId.toString(),
+                        service.destination,
+                        service.latitude.toString(),
+                        service.longitude.toString(),
+                        service.currentStop.toString(),
+                        service.currentSpeed.toString(),
+                        service.state,
+                        service.stateTime.toString(),
+                        service.path.toString()
+                    )
+                )
             }
         ) {
             Column {
                 Row {
-                    Image(
-                        painter = painterResource(id = line.lineImageResource),
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(line.value?.imageUrl)
+                            .decoderFactory(SvgDecoder.Factory())
+                            .build(),
                         contentDescription = null,
                         modifier = Modifier
                             .size(25.dp)
@@ -79,7 +99,7 @@ fun AllServicesListRow(service: Service, navController: NavController) {
                     )
 
                     Text(
-                        text = line.lineName,
+                        text = line.value?.name ?: "",
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
                         color = if (colorScheme) Color.Black else Color.White,
