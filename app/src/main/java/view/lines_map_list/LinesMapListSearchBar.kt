@@ -25,7 +25,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
-import model.DTO.Line
 import model.DTO.LineR
 
 enum class SearchDisplay {

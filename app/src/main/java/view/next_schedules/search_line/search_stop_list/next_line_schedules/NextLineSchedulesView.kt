@@ -20,21 +20,15 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import model.DTO.Line
 import model.DTO.NextSchedule
 import model.DTO.NextSchedulesDestinations
 import com.diplay.ouestmonbus.R
-import com.google.android.gms.maps.model.CameraPosition
-import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.compose.CameraPositionState
 import kotlinx.coroutines.delay
 import model.DTO.LineR
-import model.DTO.NextSchedules
 
 @Composable
 fun NextLineSchedulesView(

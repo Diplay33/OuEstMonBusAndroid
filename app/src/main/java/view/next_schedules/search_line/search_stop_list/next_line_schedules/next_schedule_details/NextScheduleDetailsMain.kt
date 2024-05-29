@@ -17,7 +17,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
@@ -26,23 +25,16 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import model.DTO.Destinations
 import model.DTO.LineR
-import model.DTO.Lines
 import model.DTO.LinesR
 import model.DTO.Service
 import model.DTO.Services
-import model.DTO.Station
-import model.DTO.Stations
 import model.DTO.Vehicles
 import view.more_view.all_services_list.service_detail.ServiceDetailHeader
-import view.more_view.all_services_list.service_detail.ServiceDetailMapRow
 import view.more_view.all_services_list.service_detail.ServiceDetailOperatorRow
 import view.more_view.all_services_list.service_detail.ServiceDetailSpeedRow
 import view.more_view.all_services_list.service_detail.ServiceDetailStateRow
 import view.more_view.all_services_list.service_detail.ServiceDetailVehicleRow
-import java.time.format.DateTimeFormatter
 import java.util.Date
-import kotlin.time.Duration.Companion.hours
-import kotlin.time.Duration.Companion.minutes
 
 @Composable
 fun NextScheduleDetailsMain(

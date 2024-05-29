@@ -18,7 +18,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
-import model.DTO.Line
 import model.DTO.LineR
 import model.preferences_data_store.StoreFavoriteStopsWithLine
 
@@ -56,7 +55,6 @@ fun NextLineSchedulesTopBar(
             }
             scope.launch {
                 storeFavStopsWithLine.checkMaxStopCountReached {
-                    println(it)
                     isMaxFavoritesReached.value = it
                 }
             }

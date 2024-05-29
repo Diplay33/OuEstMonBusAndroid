@@ -13,7 +13,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import model.DTO.Line
 import model.DTO.LineR
 import model.DTO.ProgrammedMessage
 import model.DTO.Service

@@ -15,7 +15,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import model.DTO.LineR
-import model.DTO.Lines
 import model.DTO.LinesR
 import model.DTO.Station
 import model.DTO.Stations

@@ -16,7 +16,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import model.DTO.Destinations
 import model.DTO.LineR
-import model.DTO.Lines
 import model.DTO.LinesR
 import model.DTO.Vehicles
 

@@ -6,7 +6,7 @@ import androidx.datastore.preferences.preferencesDataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringSetPreferencesKey
-import model.DTO.Lines
+import model.DTO.LinesR
 
 //key: lineId, value: stationId(s)
 class StoreFavoriteStopsWithLine(private val context: Context) {
@@ -29,10 +29,12 @@ class StoreFavoriteStopsWithLine(private val context: Context) {
     suspend fun checkMaxStopCountReached(callback: (Boolean) -> Unit) {
         context.dataStore.data.collect { preferences ->
             val favoriteStopsSet = mutableSetOf<String>()
-            Lines.getAllLines().forEach { line ->
-                favoriteStopsSet.addAll(preferences[stringSetPreferencesKey(line.id.toString())]?.toList() ?: listOf())
+            LinesR.getAllLines { allLines ->
+                allLines.forEach {  line ->
+                    favoriteStopsSet.addAll(preferences[stringSetPreferencesKey(line.id.toString())]?.toList() ?: listOf())
+                }
+                callback(favoriteStopsSet.count() >= 10 )
             }
-            callback(favoriteStopsSet.count() >= 10 )
         }
     }
 

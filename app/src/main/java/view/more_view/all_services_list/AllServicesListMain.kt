@@ -75,7 +75,9 @@ fun AllServicesListMain(
                 delay(100)
                 state.searching = false
             }
-            state.searchResults = Services.filterServicesBySearchText(filteredServices, state.query.text)
+            Services.filterServicesBySearchText(filteredServices, state.query.text) { results ->
+                state.searchResults = results
+            }
 
             when(state.searchDisplay) {
                 SearchDisplay.INITIALRESULTS -> {
@@ -86,14 +88,16 @@ fun AllServicesListMain(
                     LazyColumn(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
                         .fillMaxWidth()
                     ) {
-                        items(state.searchResults.size) { groupIndex ->
-                            if(state.searchResults[groupIndex].isNotEmpty()) {
-                                AllServicesListGroup(
-                                    services = state.searchResults[groupIndex],
-                                    navController = navController,
-                                    collapsedGroupHandler = collapsedGroupHandler,
-                                    groupIndex = groupIndex
-                                )
+                        if(state.searchResults.size == collapsedGroupHandler.size) {
+                            items(state.searchResults.size) { groupIndex ->
+                                if(state.searchResults[groupIndex].isNotEmpty()) {
+                                    AllServicesListGroup(
+                                        services = state.searchResults[groupIndex],
+                                        navController = navController,
+                                        collapsedGroupHandler = collapsedGroupHandler,
+                                        groupIndex = groupIndex
+                                    )
+                                }
                             }
                         }
 

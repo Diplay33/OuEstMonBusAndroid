@@ -20,9 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
-import model.DTO.Line
 import model.DTO.LineR
-import model.DTO.Lines
 import model.DTO.LinesR
 import model.DTO.Service
 import model.DTO.Services

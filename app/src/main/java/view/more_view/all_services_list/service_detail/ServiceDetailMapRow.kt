@@ -16,7 +16,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -24,7 +23,6 @@ import androidx.core.content.ContextCompat
 import com.diplay.ouestmonbus.R
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.compose.*
-import model.DTO.Line
 import model.DTO.LineR
 import model.DTO.Paths
 import model.DTO.Station
