@@ -72,7 +72,7 @@ fun LineMapViewBottomSheet(
                 )
             }
             else {
-                LineMapViewServiceDetail(selectedService)
+                LineMapViewServiceDetail(selectedService, line)
             }
         }
     }

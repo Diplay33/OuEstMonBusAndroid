@@ -25,6 +25,7 @@ import com.diplay.ouestmonbus.R
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.compose.*
 import model.DTO.Line
+import model.DTO.LineR
 import model.DTO.Paths
 import model.DTO.Station
 import model.DTO.Stations
@@ -32,7 +33,7 @@ import view.lines_map_list.line_map.MapStyle
 
 @Composable
 fun ServiceDetailMapRow(
-    line: Line,
+    line: LineR?,
     stationId: String,
     latitude: Double,
     longitude: Double,
@@ -65,7 +66,7 @@ fun ServiceDetailMapRow(
         mutableStateListOf<List<LatLng>>()
     }
 
-    LaunchedEffect(line.lineName) {
+    LaunchedEffect(line?.name) {
         if(stationId == "") {
             station.value = Station(0, "", "Arrêt inconnu",  0.0, 0.0)
         }
@@ -102,7 +103,7 @@ fun ServiceDetailMapRow(
             ) {
                 Marker(
                     state = MarkerState(position = LatLng(latitude, longitude)),
-                    icon = bitmapDescriptor(LocalContext.current, when(line.lineName) {
+                    icon = bitmapDescriptor(LocalContext.current, when(line?.name) {
                         "Tram A" -> R.drawable.map_logo_tram
                         "Tram B" -> R.drawable.map_logo_tram
                         "Tram C" -> R.drawable.map_logo_tram
@@ -113,7 +114,10 @@ fun ServiceDetailMapRow(
                 )
 
                 pathCoordinates.forEach { coordinates ->
-                    Polyline(points = coordinates, color = colorResource(id = line.lineColorResource))
+                    Polyline(points = coordinates, color = if (line == null)
+                        Color.Transparent
+                    else
+                        Color(android.graphics.Color.parseColor(line.colorHex)))
                 }
             }
         }

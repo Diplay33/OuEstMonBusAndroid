@@ -94,7 +94,7 @@ fun NextScheduleDetailsMain(
                 )
 
                 ServiceDetailHeader(
-                    line = Lines.getLine(line.value?.id.toString()),
+                    line = line.value,
                     destination = Destinations.getDestinationFromRaw(
                         destination = service.value.destination,
                         lineId = line.value?.id ?: 0

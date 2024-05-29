@@ -13,15 +13,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 import model.DTO.Line
+import model.DTO.LineR
 
 @Composable
-fun ServiceDetailHeader(line: Line, destination: List<String>) {
+fun ServiceDetailHeader(line: LineR?, destination: List<String>) {
     val colorScheme = !isSystemInDarkTheme()
 
     Row(modifier = Modifier
@@ -32,13 +37,19 @@ fun ServiceDetailHeader(line: Line, destination: List<String>) {
             shape = RoundedCornerShape(10.dp)
         )
         .background(
-            color = colorResource(line.lineColorResource).copy(alpha = 0.2f),
+            color = if (line == null)
+                Color.Transparent
+            else
+                Color(android.graphics.Color.parseColor(line.colorHex)).copy(alpha = 0.2f),
             shape = RoundedCornerShape(10.dp)
         )
         .padding(vertical = 3.dp)
     ) {
-        Image(
-            painter = painterResource(id = line.lineImageResource),
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(line?.imageUrl)
+                .decoderFactory(SvgDecoder.Factory())
+                .build(),
             contentDescription = null,
             modifier = Modifier
                 .padding(start = 15.dp)
@@ -52,7 +63,7 @@ fun ServiceDetailHeader(line: Line, destination: List<String>) {
             .offset(y = 3.dp)
         ) {
             Text(
-                text = line.lineName,
+                text = line?.name ?: "",
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
                 color = if (colorScheme) Color.Black else Color.White,
