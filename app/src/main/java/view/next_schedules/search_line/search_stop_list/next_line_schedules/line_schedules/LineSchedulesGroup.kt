@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.launch
 import model.DTO.Line
+import model.DTO.LineR
 import model.DTO.Path
 import model.DTO.Schedule
 import java.util.*
@@ -35,7 +36,7 @@ import java.util.*
 @Composable
 fun LineSchedulesGroup(
     schedules: List<Schedule>,
-    line: Line,
+    line: LineR?,
     paths: List<Path>,
     collapsedGroupHandler: MutableList<Boolean>,
     groupIndex: Int
@@ -97,7 +98,10 @@ fun LineSchedulesGroup(
                 shape = RoundedCornerShape(10.dp)
             )
             .background(
-                colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+                if (line == null)
+                    Color.Transparent
+                else
+                    Color(android.graphics.Color.parseColor(line.colorHex)).copy(alpha = 0.2f),
                 shape = RoundedCornerShape(10.dp)
             )
         ) {

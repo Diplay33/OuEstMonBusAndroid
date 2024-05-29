@@ -13,24 +13,29 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 import model.DTO.Line
+import model.DTO.LineR
 import model.DTO.Path
 import model.DTO.PathDestinations
 import model.DTO.Schedule
 import java.util.*
 
 @Composable
-fun LineSchedulesRow(line: Line, schedule: Schedule, path: Path) {
+fun LineSchedulesRow(line: LineR?, schedule: Schedule, path: Path) {
     val colorScheme = !isSystemInDarkTheme()
     val scheduleCalendar = Calendar.getInstance()
     scheduleCalendar.time = schedule.getTime() ?: Date()
     val minutes = scheduleCalendar.get(Calendar.MINUTE).toString()
-    val destination = PathDestinations.getDestinationFromPathName(line.id, path.name)
+    val destination = PathDestinations.getDestinationFromPathName(line?.id ?: 0, path.name)
 
     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
         .fillMaxWidth()
@@ -38,8 +43,11 @@ fun LineSchedulesRow(line: Line, schedule: Schedule, path: Path) {
         .padding(vertical = 3.dp)
     ) {
         Row {
-            Image(
-                painter = painterResource(id = line.lineImageResource),
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(line?.imageUrl)
+                    .decoderFactory(SvgDecoder.Factory())
+                    .build(),
                 contentDescription = null,
                 modifier = Modifier
                     .size(40.dp)
