@@ -25,7 +25,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import model.DTO.Destinations
+import model.DTO.LineR
 import model.DTO.Lines
+import model.DTO.LinesR
 import model.DTO.Service
 import model.DTO.Services
 import model.DTO.Station
@@ -51,7 +53,9 @@ fun NextScheduleDetailsMain(
     lineId: String?
 ) {
     val vehicle = Vehicles.getVehicleById(vehicleId.toString())
-    val line = Lines.getLine(lineId)
+    val line = remember {
+        mutableStateOf<LineR?>(null)
+    }
     val service = remember {
         mutableStateOf(Service(0, 0, 0, 0, "", 0, "", 0.0, 0.0, 0, 0, timestamp = Date()))
     }
@@ -59,6 +63,7 @@ fun NextScheduleDetailsMain(
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(vehicle) {
+        LinesR.getLine(lineId?.toInt() ?: 0) { line.value = it }
         while(true) {
             Services.getServiceByVehicleId(vehicle.id) {
                 it?.let { value -> service.value = value }
@@ -89,10 +94,10 @@ fun NextScheduleDetailsMain(
                 )
 
                 ServiceDetailHeader(
-                    line = line,
+                    line = Lines.getLine(line.value?.id.toString()),
                     destination = Destinations.getDestinationFromRaw(
                         destination = service.value.destination,
-                        lineId = line.id
+                        lineId = line.value?.id ?: 0
                     )
                 )
 
@@ -100,7 +105,7 @@ fun NextScheduleDetailsMain(
                     .height(30.dp)
                 )
 
-                ServiceDetailVehicleRow(vehicle.model, line.lineName)
+                ServiceDetailVehicleRow(vehicle.model, line.value?.name ?: "")
 
                 Spacer(modifier = Modifier
                     .height(10.dp)
@@ -112,7 +117,7 @@ fun NextScheduleDetailsMain(
                     .height(30.dp)
                 )
 
-                NextSchedulesDetailsMap(service.value)
+                NextSchedulesDetailsMap(service.value, line.value)
 
                 Spacer(modifier = Modifier
                     .height(30.dp)

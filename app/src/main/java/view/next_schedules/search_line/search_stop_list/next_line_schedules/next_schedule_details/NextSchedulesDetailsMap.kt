@@ -43,6 +43,7 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
+import model.DTO.LineR
 import model.DTO.Lines
 import model.DTO.Path
 import model.DTO.Paths
@@ -54,7 +55,7 @@ import view.lines_map_list.line_map.MapStyle
 import view.more_view.all_services_list.service_detail.bitmapDescriptor
 
 @Composable
-fun NextSchedulesDetailsMap(service: Service) {
+fun NextSchedulesDetailsMap(service: Service, line: LineR?) {
     val colorScheme = !isSystemInDarkTheme()
     val mapProperties by remember {
         mutableStateOf(MapProperties(
@@ -75,7 +76,6 @@ fun NextSchedulesDetailsMap(service: Service) {
             rotationGesturesEnabled = false
         ))
     }
-    val line = Lines.getLine(service.lineId.toString())
     val station = remember {
         mutableStateOf(Station(0, "", "", 0.0, 0.0))
     }
@@ -121,7 +121,7 @@ fun NextSchedulesDetailsMap(service: Service) {
                 Marker(
                     state = MarkerState(position = LatLng(service.latitude, service.longitude)),
                     icon = bitmapDescriptor(
-                        LocalContext.current, when(line.lineName) {
+                        LocalContext.current, when(line?.name) {
                         "Tram A" -> R.drawable.map_logo_tram
                         "Tram B" -> R.drawable.map_logo_tram
                         "Tram C" -> R.drawable.map_logo_tram
@@ -132,7 +132,10 @@ fun NextSchedulesDetailsMap(service: Service) {
                 )
 
                 pathCoordinates.forEach { coordinates ->
-                    Polyline(points = coordinates, color = colorResource(id = line.lineColorResource))
+                    Polyline(points = coordinates, color = if (line == null)
+                        Color.Transparent
+                    else
+                        Color(android.graphics.Color.parseColor(line.colorHex)))
                 }
             }
         }
