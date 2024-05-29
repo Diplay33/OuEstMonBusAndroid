@@ -75,18 +75,14 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
             LaunchedEffect(state.query.text) {
                 searchText.value = state.query.text
                 index.value = 0
-                LinesR.getAllLinesBySection(context) { lines ->
-                    linesBySection.addAll(lines)
-                }
+                LinesR.getAllLinesBySection(context) { linesBySection.addAll(it) }
                 ProgrammedMessages.getAllProgrammedMessages { values ->
                     programmedMessages.clear()
                     programmedMessages.addAll(values)
                 }
                 state.searching = true
                 delay(100)
-                LinesR.getLinesBySearchText(state.query.text) {
-                    state.searchResults = it
-                }
+                LinesR.getLinesBySearchText(state.query.text) { state.searchResults = it }
                 state.searching = false
             }
 

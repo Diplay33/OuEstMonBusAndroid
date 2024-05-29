@@ -15,7 +15,7 @@ import java.text.Normalizer
 
 class LinesR {
     companion object {
-        val lineRDAO = MainApplication.appDatabase.getLineRDAO()
+        private val lineRDAO = MainApplication.appDatabase.getLineRDAO()
 
         //MARK: - Multiple
         fun getAllLines(callback: (List<LineR>) -> Unit) {
@@ -24,9 +24,11 @@ class LinesR {
             }
         }
 
-        fun getAllLinesBySection(context: Context, callback: (List<List<LineR>>) -> Unit) {
+        fun getAllLinesBySection(context: Context, forSchedules: Boolean = false, callback: (List<List<LineR>>) -> Unit) {
             CoroutineScope(Dispatchers.IO).launch {
-                val lines = lineRDAO.getAllLinesR()
+                val lines = if (forSchedules) lineRDAO.getAllLinesRForSchedules()
+                else
+                    lineRDAO.getAllLinesR()
                 val listSectionSet = lines.map { it.section }.toSet().toList()
                 val linesBySection: ArrayList<ArrayList<LineR>> = ArrayList(listSectionSet.map { arrayListOf() })
                 linesBySection.add(arrayListOf())

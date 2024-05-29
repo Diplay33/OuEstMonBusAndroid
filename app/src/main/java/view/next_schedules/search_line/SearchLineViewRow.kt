@@ -34,6 +34,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 import kotlinx.coroutines.launch
 import model.DAO.AccessData.DestinationAllerData
 import model.DTO.*
@@ -42,8 +45,8 @@ import view.lines_map_list.ColorIndicatorDot
 
 @Composable
 fun SearchLineViewRow(
-    linesByGroup: SnapshotStateList<List<Line>>,
-    line: Line,
+    linesByGroup: SnapshotStateList<List<LineR>>,
+    line: LineR,
     navController: NavController,
     isLineInService: Boolean?
 ) {
@@ -79,7 +82,7 @@ fun SearchLineViewRow(
             shape = RoundedCornerShape(10.dp)
         )
         .background(
-            colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+            Color(android.graphics.Color.parseColor(line.colorHex)).copy(alpha = 0.2f),
             shape = RoundedCornerShape(10.dp)
         )
     ) {
@@ -126,8 +129,11 @@ fun SearchLineViewRow(
                 .align(Alignment.CenterVertically)
             ) {
                 Row {
-                    Image(
-                        painter = painterResource(id = line.lineImageResource),
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(line.imageUrl)
+                            .decoderFactory(SvgDecoder.Factory())
+                            .build(),
                         contentDescription = null,
                         modifier = Modifier
                             .size(40.dp)
@@ -138,7 +144,7 @@ fun SearchLineViewRow(
                     )
 
                     Text(
-                        text = line.lineName,
+                        text = line.name,
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
                         color = if (colorScheme) Color.Black else Color.White,
@@ -199,7 +205,7 @@ fun SearchLineViewRow(
         if(!isCollapsed.value) {
             Column(modifier = Modifier
                 .background(
-                    colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+                    Color(android.graphics.Color.parseColor(line.colorHex)).copy(alpha = 0.2f),
                     shape = RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp)
                 )
                 .fillMaxWidth()
@@ -236,8 +242,10 @@ fun SearchLineViewRow(
                 DropdownMenuItem(onClick = {
                     scope.launch {
                         storeFavLines.removeFromFavorites(line.id.toString())
-                        linesByGroup.clear()
-                        linesByGroup.addAll(Lines.getLinesByGroup(context))
+                        LinesR.getAllLinesBySection(context, true) {
+                            linesByGroup.clear()
+                            linesByGroup.addAll(it)
+                        }
                     }
                     menuShown.value = false
                 }) {
@@ -267,8 +275,10 @@ fun SearchLineViewRow(
                 DropdownMenuItem(onClick = {
                     scope.launch {
                         storeFavLines.saveFavoriteLine(line.id.toString())
-                        linesByGroup.clear()
-                        linesByGroup.addAll(Lines.getLinesByGroup(context))
+                        LinesR.getAllLinesBySection(context, true) {
+                            linesByGroup.clear()
+                            linesByGroup.addAll(it)
+                        }
                     }
                     menuShown.value = false
                 }) {
