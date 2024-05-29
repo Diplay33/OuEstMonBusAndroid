@@ -147,7 +147,7 @@ fun FavoriteStopDetailMain(
     }
 
     Scaffold(topBar = {
-        NextLineSchedulesTopBar(navController, stopId.toString(), stopName.toString(), Lines.getLine(line.value?.id.toString()))
+        NextLineSchedulesTopBar(navController, stopId.toString(), stopName.toString(), line.value)
     }) { padding ->
         LazyColumn(modifier = Modifier
             .padding(padding)
@@ -155,25 +155,25 @@ fun FavoriteStopDetailMain(
             .background(if (colorScheme) Color.White else Color.Black)
         ) {
             item {
-                NextLineSchedulesHeader(Lines.getLine(line.value?.id.toString()), paths, destinations)
+                NextLineSchedulesHeader(line.value, paths, destinations)
 
                 Spacer(modifier = Modifier
                     .height(30.dp)
                 )
 
-                NextLineSchedulesView(capFilteredNextSchedules, Lines.getLine(line.value?.id.toString()), isLoading.value, focusedVehicle)
+                NextLineSchedulesView(capFilteredNextSchedules, line.value, isLoading.value, focusedVehicle)
 
                 Spacer(modifier = Modifier
                     .height(30.dp)
                 )
 
-                NextLineSchedulesMap(station.value, Lines.getLine(line.value?.id.toString()), mapMarkers, focusedVehicle, navController, pathsCoordinates)
+                NextLineSchedulesMap(station.value, line.value, mapMarkers, focusedVehicle, navController, pathsCoordinates)
 
                 Spacer(modifier = Modifier
                     .height(30.dp)
                 )
 
-                NextLineSchedulesSchdlGroup(navController, Lines.getLine(line.value?.id.toString()), stopId, stopName, pathDirection.value)
+                NextLineSchedulesSchdlGroup(navController, line.value, stopId, stopName, pathDirection.value)
             }
         }
     }

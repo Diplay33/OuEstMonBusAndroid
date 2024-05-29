@@ -49,6 +49,7 @@ import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.launch
 import model.DTO.Line
+import model.DTO.LineR
 import model.DTO.NSchedulesMapMarker
 import model.DTO.NSchedulesMapMarkerType
 import model.DTO.Service
@@ -59,7 +60,7 @@ import view.lines_map_list.line_map.MapStyle
 @Composable
 fun NextLineSchedulesMap(
     station: Station?,
-    line: Line,
+    line: LineR?,
     mapMarkers: List<NSchedulesMapMarker>,
     focusedVehicle: MutableState<Int?>,
     navController: NavController,
@@ -215,7 +216,7 @@ fun NextLineSchedulesMap(
                     marker.stop?.let { stop ->
                         Marker(
                             state = MarkerState(position = LatLng(stop.latitude, stop.longitude)),
-                            icon = setCustomMapStopIcon(stop.name, line.lineColorResource, context),
+                            icon = setCustomMapStopIcon(stop.name, line?.colorHex ?: "#000000", context),
                             zIndex = 1f
                         )
                     }
@@ -223,7 +224,7 @@ fun NextLineSchedulesMap(
                     marker.service?.let { service ->
                         Marker(
                             state = MarkerState(position = LatLng(service.latitude, service.longitude)),
-                            icon = setCustomMapServiceIcon(service.vehicle.parkId, colorScheme, context, when(line.lineName) {
+                            icon = setCustomMapServiceIcon(service.vehicle.parkId, colorScheme, context, when(line?.name) {
                                 "Tram A" -> R.drawable.map_logo_tram
                                 "Tram B" -> R.drawable.map_logo_tram
                                 "Tram C" -> R.drawable.map_logo_tram
@@ -237,7 +238,7 @@ fun NextLineSchedulesMap(
                                         service.vehicleId.toString(),
                                         station?.stationId.toString(),
                                         station?.name ?: "Arrêt inconnu",
-                                        line.id.toString()
+                                        line?.id.toString()
                                     )
                                 )
                                 true
@@ -255,7 +256,10 @@ fun NextLineSchedulesMap(
         }
 
         pathsCoordinates.forEach { coordinates ->
-            Polyline(points = coordinates, color = colorResource(id = line.lineColorResource))
+            Polyline(points = coordinates, color = if (line == null)
+                Color.Transparent
+            else
+                Color(android.graphics.Color.parseColor(line.colorHex)))
         }
     }
 }
@@ -289,7 +293,7 @@ private fun setCustomMapServiceIcon(parkId: String, colorScheme: Boolean, contex
     return BitmapDescriptorFactory.fromBitmap(bm)
 }
 
-private fun setCustomMapStopIcon(message: String, outlineColorResource: Int, context: Context): BitmapDescriptor {
+private fun setCustomMapStopIcon(message: String, colorHex: String, context: Context): BitmapDescriptor {
     val height = 125f
     val widthPadding = 50.dp.value
     val width = paintTextWhite.measureText(message, 0, message.length) + widthPadding
@@ -311,7 +315,7 @@ private fun setCustomMapStopIcon(message: String, outlineColorResource: Int, con
     val bm = Bitmap.createBitmap(width.toInt(), height.toInt() , Bitmap.Config.ARGB_8888)
     val canvas = Canvas(bm)
     canvas.drawPath(path, paintBlackFill)
-    canvas.drawPath(path, paintOutline(outlineColorResource, context))
+    canvas.drawPath(path, paintOutline(colorHex, context))
     canvas.drawText(message, width/2, height * 2/3 * 2/3, paintTextWhite)
     return BitmapDescriptorFactory.fromBitmap(bm)
 }
@@ -337,8 +341,8 @@ val paintBlackFill = Paint().apply {
     textSize = 5.dp.value
 }
 
-fun paintOutline(colorResource: Int, context: Context): Paint {
-    val convertedColor = ContextCompat.getColor(context, colorResource)
+fun paintOutline(colorHex: String, context: Context): Paint {
+    val convertedColor = android.graphics.Color.parseColor(colorHex)
     return Paint().apply {
         style = Paint.Style.STROKE
         strokeCap = Paint.Cap.ROUND

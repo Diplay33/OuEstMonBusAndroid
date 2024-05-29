@@ -17,17 +17,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 import model.DTO.Line
+import model.DTO.LineR
 import model.DTO.Path
 
 @Composable
 fun NextLineSchedulesHeader(
-    line: Line,
+    line: LineR?,
     paths: List<Path>,
     destinations: List<List<String>> = listOf()
 ) {
@@ -44,7 +49,10 @@ fun NextLineSchedulesHeader(
             shape = RoundedCornerShape(10.dp)
         )
         .background(
-            colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+            if (line == null)
+                Color.Transparent
+            else
+                Color(android.graphics.Color.parseColor(line.colorHex)).copy(alpha = 0.2f),
             shape = RoundedCornerShape(10.dp)
         )
     ) {
@@ -52,8 +60,11 @@ fun NextLineSchedulesHeader(
             .fillMaxWidth()
             .padding(horizontal = 15.dp)
         ) {
-            Image(
-                painter = painterResource(id = line.lineImageResource),
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(line?.imageUrl)
+                    .decoderFactory(SvgDecoder.Factory())
+                    .build(),
                 contentDescription = null,
                 modifier = Modifier
                     .size(50.dp)
@@ -61,7 +72,7 @@ fun NextLineSchedulesHeader(
             )
 
             Text(
-                text = line.lineName,
+                text = line?.name ?: "",
                 fontSize = 23.sp,
                 fontWeight = FontWeight.Bold,
                 color = if (colorScheme) Color.Black else Color.White,
@@ -74,7 +85,10 @@ fun NextLineSchedulesHeader(
 
         Column(modifier = Modifier
             .background(
-                colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+                if (line == null)
+                    Color.Transparent
+                else
+                    Color(android.graphics.Color.parseColor(line.colorHex)).copy(alpha = 0.2f),
                 shape = RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp)
             )
             .fillMaxWidth()

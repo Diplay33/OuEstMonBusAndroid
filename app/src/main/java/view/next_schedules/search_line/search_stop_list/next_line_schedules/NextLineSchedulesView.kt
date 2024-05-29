@@ -33,12 +33,13 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.CameraPositionState
 import kotlinx.coroutines.delay
+import model.DTO.LineR
 import model.DTO.NextSchedules
 
 @Composable
 fun NextLineSchedulesView(
     nextSchedules: List<NextSchedule>,
-    line: Line,
+    line: LineR?,
     isLoading: Boolean,
     focusedVehicle: MutableState<Int?>
 ) {
@@ -90,7 +91,7 @@ fun NextLineSchedulesView(
         }
     }
     else {
-        if(nextSchedules.none { it.lineId == line.id }) {
+        if(nextSchedules.none { it.lineId == line?.id }) {
             Row(horizontalArrangement = Arrangement.Center, modifier = Modifier
                 .fillMaxWidth()
             ) {
@@ -110,12 +111,15 @@ fun NextLineSchedulesView(
                     shape = RoundedCornerShape(10.dp)
                 )
                 .background(
-                    colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+                    if (line == null)
+                        Color.Transparent
+                    else
+                        Color(android.graphics.Color.parseColor(line.colorHex)).copy(alpha = 0.2f),
                     shape = RoundedCornerShape(10.dp)
                 )
             ) {
                 nextSchedules.forEach { nextSchedule ->
-                    val destination = NextSchedulesDestinations.getDestinationFromRaw(line.id, nextSchedule.destination)
+                    val destination = NextSchedulesDestinations.getDestinationFromRaw(line?.id ?: 0, nextSchedule.destination)
                     val displayedTime = nextSchedule.getTimeLeft()
 
                     if(nextSchedule.getTimeLeft().toInt() >= 0) {
@@ -173,7 +177,10 @@ fun NextLineSchedulesView(
                                 .align(Alignment.CenterVertically)
                                 .size(35.dp)
                                 .background(
-                                    colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+                                    if (line == null)
+                                        Color.Transparent
+                                    else
+                                        Color(android.graphics.Color.parseColor(line.colorHex)).copy(alpha = 0.2f),
                                     shape = RoundedCornerShape(10.dp)
                                 )
                             ) {

@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import kotlinx.coroutines.launch
 import model.DTO.Line
+import model.DTO.LineR
 import model.preferences_data_store.StoreFavoriteStopsWithLine
 
 @Composable
@@ -26,7 +27,7 @@ fun NextLineSchedulesTopBar(
     navController: NavController,
     stopId: String,
     stopName: String,
-    line: Line
+    line: LineR?
 ) {
     val colorScheme = !isSystemInDarkTheme()
 
@@ -49,7 +50,7 @@ fun NextLineSchedulesTopBar(
 
         LaunchedEffect(line) {
             scope.launch {
-                storeFavStopsWithLine.getFavoriteStopsForLine(line.id.toString()) { favoriteStops ->
+                storeFavStopsWithLine.getFavoriteStopsForLine(line?.id.toString()) { favoriteStops ->
                     isFavorite.value = favoriteStops.contains(stopId)
                 }
             }
@@ -102,7 +103,7 @@ fun NextLineSchedulesTopBar(
                             scope.launch {
                                 if(isFavorite.value) {
                                     storeFavStopsWithLine.removeFavoriteStopForLine(
-                                        lineId = line.id.toString(),
+                                        lineId = line?.id.toString(),
                                         stopId = stopId
                                     )
                                     storeFavStopsWithLine.checkMaxStopCountReached { result ->
@@ -114,7 +115,7 @@ fun NextLineSchedulesTopBar(
                                         isDialogShown.value = true
                                     } else {
                                         storeFavStopsWithLine.saveFavoriteStopForLine(
-                                            lineId = line.id.toString(),
+                                            lineId = line?.id.toString(),
                                             stopId = stopId
                                         )
                                         storeFavStopsWithLine.checkMaxStopCountReached { result ->
