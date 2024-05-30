@@ -766,9 +766,9 @@ class VehicleData {
             mapOf("id" to "1899", "parkId" to "8604", "brand" to "DIETRICH Véhicules", "model" to "DIETRICH Véhicules City 23", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
 
             //MAN Lion's City 12G EfficientHybrid
-            mapOf("id" to "", "parkId" to "0001", "brand" to "MAN", "model" to "MAN Lion's City 12G EfficientHybrid", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "80001", "parkId" to "0001", "brand" to "MAN", "model" to "MAN Lion's City 12G EfficientHybrid", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
             mapOf("id" to "", "parkId" to "0002", "brand" to "MAN", "model" to "MAN Lion's City 12G EfficientHybrid", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
-            mapOf("id" to "", "parkId" to "0003", "brand" to "MAN", "model" to "MAN Lion's City 12G EfficientHybrid", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
+            mapOf("id" to "80003", "parkId" to "0003", "brand" to "MAN", "model" to "MAN Lion's City 12G EfficientHybrid", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
             mapOf("id" to "", "parkId" to "0004", "brand" to "MAN", "model" to "MAN Lion's City 12G EfficientHybrid", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
             mapOf("id" to "80005", "parkId" to "0005", "brand" to "MAN", "model" to "MAN Lion's City 12G EfficientHybrid", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
             mapOf("id" to "", "parkId" to "0006", "brand" to "MAN", "model" to "MAN Lion's City 12G EfficientHybrid", "type" to "BUS", "operator" to "TRANSDEV Citram Aquitaine"),
