@@ -13,7 +13,6 @@ class LineData {
             Line(199, "Bus Express G", R.drawable.bus_express_g, R.color.bus_express_g, "Tram"),
             Line(1, "Lianes 1", R.drawable.lianes_1, R.color.lianes, "Lianes"),
             Line(2, "Lianes 2", R.drawable.lianes_2, R.color.lianes, "Lianes"),
-            Line(3, "Lianes 3", R.drawable.lianes_3, R.color.lianes, "Lianes"),
             Line(4, "Lianes 4", R.drawable.lianes_4, R.color.lianes, "Lianes"),
             Line(5, "Lianes 5", R.drawable.lianes_5, R.color.lianes, "Lianes"),
             Line(7, "Lianes 7", R.drawable.lianes_7, R.color.lianes, "Lianes"),
