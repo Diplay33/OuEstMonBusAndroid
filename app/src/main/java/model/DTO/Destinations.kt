@@ -10,6 +10,8 @@ class Destinations {
                     return listOf("MERIGNAC", "René Coty")
                 lineId == 66 && destination == "Les Pins" ->
                     return listOf("MARTIGNAS SUR JALLE", "Les Pins")
+                lineId == 34 && destination == "République" ->
+                    return listOf("SAINT MÉDARD EN JALLES", "République")
                 else ->
                     DestinationData.destinations[destination]?.let { values ->
                         return values
