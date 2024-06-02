@@ -71,6 +71,7 @@ class NextSchedulesDestinationData {
             "Gare De Blanquefort" to listOf("BLANQUEFORT", "Gare"),
             "Gare de Bruges" to listOf("BRUGES", "Gare"),
             "Gare Routière" to listOf("SAINT MÉDARD EN JALLES", "Gare Routière"),
+            "Gare Saint-Jean" to listOf("BORDEAUX", "Gare Saint Jean"),
             "Gare St Jean" to listOf("BORDEAUX", "Gare Saint Jean"),
             "Gare St Jean (arrêt de Descente)" to listOf("BORDEAUX", "Gare Saint Jean"),
             "Gare St Jean (Hall 3)" to listOf("BORDEAUX", "Gare Saint Jean — Hall 3"),
@@ -176,6 +177,7 @@ class NextSchedulesDestinationData {
             "Stade Ornon" to listOf("GRADIGNAN", "Stade Ornon"),
             "Stalingrad" to listOf("BORDEAUX", "Stalingrad"),
             "Stalingrad (Parlier)" to listOf("BORDEAUX", "Stalingrad"),
+            "St-Aubin Villepreux" to listOf("SAINT AUBIN", "Villepreux"),
             "St Exupéry" to listOf("AMBÈS", "Saint Exupéry"),
             //T
             "Talence Centre-Forum" to listOf("TALENCE", "Forum"),

@@ -23,6 +23,9 @@ class PathDestinations {
                 lineId == 105 && finalString == "Lycée Sud Médoc" -> {
                     return listOf("LE TAILLAN", "Lycée Sud Médoc", "")
                 }
+                lineId == 34 && finalString == "République" -> {
+                    return listOf("SAINT MÉDARD EN JALLES", "République", "")
+                }
                 else -> {
                     PathDestinationData.destinations[finalString]?.let { values ->
                         return values

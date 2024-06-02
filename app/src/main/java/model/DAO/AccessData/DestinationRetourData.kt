@@ -21,7 +21,7 @@ class DestinationRetourData {
             //Tram D
             62 to listOf(listOf("BORDEAUX", "Carle Vernet")),
             //Bus Express G
-            199 to listOf(listOf("BORDEAUX", "Gare Saint Jean")),
+            34 to listOf(listOf("BORDEAUX", "Gare Saint Jean")),
             //Lianes 1
             1 to listOf(listOf("BORDEAUX", "République")),
             //Lianes 2

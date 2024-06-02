@@ -253,6 +253,7 @@ class PathDestinationData {
             "Stalingrad (Parlier) via CITE DU VIN" to listOf("BORDEAUX", "Stalingrad", "via La Cité du Vin"),
             "Stalingrad (Tram A)" to listOf("BORDEAUX", "Stalingrad", "via Collège Simone Veil"),
             "Stalingrad via CCBLAN" to listOf("BORDEAUX", "Stalingrad", "via Collège Simone Veil"),
+            "St-Aubin Villepreux" to listOf("SAINT AUBIN", "Villepreux", ""),
             "St Exupéry" to listOf("AMBÈS", "Saint Exupéry", ""),
             "St Exupéry via CCBLAN" to listOf("AMBÈS", "Saint Exupéry", "via Collège Simone Veil"),
             //T
