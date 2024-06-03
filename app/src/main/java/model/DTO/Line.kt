@@ -8,13 +8,13 @@ data class Line (
     var id: Int,
     var name: String,
     var type: String,
-    var index: Int,
-    var section: Int,
+    var index: Int?,
+    var section: Int?,
     var physicalType: String,
-    var imageUrl: String,
-    var colorHex: String,
+    var imageUrl: String?,
+    var colorHex: String?,
     var isNest: Boolean,
     var showSchedules: Boolean,
-    var parentId: Int,
+    var parentId: Int?,
     var createdAt: String
 )
