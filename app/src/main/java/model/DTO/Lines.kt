@@ -82,6 +82,7 @@ class Lines {
                 colorHex = "#FFFFFF",
                 isNest = false,
                 showSchedules = false,
+                parentId = 0,
                 createdAt = ""
             )
         }

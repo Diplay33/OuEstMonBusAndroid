@@ -15,5 +15,6 @@ data class Line (
     var colorHex: String,
     var isNest: Boolean,
     var showSchedules: Boolean,
+    var parentId: Int,
     var createdAt: String
 )

@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import model.DAO.LineDAO
 import model.DTO.Line
 
-@Database(entities = [Line::class], version = 2)
+@Database(entities = [Line::class], version = 3)
 abstract class AppDatabase: RoomDatabase() {
     companion object {
         const val NAME = "APP_DB"

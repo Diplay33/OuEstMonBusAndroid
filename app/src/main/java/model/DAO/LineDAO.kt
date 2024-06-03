@@ -8,7 +8,7 @@ import model.DTO.Line
 
 @Dao
 interface LineDAO {
-    @Query("SELECT * FROM Line")
+    @Query("SELECT * FROM Line WHERE parentId = ''")
     fun getAllLinesR(): List<Line>
 
     @Query("SELECT * FROM Line WHERE showSchedules = 1")
