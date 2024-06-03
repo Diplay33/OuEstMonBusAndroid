@@ -17,15 +17,15 @@ class Lines {
         //MARK: - Multiple
         fun getAllLines(callback: (List<Line>) -> Unit) {
             CoroutineScope(Dispatchers.IO).launch {
-                callback(lineDAO.getAllLinesR())
+                callback(lineDAO.getAllLines())
             }
         }
 
         fun getAllLinesBySection(context: Context, forSchedules: Boolean = false, callback: (List<List<Line>>) -> Unit) {
             CoroutineScope(Dispatchers.IO).launch {
-                val lines = if (forSchedules) lineDAO.getAllLinesRForSchedules()
+                val lines = if (forSchedules) lineDAO.getAllLinesForSchedules()
                 else
-                    lineDAO.getAllLinesR()
+                    lineDAO.getAllLines()
                 val listSectionSet = lines.map { it.section }.toSet().toList()
                 val linesBySection: ArrayList<ArrayList<Line>> = ArrayList(listSectionSet.map { arrayListOf() })
                 linesBySection.add(arrayListOf())
@@ -56,7 +56,7 @@ class Lines {
                     return REGEX_UNACCENT.replace(temp, "")
                 }
 
-                callback(lineDAO.getAllLinesR().filter { line ->
+                callback(lineDAO.getAllLines().filter { line ->
                     line.name.lowercase().unaccent().contains(searchText.trim().lowercase().unaccent())
                 })
             }
