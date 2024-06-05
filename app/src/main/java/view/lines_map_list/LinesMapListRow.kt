@@ -49,10 +49,9 @@ fun LinesMapListRow(
     searchText: MutableState<String> = mutableStateOf("")
 ) {
     val serviceCount = services.filter { it.lineId == rowLine.id }.size
-    val navetteTramServicesCount = remember {
+    val nestServicesCount = remember {
         mutableStateOf(0)
     }
-    val isNavetteTram = rowLine.id == 123
     val menuShown = remember {
         mutableStateOf(false)
     }
@@ -65,15 +64,10 @@ fun LinesMapListRow(
     val displayNotifCount = storeDisplayNotifCount.isEnabled.collectAsState(initial = false)
     val colorScheme = !isSystemInDarkTheme()
 
-    LaunchedEffect(rowLine) {
-        if(rowLine.id == 123) {
-            isLoading.value = true
-            while(true) {
-                /*Services.getNavetteTramServices { returnedServices ->
-                    navetteTramServicesCount.value = returnedServices.size
-                    isLoading.value = false
-                }*/
-                delay(30000)
+    LaunchedEffect(services) {
+        if(rowLine.isNest) {
+            Lines.getChildLineIds(rowLine.id) { childLineIds ->
+                nestServicesCount.value = services.filter { childLineIds.contains(it.lineId) }.size
             }
         }
     }
@@ -150,8 +144,8 @@ fun LinesMapListRow(
                     }
                     else {
                         ColorIndicatorDot(
-                            color = if ((if (isNavetteTram)
-                                navetteTramServicesCount.value
+                            color = if ((if (rowLine.isNest)
+                                nestServicesCount.value
                                 else
                                     serviceCount) == 0) Color.Red else Color.Green,
                             size = 10.dp,
@@ -164,14 +158,14 @@ fun LinesMapListRow(
                         )
 
                         Text(
-                            when(if (isNavetteTram)
-                                navetteTramServicesCount.value
+                            when(if (rowLine.isNest)
+                                nestServicesCount.value
                             else
                                 serviceCount) {
                                 0 -> "Aucun véhicule en service"
                                 1 -> "1 véhicule en service"
-                                else -> "${if (isNavetteTram) 
-                                    navetteTramServicesCount.value 
+                                else -> "${if (rowLine.isNest)
+                                    nestServicesCount.value 
                                 else 
                                     serviceCount} véhicules en service"
                             },
