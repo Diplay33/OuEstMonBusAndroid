@@ -18,15 +18,9 @@ class Services {
             }
         }
 
-        fun getNavetteTramServices(callback: (ArrayList<Service>) -> Unit) {
-            ServiceDAO.getAllServices { services ->
-                val navetteTramServices = ArrayList<Service>()
-                services.forEach { service ->
-                    if(service.lineId in 123..198) {
-                        navetteTramServices.add(service)
-                    }
-                }
-                callback(navetteTramServices)
+        fun getServicesFilteredBy(ids: List<Int>, callback: (List<Service>) -> Unit) {
+            ServiceDAO.getAllServices { returnedServices ->
+                callback(returnedServices.filter { ids.contains(it.lineId) })
             }
         }
 

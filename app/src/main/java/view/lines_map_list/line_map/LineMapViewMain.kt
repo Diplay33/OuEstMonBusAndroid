@@ -100,8 +100,8 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
             }
 
             while(true) {
-                if(lineId == "123") {
-                    Services.getNavetteTramServices { returnedServices ->
+                if(line.value?.isNest == true) {
+                    Services.getServicesFilteredBy(listOf(1, 2)) { returnedServices ->
                         services.clear()
                         services.addAll(returnedServices)
                         isLoading.value = false

@@ -69,10 +69,10 @@ fun LinesMapListRow(
         if(rowLine.id == 123) {
             isLoading.value = true
             while(true) {
-                Services.getNavetteTramServices { returnedServices ->
+                /*Services.getNavetteTramServices { returnedServices ->
                     navetteTramServicesCount.value = returnedServices.size
                     isLoading.value = false
-                }
+                }*/
                 delay(30000)
             }
         }
