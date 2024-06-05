@@ -62,6 +62,10 @@ class Lines {
             }
         }
 
+        fun getChildLineIds(parentId: Int, callback: (List<Int>) -> Unit) {
+            CoroutineScope(Dispatchers.IO).launch { callback(lineDAO.getChildLineIds(parentId)) }
+        }
+
         //MARK: - Single
         fun getLine(id: Int, callback: (Line) -> Unit) {
             CoroutineScope(Dispatchers.IO).launch {

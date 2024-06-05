@@ -87,25 +87,33 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
             ProgrammedMessages.getNumberOfMessagesByLine(line.value?.id.toString()) { count ->
                 programmedMessagesCount.value = count
             }
-            Paths.getOrderedPathsByLine(line.value?.id ?: 0, true) { paths ->
-                paths.forEach { backAndForthPaths ->
-                    backAndForthPaths.forEach { path ->
-                        pathsCoordinates.addAll(
-                            path.coordinates.map { coordinates ->
-                                coordinates.map { LatLng(it[1], it[0]) }
-                            }
-                        )
+            if(line.value?.isNest != true) {
+                Paths.getOrderedPathsByLine(line.value?.id ?: 0, true) { paths ->
+                    paths.forEach { backAndForthPaths ->
+                        backAndForthPaths.forEach { path ->
+                            pathsCoordinates.addAll(
+                                path.coordinates.map { coordinates ->
+                                    coordinates.map { LatLng(it[1], it[0]) }
+                                }
+                            )
+                        }
                     }
                 }
             }
+        }
 
+        LaunchedEffect(line.value) {
             while(true) {
                 if(line.value?.isNest == true) {
-                    Services.getServicesFilteredBy(listOf(1, 2)) { returnedServices ->
-                        services.clear()
-                        services.addAll(returnedServices)
-                        isLoading.value = false
-                        refreshDate.value = Calendar.getInstance().time
+                    line.value?.id?.let { lineId ->
+                        Lines.getChildLineIds(lineId) { childLineIds ->
+                            Services.getServicesFilteredBy(childLineIds) { returnedServices ->
+                                services.clear()
+                                services.addAll(returnedServices)
+                                isLoading.value = false
+                                refreshDate.value = Calendar.getInstance().time
+                            }
+                        }
                     }
                 }
                 else {
