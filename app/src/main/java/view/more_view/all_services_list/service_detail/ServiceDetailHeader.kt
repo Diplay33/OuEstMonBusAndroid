@@ -23,7 +23,7 @@ import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import model.DTO.Destination
-import model.DTO.DestinationsR
+import model.DTO.Destinations
 import model.DTO.Line
 
 @Composable
@@ -35,7 +35,7 @@ fun ServiceDetailHeader(line: Line?, rawDestination: String) {
 
     LaunchedEffect(line, rawDestination) {
         line?.let { line ->
-            DestinationsR.getDestination(rawDestination, line.id) { destination.value = it }
+            Destinations.getDestination(rawDestination, line.id) { destination.value = it }
         }
     }
 

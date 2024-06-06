@@ -25,7 +25,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.CameraPositionState
 import model.DTO.Destination
 import model.DTO.Destinations
-import model.DTO.DestinationsR
 import model.DTO.Line
 import model.DTO.Lines
 import model.DTO.Service
@@ -52,7 +51,7 @@ fun LineMapViewServicesListRow(
             }
             line.value = returnedLine
         }
-        DestinationsR.getDestination(service.destination, service.lineId) { destination.value = it }
+        Destinations.getDestination(service.destination, service.lineId) { destination.value = it }
     }
 
     Row(modifier = Modifier

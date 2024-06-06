@@ -23,7 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
-import model.DTO.Destinations
 import model.DTO.Line
 import model.DTO.Lines
 import model.DTO.Service

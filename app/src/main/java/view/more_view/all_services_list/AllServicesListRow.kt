@@ -40,7 +40,7 @@ fun AllServicesListRow(service: Service, navController: NavController) {
 
     LaunchedEffect(service) {
         Lines.getLine(service.lineId) { line.value = it }
-        DestinationsR.getDestination(service.destination, service.lineId) { destination.value = it }
+        Destinations.getDestination(service.destination, service.lineId) { destination.value = it }
     }
 
     Row(modifier = Modifier
