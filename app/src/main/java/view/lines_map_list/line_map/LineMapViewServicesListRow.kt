@@ -41,7 +41,13 @@ fun LineMapViewServicesListRow(
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(service) {
-        Lines.getLine(service.lineId) { line.value = it }
+        Lines.getLine(service.lineId) { returnedLine ->
+            returnedLine.parentId?.let { parentId ->
+                Lines.getLine(parentId) { line.value = it }
+                return@getLine
+            }
+            line.value = returnedLine
+        }
     }
 
     Row(modifier = Modifier
