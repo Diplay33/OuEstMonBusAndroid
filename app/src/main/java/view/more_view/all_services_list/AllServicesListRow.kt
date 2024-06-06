@@ -33,11 +33,18 @@ fun AllServicesListRow(service: Service, navController: NavController) {
     val line = remember {
         mutableStateOf<Line?>(null)
     }
-    val destination = Destinations.getDestinationFromRaw(service.destination, service.lineId)
+    val destination = remember {
+        mutableStateOf<Destination?>(null)
+    }
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(service) {
-        Lines.getLine(service.lineId) { line.value = it }
+        Lines.getLine(service.lineId) { returnedLine ->
+            line.value = returnedLine
+            DestinationsR.getDestination(service.destination, returnedLine.id) {
+                destination.value = it
+            }
+        }
     }
 
     Row(modifier = Modifier
@@ -58,7 +65,7 @@ fun AllServicesListRow(service: Service, navController: NavController) {
                 shape = RoundedCornerShape(10.dp)
             )
             .padding(horizontal = 15.dp)
-            .padding(top = 7.dp, bottom = if (destination.first() == "") 7.dp else 5.dp)
+            .padding(top = 7.dp, bottom = if (destination.value == null) 7.dp else 5.dp)
             .fillMaxWidth()
             .clickable {
                 navController.navigate(
@@ -115,24 +122,24 @@ fun AllServicesListRow(service: Service, navController: NavController) {
                     )
 
                     Column {
-                        if(destination.first() != "") {
+                        destination.value?.let { destination ->
                             Text(
-                                text = destination.first(),
+                                text = destination.city,
                                 fontSize = 13.sp,
                                 color = Color.Gray,
                                 modifier = Modifier
-                                    .offset(y = if (destination.first() == "") 0.dp else 2.dp)
+                                    .offset(y = 2.dp)
                             )
 
                             Spacer(modifier = Modifier.height(3.dp))
                         }
 
                         Text(
-                            text = destination.last(),
+                            text = destination.value?.destination ?: service.destination,
                             fontSize = 18.sp,
                             color = if (colorScheme) Color.Black else Color.White,
                             modifier = Modifier
-                                .offset(y = if (destination.first() == "") 0.dp else (-2).dp)
+                                .offset(y = if (destination.value == null) 0.dp else (-2).dp)
                         )
                     }
                 }

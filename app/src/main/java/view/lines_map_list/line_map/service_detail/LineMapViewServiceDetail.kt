@@ -79,10 +79,7 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>, line: Line
 
     LazyColumn {
         item {
-            ServiceDetailHeader(
-                line = line,
-                destination = Destinations.getDestinationFromRaw(service.destination, service.lineId)
-            )
+            ServiceDetailHeader(line, service.destination)
 
             Spacer(modifier = Modifier
                 .height(30.dp)

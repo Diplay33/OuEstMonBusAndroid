@@ -50,10 +50,7 @@ fun ServiceDetailMain(
             .padding(padding)
             .background(if (colorScheme) Color.White else Color.Black)
         ) {
-            ServiceDetailHeader(
-                line = line.value,
-                destination = Destinations.getDestinationFromRaw(destination ?: "", line.value?.id ?: 0)
-            )
+            ServiceDetailHeader(line = line.value, destination ?: "")
 
             Spacer(modifier = Modifier
                 .height(30.dp)

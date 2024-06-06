@@ -9,6 +9,9 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,11 +22,22 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import model.DTO.Destination
+import model.DTO.DestinationsR
 import model.DTO.Line
 
 @Composable
-fun ServiceDetailHeader(line: Line?, destination: List<String>) {
+fun ServiceDetailHeader(line: Line?, rawDestination: String) {
     val colorScheme = !isSystemInDarkTheme()
+    val destination = remember {
+        mutableStateOf<Destination?>(null)
+    }
+
+    LaunchedEffect(line, rawDestination) {
+        line?.let { line ->
+            DestinationsR.getDestination(rawDestination, line.id) { destination.value = it }
+        }
+    }
 
     Row(modifier = Modifier
         .padding(horizontal = 15.dp)
@@ -82,24 +96,24 @@ fun ServiceDetailHeader(line: Line?, destination: List<String>) {
                 Column(modifier = Modifier
                     .padding(horizontal = 10.dp)
                 ) {
-                    if(destination.first() != "") {
+                    destination.value?.let { destination ->
                         Text(
-                            text = destination.first(),
+                            text = destination.city,
                             fontSize = 13.sp,
                             color = Color.Gray,
                             modifier = Modifier
-                                .offset(y = if (destination.first() == "") 0.dp else 2.dp)
+                                .offset(y = 2.dp)
                         )
 
                         Spacer(modifier = Modifier.height(3.dp))
                     }
 
                     Text(
-                        text = destination.last(),
+                        text = destination.value?.destination ?: rawDestination,
                         fontSize = 18.sp,
                         color = if (colorScheme) Color.Black else Color.White,
                         modifier = Modifier
-                            .offset(y = if (destination.first() == "") 0.dp else (-2).dp)
+                            .offset(y = if (destination.value == null) 0.dp else (-2).dp)
                     )
                 }
             }

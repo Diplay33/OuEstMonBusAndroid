@@ -85,13 +85,7 @@ fun NextScheduleDetailsMain(
                     .height(30.dp)
                 )
 
-                ServiceDetailHeader(
-                    line = line.value,
-                    destination = Destinations.getDestinationFromRaw(
-                        destination = service.value.destination,
-                        lineId = line.value?.id ?: 0
-                    )
-                )
+                ServiceDetailHeader(line.value, service.value.destination)
 
                 Spacer(modifier = Modifier
                     .height(30.dp)
