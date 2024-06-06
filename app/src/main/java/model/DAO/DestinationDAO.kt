@@ -9,6 +9,6 @@ interface DestinationDAO {
     @Query("SELECT * FROM Destination WHERE input = (:input) AND relatedLine = (:lineId)")
     fun getLineRelatedDestination(input: String, lineId: Int): Destination?
 
-    @Query("SELECT * FROM Destination WHERE input = (:input)")
+    @Query("SELECT * FROM Destination WHERE input = (:input) AND relatedLine IS NULL")
     fun getDestination(input: String): Destination?
 }

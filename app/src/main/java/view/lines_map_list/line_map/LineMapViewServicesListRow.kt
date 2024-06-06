@@ -51,10 +51,8 @@ fun LineMapViewServicesListRow(
                 return@getLine
             }
             line.value = returnedLine
-            DestinationsR.getDestination(service.destination, returnedLine.id) {
-                destination.value = it
-            }
         }
+        DestinationsR.getDestination(service.destination, service.lineId) { destination.value = it }
     }
 
     Row(modifier = Modifier

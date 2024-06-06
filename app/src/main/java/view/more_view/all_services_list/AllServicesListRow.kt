@@ -39,12 +39,8 @@ fun AllServicesListRow(service: Service, navController: NavController) {
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(service) {
-        Lines.getLine(service.lineId) { returnedLine ->
-            line.value = returnedLine
-            DestinationsR.getDestination(service.destination, returnedLine.id) {
-                destination.value = it
-            }
-        }
+        Lines.getLine(service.lineId) { line.value = it }
+        DestinationsR.getDestination(service.destination, service.lineId) { destination.value = it }
     }
 
     Row(modifier = Modifier
