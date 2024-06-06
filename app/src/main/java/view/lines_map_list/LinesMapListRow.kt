@@ -64,7 +64,7 @@ fun LinesMapListRow(
     val displayNotifCount = storeDisplayNotifCount.isEnabled.collectAsState(initial = false)
     val colorScheme = !isSystemInDarkTheme()
 
-    LaunchedEffect(services) {
+    LaunchedEffect(isLoading.value) {
         if(rowLine.isNest) {
             Lines.getChildLineIds(rowLine.id) { childLineIds ->
                 nestServicesCount.value = services.filter { childLineIds.contains(it.lineId) }.size
