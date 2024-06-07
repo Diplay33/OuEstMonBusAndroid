@@ -64,7 +64,9 @@ fun NextLineSchedulesMain(
                 }
             }
             else {
-                destinations.addAll(DestinationsRetour.getDestinationRetourOfLine(returnedLine.id))
+                RetourDestinations.getListOfDestinations(returnedLine.id) {
+                    destinations.addAll(it)
+                }
             }
         }
     }

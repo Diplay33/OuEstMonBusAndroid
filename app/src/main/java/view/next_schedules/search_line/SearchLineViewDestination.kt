@@ -13,6 +13,7 @@ import model.DTO.AllerDestinations
 import model.DTO.DestinationsRetour
 import model.DTO.Line
 import model.DTO.Path
+import model.DTO.RetourDestinations
 
 @Composable
 fun SearchLineViewDestination(paths: List<Path>, line: Line, navController: NavController) {
@@ -27,7 +28,9 @@ fun SearchLineViewDestination(paths: List<Path>, line: Line, navController: NavC
             }
         }
         else {
-            destinations.addAll(DestinationsRetour.getDestinationRetourOfLine(line.id))
+            RetourDestinations.getListOfDestinations(line.id) {
+                destinations.addAll(it)
+            }
         }
     }
 

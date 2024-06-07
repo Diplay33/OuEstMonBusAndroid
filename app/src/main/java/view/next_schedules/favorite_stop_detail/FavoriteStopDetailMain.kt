@@ -30,6 +30,7 @@ import model.DTO.NextSchedule
 import model.DTO.NextSchedules
 import model.DTO.Path
 import model.DTO.Paths
+import model.DTO.RetourDestinations
 import model.DTO.Station
 import model.DTO.Stations
 import view.next_schedules.search_line.search_stop_list.next_line_schedules.NextLineSchedulesHeader
@@ -97,7 +98,9 @@ fun FavoriteStopDetailMain(
                                 }
                             }
                             else {
-                                destinations.addAll(DestinationsRetour.getDestinationRetourOfLine(line.id))
+                                RetourDestinations.getListOfDestinations(lineId?.toInt() ?: 0) {
+                                    destinations.addAll(it)
+                                }
                             }
                         }
                     }

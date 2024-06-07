@@ -61,7 +61,9 @@ fun SearchStopListMain(
                 }
             }
             else {
-                destinations.addAll(DestinationsRetour.getDestinationRetourOfLine(line.id))
+                RetourDestinations.getListOfDestinations(line.id) {
+                    destinations.addAll(it)
+                }
             }
         }
     }
