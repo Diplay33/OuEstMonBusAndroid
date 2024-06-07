@@ -20,7 +20,6 @@ import androidx.navigation.NavController
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.delay
 import model.DTO.AllerDestinations
-import model.DTO.DestinationsRetour
 import model.DTO.Line
 import model.DTO.Lines
 import model.DTO.NSchedulesMapMarker
