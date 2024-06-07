@@ -87,7 +87,7 @@ fun SearchLineViewRow(
                     onDoubleTap = { },
                     onLongPress = { menuShown.value = true },
                     onTap = {
-                        if(isCollapsed.value && paths.isEmpty()) {
+                        if (isCollapsed.value && paths.isEmpty()) {
                             isLoading.value = true
                             Paths.getOrderedPathsByLine(line.id) { returnedPaths ->
                                 paths.clear()
@@ -101,8 +101,7 @@ fun SearchLineViewRow(
                                     )
                                 }
                             }
-                        }
-                        else {
+                        } else {
                             isCollapsed.value = !isCollapsed.value
                             scope.launch {
                                 rotation.animateTo(
@@ -206,19 +205,7 @@ fun SearchLineViewRow(
             ) {
                 paths.forEach { paths ->
                     if(paths.isNotEmpty()) {
-                        SearchLineViewDestinationRow(
-                            paths = paths,
-                            destinations = if (paths.first().direction == "ALLER")
-                                DestinationsAller.getDestinationAllerOfLine(line.id)
-                            else
-                                DestinationsRetour.getDestinationRetourOfLine(line.id),
-                            lineId = line.id.toString(),
-                            navController = navController
-                        )
-
-                        Spacer(modifier = Modifier
-                            .height(15.dp)
-                        )
+                        SearchLineViewDestination(paths, line, navController)
                     }
                 }
             }

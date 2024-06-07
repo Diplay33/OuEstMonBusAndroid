@@ -28,10 +28,9 @@ fun NextLineSchedulesMain(
     val paths = remember {
         mutableStateListOf<Path>()
     }
-    val destinations = if (pathDirection == "ALLER")
-        DestinationsAller.getDestinationAllerOfLine(line.value?.id ?: 0)
-    else
-        DestinationsRetour.getDestinationRetourOfLine(line.value?.id ?: 0)
+    val destinations = remember {
+        mutableStateListOf<List<String>>()
+    }
     val isLoading = remember {
         mutableStateOf(true)
     }
@@ -56,7 +55,18 @@ fun NextLineSchedulesMain(
     }
 
     LaunchedEffect(lineId) {
-        Lines.getLine(lineId?.toInt() ?: 0) { line.value = it }
+        Lines.getLine(lineId?.toInt() ?: 0) { returnedLine ->
+            line.value = returnedLine
+
+            if(pathDirection == "ALLER") {
+                AllerDestinations.getListOfDestinations(returnedLine.id) {
+                    destinations.addAll(it)
+                }
+            }
+            else {
+                destinations.addAll(DestinationsRetour.getDestinationRetourOfLine(returnedLine.id))
+            }
+        }
     }
 
     LaunchedEffect(stopName, line.value) {

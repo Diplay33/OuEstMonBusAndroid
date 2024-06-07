@@ -19,6 +19,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.delay
+import model.DTO.AllerDestinations
 import model.DTO.DestinationsAller
 import model.DTO.DestinationsRetour
 import model.DTO.Line
@@ -91,11 +92,14 @@ fun FavoriteStopDetailMain(
                             paths.addAll(returnedPaths)
                             destinations.clear()
                             pathDirection.value = paths.first().direction
-                            destinations.addAll(if (pathDirection.value == "ALLER")
-                                DestinationsAller.getDestinationAllerOfLine(line.id)
-                            else
-                                DestinationsRetour.getDestinationRetourOfLine(line.id))
-
+                            if(pathDirection.value == "ALLER") {
+                                AllerDestinations.getListOfDestinations(lineId?.toInt() ?: 0) {
+                                    destinations.addAll(it)
+                                }
+                            }
+                            else {
+                                destinations.addAll(DestinationsRetour.getDestinationRetourOfLine(line.id))
+                            }
                         }
                     }
                 }

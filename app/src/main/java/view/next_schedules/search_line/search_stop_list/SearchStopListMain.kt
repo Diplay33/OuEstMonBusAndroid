@@ -48,11 +48,23 @@ fun SearchStopListMain(
     val pathDirectionState = remember {
         mutableStateOf(pathDirection ?: "")
     }
-    val destinations = if (pathDirectionState.value == "ALLER")
-        DestinationsAller.getDestinationAllerOfLine(line.value?.id ?: 0)
-    else
-        DestinationsRetour.getDestinationRetourOfLine(line.value?.id ?: 0)
+    val destinations = remember {
+        mutableStateListOf<List<String>>()
+    }
     val colorScheme = !isSystemInDarkTheme()
+
+    LaunchedEffect(line.value) {
+        line.value?.let { line ->
+            if(pathDirectionState.value == "ALLER") {
+                AllerDestinations.getListOfDestinations(line.id) {
+                    destinations.addAll(it)
+                }
+            }
+            else {
+                destinations.addAll(DestinationsRetour.getDestinationRetourOfLine(line.id))
+            }
+        }
+    }
 
     Scaffold(topBar = { SearchStopListTopBar(navController) }) { padding ->
         Column(modifier = Modifier

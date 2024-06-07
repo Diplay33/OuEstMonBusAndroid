@@ -9,9 +9,23 @@ class AllerDestinations {
     companion object {
         private val allerDestinationDAO = MainApplication.appDatabase.getAllerDestinationDAO()
 
-        fun getAllerDestination(lineId: Int, callback: (AllerDestination?) -> Unit) {
+        fun getListOfDestinations(lineId: Int, callback: (List<List<String>>) -> Unit) {
             CoroutineScope(Dispatchers.IO).launch {
-                callback(allerDestinationDAO.getAllerDestination(lineId))
+                allerDestinationDAO.getAllerDestination(lineId)?.let { allerDestination ->
+                    val destinationsToReturn: MutableList<MutableList<String>> = mutableListOf(
+                        mutableListOf(allerDestination.city1, allerDestination.destination1)
+                    )
+
+                    allerDestination.city2?.let { destinationsToReturn.add(mutableListOf(it)) }
+                    allerDestination.destination2?.let { destinationsToReturn[1].add(it) }
+
+                    allerDestination.city3?.let { destinationsToReturn.add(mutableListOf(it)) }
+                    allerDestination.destination3?.let { destinationsToReturn[2].add(it) }
+
+                    callback(destinationsToReturn)
+                    return@launch
+                }
+                callback(listOf())
             }
         }
     }
