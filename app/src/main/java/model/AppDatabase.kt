@@ -6,11 +6,13 @@ import model.DAO.AllerDestinationDAO
 import model.DAO.DestinationDAO
 import model.DAO.LineDAO
 import model.DAO.NextSchedulesDestinationDAO
+import model.DAO.PathDestinationDAO
 import model.DAO.RetourDestinationDAO
 import model.DTO.Destination
 import model.DTO.Line
 import model.DTO.AllerDestination
 import model.DTO.NextSchedulesDestination
+import model.DTO.PathDestination
 import model.DTO.RetourDestination
 
 @Database(
@@ -19,9 +21,10 @@ import model.DTO.RetourDestination
         Destination::class,
         AllerDestination::class,
         RetourDestination::class,
-        NextSchedulesDestination::class
+        NextSchedulesDestination::class,
+        PathDestination::class
     ],
-    version = 9
+    version = 10
 )
 abstract class AppDatabase: RoomDatabase() {
     companion object {
@@ -32,4 +35,5 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun getAllerDestinationDAO(): AllerDestinationDAO
     abstract fun getRetourDestinationDAO(): RetourDestinationDAO
     abstract fun getNextSchedulesDestinationDAO(): NextSchedulesDestinationDAO
+    abstract fun getPathDestinationDAO(): PathDestinationDAO
 }
