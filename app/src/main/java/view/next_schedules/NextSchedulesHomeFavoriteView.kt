@@ -28,6 +28,8 @@ import kotlinx.coroutines.delay
 import model.DTO.Line
 import model.DTO.NextSchedule
 import model.DTO.NextSchedulesDestinations
+import model.DTO.NextSchedulesDestinationsR
+import view.next_schedules.search_line.NextSchedulesHomeFavoriteNextSchedule
 
 @Composable
 fun NextSchedulesHomeFavoriteView(
@@ -35,11 +37,6 @@ fun NextSchedulesHomeFavoriteView(
     nextSchedules: List<NextSchedule>,
     isLoading: Boolean
 ) {
-    val animationState = remember {
-        mutableStateOf(false)
-    }
-    val indicatorOpacityState = if (animationState.value) 0.1f else 0.8f
-    val indicatorOpacity by animateFloatAsState(targetValue = indicatorOpacityState)
     val capFilteredNextSchedules = mutableListOf<NextSchedule>()
     nextSchedules.forEach { ns ->
         if(capFilteredNextSchedules.size < 5 && ns.lineId == line.id) {
@@ -47,14 +44,6 @@ fun NextSchedulesHomeFavoriteView(
         }
     }
     val colorScheme = !isSystemInDarkTheme()
-
-    LaunchedEffect(line) {
-        delay(1000)
-        while(true) {
-            animationState.value = !animationState.value
-            delay(1000)
-        }
-    }
 
     Column(modifier = Modifier
         .fillMaxWidth()
@@ -95,126 +84,11 @@ fun NextSchedulesHomeFavoriteView(
             else {
                 capFilteredNextSchedules.forEach { nextSchedule ->
                     if(nextSchedule.getTimeLeft().toInt() >= 0) {
-                        val destination = NextSchedulesDestinations.getDestinationFromRaw(line.id, nextSchedule.destination)
-                        val displayedTime = nextSchedule.getTimeLeft()
-
-                        Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 15.dp)
-                        ) {
-                            Row {
-                                Icon(
-                                    imageVector = Icons.Rounded.PlayArrow,
-                                    contentDescription = null,
-                                    tint = if (colorScheme) Color.Black else Color.White,
-                                    modifier = Modifier
-                                        .align(Alignment.CenterVertically)
-                                        .offset(x = (-7).dp)
-                                )
-
-                                if(destination.isEmpty()) {
-                                    Text(
-                                        text = nextSchedule.destination,
-                                        fontSize = 18.sp,
-                                        color = if (colorScheme) Color.Black else Color.White,
-                                        modifier = Modifier
-                                            .padding(vertical = 8.dp)
-                                            .align(Alignment.CenterVertically)
-                                    )
-                                }
-                                else {
-                                    Column(modifier = Modifier
-                                        .padding(vertical = 3.dp)
-                                    ) {
-                                        Text(
-                                            text = destination.first(),
-                                            fontSize = 13.sp,
-                                            color = Color.Gray,
-                                            modifier = Modifier
-                                                .offset(y = 2.dp)
-                                        )
-
-                                        Spacer(modifier = Modifier.height(3.dp))
-
-                                        Text(
-                                            text = destination.last(),
-                                            fontSize = 18.sp,
-                                            color = if (colorScheme) Color.Black else Color.White,
-                                            modifier = Modifier
-                                                .offset(y = (-2).dp)
-                                        )
-                                    }
-                                }
-                            }
-
-                            Box(contentAlignment = Alignment.Center, modifier = Modifier
-                                .align(Alignment.CenterVertically)
-                                .size(35.dp)
-                                .background(
-                                    Color(android.graphics.Color.parseColor(line.colorHex)).copy(alpha = 0.2f),
-                                    shape = RoundedCornerShape(10.dp)
-                                )
-                            ) {
-                                if(displayedTime == "0") {
-                                    Text(
-                                        text = "PROCHE",
-                                        fontSize = 8.sp,
-                                        fontWeight = FontWeight.Bold,
-                                        color = if (colorScheme) Color.Black else Color.White,
-                                    )
-                                }
-                                else {
-                                    Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-                                        .fillMaxWidth()
-                                    ) {
-                                        Text(
-                                            text = displayedTime,
-                                            fontSize = 15.sp,
-                                            color = if (colorScheme) Color.Black else Color.White,
-                                        )
-
-                                        Text(
-                                            text = "MIN",
-                                            fontSize = 10.sp,
-                                            fontWeight = FontWeight.Bold,
-                                            color = if (colorScheme) Color.Black else Color.White,
-                                            modifier = Modifier
-                                                .offset(y = (-3).dp)
-                                        )
-                                    }
-                                }
-
-                                if(nextSchedule.isOnline) {
-                                    Image(
-                                        painter = painterResource(id = R.drawable.bean_small),
-                                        contentDescription = null,
-                                        colorFilter = ColorFilter.tint(if (colorScheme)
-                                            Color.Black
-                                        else
-                                            Color.White),
-                                        modifier = Modifier
-                                            .size(15.dp)
-                                            .offset(x = 11.dp, y = (-11).dp)
-                                            .alpha(indicatorOpacity)
-                                    )
-                                }
-                            }
-                        }
-
-                        if(nextSchedule != capFilteredNextSchedules.last()) {
-                            Row {
-                                Spacer(modifier = Modifier
-                                    .width(39.dp)
-                                )
-
-                                Box(modifier = Modifier
-                                    .clip(RectangleShape)
-                                    .background(if (colorScheme) Color.LightGray else Color.Gray)
-                                    .fillMaxWidth()
-                                    .height(1.dp)
-                                )
-                            }
-                        }
+                        NextSchedulesHomeFavoriteNextSchedule(
+                            nextSchedule = nextSchedule,
+                            line = line,
+                            capFilteredNextSchedules = capFilteredNextSchedules
+                        )
                     }
                 }
             }
