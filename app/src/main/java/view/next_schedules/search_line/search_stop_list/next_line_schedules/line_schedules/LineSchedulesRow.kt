@@ -24,7 +24,6 @@ import model.DTO.Line
 import model.DTO.Path
 import model.DTO.PathDestination
 import model.DTO.PathDestinations
-import model.DTO.PathDestinationsR
 import model.DTO.Schedule
 import java.util.*
 
@@ -40,7 +39,7 @@ fun LineSchedulesRow(line: Line?, schedule: Schedule, path: Path) {
 
     LaunchedEffect(line) {
         line?.let { line ->
-            PathDestinationsR.getDestination(path.name, line.id) { destination.value = it }
+            PathDestinations.getDestination(path.name, line.id) { destination.value = it }
         }
     }
 
