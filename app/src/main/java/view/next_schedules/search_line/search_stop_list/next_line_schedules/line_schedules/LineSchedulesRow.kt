@@ -7,6 +7,9 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -19,7 +22,9 @@ import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import model.DTO.Line
 import model.DTO.Path
+import model.DTO.PathDestination
 import model.DTO.PathDestinations
+import model.DTO.PathDestinationsR
 import model.DTO.Schedule
 import java.util.*
 
@@ -29,7 +34,15 @@ fun LineSchedulesRow(line: Line?, schedule: Schedule, path: Path) {
     val scheduleCalendar = Calendar.getInstance()
     scheduleCalendar.time = schedule.getTime() ?: Date()
     val minutes = scheduleCalendar.get(Calendar.MINUTE).toString()
-    val destination = PathDestinations.getDestinationFromPathName(line?.id ?: 0, path.name)
+    val destination = remember {
+        mutableStateOf<PathDestination?>(null)
+    }
+
+    LaunchedEffect(line) {
+        line?.let { line ->
+            PathDestinationsR.getDestination(path.name, line.id) { destination.value = it }
+        }
+    }
 
     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
         .fillMaxWidth()
@@ -61,7 +74,7 @@ fun LineSchedulesRow(line: Line?, schedule: Schedule, path: Path) {
                     .offset(x = (-7).dp)
             )
 
-            if(destination.isEmpty()) {
+            if(destination.value == null) {
                 Text(
                     text = path.name,
                     fontSize = 18.sp,
@@ -73,33 +86,35 @@ fun LineSchedulesRow(line: Line?, schedule: Schedule, path: Path) {
                 )
             }
             else {
-                Column(modifier = Modifier
-                    .padding(vertical = 3.dp)
-                ) {
-                    Text(
-                        text = destination.first(),
-                        fontSize = 13.sp,
-                        color = Color.Gray,
-                        modifier = Modifier
-                            .offset(y = 2.dp)
-                    )
-
-                    Spacer(modifier = Modifier.height(3.dp))
-
-                    Text(
-                        text = destination[1],
-                        fontSize = 18.sp,
-                        color = if (colorScheme) Color.Black else Color.White,
-                        modifier = Modifier
-                            .offset(y = (-2).dp)
-                    )
-
-                    if(destination.last() != "") {
+                destination.value?.let { destination ->
+                    Column(modifier = Modifier
+                        .padding(vertical = 3.dp)
+                    ) {
                         Text(
-                            text = destination.last(),
+                            text = destination.city,
+                            fontSize = 13.sp,
+                            color = Color.Gray,
                             modifier = Modifier
-                                .offset(y = (-4).dp)
+                                .offset(y = 2.dp)
                         )
+
+                        Spacer(modifier = Modifier.height(3.dp))
+
+                        Text(
+                            text = destination.destination,
+                            fontSize = 18.sp,
+                            color = if (colorScheme) Color.Black else Color.White,
+                            modifier = Modifier
+                                .offset(y = (-2).dp)
+                        )
+
+                        destination.by?.let {
+                            Text(
+                                text = it,
+                                modifier = Modifier
+                                    .offset(y = (-4).dp)
+                            )
+                        }
                     }
                 }
             }
