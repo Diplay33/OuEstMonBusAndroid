@@ -44,7 +44,6 @@ import model.DTO.Line
 import model.DTO.NextSchedule
 import model.DTO.NextSchedulesDestination
 import model.DTO.NextSchedulesDestinations
-import model.DTO.NextSchedulesDestinationsR
 
 @Composable
 fun NextLineSchedulesViewRow(
@@ -66,7 +65,7 @@ fun NextLineSchedulesViewRow(
 
     LaunchedEffect(nextSchedule) {
         line?.let { line ->
-            NextSchedulesDestinationsR.getDestination(nextSchedule.destination, line.id) {
+            NextSchedulesDestinations.getDestination(nextSchedule.destination, line.id) {
                 destination.value = it
             }
         }

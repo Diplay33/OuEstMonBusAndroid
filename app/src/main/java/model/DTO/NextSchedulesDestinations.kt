@@ -1,17 +1,25 @@
 package model.DTO
 
-import model.DAO.AccessData.NextSchedulesDestinationData
+import com.diplay.ouestmonbus.MainApplication
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class NextSchedulesDestinations {
     companion object {
-        fun getDestinationFromRaw(lineId: Int, destination: String): List<String> {
-            NextSchedulesDestinationData.destinations[destination.trim()]?.let { values ->
-                when {
-                    lineId == 1 && destination == "René Coty" -> return listOf("MERIGNAC", "René Coty")
-                    else -> return values
+        private val nextSchedulesDestinationDAO = MainApplication.appDatabase.getNextSchedulesDestinationDAO()
+
+        fun getDestination(rawDestination: String, lineId: Int, callback: (NextSchedulesDestination?) -> Unit) {
+            CoroutineScope(Dispatchers.IO).launch {
+                nextSchedulesDestinationDAO.getLineRelatedNextSchedulesDestination(rawDestination, lineId)?.let {
+                    callback(it)
+                    return@launch
                 }
-            } ?: run {
-                return listOf("", "Destination inconnue")
+                nextSchedulesDestinationDAO.getNextSchedulesDestination(rawDestination)?.let {
+                    callback(it)
+                    return@launch
+                }
+                callback(null)
             }
         }
     }

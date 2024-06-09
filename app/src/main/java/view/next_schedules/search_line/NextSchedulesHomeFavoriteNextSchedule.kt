@@ -41,7 +41,7 @@ import kotlinx.coroutines.delay
 import model.DTO.Line
 import model.DTO.NextSchedule
 import model.DTO.NextSchedulesDestination
-import model.DTO.NextSchedulesDestinationsR
+import model.DTO.NextSchedulesDestinations
 
 @Composable
 fun NextSchedulesHomeFavoriteNextSchedule(
@@ -61,7 +61,7 @@ fun NextSchedulesHomeFavoriteNextSchedule(
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(nextSchedule) {
-        NextSchedulesDestinationsR.getDestination(nextSchedule.destination, line.id) {
+        NextSchedulesDestinations.getDestination(nextSchedule.destination, line.id) {
             destination.value = it
         }
     }
