@@ -28,7 +28,6 @@ import model.DTO.Lines
 import model.DTO.Service
 import model.DTO.Services
 import model.DTO.Vehicles
-import model.DTO.VehiclesR
 import view.more_view.all_services_list.service_detail.ServiceDetailHeader
 import view.more_view.all_services_list.service_detail.ServiceDetailOperatorRow
 import view.more_view.all_services_list.service_detail.ServiceDetailSpeedRow
@@ -44,7 +43,7 @@ fun NextScheduleDetailsMain(
     stopName: String?,
     lineId: String?
 ) {
-    val vehicle = VehiclesR.getVehicle(vehicleId.toString())
+    val vehicle = Vehicles.getVehicle(vehicleId.toString())
     val line = remember {
         mutableStateOf<Line?>(null)
     }

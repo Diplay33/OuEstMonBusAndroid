@@ -21,10 +21,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.rounded.ArrowForward
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,11 +31,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import model.DTO.NextSchedule
 import model.DTO.NextSchedules
 import model.DTO.Vehicles
-import model.DTO.VehiclesR
 
 @Composable
 fun NextScheduleDetailsArrivalTimeRow(
@@ -53,7 +49,7 @@ fun NextScheduleDetailsArrivalTimeRow(
     val scheduleIsLoading = remember {
         mutableStateOf(true)
     }
-    val vehicle = VehiclesR.getVehicle(vehicleId.toString())
+    val vehicle = Vehicles.getVehicle(vehicleId.toString())
     val isDismissDialogShown = remember {
         mutableStateOf(false)
     }

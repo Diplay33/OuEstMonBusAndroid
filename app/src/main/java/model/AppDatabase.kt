@@ -8,14 +8,14 @@ import model.DAO.LineDAO
 import model.DAO.NextSchedulesDestinationDAO
 import model.DAO.PathDestinationDAO
 import model.DAO.RetourDestinationDAO
-import model.DAO.VehicleRDAO
+import model.DAO.VehicleDAO
 import model.DTO.Destination
 import model.DTO.Line
 import model.DTO.AllerDestination
 import model.DTO.NextSchedulesDestination
 import model.DTO.PathDestination
 import model.DTO.RetourDestination
-import model.DTO.VehicleR
+import model.DTO.Vehicle
 
 @Database(
     entities = [
@@ -25,9 +25,9 @@ import model.DTO.VehicleR
         RetourDestination::class,
         NextSchedulesDestination::class,
         PathDestination::class,
-        VehicleR::class
+        Vehicle::class
     ],
-    version = 12
+    version = 13
 )
 abstract class AppDatabase: RoomDatabase() {
     companion object {
@@ -39,5 +39,5 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun getRetourDestinationDAO(): RetourDestinationDAO
     abstract fun getNextSchedulesDestinationDAO(): NextSchedulesDestinationDAO
     abstract fun getPathDestinationDAO(): PathDestinationDAO
-    abstract fun getVehicleDAO(): VehicleRDAO
+    abstract fun getVehicleDAO(): VehicleDAO
 }

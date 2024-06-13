@@ -1,9 +1,15 @@
 package model.DTO
 
-class Vehicle(val id: Int,
-              val parkId: String,
-              val brand: String,
-              val model: String,
-              val type: String,
-              val operator: String,
+import androidx.room.Entity
+
+@Entity(primaryKeys = ["id", "network"])
+data class Vehicle (
+    var id: String,
+    var network: String,
+    var parkId: String,
+    var brand: String,
+    var model: String,
+    var type: String,
+    var operator: String,
+    var tciId: Int?
 )
