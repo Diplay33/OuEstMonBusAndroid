@@ -11,5 +11,5 @@ data class VehicleR (
     var model: String,
     var type: String,
     var operator: String,
-    var tciId: Int
+    var tciId: Int?
 )
