@@ -15,6 +15,6 @@ class MainApplication: Application() {
             applicationContext,
             AppDatabase::class.java,
             AppDatabase.NAME
-        )/*.fallbackToDestructiveMigration()*/.build()
+        )/*.fallbackToDestructiveMigration()*/.allowMainThreadQueries().build()
     }
 }

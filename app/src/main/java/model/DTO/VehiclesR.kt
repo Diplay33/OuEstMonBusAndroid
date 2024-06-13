@@ -9,10 +9,8 @@ class VehiclesR {
     companion object {
         private val vehicleDAO = MainApplication.appDatabase.getVehicleDAO()
 
-        fun getVehicle(id: String, callback: (VehicleR) -> Unit) {
-            CoroutineScope(Dispatchers.IO).launch {
-                callback(vehicleDAO.getVehicle(id) ?: getUnknowVehicle(id))
-            }
+        fun getVehicle(id: String): VehicleR {
+            return vehicleDAO.getVehicle(id) ?: getUnknowVehicle(id)
         }
         
         fun getUnknowVehicle(id: String): VehicleR {

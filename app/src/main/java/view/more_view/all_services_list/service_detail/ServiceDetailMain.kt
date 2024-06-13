@@ -17,6 +17,7 @@ import androidx.navigation.NavController
 import model.DTO.Line
 import model.DTO.Lines
 import model.DTO.Vehicles
+import model.DTO.VehiclesR
 
 @Composable
 fun ServiceDetailMain(
@@ -35,7 +36,7 @@ fun ServiceDetailMain(
     val line = remember {
         mutableStateOf<Line?>(null)
     }
-    val vehicle = Vehicles.getVehicleById(vehicleId ?: "")
+    val vehicle = VehiclesR.getVehicle(vehicleId ?: "")
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(lineId) {

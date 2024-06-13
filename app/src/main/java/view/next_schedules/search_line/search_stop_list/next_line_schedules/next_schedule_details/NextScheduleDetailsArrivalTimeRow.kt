@@ -37,6 +37,7 @@ import kotlinx.coroutines.launch
 import model.DTO.NextSchedule
 import model.DTO.NextSchedules
 import model.DTO.Vehicles
+import model.DTO.VehiclesR
 
 @Composable
 fun NextScheduleDetailsArrivalTimeRow(
@@ -52,7 +53,7 @@ fun NextScheduleDetailsArrivalTimeRow(
     val scheduleIsLoading = remember {
         mutableStateOf(true)
     }
-    val vehicle = Vehicles.getVehicleById(vehicleId.toString())
+    val vehicle = VehiclesR.getVehicle(vehicleId.toString())
     val isDismissDialogShown = remember {
         mutableStateOf(false)
     }

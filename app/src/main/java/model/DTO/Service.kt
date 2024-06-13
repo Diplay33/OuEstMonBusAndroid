@@ -14,5 +14,5 @@ class Service (val id: Int,
                val currentStop: Int,
                val path: Int,
                val timestamp: Date,
-               var vehicle: Vehicle = Vehicles.getVehicleById(vehicleId.toString())
+               val vehicle: VehicleR = VehiclesR.getVehicle(vehicleId.toString())
 )
