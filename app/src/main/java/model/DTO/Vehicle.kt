@@ -1,6 +1,7 @@
 package model.DTO
 
 import androidx.room.Entity
+import androidx.room.Ignore
 
 @Entity(primaryKeys = ["id", "network"])
 data class Vehicle (
@@ -12,4 +13,6 @@ data class Vehicle (
     var type: String,
     var operator: String,
     var tciId: Int?
-)
+) {
+    @Ignore val fullName: String = "$brand $model".trim()
+}

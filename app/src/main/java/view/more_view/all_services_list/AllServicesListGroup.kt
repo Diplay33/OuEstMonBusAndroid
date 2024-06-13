@@ -54,7 +54,7 @@ fun AllServicesListGroup(
                 .padding(horizontal = 15.dp)
             ) {
                 Text(
-                    text = services.first().vehicle.model,
+                    text = services.first().vehicle.fullName,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = if (colorScheme) Color.Black else Color.White,

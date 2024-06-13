@@ -84,7 +84,7 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>, line: Line
                 .height(30.dp)
             )
 
-            ServiceDetailVehicleRow(service.vehicle.model, line?.name ?: "")
+            ServiceDetailVehicleRow(service.vehicle.fullName, line?.name ?: "")
 
             Spacer(modifier = Modifier
                 .height(10.dp)

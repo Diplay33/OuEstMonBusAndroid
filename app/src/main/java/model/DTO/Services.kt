@@ -66,7 +66,7 @@ class Services {
         }*/
 
         private fun filterServicesSortedByVehicle(services: List<Service>): List<Service> {
-            return services.sortedBy { it.vehicle.parkId }.sortedBy { it.vehicle.model }
+            return services.sortedBy { it.vehicle.parkId }.sortedBy { it.vehicle.fullName }
         }
 
         fun filterServicesByVehicle(services: List<Service>): List<List<Service>> {
@@ -78,17 +78,17 @@ class Services {
             filteredServices.forEach { service ->
                 if(servicesToReturn.isEmpty() && tempServices.isEmpty()) {
                     tempServices.add(service)
-                    precedentVehicle = service.vehicle.model
+                    precedentVehicle = service.vehicle.fullName
                 }
                 else {
-                    if(service.vehicle.model == precedentVehicle) {
+                    if(service.vehicle.fullName == precedentVehicle) {
                         tempServices.add(service)
                     }
                     else {
                         servicesToReturn.add(tempServices)
                         tempServices = mutableListOf()
                         tempServices.add(service)
-                        precedentVehicle = service.vehicle.model
+                        precedentVehicle = service.vehicle.fullName
                     }
                 }
             }

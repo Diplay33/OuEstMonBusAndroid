@@ -158,7 +158,7 @@ fun NextScheduleDetailsArrivalTimeRow(
             },
             text = {
                 Text(
-                    text = "${getPronounDependingOn(vehicle.model.first()) + vehicle.model} n°${vehicle.parkId} a dépassé l'arrêt $stopName",
+                    text = "${getPronounDependingOn(vehicle.fullName.first()) + vehicle.fullName} n°${vehicle.parkId} a dépassé l'arrêt $stopName",
                     color = if (colorScheme) Color.Black else Color.White
                 )
             },

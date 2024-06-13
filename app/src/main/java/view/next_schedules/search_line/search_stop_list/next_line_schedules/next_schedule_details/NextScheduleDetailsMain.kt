@@ -90,7 +90,7 @@ fun NextScheduleDetailsMain(
                     .height(30.dp)
                 )
 
-                ServiceDetailVehicleRow(vehicle.model, line.value?.name ?: "")
+                ServiceDetailVehicleRow(vehicle.fullName, line.value?.name ?: "")
 
                 Spacer(modifier = Modifier
                     .height(10.dp)
