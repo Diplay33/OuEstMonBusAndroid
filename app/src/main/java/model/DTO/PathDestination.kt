@@ -2,7 +2,10 @@ package model.DTO
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 @Entity
 data class PathDestination (
     @PrimaryKey
@@ -11,6 +14,6 @@ data class PathDestination (
     var city: String,
     var destination: String,
     var by: String?,
-    var relatedLine: Int?,
+    @SerialName("related_line") var relatedLine: Int?,
     var network: String
 )

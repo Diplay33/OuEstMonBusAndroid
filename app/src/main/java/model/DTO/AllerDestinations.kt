@@ -9,6 +9,8 @@ class AllerDestinations {
     companion object {
         private val allerDestinationDAO = MainApplication.appDatabase.getAllerDestinationDAO()
 
+        //MARK: - GET
+
         fun getListOfDestinations(lineId: Int, callback: (List<List<String>>) -> Unit) {
             CoroutineScope(Dispatchers.IO).launch {
                 allerDestinationDAO.getAllerDestination(lineId)?.let { allerDestination ->
@@ -27,6 +29,12 @@ class AllerDestinations {
                 }
                 callback(listOf())
             }
+        }
+
+        //MARK: - SET
+
+        fun insertAllerDestinations(allerDestinations: List<AllerDestination>) {
+            allerDestinationDAO.insertAllerDestinations(allerDestinations)
         }
     }
 }

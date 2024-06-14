@@ -8,6 +8,8 @@ import model.DTO.Line
 
 @Dao
 interface LineDAO {
+    //MARK : - SELECT
+
     @Query("SELECT * FROM Line WHERE parentId IS null")
     fun getAllLines(): List<Line>
 
@@ -20,6 +22,8 @@ interface LineDAO {
     @Query("SELECT id FROM Line WHERE parentId = (:parentId)")
     fun getChildLineIds(parentId: Int): List<Int>
 
+    //MARK: - INSERT
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun addLine(line: Line)
+    fun insertLines(lines: List<Line>)
 }

@@ -6,6 +6,8 @@ class Vehicles {
     companion object {
         private val vehicleDAO = MainApplication.appDatabase.getVehicleDAO()
 
+        //MARK: - GET
+
         fun getVehicle(id: String): Vehicle {
             return vehicleDAO.getVehicle(id) ?: getUnknowVehicle(id)
         }
@@ -21,6 +23,12 @@ class Vehicles {
                 operator = "Inconnu",
                 tciId = null
             )
+        }
+
+        //MARK: - SET
+
+        fun insertVehicles(vehicles: List<Vehicle>) {
+            vehicleDAO.insertVehicles(vehicles)
         }
     }
 }

@@ -9,6 +9,8 @@ class RetourDestinations {
     companion object {
         private val retourDestinationDAO = MainApplication.appDatabase.getRetourDestinationDAO()
 
+        //MARK: - GET
+
         fun getListOfDestinations(lineId: Int, callback: (List<List<String>>) -> Unit) {
             CoroutineScope(Dispatchers.IO).launch {
                 retourDestinationDAO.getRetourDestination(lineId)?.let { retourDestination ->
@@ -27,6 +29,12 @@ class RetourDestinations {
                 }
                 callback(listOf())
             }
+        }
+
+        //MARK: - SET
+
+        fun insertRetourDestinations(retourDestinations: List<RetourDestination>) {
+            retourDestinationDAO.insertRetourDestinations(retourDestinations)
         }
     }
 }

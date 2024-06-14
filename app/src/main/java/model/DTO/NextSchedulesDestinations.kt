@@ -9,6 +9,8 @@ class NextSchedulesDestinations {
     companion object {
         private val nextSchedulesDestinationDAO = MainApplication.appDatabase.getNextSchedulesDestinationDAO()
 
+        //MARK: - GET
+
         fun getDestination(rawDestination: String, lineId: Int, callback: (NextSchedulesDestination?) -> Unit) {
             CoroutineScope(Dispatchers.IO).launch {
                 nextSchedulesDestinationDAO.getLineRelatedNextSchedulesDestination(rawDestination, lineId)?.let {
@@ -21,6 +23,12 @@ class NextSchedulesDestinations {
                 }
                 callback(null)
             }
+        }
+
+        //MARK: - SET
+
+        fun insertNextSchedulesDestinations(nsDestinations: List<NextSchedulesDestination>) {
+            nextSchedulesDestinationDAO.insertNextSchedulesDestinations(nsDestinations)
         }
     }
 }

@@ -9,6 +9,8 @@ class PathDestinations {
     companion object {
         private val pathDestinationDAO = MainApplication.appDatabase.getPathDestinationDAO()
 
+        //MARK: - GET
+
         fun getDestination(pathName: String, lineId: Int, callback: (PathDestination?) -> Unit) {
             CoroutineScope(Dispatchers.IO).launch {
                 val reversedName = pathName.reversed()
@@ -29,6 +31,12 @@ class PathDestinations {
                 }
                 callback(null)
             }
+        }
+
+        //MARK: - SET
+
+        fun insertPathDestinations(pathDestinations: List<PathDestination>) {
+            pathDestinationDAO.insertPathDestinations(pathDestinations)
         }
     }
 }

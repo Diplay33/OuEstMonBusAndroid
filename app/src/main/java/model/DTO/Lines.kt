@@ -14,7 +14,8 @@ class Lines {
     companion object {
         private val lineDAO = MainApplication.appDatabase.getLineDAO()
 
-        //MARK: - Multiple
+        //MARK: - GET
+
         fun getAllLines(callback: (List<Line>) -> Unit) {
             CoroutineScope(Dispatchers.IO).launch {
                 callback(lineDAO.getAllLines())
@@ -23,9 +24,9 @@ class Lines {
 
         fun getAllLinesBySection(context: Context, forSchedules: Boolean = false, callback: (List<List<Line>>) -> Unit) {
             CoroutineScope(Dispatchers.IO).launch {
-                val lines = if (forSchedules) lineDAO.getAllLinesForSchedules()
+                val lines = (if (forSchedules) lineDAO.getAllLinesForSchedules()
                 else
-                    lineDAO.getAllLines()
+                    lineDAO.getAllLines()).sortedBy { it.index }
                 val listSectionSet = lines.map { it.section }.toSet().toList()
                 val linesBySection: ArrayList<ArrayList<Line>> = ArrayList(listSectionSet.map { arrayListOf() })
                 linesBySection.add(arrayListOf())
@@ -66,7 +67,6 @@ class Lines {
             CoroutineScope(Dispatchers.IO).launch { callback(lineDAO.getChildLineIds(parentId)) }
         }
 
-        //MARK: - Single
         fun getLine(id: Int, callback: (Line) -> Unit) {
             CoroutineScope(Dispatchers.IO).launch {
                 callback(lineDAO.getLine(id) ?: getEmptyLine())
@@ -91,9 +91,10 @@ class Lines {
             )
         }
 
-        //TO REMOVE
-        fun addLine(line: Line) {
-            lineDAO.addLine(line)
+        //MARK: - SET
+
+        fun insertLines(lines: List<Line>) {
+            lineDAO.insertLines(lines)
         }
     }
 }

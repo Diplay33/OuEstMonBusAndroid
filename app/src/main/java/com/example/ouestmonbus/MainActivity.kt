@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -29,7 +30,26 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.diplay.ouestmonbus.ui.theme.OùEstMonBusTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import io.github.jan.supabase.createSupabaseClient
+import io.github.jan.supabase.postgrest.Postgrest
+import io.github.jan.supabase.postgrest.from
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import model.DTO.AllerDestination
+import model.DTO.AllerDestinations
+import model.DTO.Destination
+import model.DTO.Destinations
+import model.DTO.Line
+import model.DTO.Lines
+import model.DTO.NextSchedulesDestination
+import model.DTO.NextSchedulesDestinations
+import model.DTO.PathDestination
+import model.DTO.PathDestinations
+import model.DTO.RetourDestination
+import model.DTO.RetourDestinations
+import model.DTO.Vehicle
+import model.DTO.Vehicles
 import model.preferences_data_store.StoreDisplayNotifCountParam
 import model.preferences_data_store.StoreFirstLaunch
 import view.BottomNavigationBar
@@ -49,6 +69,14 @@ import view.next_schedules.search_line.search_stop_list.SearchStopListMain
 import view.next_schedules.search_line.search_stop_list.next_line_schedules.NextLineSchedulesMain
 import view.next_schedules.search_line.search_stop_list.next_line_schedules.line_schedules.LineSchedulesMain
 import view.next_schedules.search_line.search_stop_list.next_line_schedules.next_schedule_details.NextScheduleDetailsMain
+
+
+val supabase = createSupabaseClient(
+    supabaseUrl = "https://xddvqmengnkoebmlehmc.supabase.co",
+    supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhkZHZxbWVuZ25rb2VibWxlaG1jIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTUyOTE4ODgsImV4cCI6MjAzMDg2Nzg4OH0.fk8GO44O8BZcce0ic_q25vcfsTBWXw7BBGDClSD0FY0"
+) {
+    install(Postgrest)
+}
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,6 +112,52 @@ class MainActivity : ComponentActivity() {
                 systemUiController.setSystemBarsColor(
                     color = Color(0xff18191A)
                 )
+            }
+
+            LaunchedEffect(Unit) {
+                withContext(Dispatchers.IO) {
+                    val lines = supabase
+                        .from("lines")
+                        .select()
+                        .decodeList<Line>()
+                    Lines.insertLines(lines)
+
+                    val destinations = supabase
+                        .from("destinations")
+                        .select()
+                        .decodeList<Destination>()
+                    Destinations.insertDestinations(destinations)
+
+                    val allerDestinations = supabase
+                        .from("aller_destinations")
+                        .select()
+                        .decodeList<AllerDestination>()
+                    AllerDestinations.insertAllerDestinations(allerDestinations)
+
+                    val retourDestinations = supabase
+                        .from("retour_destinations")
+                        .select()
+                        .decodeList<RetourDestination>()
+                    RetourDestinations.insertRetourDestinations(retourDestinations)
+
+                    val nextSchedulesDestinations = supabase
+                        .from("next_schedules_destinations")
+                        .select()
+                        .decodeList<NextSchedulesDestination>()
+                    NextSchedulesDestinations.insertNextSchedulesDestinations(nextSchedulesDestinations)
+
+                    val pathDestinations = supabase
+                        .from("path_destinations")
+                        .select()
+                        .decodeList<PathDestination>()
+                    PathDestinations.insertPathDestinations(pathDestinations)
+
+                    val vehicles = supabase
+                        .from("vehicles")
+                        .select()
+                        .decodeList<Vehicle>()
+                    Vehicles.insertVehicles(vehicles)
+                }
             }
 
             Scaffold(bottomBar = { BottomNavigationBar(navController, bottomNavigationItems) } ) {
