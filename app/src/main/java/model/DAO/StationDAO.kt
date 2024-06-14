@@ -1,8 +1,7 @@
 package model.DAO
 
-import model.DAO.AccessData.CallAPI
+import model.CallAPI
 import model.DTO.Station
-import model.DTO.Stations
 import org.json.JSONObject
 
 class StationDAO {

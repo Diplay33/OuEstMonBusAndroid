@@ -1,6 +1,6 @@
 package model.DAO
 
-import model.DAO.AccessData.CallAPI
+import model.CallAPI
 import model.DTO.Path
 import org.json.JSONObject
 

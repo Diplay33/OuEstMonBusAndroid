@@ -1,4 +1,4 @@
-package model.DAO.AccessData
+package model
 
 import okhttp3.*
 import java.io.IOException
