@@ -96,5 +96,9 @@ class Lines {
         fun insertLines(lines: List<Line>) {
             lineDAO.insertLines(lines)
         }
+
+        fun deleteContent() {
+            lineDAO.deleteContent()
+        }
     }
 }

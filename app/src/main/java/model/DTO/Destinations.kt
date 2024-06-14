@@ -30,5 +30,9 @@ class Destinations {
         fun insertDestinations(destinations: List<Destination>) {
             destinationDAO.insertDestinations(destinations)
         }
+
+        fun deleteContent() {
+            destinationDAO.deleteContent()
+        }
     }
 }

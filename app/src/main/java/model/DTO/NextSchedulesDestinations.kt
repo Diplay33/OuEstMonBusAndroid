@@ -30,5 +30,9 @@ class NextSchedulesDestinations {
         fun insertNextSchedulesDestinations(nsDestinations: List<NextSchedulesDestination>) {
             nextSchedulesDestinationDAO.insertNextSchedulesDestinations(nsDestinations)
         }
+
+        fun deleteContent() {
+            nextSchedulesDestinationDAO.deleteContent()
+        }
     }
 }

@@ -1,6 +1,7 @@
 package model.DAO
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -26,4 +27,8 @@ interface LineDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertLines(lines: List<Line>)
+
+    //MARK: - DELETE
+    @Query("DELETE FROM Line")
+    fun deleteContent()
 }

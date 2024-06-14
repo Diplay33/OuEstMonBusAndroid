@@ -38,5 +38,9 @@ class PathDestinations {
         fun insertPathDestinations(pathDestinations: List<PathDestination>) {
             pathDestinationDAO.insertPathDestinations(pathDestinations)
         }
+
+        fun deleteContent() {
+            pathDestinationDAO.deleteContent()
+        }
     }
 }

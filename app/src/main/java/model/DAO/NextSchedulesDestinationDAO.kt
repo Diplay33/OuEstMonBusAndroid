@@ -20,4 +20,9 @@ interface NextSchedulesDestinationDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertNextSchedulesDestinations(nsDestinations: List<NextSchedulesDestination>)
+
+    //MARK: - DELETE
+
+    @Query("DELETE FROM NextSchedulesDestination")
+    fun deleteContent()
 }

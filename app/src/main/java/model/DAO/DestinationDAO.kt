@@ -20,4 +20,9 @@ interface DestinationDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertDestinations(destinations: List<Destination>)
+
+    //MARK: - DELETE
+
+    @Query("DELETE FROM Destination")
+    fun deleteContent()
 }

@@ -36,5 +36,9 @@ class RetourDestinations {
         fun insertRetourDestinations(retourDestinations: List<RetourDestination>) {
             retourDestinationDAO.insertRetourDestinations(retourDestinations)
         }
+
+        fun deleteContent() {
+            retourDestinationDAO.deleteContent()
+        }
     }
 }

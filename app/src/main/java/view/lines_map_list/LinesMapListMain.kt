@@ -79,7 +79,10 @@ fun LinesMapListMain(
             LaunchedEffect(refreshLinesAction) {
                 refreshLinesAction?.let { action ->
                     if(action == "reload") {
-                        Lines.getAllLinesBySection(context) { linesBySection.addAll(it) }
+                        Lines.getAllLinesBySection(context) {
+                            linesBySection.clear()
+                            linesBySection.addAll(it)
+                        }
                     }
                 }
             }

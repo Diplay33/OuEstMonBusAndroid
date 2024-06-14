@@ -17,4 +17,9 @@ interface AllerDestinationDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertAllerDestinations(allerDestinations: List<AllerDestination>)
+
+    //MARK: - DELETE
+
+    @Query("DELETE FROM AllerDestination")
+    fun deleteContent()
 }

@@ -17,4 +17,9 @@ interface RetourDestinationDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertRetourDestinations(retourDestinations: List<RetourDestination>)
+
+    //MARK: - DELETE
+
+    @Query("DELETE FROM RetourDestination")
+    fun deleteContent()
 }

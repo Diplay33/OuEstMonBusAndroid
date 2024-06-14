@@ -17,4 +17,9 @@ interface VehicleDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertVehicles(vehicles: List<Vehicle>)
+
+    //MARK: - DELETE
+
+    @Query("DELETE FROM Vehicle")
+    fun deleteContent()
 }

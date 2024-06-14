@@ -30,5 +30,9 @@ class Vehicles {
         fun insertVehicles(vehicles: List<Vehicle>) {
             vehicleDAO.insertVehicles(vehicles)
         }
+
+        fun deleteContent() {
+            vehicleDAO.deleteContent()
+        }
     }
 }

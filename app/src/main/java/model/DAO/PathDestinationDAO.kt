@@ -20,4 +20,9 @@ interface PathDestinationDAO {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertPathDestinations(pathDestinations: List<PathDestination>)
+
+    //MARK: - DELETE
+
+    @Query("DELETE FROM PathDestination")
+    fun deleteContent()
 }

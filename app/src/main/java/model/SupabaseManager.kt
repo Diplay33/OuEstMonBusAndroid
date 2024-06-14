@@ -2,6 +2,8 @@ package model
 
 import com.diplay.ouestmonbus.MainApplication
 import io.github.jan.supabase.postgrest.from
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 import model.DTO.AllerDestination
 import model.DTO.AllerDestinations
 import model.DTO.Destination
@@ -18,21 +20,46 @@ import model.DTO.Vehicle
 import model.DTO.Vehicles
 
 class SupabaseManager {
+    @Serializable
+    class VersionDescriptor (
+        val id: Int,
+        @SerialName("table_name") val tableName: String,
+        var version: String,
+        var network: String,
+        @SerialName("updated_at") val updatedAt: String
+    )
+
     companion object {
         private val supabase = MainApplication.supabase
 
         suspend fun beginSyncDatabaseProcess(callback: (String) -> Unit) {
-            retrieveLines()
-            retrieveDestinations()
-            retrieveAllerDestinations()
-            retrieveRetourDestinations()
-            retrieveNextSchedulesDestinations()
-            retrievePathDestinations()
-            retrieveVehicles()
+            checkTablesVersion()
             callback("reload")
         }
 
+        private suspend fun checkTablesVersion() {
+            getVersions().forEach {
+                when(it.tableName) {
+                    "lines" -> retrieveLines()
+                    "destinations" -> retrieveDestinations()
+                    "aller_destinations" -> retrieveAllerDestinations()
+                    "retour_destinations" -> retrieveRetourDestinations()
+                    "next_schedules_destinations" -> retrieveNextSchedulesDestinations()
+                    "path_destinations" -> retrievePathDestinations()
+                    "vehicles" -> retrieveVehicles()
+                }
+            }
+        }
+
+        private suspend fun getVersions(): List<VersionDescriptor> {
+            return supabase
+                .from("table_version_descriptor")
+                .select()
+                .decodeList<VersionDescriptor>()
+        }
+
         private suspend fun retrieveLines() {
+            Lines.deleteContent()
             val lines = supabase
                 .from("lines")
                 .select()
@@ -41,6 +68,7 @@ class SupabaseManager {
         }
 
         private suspend fun retrieveDestinations() {
+            Destinations.deleteContent()
             val destinations = supabase
                 .from("destinations")
                 .select()
@@ -49,6 +77,7 @@ class SupabaseManager {
         }
 
         private suspend fun retrieveAllerDestinations() {
+            AllerDestinations.deleteContent()
             val allerDestinations = supabase
                 .from("aller_destinations")
                 .select()
@@ -57,6 +86,7 @@ class SupabaseManager {
         }
 
         private suspend fun retrieveRetourDestinations() {
+            RetourDestinations.deleteContent()
             val retourDestinations = supabase
                 .from("retour_destinations")
                 .select()
@@ -65,6 +95,7 @@ class SupabaseManager {
         }
 
         private suspend fun retrieveNextSchedulesDestinations() {
+            NextSchedulesDestinations.deleteContent()
             val nextSchedulesDestinations = supabase
                 .from("next_schedules_destinations")
                 .select()
@@ -73,6 +104,7 @@ class SupabaseManager {
         }
 
         private suspend fun retrievePathDestinations() {
+            PathDestinations.deleteContent()
             val pathDestinations = supabase
                 .from("path_destinations")
                 .select()
@@ -81,6 +113,7 @@ class SupabaseManager {
         }
 
         private suspend fun retrieveVehicles() {
+            Vehicles.deleteContent()
             val vehicles = supabase
                 .from("vehicles")
                 .select()

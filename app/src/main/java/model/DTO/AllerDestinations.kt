@@ -36,5 +36,9 @@ class AllerDestinations {
         fun insertAllerDestinations(allerDestinations: List<AllerDestination>) {
             allerDestinationDAO.insertAllerDestinations(allerDestinations)
         }
+
+        fun deleteContent() {
+            allerDestinationDAO.deleteContent()
+        }
     }
 }
