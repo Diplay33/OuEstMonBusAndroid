@@ -17,6 +17,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -79,6 +81,9 @@ class MainActivity : ComponentActivity() {
             val scope = rememberCoroutineScope()
             val firstLaunchDataStore = StoreFirstLaunch(context)
             val displayNotifCountDataStore = StoreDisplayNotifCountParam(context)
+            val refreshLinesAction = remember {
+                mutableStateOf<String?>(null)
+            }
 
             if(firstLaunchDataStore.isEnabled.collectAsState(initial = false).value != true) {
                 scope.launch {
@@ -109,7 +114,7 @@ class MainActivity : ComponentActivity() {
 
             LaunchedEffect(Unit) {
                 withContext(Dispatchers.IO) {
-                    SupabaseManager.beginSyncDatabaseProcess {  }
+                    SupabaseManager.beginSyncDatabaseProcess { refreshLinesAction.value = it }
                 }
             }
 
@@ -128,7 +133,10 @@ class MainActivity : ComponentActivity() {
                 ) {
                     //Cartes screen
                     composable(BottomNavigationScreens.Cartes.route) {
-                        LinesMapListMain(navController = navController)
+                        LinesMapListMain(
+                            navController = navController,
+                            refreshLinesAction = refreshLinesAction.value
+                        )
                     }
 
                     composable(route = CartesScreens.HelloWorld.route + "/{lineId}", arguments = listOf(

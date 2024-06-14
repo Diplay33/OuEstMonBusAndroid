@@ -21,7 +21,7 @@ class SupabaseManager {
     companion object {
         private val supabase = MainApplication.supabase
 
-        suspend fun beginSyncDatabaseProcess(callback: (Boolean) -> Unit) {
+        suspend fun beginSyncDatabaseProcess(callback: (String) -> Unit) {
             retrieveLines()
             retrieveDestinations()
             retrieveAllerDestinations()
@@ -29,6 +29,7 @@ class SupabaseManager {
             retrieveNextSchedulesDestinations()
             retrievePathDestinations()
             retrieveVehicles()
+            callback("reload")
         }
 
         private suspend fun retrieveLines() {

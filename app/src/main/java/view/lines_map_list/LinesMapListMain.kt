@@ -22,7 +22,11 @@ import model.DTO.*
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), navController: NavController) {
+fun LinesMapListMain(
+    state: LinesMapListSearchState = rememberSearchState(),
+    navController: NavController,
+    refreshLinesAction: String?
+) {
     val context = LocalContext.current
     val linesBySection = remember {
         mutableStateListOf<List<Line>>()
@@ -69,6 +73,14 @@ fun LinesMapListMain(state: LinesMapListSearchState = rememberSearchState(), nav
                         isLoading.value = false
                     }
                     delay(30000)
+                }
+            }
+
+            LaunchedEffect(refreshLinesAction) {
+                refreshLinesAction?.let { action ->
+                    if(action == "reload") {
+                        Lines.getAllLinesBySection(context) { linesBySection.addAll(it) }
+                    }
                 }
             }
 
