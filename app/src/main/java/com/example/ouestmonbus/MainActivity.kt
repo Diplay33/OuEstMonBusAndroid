@@ -114,7 +114,7 @@ class MainActivity : ComponentActivity() {
 
             LaunchedEffect(Unit) {
                 withContext(Dispatchers.IO) {
-                    SupabaseManager.beginSyncDatabaseProcess { refreshLinesAction.value = it }
+                    SupabaseManager.beginSyncDatabaseProcess(context) { refreshLinesAction.value = it }
                 }
             }
 
