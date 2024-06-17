@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.Image
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
@@ -15,13 +16,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import com.diplay.ouestmonbus.R
 import model.DTO.Destination
 import model.DTO.Destinations
 import model.DTO.Line
@@ -55,18 +59,31 @@ fun ServiceDetailHeader(line: Line?, rawDestination: String) {
         )
         .padding(vertical = 3.dp)
     ) {
-        AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(line?.imageUrl)
-                .decoderFactory(SvgDecoder.Factory())
-                .build(),
-            contentDescription = null,
-            modifier = Modifier
-                .padding(start = 15.dp)
-                .width(70.dp)
-                .height(55.dp)
-                .align(Alignment.CenterVertically)
-        )
+        if(line?.name == "Ligne inconnue") {
+            Image(
+                painter = painterResource(id = R.drawable.question_mark_box),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(start = 15.dp)
+                    .width(70.dp)
+                    .height(55.dp)
+                    .align(Alignment.CenterVertically)
+            )
+        }
+        else {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(line?.imageUrl)
+                    .decoderFactory(SvgDecoder.Factory())
+                    .build(),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(start = 15.dp)
+                    .width(70.dp)
+                    .height(55.dp)
+                    .align(Alignment.CenterVertically)
+            )
+        }
 
         Column(modifier = Modifier
             .padding()

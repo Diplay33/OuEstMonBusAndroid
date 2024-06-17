@@ -86,7 +86,7 @@ class Lines {
                 section = 0,
                 physicalType = "",
                 imageUrl = "",
-                colorHex = "#FFFFFF",
+                colorHex = "#DEDEDE",
                 isNest = false,
                 showSchedules = false,
                 parentId = 0,

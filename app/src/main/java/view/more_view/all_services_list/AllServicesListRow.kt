@@ -1,5 +1,6 @@
 package view.more_view.all_services_list
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -18,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,6 +27,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.decode.SvgDecoder
 import coil.request.ImageRequest
+import com.diplay.ouestmonbus.R
 import model.DTO.*
 import view.Screens.PlusScreens
 
@@ -82,16 +85,27 @@ fun AllServicesListRow(service: Service, navController: NavController) {
         ) {
             Column {
                 Row {
-                    AsyncImage(
-                        model = ImageRequest.Builder(LocalContext.current)
-                            .data(line.value?.imageUrl)
-                            .decoderFactory(SvgDecoder.Factory())
-                            .build(),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(25.dp)
-                            .align(Alignment.CenterVertically)
-                    )
+                    if(line.value?.name == "Ligne inconnue") {
+                        Image(
+                            painter = painterResource(id = R.drawable.question_mark_box),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(25.dp)
+                                .align(Alignment.CenterVertically)
+                        )
+                    }
+                    else {
+                        AsyncImage(
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data(line.value?.imageUrl)
+                                .decoderFactory(SvgDecoder.Factory())
+                                .build(),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(25.dp)
+                                .align(Alignment.CenterVertically)
+                        )
+                    }
 
                     Spacer(modifier = Modifier
                         .width(10.dp)
