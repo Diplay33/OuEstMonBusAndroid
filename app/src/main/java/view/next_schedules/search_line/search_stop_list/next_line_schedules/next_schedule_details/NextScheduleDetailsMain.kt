@@ -32,6 +32,7 @@ import view.more_view.all_services_list.service_detail.ServiceDetailHeader
 import view.more_view.all_services_list.service_detail.ServiceDetailOperatorRow
 import view.more_view.all_services_list.service_detail.ServiceDetailSpeedRow
 import view.more_view.all_services_list.service_detail.ServiceDetailStateRow
+import view.more_view.all_services_list.service_detail.ServiceDetailTCIRow
 import view.more_view.all_services_list.service_detail.ServiceDetailVehicleRow
 import java.util.Date
 
@@ -97,6 +98,14 @@ fun NextScheduleDetailsMain(
                 )
 
                 ServiceDetailOperatorRow(vehicle.operator)
+
+                vehicle.tciId?.let {
+                    Spacer(modifier = Modifier
+                        .height(10.dp)
+                    )
+
+                    ServiceDetailTCIRow(it)
+                }
 
                 Spacer(modifier = Modifier
                     .height(30.dp)

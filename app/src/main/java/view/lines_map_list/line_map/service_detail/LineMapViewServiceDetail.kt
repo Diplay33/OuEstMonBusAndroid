@@ -96,6 +96,14 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>, line: Line
                 .height(10.dp)
             )
 
+            service.vehicle.tciId?.let {
+                ServiceDetailTCIRow(it)
+
+                Spacer(modifier = Modifier
+                    .height(10.dp)
+                )
+            }
+
             LineMapViewServiceDetailCurrentStopRow(service.currentStop.toString())
 
             Spacer(modifier = Modifier

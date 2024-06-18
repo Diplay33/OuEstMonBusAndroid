@@ -63,6 +63,14 @@ fun ServiceDetailMain(
 
             ServiceDetailOperatorRow(vehicle.operator)
 
+            vehicle.tciId?.let {
+                Spacer(modifier = Modifier
+                    .height(10.dp)
+                )
+
+                ServiceDetailTCIRow(it)
+            }
+
             Spacer(modifier = Modifier
                 .height(30.dp)
             )
