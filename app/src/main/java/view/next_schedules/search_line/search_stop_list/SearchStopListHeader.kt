@@ -14,7 +14,9 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -38,7 +40,7 @@ import model.DTO.Station
 fun SearchStopListHeader(
     line: Line?,
     paths: List<Path>,
-    destinations: List<List<String>> = listOf(),
+    destinations: SnapshotStateList<List<String>> = mutableStateListOf(),
     pathDirectionState: MutableState<String>,
     isLoading: MutableState<Boolean>,
     stops: SnapshotStateList<Station>
@@ -49,8 +51,12 @@ fun SearchStopListHeader(
     val headerMenuShown = remember {
         mutableStateOf(false)
     }
-    paths.forEach { destinationsSet.add(it.getDestinationName()) }
     val colorScheme = !isSystemInDarkTheme()
+
+    LaunchedEffect(isLoading.value) {
+        destinationsSet.clear()
+        paths.forEach { destinationsSet.add(it.getDestinationName()) }
+    }
 
     Column(modifier = Modifier
         .padding(horizontal = 15.dp)
@@ -223,6 +229,7 @@ fun SearchStopListHeader(
                             "ALLER"
                         headerMenuShown.value = false
                         isLoading.value = true
+                        destinations.clear()
                         stops.clear()
                     }) {
                         Row {

@@ -53,7 +53,7 @@ fun SearchStopListMain(
     }
     val colorScheme = !isSystemInDarkTheme()
 
-    LaunchedEffect(line.value) {
+    LaunchedEffect(line.value, pathDirectionState.value) {
         line.value?.let { line ->
             if(pathDirectionState.value == "ALLER") {
                 AllerDestinations.getListOfDestinations(line.id) {
