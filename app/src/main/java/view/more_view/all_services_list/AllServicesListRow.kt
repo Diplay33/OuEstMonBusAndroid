@@ -42,7 +42,17 @@ fun AllServicesListRow(service: Service, navController: NavController) {
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(service) {
-        Lines.getLine(service.lineId) { line.value = it }
+        Lines.getLine(service.lineId) { returnedLine ->
+            if(returnedLine.parentId != null) {
+                Lines.getLine(returnedLine.parentId ?: 0) {
+                    it.name = returnedLine.name
+                    line.value = it
+                }
+            }
+            else {
+                line.value = returnedLine
+            }
+        }
         Destinations.getDestination(service.destination, service.lineId) { destination.value = it }
     }
 
