@@ -49,7 +49,7 @@ fun MoreViewContactTwitterRow() {
 
             Text(text = "Jacques HU (@diplay3311)",
                 fontSize = 18.sp,
-                color = Color.Blue,
+                color = Color(android.graphics.Color.parseColor("#007AFF")),
                 modifier = Modifier
                     .clickable {
                         uriHandler.openUri("https://x.com/diplay3311")

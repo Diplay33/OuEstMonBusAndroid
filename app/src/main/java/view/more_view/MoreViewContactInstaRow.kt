@@ -41,7 +41,7 @@ fun MoreViewContactInstaRow() {
 
             Text(
                 text = "Où est mon bus (@ou_est_mon_bus)",
-                color = Color.Blue,
+                color = Color(android.graphics.Color.parseColor("#007AFF")),
                 fontSize = 18.sp,
                 modifier = Modifier
                     .clickable {
