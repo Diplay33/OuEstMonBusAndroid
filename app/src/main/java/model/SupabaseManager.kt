@@ -64,10 +64,16 @@ class SupabaseManager {
         }
 
         private suspend fun getVersions(): List<VersionDescriptor> {
-            return supabase
-                .from("table_version_descriptor")
-                .select()
-                .decodeList<VersionDescriptor>()
+            try {
+                return supabase
+                    .from("table_version_descriptor")
+                    .select()
+                    .decodeList<VersionDescriptor>()
+            }
+            catch(e: Exception) {
+                println(e.localizedMessage)
+                return emptyList()
+            }
         }
 
         private suspend fun retrieveLines(
@@ -75,63 +81,83 @@ class SupabaseManager {
             context: Context,
             callback: (String) -> Unit
         ) {
-            val storeLinePreferences = StoreLineTableVersion(context)
-            storeLinePreferences.version.firstOrNull().let {
-                if(onlineVersion != it) {
-                    Lines.deleteContent()
-                    val lines = supabase
-                        .from("lines")
-                        .select()
-                        .decodeList<Line>()
-                    Lines.insertLines(lines)
-                    callback("reload")
-                    storeLinePreferences.setCurrentVersion(onlineVersion)
+            try {
+                val storeLinePreferences = StoreLineTableVersion(context)
+                storeLinePreferences.version.firstOrNull().let {
+                    if(onlineVersion != it) {
+                        Lines.deleteContent()
+                        val lines = supabase
+                            .from("lines")
+                            .select()
+                            .decodeList<Line>()
+                        Lines.insertLines(lines)
+                        callback("reload")
+                        storeLinePreferences.setCurrentVersion(onlineVersion)
+                    }
                 }
+            }
+            catch(e: Exception) {
+                println(e.localizedMessage)
             }
         }
 
         private suspend fun retrieveDestinations(onlineVersion: String, context: Context) {
-            val storeDestinationPreferences = StoreDestinationTableVersion(context)
-            storeDestinationPreferences.version.firstOrNull().let {
-                if(onlineVersion != it) {
-                    Destinations.deleteContent()
-                    val destinations = supabase
-                        .from("destinations")
-                        .select()
-                        .decodeList<Destination>()
-                    Destinations.insertDestinations(destinations)
-                    storeDestinationPreferences.setCurrentVersion(onlineVersion)
+            try {
+                val storeDestinationPreferences = StoreDestinationTableVersion(context)
+                storeDestinationPreferences.version.firstOrNull().let {
+                    if(onlineVersion != it) {
+                        Destinations.deleteContent()
+                        val destinations = supabase
+                            .from("destinations")
+                            .select()
+                            .decodeList<Destination>()
+                        Destinations.insertDestinations(destinations)
+                        storeDestinationPreferences.setCurrentVersion(onlineVersion)
+                    }
                 }
+            }
+            catch(e: Exception) {
+                println(e.localizedMessage)
             }
         }
 
         private suspend fun retrieveAllerDestinations(onlineVersion: String, context: Context) {
-            val storeAllerDestinationPreferences = StoreAllerDestinationTableVersion(context)
-            storeAllerDestinationPreferences.version.firstOrNull().let {
-                if(onlineVersion != it) {
-                    AllerDestinations.deleteContent()
-                    val allerDestinations = supabase
-                        .from("aller_destinations")
-                        .select()
-                        .decodeList<AllerDestination>()
-                    AllerDestinations.insertAllerDestinations(allerDestinations)
-                    storeAllerDestinationPreferences.setCurrentVersion(onlineVersion)
+            try {
+                val storeAllerDestinationPreferences = StoreAllerDestinationTableVersion(context)
+                storeAllerDestinationPreferences.version.firstOrNull().let {
+                    if(onlineVersion != it) {
+                        AllerDestinations.deleteContent()
+                        val allerDestinations = supabase
+                            .from("aller_destinations")
+                            .select()
+                            .decodeList<AllerDestination>()
+                        AllerDestinations.insertAllerDestinations(allerDestinations)
+                        storeAllerDestinationPreferences.setCurrentVersion(onlineVersion)
+                    }
                 }
+            }
+            catch(e: Exception) {
+                println(e.localizedMessage)
             }
         }
 
         private suspend fun retrieveRetourDestinations(onlineVersion: String, context: Context) {
-            val storeRetourDestinationPreferences = StoreRetourDestinationTableVersion(context)
-            storeRetourDestinationPreferences.version.firstOrNull().let {
-                if(onlineVersion != it) {
-                    RetourDestinations.deleteContent()
-                    val retourDestinations = supabase
-                        .from("retour_destinations")
-                        .select()
-                        .decodeList<RetourDestination>()
-                    RetourDestinations.insertRetourDestinations(retourDestinations)
-                    storeRetourDestinationPreferences.setCurrentVersion(onlineVersion)
+            try {
+                val storeRetourDestinationPreferences = StoreRetourDestinationTableVersion(context)
+                storeRetourDestinationPreferences.version.firstOrNull().let {
+                    if(onlineVersion != it) {
+                        RetourDestinations.deleteContent()
+                        val retourDestinations = supabase
+                            .from("retour_destinations")
+                            .select()
+                            .decodeList<RetourDestination>()
+                        RetourDestinations.insertRetourDestinations(retourDestinations)
+                        storeRetourDestinationPreferences.setCurrentVersion(onlineVersion)
+                    }
                 }
+            }
+            catch(e: Exception) {
+                println(e.localizedMessage)
             }
         }
 
@@ -139,50 +165,65 @@ class SupabaseManager {
             onlineVersion: String,
             context: Context
         ) {
-            val storeNextSchedulesDestinationPreferences =
-                StoreNextSchedulesDestinationTableVersion(context)
-            storeNextSchedulesDestinationPreferences.version.firstOrNull().let {
-                if(onlineVersion != it) {
-                    NextSchedulesDestinations.deleteContent()
-                    val nextSchedulesDestinations = supabase
-                        .from("next_schedules_destinations")
-                        .select()
-                        .decodeList<NextSchedulesDestination>()
-                    NextSchedulesDestinations.insertNextSchedulesDestinations(
-                        nsDestinations = nextSchedulesDestinations
-                    )
-                    storeNextSchedulesDestinationPreferences.setCurrentVersion(onlineVersion)
+            try {
+                val storeNextSchedulesDestinationPreferences =
+                    StoreNextSchedulesDestinationTableVersion(context)
+                storeNextSchedulesDestinationPreferences.version.firstOrNull().let {
+                    if(onlineVersion != it) {
+                        NextSchedulesDestinations.deleteContent()
+                        val nextSchedulesDestinations = supabase
+                            .from("next_schedules_destinations")
+                            .select()
+                            .decodeList<NextSchedulesDestination>()
+                        NextSchedulesDestinations.insertNextSchedulesDestinations(
+                            nsDestinations = nextSchedulesDestinations
+                        )
+                        storeNextSchedulesDestinationPreferences.setCurrentVersion(onlineVersion)
+                    }
                 }
+            }
+            catch(e: Exception) {
+                println(e.localizedMessage)
             }
         }
 
         private suspend fun retrievePathDestinations(onlineVersion: String, context: Context) {
-            val storePathDestinationPreferences = StorePathDestinationTableVersion(context)
-            storePathDestinationPreferences.version.firstOrNull().let {
-                if(onlineVersion != it) {
-                    PathDestinations.deleteContent()
-                    val pathDestinations = supabase
-                        .from("path_destinations")
-                        .select()
-                        .decodeList<PathDestination>()
-                    PathDestinations.insertPathDestinations(pathDestinations)
-                    storePathDestinationPreferences.setCurrentVersion(onlineVersion)
+            try {
+                val storePathDestinationPreferences = StorePathDestinationTableVersion(context)
+                storePathDestinationPreferences.version.firstOrNull().let {
+                    if(onlineVersion != it) {
+                        PathDestinations.deleteContent()
+                        val pathDestinations = supabase
+                            .from("path_destinations")
+                            .select()
+                            .decodeList<PathDestination>()
+                        PathDestinations.insertPathDestinations(pathDestinations)
+                        storePathDestinationPreferences.setCurrentVersion(onlineVersion)
+                    }
                 }
+            }
+            catch(e: Exception) {
+                println(e.localizedMessage)
             }
         }
 
         private suspend fun retrieveVehicles(onlineVersion: String, context: Context) {
-            val storeVehiclePreferences = StoreVehicleTableVersion(context)
-            storeVehiclePreferences.version.firstOrNull().let {
-                if(onlineVersion != it) {
-                    Vehicles.deleteContent()
-                    val vehicles = supabase
-                        .from("vehicles")
-                        .select()
-                        .decodeList<Vehicle>()
-                    Vehicles.insertVehicles(vehicles)
-                    storeVehiclePreferences.setCurrentVersion(onlineVersion)
+            try {
+                val storeVehiclePreferences = StoreVehicleTableVersion(context)
+                storeVehiclePreferences.version.firstOrNull().let {
+                    if(onlineVersion != it) {
+                        Vehicles.deleteContent()
+                        val vehicles = supabase
+                            .from("vehicles")
+                            .select()
+                            .decodeList<Vehicle>()
+                        Vehicles.insertVehicles(vehicles)
+                        storeVehiclePreferences.setCurrentVersion(onlineVersion)
+                    }
                 }
+            }
+            catch(e: Exception) {
+                println(e.localizedMessage)
             }
         }
     }
