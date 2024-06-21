@@ -83,21 +83,21 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
         backgroundColor = if (colorScheme) Color.White else Color.Black
     ) { padding ->
         LaunchedEffect(lineId) {
-            Lines.getLine((lineId ?: "0").toInt()) {
-                line.value = it
-                ProgrammedMessages.getNumberOfMessagesByLine(it.id.toString()) { count ->
+            Lines.getLine((lineId ?: "0").toInt()) { returnedLine ->
+                line.value = returnedLine
+                ProgrammedMessages.getNumberOfMessagesByLine(returnedLine.id.toString()) { count ->
                     programmedMessagesCount.value = count
                 }
-            }
-            if(line.value?.isNest != true) {
-                Paths.getOrderedPathsByLine(line.value?.id ?: 0, true) { paths ->
-                    paths.forEach { backAndForthPaths ->
-                        backAndForthPaths.forEach { path ->
-                            pathsCoordinates.addAll(
-                                path.coordinates.map { coordinates ->
-                                    coordinates.map { LatLng(it[1], it[0]) }
-                                }
-                            )
+                if(!returnedLine.isNest) {
+                    Paths.getOrderedPathsByLine(returnedLine.id, true) { paths ->
+                        paths.forEach { backAndForthPaths ->
+                            backAndForthPaths.forEach { path ->
+                                pathsCoordinates.addAll(
+                                    path.coordinates.map { coordinates ->
+                                        coordinates.map { LatLng(it[1], it[0]) }
+                                    }
+                                )
+                            }
                         }
                     }
                 }
