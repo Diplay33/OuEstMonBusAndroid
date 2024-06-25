@@ -17,8 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.text.capitalize
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -50,7 +48,9 @@ fun LineSchedulesMain(
     val displayMoreSchedules = remember {
         mutableStateOf(false)
     }
-    val line = Lines.getLine(lineId)
+    val line = remember {
+        mutableStateOf<Line?>(null)
+    }
     val collapsedGroupHandler: MutableList<Boolean> = sortedSchedules.map {
         false
     }.toMutableList()
@@ -62,6 +62,7 @@ fun LineSchedulesMain(
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(stationId) {
+        Lines.getLine(lineId?.toInt() ?: 0) { line.value = it }
         Paths.getOrderedAllPathsByLine(lineId?.toInt() ?: 0) { returnedPaths ->
             paths.clear()
             returnedPaths.map { value ->
@@ -149,7 +150,10 @@ fun LineSchedulesMain(
                                             shape = RoundedCornerShape(10.dp)
                                         )
                                         .background(
-                                            colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+                                            if (line.value == null)
+                                                Color.Transparent
+                                            else
+                                                Color(android.graphics.Color.parseColor(line.value?.colorHex)).copy(alpha = 0.2f),
                                             shape = RoundedCornerShape(10.dp)
                                         )
                                         .height(45.dp)
@@ -161,7 +165,10 @@ fun LineSchedulesMain(
                                         imageVector = Icons.Rounded.ArrowForward,
                                         contentDescription = null,
                                         tint = if (colorScheme)
-                                            colorResource(id = line.lineColorResource)
+                                            if (line.value == null)
+                                                Color.Transparent
+                                            else
+                                                Color(android.graphics.Color.parseColor(line.value?.colorHex))
                                         else
                                             Color.White,
                                         modifier = Modifier
@@ -178,7 +185,10 @@ fun LineSchedulesMain(
                                         fontWeight = FontWeight.Bold,
                                         fontSize = 18.sp,
                                         color = if (colorScheme)
-                                            colorResource(id = line.lineColorResource)
+                                            if (line.value == null)
+                                                Color.Transparent
+                                            else
+                                                Color(android.graphics.Color.parseColor(line.value?.colorHex))
                                         else
                                             Color.White
                                     )
@@ -219,7 +229,7 @@ fun LineSchedulesMain(
                                     sortedSchedules[groupIndex]
                                 else
                                     notRealizedSchedules[groupIndex],
-                                line = line,
+                                line = line.value,
                                 paths = paths,
                                 collapsedGroupHandler = collapsedGroupHandler,
                                 groupIndex = groupIndex

@@ -1,6 +1,6 @@
 package model.DAO
 
-import model.DAO.AccessData.CallAPI
+import model.CallAPI
 import model.DTO.ProgrammedMessage
 import model.DTO.Severity
 import org.json.JSONObject

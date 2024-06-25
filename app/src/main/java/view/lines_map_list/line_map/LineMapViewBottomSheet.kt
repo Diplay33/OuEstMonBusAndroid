@@ -27,7 +27,7 @@ fun LineMapViewBottomSheet(
     isLoading: Boolean,
     refreshDate: Date,
     selectedService: MutableState<Service?>,
-    line: Line,
+    line: Line?,
     cameraPositionState: CameraPositionState
 ) {
     val areMessagesDisplayed = remember {
@@ -71,7 +71,7 @@ fun LineMapViewBottomSheet(
                 )
             }
             else {
-                LineMapViewServiceDetail(selectedService)
+                LineMapViewServiceDetail(selectedService, line)
             }
         }
     }

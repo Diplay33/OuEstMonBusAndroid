@@ -7,11 +7,14 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import model.DTO.Destinations
+import model.DTO.Line
 import model.DTO.Lines
 import model.DTO.Vehicles
 
@@ -29,9 +32,15 @@ fun ServiceDetailMain(
     stateTime: String?,
     pathId: String?
 ) {
-    val line = Lines.getLine(lineId)
-    val vehicle = Vehicles.getVehicleById(vehicleId ?: "")
+    val line = remember {
+        mutableStateOf<Line?>(null)
+    }
+    val vehicle = Vehicles.getVehicle(vehicleId ?: "")
     val colorScheme = !isSystemInDarkTheme()
+
+    LaunchedEffect(lineId) {
+        Lines.getLine(lineId?.toInt() ?: 0) { line.value = it }
+    }
 
     Scaffold(topBar = { ServiceDetailTopBar(vehicle.parkId, navController) }) { padding ->
         Column(modifier = Modifier
@@ -40,16 +49,13 @@ fun ServiceDetailMain(
             .padding(padding)
             .background(if (colorScheme) Color.White else Color.Black)
         ) {
-            ServiceDetailHeader(
-                line = line,
-                destination = Destinations.getDestinationFromRaw(destination ?: "", line.id)
-            )
+            ServiceDetailHeader(line = line.value, destination ?: "")
 
             Spacer(modifier = Modifier
                 .height(30.dp)
             )
 
-            ServiceDetailVehicleRow(vehicle.model, line.lineName)
+            ServiceDetailVehicleRow(vehicle.fullName, line.value?.name ?: "")
 
             Spacer(modifier = Modifier
                 .height(10.dp)
@@ -57,12 +63,20 @@ fun ServiceDetailMain(
 
             ServiceDetailOperatorRow(vehicle.operator)
 
+            vehicle.tciId?.let {
+                Spacer(modifier = Modifier
+                    .height(10.dp)
+                )
+
+                ServiceDetailTCIRow(it)
+            }
+
             Spacer(modifier = Modifier
                 .height(30.dp)
             )
 
             ServiceDetailMapRow(
-                line = line,
+                line = line.value,
                 stationId = stationId ?: "",
                 latitude = latitude?.toDouble() ?: 0.0,
                 longitude = longitude?.toDouble() ?: 0.0,

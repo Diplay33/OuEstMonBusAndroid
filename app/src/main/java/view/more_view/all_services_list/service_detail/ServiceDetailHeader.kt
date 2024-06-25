@@ -1,28 +1,47 @@
 package view.more_view.all_services_list.service_detail
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.Image
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
+import com.diplay.ouestmonbus.R
+import model.DTO.Destination
+import model.DTO.Destinations
 import model.DTO.Line
 
 @Composable
-fun ServiceDetailHeader(line: Line, destination: List<String>) {
+fun ServiceDetailHeader(line: Line?, rawDestination: String) {
     val colorScheme = !isSystemInDarkTheme()
+    val destination = remember {
+        mutableStateOf<Destination?>(null)
+    }
+
+    LaunchedEffect(line, rawDestination) {
+        line?.let { line ->
+            Destinations.getDestination(rawDestination, line.id) { destination.value = it }
+        }
+    }
 
     Row(modifier = Modifier
         .padding(horizontal = 15.dp)
@@ -32,27 +51,46 @@ fun ServiceDetailHeader(line: Line, destination: List<String>) {
             shape = RoundedCornerShape(10.dp)
         )
         .background(
-            color = colorResource(line.lineColorResource).copy(alpha = 0.2f),
+            color = if (line == null)
+                Color.Transparent
+            else
+                Color(android.graphics.Color.parseColor(line.colorHex)).copy(alpha = 0.2f),
             shape = RoundedCornerShape(10.dp)
         )
         .padding(vertical = 3.dp)
     ) {
-        Image(
-            painter = painterResource(id = line.lineImageResource),
-            contentDescription = null,
-            modifier = Modifier
-                .padding(start = 15.dp)
-                .width(70.dp)
-                .height(55.dp)
-                .align(Alignment.CenterVertically)
-        )
+        if(line?.name == "Ligne inconnue") {
+            Image(
+                painter = painterResource(id = R.drawable.question_mark_box),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(start = 15.dp)
+                    .width(70.dp)
+                    .height(55.dp)
+                    .align(Alignment.CenterVertically)
+            )
+        }
+        else {
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(line?.imageUrl)
+                    .decoderFactory(SvgDecoder.Factory())
+                    .build(),
+                contentDescription = null,
+                modifier = Modifier
+                    .padding(start = 15.dp)
+                    .width(70.dp)
+                    .height(55.dp)
+                    .align(Alignment.CenterVertically)
+            )
+        }
 
         Column(modifier = Modifier
             .padding()
             .offset(y = 3.dp)
         ) {
             Text(
-                text = line.lineName,
+                text = line?.name ?: "",
                 fontWeight = FontWeight.Bold,
                 fontSize = 20.sp,
                 color = if (colorScheme) Color.Black else Color.White,
@@ -75,24 +113,24 @@ fun ServiceDetailHeader(line: Line, destination: List<String>) {
                 Column(modifier = Modifier
                     .padding(horizontal = 10.dp)
                 ) {
-                    if(destination.first() != "") {
+                    destination.value?.let { destination ->
                         Text(
-                            text = destination.first(),
+                            text = destination.city,
                             fontSize = 13.sp,
                             color = Color.Gray,
                             modifier = Modifier
-                                .offset(y = if (destination.first() == "") 0.dp else 2.dp)
+                                .offset(y = 2.dp)
                         )
 
                         Spacer(modifier = Modifier.height(3.dp))
                     }
 
                     Text(
-                        text = destination.last(),
+                        text = destination.value?.destination ?: rawDestination,
                         fontSize = 18.sp,
                         color = if (colorScheme) Color.Black else Color.White,
                         modifier = Modifier
-                            .offset(y = if (destination.first() == "") 0.dp else (-2).dp)
+                            .offset(y = if (destination.value == null) 0.dp else (-2).dp)
                     )
                 }
             }

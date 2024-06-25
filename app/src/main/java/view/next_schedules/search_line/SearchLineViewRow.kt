@@ -3,9 +3,7 @@ package view.next_schedules.search_line
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
@@ -16,26 +14,23 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.FavoriteBorder
-import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 import kotlinx.coroutines.launch
-import model.DAO.AccessData.DestinationAllerData
 import model.DTO.*
 import model.preferences_data_store.StoreFavoriteLines
 import view.lines_map_list.ColorIndicatorDot
@@ -79,7 +74,7 @@ fun SearchLineViewRow(
             shape = RoundedCornerShape(10.dp)
         )
         .background(
-            colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+            Color(android.graphics.Color.parseColor(line.colorHex)).copy(alpha = 0.2f),
             shape = RoundedCornerShape(10.dp)
         )
     ) {
@@ -92,7 +87,7 @@ fun SearchLineViewRow(
                     onDoubleTap = { },
                     onLongPress = { menuShown.value = true },
                     onTap = {
-                        if(isCollapsed.value && paths.isEmpty()) {
+                        if (isCollapsed.value && paths.isEmpty()) {
                             isLoading.value = true
                             Paths.getOrderedPathsByLine(line.id) { returnedPaths ->
                                 paths.clear()
@@ -106,8 +101,7 @@ fun SearchLineViewRow(
                                     )
                                 }
                             }
-                        }
-                        else {
+                        } else {
                             isCollapsed.value = !isCollapsed.value
                             scope.launch {
                                 rotation.animateTo(
@@ -126,8 +120,11 @@ fun SearchLineViewRow(
                 .align(Alignment.CenterVertically)
             ) {
                 Row {
-                    Image(
-                        painter = painterResource(id = line.lineImageResource),
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(line.imageUrl)
+                            .decoderFactory(SvgDecoder.Factory())
+                            .build(),
                         contentDescription = null,
                         modifier = Modifier
                             .size(40.dp)
@@ -138,7 +135,7 @@ fun SearchLineViewRow(
                     )
 
                     Text(
-                        text = line.lineName,
+                        text = line.name,
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
                         color = if (colorScheme) Color.Black else Color.White,
@@ -199,7 +196,7 @@ fun SearchLineViewRow(
         if(!isCollapsed.value) {
             Column(modifier = Modifier
                 .background(
-                    colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+                    Color(android.graphics.Color.parseColor(line.colorHex)).copy(alpha = 0.2f),
                     shape = RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp)
                 )
                 .fillMaxWidth()
@@ -208,19 +205,7 @@ fun SearchLineViewRow(
             ) {
                 paths.forEach { paths ->
                     if(paths.isNotEmpty()) {
-                        SearchLineViewDestinationRow(
-                            paths = paths,
-                            destinations = if (paths.first().direction == "ALLER")
-                                DestinationsAller.getDestinationAllerOfLine(line.id)
-                            else
-                                DestinationsRetour.getDestinationRetourOfLine(line.id),
-                            lineId = line.id.toString(),
-                            navController = navController
-                        )
-
-                        Spacer(modifier = Modifier
-                            .height(15.dp)
-                        )
+                        SearchLineViewDestination(paths, line, navController)
                     }
                 }
             }
@@ -236,8 +221,10 @@ fun SearchLineViewRow(
                 DropdownMenuItem(onClick = {
                     scope.launch {
                         storeFavLines.removeFromFavorites(line.id.toString())
-                        linesByGroup.clear()
-                        linesByGroup.addAll(Lines.getLinesByGroup(context))
+                        Lines.getAllLinesBySection(context, true) {
+                            linesByGroup.clear()
+                            linesByGroup.addAll(it)
+                        }
                     }
                     menuShown.value = false
                 }) {
@@ -267,8 +254,10 @@ fun SearchLineViewRow(
                 DropdownMenuItem(onClick = {
                     scope.launch {
                         storeFavLines.saveFavoriteLine(line.id.toString())
-                        linesByGroup.clear()
-                        linesByGroup.addAll(Lines.getLinesByGroup(context))
+                        Lines.getAllLinesBySection(context, true) {
+                            linesByGroup.clear()
+                            linesByGroup.addAll(it)
+                        }
                     }
                     menuShown.value = false
                 }) {

@@ -10,11 +10,9 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -35,7 +33,9 @@ fun SearchStopListMain(
     pathDirection: String?,
     state: SearchStopListSearchState = rememberSearchState()
 ) {
-    val line = Lines.getLine(lineId)
+    val line = remember {
+        mutableStateOf<Line?>(null)
+    }
     val paths = remember {
         mutableStateListOf<Path>()
     }
@@ -48,11 +48,25 @@ fun SearchStopListMain(
     val pathDirectionState = remember {
         mutableStateOf(pathDirection ?: "")
     }
-    val destinations = if (pathDirectionState.value == "ALLER")
-        DestinationsAller.getDestinationAllerOfLine(line.id)
-    else
-        DestinationsRetour.getDestinationRetourOfLine(line.id)
+    val destinations = remember {
+        mutableStateListOf<List<String>>()
+    }
     val colorScheme = !isSystemInDarkTheme()
+
+    LaunchedEffect(line.value, pathDirectionState.value) {
+        line.value?.let { line ->
+            if(pathDirectionState.value == "ALLER") {
+                AllerDestinations.getListOfDestinations(line.id) {
+                    destinations.addAll(it)
+                }
+            }
+            else {
+                RetourDestinations.getListOfDestinations(line.id) {
+                    destinations.addAll(it)
+                }
+            }
+        }
+    }
 
     Scaffold(topBar = { SearchStopListTopBar(navController) }) { padding ->
         Column(modifier = Modifier
@@ -94,13 +108,17 @@ fun SearchStopListMain(
                 searchText = state.query.text
             )
 
+            LaunchedEffect(lineId) {
+                Lines.getLine(lineId?.toInt() ?: 0) { line.value = it }
+            }
+
             when(state.searchDisplay) {
                 SearchDisplay.INITIALRESULTS -> {
                     Column(modifier = Modifier
                         .verticalScroll(rememberScrollState())
                         .fillMaxWidth()
                     ) {
-                        SearchStopListHeader(line, paths, destinations, pathDirectionState, isLoading, stops)
+                        SearchStopListHeader(line.value, paths, destinations, pathDirectionState, isLoading, stops)
 
                         Spacer(modifier = Modifier
                             .height(30.dp)
@@ -134,7 +152,7 @@ fun SearchStopListMain(
                                     stop = stop,
                                     stops = stops.sortedBy { it.name },
                                     navController = navController,
-                                    line = line,
+                                    line = line.value,
                                     pathDirection = pathDirectionState.value
                                 )
                             }
@@ -163,7 +181,7 @@ fun SearchStopListMain(
                         .verticalScroll(rememberScrollState())
                         .fillMaxWidth()
                     ) {
-                        SearchStopListHeader(line, paths, destinations, pathDirectionState, isLoading, stops)
+                        SearchStopListHeader(line.value, paths, destinations, pathDirectionState, isLoading, stops)
 
                         Spacer(modifier = Modifier
                             .height(30.dp)
@@ -197,7 +215,7 @@ fun SearchStopListMain(
                                     stop = stop,
                                     stops = state.searchResults,
                                     navController = navController,
-                                    line = line,
+                                    line = line.value,
                                     pathDirection = pathDirectionState.value
                                 )
                             }

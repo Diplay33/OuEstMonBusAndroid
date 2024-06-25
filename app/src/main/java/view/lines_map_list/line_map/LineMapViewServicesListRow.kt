@@ -10,18 +10,22 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.CameraPositionState
+import model.DTO.Destination
 import model.DTO.Destinations
+import model.DTO.Line
 import model.DTO.Lines
 import model.DTO.Service
 
@@ -31,9 +35,24 @@ fun LineMapViewServicesListRow(
     selectedService: MutableState<Service?>,
     cameraPositionState: CameraPositionState,
 ) {
-    val line = Lines.getLine(service.lineId.toString())
-    val destination = Destinations.getDestinationFromRaw(service.destination, service.lineId)
+    val line = remember {
+        mutableStateOf<Line?>(null)
+    }
+    val destination = remember {
+        mutableStateOf<Destination?>(null)
+    }
     val colorScheme = !isSystemInDarkTheme()
+
+    LaunchedEffect(service) {
+        Lines.getLine(service.lineId) { returnedLine ->
+            returnedLine.parentId?.let { parentId ->
+                Lines.getLine(parentId) { line.value = it }
+                return@getLine
+            }
+            line.value = returnedLine
+        }
+        Destinations.getDestination(service.destination, service.lineId) { destination.value = it }
+    }
 
     Row(modifier = Modifier
         .padding(horizontal = 15.dp)
@@ -46,11 +65,14 @@ fun LineMapViewServicesListRow(
                 shape = RoundedCornerShape(10.dp)
             )
             .background(
-                color = colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+                color = if (line.value == null)
+                    Color.Transparent
+                else
+                    Color(android.graphics.Color.parseColor(line.value?.colorHex)).copy(alpha = 0.2f),
                 shape = RoundedCornerShape(10.dp)
             )
             .padding(horizontal = 15.dp)
-            .padding(top = 7.dp, bottom = if (destination.first() == "") 7.dp else 5.dp)
+            .padding(top = 7.dp, bottom = if (destination.value == null) 7.dp else 5.dp)
             .fillMaxWidth()
             .clickable {
                 selectedService.value = service
@@ -75,24 +97,24 @@ fun LineMapViewServicesListRow(
                 )
 
                 Column {
-                    if(destination.first() != "") {
+                    destination.value?.let { destination ->
                         Text(
-                            text = destination.first(),
+                            text = destination.city,
                             fontSize = 13.sp,
                             color = Color.Gray,
                             modifier = Modifier
-                                .offset(y = if (destination.first() == "") 0.dp else 2.dp)
+                                .offset(y = 2.dp)
                         )
 
                         Spacer(modifier = Modifier.height(3.dp))
                     }
 
                     Text(
-                        text = destination.last(),
+                        text = destination.value?.destination ?: service.destination,
                         fontSize = 18.sp,
                         color = if (colorScheme) Color.Black else Color.White,
                         modifier = Modifier
-                            .offset(y = if (destination.first() == "") 0.dp else (-2).dp)
+                            .offset(y = if (destination.value == null) 0.dp else (-2).dp)
                     )
                 }
             }

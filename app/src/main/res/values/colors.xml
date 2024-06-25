@@ -3,20 +3,4 @@
     <color name="black">#FF000000</color>
     <color name="light_grey">#DEDEDE</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="tram_a">#831F82</color>
-    <color name="tram_b">#DA003E</color>
-    <color name="tram_c">#D35098</color>
-    <color name="tram_d">#9260A0</color>
-    <color name="navette_arena">#C02C87</color>
-    <color name="navette_stade">#E01443</color>
-    <color name="navette_tram">#9DBE44</color>
-    <color name="batcub">#0BBBEF</color>
-    <color name="lianes">#00B1E6</color>
-    <color name="principale">#00A787</color>
-    <color name="locale">#7AB51D</color>
-    <color name="directe">#4B4B4D</color>
-    <color name="tbnight">#0D324B</color>
-    <color name="flex">#76b72e</color>
-    <color name="flex_night">#0c324c</color>
-    <color name="bus_express_g">#006686</color>
 </resources>

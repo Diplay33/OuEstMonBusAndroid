@@ -47,8 +47,9 @@ fun MoreViewWebVersionRow() {
                 .width(15.dp)
             )
 
-            Text(text = "Version web",
-                color = Color.Blue,
+            Text(
+                text = "Version web",
+                color = Color(android.graphics.Color.parseColor("#007AFF")),
                 fontSize = 18.sp,
                 modifier = Modifier
                     .clickable {

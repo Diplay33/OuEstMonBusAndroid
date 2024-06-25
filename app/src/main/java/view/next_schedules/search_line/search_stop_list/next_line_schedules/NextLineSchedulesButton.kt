@@ -11,7 +11,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -19,13 +18,12 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.diplay.ouestmonbus.R
 import model.DTO.Line
-import model.DTO.Station
 import view.Screens.ProchainsScreens
 import java.time.LocalDate
 
 @Composable
 fun NextLineSchedulesButton(
-    line: Line,
+    line: Line?,
     navController: NavController,
     stopId: String?,
     stopName: String?,
@@ -45,7 +43,10 @@ fun NextLineSchedulesButton(
                 shape = RoundedCornerShape(10.dp)
             )
             .background(
-                colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+                if (line == null)
+                    Color.Transparent
+                else
+                    Color(android.graphics.Color.parseColor(line.colorHex)).copy(alpha = 0.2f),
                 shape = RoundedCornerShape(10.dp)
             )
             .height(45.dp)
@@ -54,7 +55,7 @@ fun NextLineSchedulesButton(
                     ProchainsScreens.LineSchedules.withArgs(
                         stopId ?: "",
                         stopName ?: "",
-                        line.id.toString(),
+                        line?.id.toString(),
                         direction ?: "",
                         selectedDate.toString()
                     )
@@ -65,7 +66,10 @@ fun NextLineSchedulesButton(
             painter = painterResource(id = R.drawable.timer),
             contentDescription = null,
             tint = if (colorScheme)
-                colorResource(id = line.lineColorResource)
+                if (line == null)
+                    Color.Transparent
+                else
+                    Color(android.graphics.Color.parseColor(line.colorHex))
             else
                 Color.White,
             modifier = Modifier
@@ -81,7 +85,10 @@ fun NextLineSchedulesButton(
             fontWeight = FontWeight.Bold,
             fontSize = 18.sp,
             color = if (colorScheme)
-                colorResource(id = line.lineColorResource)
+                if (line == null)
+                    Color.Transparent
+                else
+                    Color(android.graphics.Color.parseColor(line.colorHex))
             else
                 Color.White
         )

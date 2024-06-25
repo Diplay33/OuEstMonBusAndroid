@@ -1,36 +1,47 @@
 package view.next_schedules.search_line.search_stop_list.next_line_schedules.line_schedules
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 import model.DTO.Line
 import model.DTO.Path
+import model.DTO.PathDestination
 import model.DTO.PathDestinations
 import model.DTO.Schedule
 import java.util.*
 
 @Composable
-fun LineSchedulesRow(line: Line, schedule: Schedule, path: Path) {
+fun LineSchedulesRow(line: Line?, schedule: Schedule, path: Path) {
     val colorScheme = !isSystemInDarkTheme()
     val scheduleCalendar = Calendar.getInstance()
     scheduleCalendar.time = schedule.getTime() ?: Date()
     val minutes = scheduleCalendar.get(Calendar.MINUTE).toString()
-    val destination = PathDestinations.getDestinationFromPathName(line.id, path.name)
+    val destination = remember {
+        mutableStateOf<PathDestination?>(null)
+    }
+
+    LaunchedEffect(line) {
+        line?.let { line ->
+            PathDestinations.getDestination(path.name, line.id) { destination.value = it }
+        }
+    }
 
     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
         .fillMaxWidth()
@@ -38,8 +49,11 @@ fun LineSchedulesRow(line: Line, schedule: Schedule, path: Path) {
         .padding(vertical = 3.dp)
     ) {
         Row {
-            Image(
-                painter = painterResource(id = line.lineImageResource),
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(line?.imageUrl)
+                    .decoderFactory(SvgDecoder.Factory())
+                    .build(),
                 contentDescription = null,
                 modifier = Modifier
                     .size(40.dp)
@@ -59,7 +73,7 @@ fun LineSchedulesRow(line: Line, schedule: Schedule, path: Path) {
                     .offset(x = (-7).dp)
             )
 
-            if(destination.isEmpty()) {
+            if(destination.value == null) {
                 Text(
                     text = path.name,
                     fontSize = 18.sp,
@@ -71,33 +85,35 @@ fun LineSchedulesRow(line: Line, schedule: Schedule, path: Path) {
                 )
             }
             else {
-                Column(modifier = Modifier
-                    .padding(vertical = 3.dp)
-                ) {
-                    Text(
-                        text = destination.first(),
-                        fontSize = 13.sp,
-                        color = Color.Gray,
-                        modifier = Modifier
-                            .offset(y = 2.dp)
-                    )
-
-                    Spacer(modifier = Modifier.height(3.dp))
-
-                    Text(
-                        text = destination[1],
-                        fontSize = 18.sp,
-                        color = if (colorScheme) Color.Black else Color.White,
-                        modifier = Modifier
-                            .offset(y = (-2).dp)
-                    )
-
-                    if(destination.last() != "") {
+                destination.value?.let { destination ->
+                    Column(modifier = Modifier
+                        .padding(vertical = 3.dp)
+                    ) {
                         Text(
-                            text = destination.last(),
+                            text = destination.city,
+                            fontSize = 13.sp,
+                            color = Color.Gray,
                             modifier = Modifier
-                                .offset(y = (-4).dp)
+                                .offset(y = 2.dp)
                         )
+
+                        Spacer(modifier = Modifier.height(3.dp))
+
+                        Text(
+                            text = destination.destination,
+                            fontSize = 18.sp,
+                            color = if (colorScheme) Color.Black else Color.White,
+                            modifier = Modifier
+                                .offset(y = (-2).dp)
+                        )
+
+                        destination.by?.let {
+                            Text(
+                                text = it,
+                                modifier = Modifier
+                                    .offset(y = (-4).dp)
+                            )
+                        }
                     }
                 }
             }

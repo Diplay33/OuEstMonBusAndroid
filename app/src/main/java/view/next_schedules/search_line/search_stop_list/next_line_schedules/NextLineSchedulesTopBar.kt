@@ -26,7 +26,7 @@ fun NextLineSchedulesTopBar(
     navController: NavController,
     stopId: String,
     stopName: String,
-    line: Line
+    line: Line?
 ) {
     val colorScheme = !isSystemInDarkTheme()
 
@@ -49,13 +49,12 @@ fun NextLineSchedulesTopBar(
 
         LaunchedEffect(line) {
             scope.launch {
-                storeFavStopsWithLine.getFavoriteStopsForLine(line.id.toString()) { favoriteStops ->
+                storeFavStopsWithLine.getFavoriteStopsForLine(line?.id.toString()) { favoriteStops ->
                     isFavorite.value = favoriteStops.contains(stopId)
                 }
             }
             scope.launch {
                 storeFavStopsWithLine.checkMaxStopCountReached {
-                    println(it)
                     isMaxFavoritesReached.value = it
                 }
             }
@@ -102,7 +101,7 @@ fun NextLineSchedulesTopBar(
                             scope.launch {
                                 if(isFavorite.value) {
                                     storeFavStopsWithLine.removeFavoriteStopForLine(
-                                        lineId = line.id.toString(),
+                                        lineId = line?.id.toString(),
                                         stopId = stopId
                                     )
                                     storeFavStopsWithLine.checkMaxStopCountReached { result ->
@@ -114,7 +113,7 @@ fun NextLineSchedulesTopBar(
                                         isDialogShown.value = true
                                     } else {
                                         storeFavStopsWithLine.saveFavoriteStopForLine(
-                                            lineId = line.id.toString(),
+                                            lineId = line?.id.toString(),
                                             stopId = stopId
                                         )
                                         storeFavStopsWithLine.checkMaxStopCountReached { result ->

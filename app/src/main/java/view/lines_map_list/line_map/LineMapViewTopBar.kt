@@ -1,6 +1,5 @@
 package view.lines_map_list.line_map
 
-import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.pm.PackageManager
 import android.util.Log
@@ -23,7 +22,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,7 +36,7 @@ import model.DTO.Line
 @Composable
 fun LineMapViewTopBar(
     navController: NavController,
-    line: Line,
+    line: Line?,
     isUserLocationShown: MutableState<Boolean>,
     cameraPositionState: CameraPositionState,
     userPosition: MutableState<LatLng>
@@ -137,14 +135,17 @@ fun LineMapViewTopBar(
             )
 
             Text(
-                text = line.lineName,
+                text = line?.name ?: "",
                 fontWeight = FontWeight.Bold,
                 fontSize = 18.sp,
                 color = Color.White,
                 modifier = Modifier
                     .align(Alignment.CenterVertically)
                     .background(
-                        color = colorResource(id = line.lineColorResource),
+                        color = if (line == null)
+                            Color.Transparent
+                        else
+                            Color(android.graphics.Color.parseColor(line.colorHex)),
                         shape = RoundedCornerShape(10.dp)
                     )
                     .padding(7.dp)

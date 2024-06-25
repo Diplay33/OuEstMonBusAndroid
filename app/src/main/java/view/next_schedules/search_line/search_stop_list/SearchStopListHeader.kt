@@ -1,6 +1,5 @@
 package view.next_schedules.search_line.search_stop_list
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -12,12 +11,12 @@ import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
@@ -26,22 +25,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import model.DTO.DestinationsAller
-import model.DTO.DestinationsRetour
+import coil.compose.AsyncImage
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 import model.DTO.Line
 import model.DTO.Path
 import model.DTO.Station
 
 @Composable
 fun SearchStopListHeader(
-    line: Line,
+    line: Line?,
     paths: List<Path>,
-    destinations: List<List<String>> = listOf(),
+    destinations: SnapshotStateList<List<String>> = mutableStateListOf(),
     pathDirectionState: MutableState<String>,
     isLoading: MutableState<Boolean>,
     stops: SnapshotStateList<Station>
@@ -52,8 +51,12 @@ fun SearchStopListHeader(
     val headerMenuShown = remember {
         mutableStateOf(false)
     }
-    paths.forEach { destinationsSet.add(it.getDestinationName()) }
     val colorScheme = !isSystemInDarkTheme()
+
+    LaunchedEffect(isLoading.value) {
+        destinationsSet.clear()
+        paths.forEach { destinationsSet.add(it.getDestinationName()) }
+    }
 
     Column(modifier = Modifier
         .padding(horizontal = 15.dp)
@@ -62,7 +65,10 @@ fun SearchStopListHeader(
             shape = RoundedCornerShape(10.dp)
         )
         .background(
-            colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+            if (line == null)
+                Color.Transparent
+            else
+                Color(android.graphics.Color.parseColor(line.colorHex)).copy(alpha = 0.2f),
             shape = RoundedCornerShape(10.dp)
         )
     ) {
@@ -70,8 +76,11 @@ fun SearchStopListHeader(
             .fillMaxWidth()
             .padding(horizontal = 15.dp)
         ) {
-            Image(
-                painter = painterResource(id = line.lineImageResource),
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(line?.imageUrl)
+                    .decoderFactory(SvgDecoder.Factory())
+                    .build(),
                 contentDescription = null,
                 modifier = Modifier
                     .size(50.dp)
@@ -79,7 +88,7 @@ fun SearchStopListHeader(
             )
 
             Text(
-                text = line.lineName,
+                text = line?.name ?: "",
                 fontSize = 23.sp,
                 fontWeight = FontWeight.Bold,
                 color = if (colorScheme) Color.Black else Color.White,
@@ -92,7 +101,10 @@ fun SearchStopListHeader(
 
         Column(modifier = Modifier
             .background(
-                colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+                if (line == null)
+                    Color.Transparent
+                else
+                    Color(android.graphics.Color.parseColor(line.colorHex)).copy(alpha = 0.2f),
                 shape = RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp)
             )
             .fillMaxWidth()
@@ -217,6 +229,7 @@ fun SearchStopListHeader(
                             "ALLER"
                         headerMenuShown.value = false
                         isLoading.value = true
+                        destinations.clear()
                         stops.clear()
                     }) {
                         Row {

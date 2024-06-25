@@ -19,9 +19,9 @@ import model.DTO.Service
 
 @Composable
 fun LinesMapListGroup(
-    lines: ArrayList<Line>,
+    lines: List<Line>,
     isFavorite: Boolean,
-    linesByGroup: SnapshotStateList<ArrayList<Line>>,
+    linesByGroup: SnapshotStateList<List<Line>>,
     navController: NavController,
     services: MutableList<Service>,
     isLoading: MutableState<Boolean>,

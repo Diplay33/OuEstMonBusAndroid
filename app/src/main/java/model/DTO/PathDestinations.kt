@@ -1,39 +1,46 @@
 package model.DTO
 
-import model.DAO.AccessData.PathDestinationData
+import com.diplay.ouestmonbus.MainApplication
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class PathDestinations {
     companion object {
-        fun getDestinationFromPathName(lineId: Int, destination: String): List<String> {
-            val reversedName = destination.reversed()
-            var processedString = ""
-            for(i in reversedName.indices) {
-                processedString += reversedName[i]
-                if(reversedName[i] == ' ' && reversedName[i + 1] == '-') { break }
-            }
-            val finalString = processedString.trim().reversed()
+        private val pathDestinationDAO = MainApplication.appDatabase.getPathDestinationDAO()
 
-            when {
-                lineId == 10 && finalString == "Hippodrome" -> {
-                    return listOf("EYSINES", "Hippodrome", "")
+        //MARK: - GET
+
+        fun getDestination(pathName: String, lineId: Int, callback: (PathDestination?) -> Unit) {
+            CoroutineScope(Dispatchers.IO).launch {
+                val reversedName = pathName.reversed()
+                var processedString = ""
+                for(i in reversedName.indices) {
+                    processedString += reversedName[i]
+                    if(reversedName[i] == ' ' && reversedName[i + 1] == '-') { break }
                 }
-                lineId == 16 || lineId == 28 && finalString == "Les Pins" -> {
-                    return listOf("MERIGNAC", "Les Pins", "")
+                val finalString = processedString.trim().reversed()
+
+                pathDestinationDAO.getLineRelatedDestination(finalString, lineId)?.let {
+                    callback(it)
+                    return@launch
                 }
-                lineId == 105 && finalString == "Lycée Sud Médoc" -> {
-                    return listOf("LE TAILLAN", "Lycée Sud Médoc", "")
+                pathDestinationDAO.getDestination(finalString)?.let {
+                    callback(it)
+                    return@launch
                 }
-                lineId == 34 && finalString == "République" -> {
-                    return listOf("SAINT MÉDARD EN JALLES", "République", "")
-                }
-                else -> {
-                    PathDestinationData.destinations[finalString]?.let { values ->
-                        return values
-                    } ?: run {
-                        return listOf()
-                    }
-                }
+                callback(null)
             }
+        }
+
+        //MARK: - SET
+
+        fun insertPathDestinations(pathDestinations: List<PathDestination>) {
+            pathDestinationDAO.insertPathDestinations(pathDestinations)
+        }
+
+        fun deleteContent() {
+            pathDestinationDAO.deleteContent()
         }
     }
 }

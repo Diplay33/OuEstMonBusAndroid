@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -53,7 +54,7 @@ fun AllServicesListGroup(
                 .padding(horizontal = 15.dp)
             ) {
                 Text(
-                    text = services.first().vehicle.model,
+                    text = services.first().vehicle.fullName,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold,
                     color = if (colorScheme) Color.Black else Color.White,

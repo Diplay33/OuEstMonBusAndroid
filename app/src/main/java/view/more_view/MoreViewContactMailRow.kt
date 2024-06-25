@@ -49,7 +49,7 @@ fun MoreViewContactMailRow() {
             Text(
                 text = "ouestmonbusoff@gmail.com",
                 fontSize = 18.sp,
-                color = Color.Blue,
+                color = Color(android.graphics.Color.parseColor("#007AFF")),
                 modifier = Modifier
                     .clickable {
                         context.sendMail(to = "ouestmonbusoff@gmail.com")

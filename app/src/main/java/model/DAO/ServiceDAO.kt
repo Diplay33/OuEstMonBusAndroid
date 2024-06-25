@@ -1,6 +1,6 @@
 package model.DAO
 
-import model.DAO.AccessData.CallAPI
+import model.CallAPI
 import model.DTO.Service
 import org.json.JSONObject
 import java.text.SimpleDateFormat

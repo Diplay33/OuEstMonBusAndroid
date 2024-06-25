@@ -15,7 +15,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,7 +32,27 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.diplay.ouestmonbus.ui.theme.OùEstMonBusTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import io.github.jan.supabase.createSupabaseClient
+import io.github.jan.supabase.postgrest.Postgrest
+import io.github.jan.supabase.postgrest.from
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import model.DTO.AllerDestination
+import model.DTO.AllerDestinations
+import model.DTO.Destination
+import model.DTO.Destinations
+import model.DTO.Line
+import model.DTO.Lines
+import model.DTO.NextSchedulesDestination
+import model.DTO.NextSchedulesDestinations
+import model.DTO.PathDestination
+import model.DTO.PathDestinations
+import model.DTO.RetourDestination
+import model.DTO.RetourDestinations
+import model.DTO.Vehicle
+import model.DTO.Vehicles
+import model.SupabaseManager
 import model.preferences_data_store.StoreDisplayNotifCountParam
 import model.preferences_data_store.StoreFirstLaunch
 import view.BottomNavigationBar
@@ -58,6 +81,9 @@ class MainActivity : ComponentActivity() {
             val scope = rememberCoroutineScope()
             val firstLaunchDataStore = StoreFirstLaunch(context)
             val displayNotifCountDataStore = StoreDisplayNotifCountParam(context)
+            val refreshLinesAction = remember {
+                mutableStateOf<String?>(null)
+            }
 
             if(firstLaunchDataStore.isEnabled.collectAsState(initial = false).value != true) {
                 scope.launch {
@@ -86,6 +112,12 @@ class MainActivity : ComponentActivity() {
                 )
             }
 
+            LaunchedEffect(Unit) {
+                withContext(Dispatchers.IO) {
+                    SupabaseManager.beginSyncDatabaseProcess(context) { refreshLinesAction.value = it }
+                }
+            }
+
             Scaffold(bottomBar = { BottomNavigationBar(navController, bottomNavigationItems) } ) {
                 NavHost(
                     navController = navController,
@@ -101,7 +133,10 @@ class MainActivity : ComponentActivity() {
                 ) {
                     //Cartes screen
                     composable(BottomNavigationScreens.Cartes.route) {
-                        LinesMapListMain(navController = navController)
+                        LinesMapListMain(
+                            navController = navController,
+                            refreshLinesAction = refreshLinesAction.value
+                        )
                     }
 
                     composable(route = CartesScreens.HelloWorld.route + "/{lineId}", arguments = listOf(

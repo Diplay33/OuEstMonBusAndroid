@@ -1,80 +1,107 @@
 package model.DTO
 
 import android.content.Context
-import com.diplay.ouestmonbus.R
+import com.diplay.ouestmonbus.MainApplication
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
-import model.DAO.LineDAO
 import model.preferences_data_store.StoreFavoriteLines
 import java.text.Normalizer
 
 class Lines {
     companion object {
-        fun getAllLines(forSchedule: Boolean = false): List<Line> {
-            return LineDAO.getLines().filter { if (forSchedule) it.id != 123 && it.id !in 72..79 else true }
+        private val lineDAO = MainApplication.appDatabase.getLineDAO()
+
+        //MARK: - GET
+
+        fun getAllLines(callback: (List<Line>) -> Unit) {
+            CoroutineScope(Dispatchers.IO).launch {
+                callback(lineDAO.getAllLines())
+            }
         }
 
-        fun getLinesByGroup(context: Context, forSchedule: Boolean = false): ArrayList<ArrayList<Line>> {
-            val lines = getAllLines(forSchedule)
-            val listGroupSet = lines.map { it.listGroup }.toSet().toList()
-            val linesByGroup: ArrayList<ArrayList<Line>> = ArrayList(listGroupSet.map { arrayListOf() })
-            linesByGroup.add(arrayListOf())
+        fun getAllLinesBySection(context: Context, forSchedules: Boolean = false, callback: (List<List<Line>>) -> Unit) {
+            CoroutineScope(Dispatchers.IO).launch {
+                val lines = (if (forSchedules) lineDAO.getAllLinesForSchedules()
+                else
+                    lineDAO.getAllLines()).sortedBy { it.index }
+                val listSectionSet = lines.map { it.section }.toSet().toList()
+                val linesBySection: ArrayList<ArrayList<Line>> = ArrayList(listSectionSet.map { arrayListOf() })
+                linesBySection.add(arrayListOf())
 
-            lines.forEach { line ->
-                runBlocking(Dispatchers.IO) {
-                    if(StoreFavoriteLines(context, line.id.toString()).isFavorite.first()!!) {
-                        linesByGroup[0].add(line)
+                lines.forEach { line ->
+                    runBlocking(Dispatchers.IO) {
+                        if(StoreFavoriteLines(context, line.id.toString()).isFavorite.first()!!) {
+                            linesBySection[0].add(line)
+                        }
+                    }
+
+                    for(i in 0 until listSectionSet.count()) {
+                        if(line.section == listSectionSet[i]) {
+                            linesBySection[i + 1].add(line)
+                        }
                     }
                 }
 
-                for(i in 0 until listGroupSet.count()) {
-                    if(line.listGroup == listGroupSet[i]) {
-                        linesByGroup[i + 1].add(line)
-                    }
-                }
-            }
-
-            return linesByGroup
-        }
-
-        fun getLinesBySearchText(text: String, forSchedule: Boolean = false): List<Line> {
-            val REGEX_UNACCENT = "\\p{InCombiningDiacriticalMarks}+".toRegex()
-            fun CharSequence.unaccent(): String {
-                val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
-                return REGEX_UNACCENT.replace(temp, "")
-            }
-
-            return getAllLines(forSchedule).filter { line ->
-                line.lineName.lowercase().unaccent().contains(text.trim().lowercase().unaccent())
+                callback(linesBySection)
             }
         }
 
-        fun getLine(lineId: String?): Line {
-            LineDAO.getLines().map { line ->
-                if(line.id.toString() == lineId) {
-                    return line
+        fun getLinesBySearchText(searchText: String, forSchedules: Boolean = false, callback: (List<Line>) -> Unit) {
+            CoroutineScope(Dispatchers.IO).launch {
+                val REGEX_UNACCENT = "\\p{InCombiningDiacriticalMarks}+".toRegex()
+                fun CharSequence.unaccent(): String {
+                    val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
+                    return REGEX_UNACCENT.replace(temp, "")
                 }
-                else if(lineId?.toInt() in 123..198) {
-                    return Line(
-                        id = 123,
-                        lineName = "Navette Tram",
-                        lineImageResource = R.drawable.navette_tram,
-                        lineColorResource = R.color.navette_tram,
-                        listGroup = "Spéciales")
-                }
+
+                val lines = (if (forSchedules) lineDAO.getAllLinesForSchedules()
+                else
+                    lineDAO.getAllLines()).sortedBy { it.index }
+                callback(lines.filter { line ->
+                    line.name.lowercase().unaccent().contains(searchText.trim().lowercase().unaccent())
+                })
             }
-            return getEmptyLine()
         }
 
-        private fun getEmptyLine(): Line {
+        fun getChildLineIds(parentId: Int, callback: (List<Int>) -> Unit) {
+            CoroutineScope(Dispatchers.IO).launch { callback(lineDAO.getChildLineIds(parentId)) }
+        }
+
+        fun getLine(id: Int, callback: (Line) -> Unit) {
+            CoroutineScope(Dispatchers.IO).launch {
+                callback(lineDAO.getLine(id) ?: getEmptyLine())
+            }
+        }
+
+        fun getEmptyLine(): Line {
             return Line(
+                network = "",
                 id = 0,
-                lineName = "Ligne inconnue",
-                lineImageResource = R.drawable.question_mark_box,
-                lineColorResource = R.color.light_grey,
-                listGroup = "Locale 2"
+                name = "Ligne inconnue",
+                type = "",
+                index = 0,
+                section = 0,
+                physicalType = "",
+                imageUrl = "",
+                colorHex = "#DEDEDE",
+                isNest = false,
+                showSchedules = false,
+                parentId = 0,
+                createdAt = ""
             )
+        }
+
+        //MARK: - SET
+
+        fun insertLines(lines: List<Line>) {
+            lineDAO.insertLines(lines)
+        }
+
+        fun deleteContent() {
+            lineDAO.deleteContent()
         }
     }
 }

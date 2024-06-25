@@ -18,15 +18,9 @@ class Services {
             }
         }
 
-        fun getNavetteTramServices(callback: (ArrayList<Service>) -> Unit) {
-            ServiceDAO.getAllServices { services ->
-                val navetteTramServices = ArrayList<Service>()
-                services.forEach { service ->
-                    if(service.lineId in 123..198) {
-                        navetteTramServices.add(service)
-                    }
-                }
-                callback(navetteTramServices)
+        fun getServicesFilteredBy(ids: List<Int>, callback: (List<Service>) -> Unit) {
+            ServiceDAO.getAllServices { returnedServices ->
+                callback(returnedServices.filter { ids.contains(it.lineId) })
             }
         }
 
@@ -72,7 +66,7 @@ class Services {
         }*/
 
         private fun filterServicesSortedByVehicle(services: List<Service>): List<Service> {
-            return services.sortedBy { it.vehicle.parkId }.sortedBy { it.vehicle.model }
+            return services.sortedBy { it.vehicle.parkId }.sortedBy { it.vehicle.fullName }
         }
 
         fun filterServicesByVehicle(services: List<Service>): List<List<Service>> {
@@ -84,17 +78,17 @@ class Services {
             filteredServices.forEach { service ->
                 if(servicesToReturn.isEmpty() && tempServices.isEmpty()) {
                     tempServices.add(service)
-                    precedentVehicle = service.vehicle.model
+                    precedentVehicle = service.vehicle.fullName
                 }
                 else {
-                    if(service.vehicle.model == precedentVehicle) {
+                    if(service.vehicle.fullName == precedentVehicle) {
                         tempServices.add(service)
                     }
                     else {
                         servicesToReturn.add(tempServices)
                         tempServices = mutableListOf()
                         tempServices.add(service)
-                        precedentVehicle = service.vehicle.model
+                        precedentVehicle = service.vehicle.fullName
                     }
                 }
             }
@@ -103,15 +97,23 @@ class Services {
             return servicesToReturn
         }
 
-        fun filterServicesBySearchText(services: SnapshotStateList<List<Service>>, text: String): List<List<Service>> {
+        fun filterServicesBySearchText(services: SnapshotStateList<List<Service>>, text: String, callback: (List<List<Service>>) -> Unit) {
             val REGEX_UNACCENT = "\\p{InCombiningDiacriticalMarks}+".toRegex()
             fun CharSequence.unaccent(): String {
                 val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
                 return REGEX_UNACCENT.replace(temp, "")
             }
 
-            return services.map { it.filter { it.vehicle.parkId.contains(text.trim()) ||
-                    Lines.getLine(it.lineId.toString()).lineName.lowercase().unaccent().contains(text.lowercase().unaccent().trim()) } }
+            Lines.getAllLines { allLines ->
+                callback(
+                    services.map { servicesSection ->
+                        servicesSection.filter { service ->
+                            val line = allLines.firstOrNull { it.id == service.lineId } ?: Lines.getEmptyLine()
+                            service.vehicle.parkId.contains(text.trim()) || line.name.lowercase().unaccent().contains(text.lowercase().unaccent().trim())
+                        }
+                    }
+                )
+            }
         }
     }
 }

@@ -12,25 +12,49 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
+import com.diplay.ouestmonbus.R
 import model.DTO.*
 import view.Screens.PlusScreens
-import view.more_view.sendMail
 
 @Composable
 fun AllServicesListRow(service: Service, navController: NavController) {
-    val line = Lines.getLine(service.lineId.toString())
-    val destination = Destinations.getDestinationFromRaw(service.destination, service.lineId)
+    val line = remember {
+        mutableStateOf<Line?>(null)
+    }
+    val destination = remember {
+        mutableStateOf<Destination?>(null)
+    }
     val colorScheme = !isSystemInDarkTheme()
+
+    LaunchedEffect(service) {
+        Lines.getLine(service.lineId) { returnedLine ->
+            if(returnedLine.parentId != null) {
+                Lines.getLine(returnedLine.parentId ?: 0) {
+                    it.name = returnedLine.name
+                    line.value = it
+                }
+            }
+            else {
+                line.value = returnedLine
+            }
+        }
+        Destinations.getDestination(service.destination, service.lineId) { destination.value = it }
+    }
 
     Row(modifier = Modifier
         .padding(horizontal = 15.dp)
@@ -43,43 +67,62 @@ fun AllServicesListRow(service: Service, navController: NavController) {
                 shape = RoundedCornerShape(10.dp)
             )
             .background(
-                color = colorResource(line.lineColorResource).copy(alpha = 0.2f),
+                color = if (line.value == null)
+                    Color.Transparent
+                else
+                    Color(android.graphics.Color.parseColor(line.value?.colorHex)).copy(alpha = 0.2f),
                 shape = RoundedCornerShape(10.dp)
             )
             .padding(horizontal = 15.dp)
-            .padding(top = 7.dp, bottom = if (destination.first() == "") 7.dp else 5.dp)
+            .padding(top = 7.dp, bottom = if (destination.value == null) 7.dp else 5.dp)
             .fillMaxWidth()
             .clickable {
-                navController.navigate(PlusScreens.ServiceDetail.withArgs(
-                    line.id.toString(),
-                    service.vehicleId.toString(),
-                    service.destination,
-                    service.latitude.toString(),
-                    service.longitude.toString(),
-                    service.currentStop.toString(),
-                    service.currentSpeed.toString(),
-                    service.state,
-                    service.stateTime.toString(),
-                    service.path.toString()
-                ))
+                navController.navigate(
+                    PlusScreens.ServiceDetail.withArgs(
+                        line.value?.id.toString(),
+                        service.vehicleId.toString(),
+                        service.destination,
+                        service.latitude.toString(),
+                        service.longitude.toString(),
+                        service.currentStop.toString(),
+                        service.currentSpeed.toString(),
+                        service.state,
+                        service.stateTime.toString(),
+                        service.path.toString()
+                    )
+                )
             }
         ) {
             Column {
                 Row {
-                    Image(
-                        painter = painterResource(id = line.lineImageResource),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(25.dp)
-                            .align(Alignment.CenterVertically)
-                    )
+                    if(line.value?.name == "Ligne inconnue") {
+                        Image(
+                            painter = painterResource(id = R.drawable.question_mark_box),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(25.dp)
+                                .align(Alignment.CenterVertically)
+                        )
+                    }
+                    else {
+                        AsyncImage(
+                            model = ImageRequest.Builder(LocalContext.current)
+                                .data(line.value?.imageUrl)
+                                .decoderFactory(SvgDecoder.Factory())
+                                .build(),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .size(25.dp)
+                                .align(Alignment.CenterVertically)
+                        )
+                    }
 
                     Spacer(modifier = Modifier
                         .width(10.dp)
                     )
 
                     Text(
-                        text = line.lineName,
+                        text = line.value?.name ?: "",
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
                         color = if (colorScheme) Color.Black else Color.White,
@@ -99,24 +142,24 @@ fun AllServicesListRow(service: Service, navController: NavController) {
                     )
 
                     Column {
-                        if(destination.first() != "") {
+                        destination.value?.let { destination ->
                             Text(
-                                text = destination.first(),
+                                text = destination.city,
                                 fontSize = 13.sp,
                                 color = Color.Gray,
                                 modifier = Modifier
-                                    .offset(y = if (destination.first() == "") 0.dp else 2.dp)
+                                    .offset(y = 2.dp)
                             )
 
                             Spacer(modifier = Modifier.height(3.dp))
                         }
 
                         Text(
-                            text = destination.last(),
+                            text = destination.value?.destination ?: service.destination,
                             fontSize = 18.sp,
                             color = if (colorScheme) Color.Black else Color.White,
                             modifier = Modifier
-                                .offset(y = if (destination.first() == "") 0.dp else (-2).dp)
+                                .offset(y = if (destination.value == null) 0.dp else (-2).dp)
                         )
                     }
                 }

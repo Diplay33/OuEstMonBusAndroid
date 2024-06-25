@@ -10,9 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.delay
 import model.DTO.*
 
@@ -24,14 +22,15 @@ fun NextLineSchedulesMain(
     lineId: String?,
     pathDirection: String?
 ) {
-    val line = Lines.getLine(lineId)
+    val line = remember {
+        mutableStateOf<Line?>(null)
+    }
     val paths = remember {
         mutableStateListOf<Path>()
     }
-    val destinations = if (pathDirection == "ALLER")
-        DestinationsAller.getDestinationAllerOfLine(line.id)
-    else
-        DestinationsRetour.getDestinationRetourOfLine(line.id)
+    val destinations = remember {
+        mutableStateListOf<List<String>>()
+    }
     val isLoading = remember {
         mutableStateOf(true)
     }
@@ -55,20 +54,39 @@ fun NextLineSchedulesMain(
         mutableStateListOf<List<LatLng>>()
     }
 
-    LaunchedEffect(stopName) {
-        Paths.getOrderedPathsByLine(line.id, true) { returnedPaths ->
-            paths.clear()
-            returnedPaths.map {
-                if(it.first().direction == pathDirection) {
-                    paths.addAll(it)
+    LaunchedEffect(lineId) {
+        Lines.getLine(lineId?.toInt() ?: 0) { returnedLine ->
+            line.value = returnedLine
+
+            if(pathDirection == "ALLER") {
+                AllerDestinations.getListOfDestinations(returnedLine.id) {
+                    destinations.addAll(it)
                 }
             }
-            returnedPaths[if ((pathDirection ?: "ALLER") == "ALLER") 0 else 1].forEach { path ->
-                pathsCoordinates.addAll(
-                    path.coordinates.map { coordinates ->
-                        coordinates.map { LatLng(it[1], it[0]) }
+            else {
+                RetourDestinations.getListOfDestinations(returnedLine.id) {
+                    destinations.addAll(it)
+                }
+            }
+        }
+    }
+
+    LaunchedEffect(stopName, line.value) {
+        line.value?.let { line ->
+            Paths.getOrderedPathsByLine(line.id, true) { returnedPaths ->
+                paths.clear()
+                returnedPaths.map {
+                    if(it.first().direction == pathDirection) {
+                        paths.addAll(it)
                     }
-                )
+                }
+                returnedPaths[if ((pathDirection ?: "ALLER") == "ALLER") 0 else 1].forEach { path ->
+                    pathsCoordinates.addAll(
+                        path.coordinates.map { coordinates ->
+                            coordinates.map { LatLng(it[1], it[0]) }
+                        }
+                    )
+                }
             }
         }
         Stations.getStationByStationId(stopId ?: "") {
@@ -76,22 +94,24 @@ fun NextLineSchedulesMain(
             stationMarker.value = NSchedulesMapMarker(NSchedulesMapMarkerType.STOP, it, null)
             mapMarkers.add(stationMarker.value)
         }
-        while(true) {
-            NextSchedules.getNextSchedulesByStationId(stopId ?: "") { returnedNextSchedules ->
-                capFilteredNextSchedules.clear()
-                returnedNextSchedules.forEach { ns ->
-                    if(capFilteredNextSchedules.size < 5 && ns.lineId == line.id) {
-                        capFilteredNextSchedules.add(ns)
+        line.value?.let { line ->
+            while(true) {
+                NextSchedules.getNextSchedulesByStationId(stopId ?: "") { returnedNextSchedules ->
+                    capFilteredNextSchedules.clear()
+                    returnedNextSchedules.forEach { ns ->
+                        if(capFilteredNextSchedules.size < 5 && ns.lineId == line.id) {
+                            capFilteredNextSchedules.add(ns)
+                        }
+                    }
+                    isLoading.value = false
+
+                    NSchedulesMapMarkers.retrieveVehicles(line.id, capFilteredNextSchedules.map { it.vehicleId ?: 0 }) { vehicles ->
+                        mapMarkers.clear()
+                        mapMarkers.addAll(vehicles + listOf(stationMarker.value))
                     }
                 }
-                isLoading.value = false
-
-                NSchedulesMapMarkers.retrieveVehicles(line.id, capFilteredNextSchedules.map { it.vehicleId ?: 0 }) { vehicles ->
-                    mapMarkers.clear()
-                    mapMarkers.addAll(vehicles + listOf(stationMarker.value))
-                }
+                delay(10000)
             }
-            delay(10000)
         }
     }
     
@@ -99,7 +119,7 @@ fun NextLineSchedulesMain(
         navController = navController,
         stopId = stopId.toString(),
         stopName = stopName ?: "Arrêt inconnu",
-        line = line
+        line = line.value
     ) }) { padding ->
         LazyColumn(modifier = Modifier
             .padding(padding)
@@ -107,25 +127,25 @@ fun NextLineSchedulesMain(
             .background(if (colorScheme) Color.White else Color.Black)
         ) {
             item {
-                NextLineSchedulesHeader(line, paths, destinations)
+                NextLineSchedulesHeader(line.value, paths, destinations)
 
                 Spacer(modifier = Modifier
                     .height(30.dp)
                 )
 
-                NextLineSchedulesView(capFilteredNextSchedules, line, isLoading.value, focusedVehicle)
+                NextLineSchedulesView(capFilteredNextSchedules, line.value, isLoading.value, focusedVehicle)
 
                 Spacer(modifier = Modifier
                     .height(30.dp)
                 )
 
-                NextLineSchedulesMap(station.value, line, mapMarkers, focusedVehicle, navController, pathsCoordinates)
+                NextLineSchedulesMap(station.value, line.value, mapMarkers, focusedVehicle, navController, pathsCoordinates)
 
                 Spacer(modifier = Modifier
                     .height(30.dp)
                 )
 
-                NextLineSchedulesSchdlGroup(navController, line, stopId, stopName, pathDirection)
+                NextLineSchedulesSchdlGroup(navController, line.value, stopId, stopName, pathDirection)
             }
         }
     }

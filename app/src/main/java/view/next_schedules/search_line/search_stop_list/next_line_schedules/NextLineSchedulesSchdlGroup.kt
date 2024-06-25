@@ -19,7 +19,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -36,7 +35,7 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun NextLineSchedulesSchdlGroup(
     navController: NavController,
-    line: Line,
+    line: Line?,
     stopId: String?,
     stopName: String?,
     pathDirection: String?
@@ -93,8 +92,14 @@ fun NextLineSchedulesSchdlGroup(
     MaterialDialog(
         dialogState = dateDialogState,
         buttons = {
-            positiveButton("OK", textStyle = TextStyle(color = colorResource(line.lineColorResource), fontWeight = FontWeight.Bold))
-            negativeButton("Annuler", textStyle = TextStyle(color = colorResource(line.lineColorResource), fontWeight = FontWeight.Bold))
+            positiveButton("OK", textStyle = TextStyle(color = if (line == null)
+                Color.LightGray
+            else
+                Color(android.graphics.Color.parseColor(line.colorHex)), fontWeight = FontWeight.Bold))
+            negativeButton("Annuler", textStyle = TextStyle(color = if (line == null)
+                Color.LightGray
+            else
+                Color(android.graphics.Color.parseColor(line.colorHex)), fontWeight = FontWeight.Bold))
         },
         shape = RoundedCornerShape(5),
         backgroundColor = if (colorScheme) Color.White else Color(0xff18191A)
@@ -102,8 +107,14 @@ fun NextLineSchedulesSchdlGroup(
         datepicker(
             initialDate = LocalDate.now(),
             colors = DatePickerDefaults.colors(
-                headerBackgroundColor = colorResource(line.lineColorResource),
-                dateActiveBackgroundColor = colorResource(line.lineColorResource),
+                headerBackgroundColor = if (line == null)
+                    Color.LightGray
+                else
+                    Color(android.graphics.Color.parseColor(line.colorHex)),
+                dateActiveBackgroundColor = if (line == null)
+                    Color.LightGray
+                else
+                    Color(android.graphics.Color.parseColor(line.colorHex)),
                 calendarHeaderTextColor = if (colorScheme) Color.Black else Color.White,
                 dateInactiveTextColor = if (colorScheme) Color.Black else Color.White
             ),

@@ -1,6 +1,5 @@
 package view.next_schedules
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -9,30 +8,27 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.Favorite
-import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.MoreVert
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import model.DTO.*
 import model.preferences_data_store.StoreFavoriteStopsWithLine
 import view.Screens.ProchainsScreens
-import view.next_schedules.search_line.search_stop_list.next_line_schedules.NextLineSchedulesView
 
 @Composable
 fun NextSchedulesHomeFavoriteRow(
@@ -105,7 +101,8 @@ fun NextSchedulesHomeFavoriteRow(
                             shape = RoundedCornerShape(10.dp)
                         )
                         .background(
-                            colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+                            Color(android.graphics.Color.parseColor(line.colorHex))
+                                .copy(alpha = 0.2f),
                             shape = RoundedCornerShape(10.dp)
                         )
                     ) {
@@ -114,8 +111,11 @@ fun NextSchedulesHomeFavoriteRow(
                             .padding(horizontal = 15.dp)
                         ) {
                             Row {
-                                Image(
-                                    painter = painterResource(id = line.lineImageResource),
+                                AsyncImage(
+                                    model = ImageRequest.Builder(LocalContext.current)
+                                        .data(line.imageUrl)
+                                        .decoderFactory(SvgDecoder.Factory())
+                                        .build(),
                                     contentDescription = null,
                                     modifier = Modifier
                                         .size(40.dp)
@@ -126,7 +126,7 @@ fun NextSchedulesHomeFavoriteRow(
                                 )
 
                                 Text(
-                                    text = line.lineName,
+                                    text = line.name,
                                     fontSize = 18.sp,
                                     fontWeight = FontWeight.Bold,
                                     color = if (colorScheme) Color.Black else Color.White,
@@ -157,7 +157,8 @@ fun NextSchedulesHomeFavoriteRow(
                         Row(modifier = Modifier
                             .fillMaxWidth()
                             .background(
-                                colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+                                Color(android.graphics.Color.parseColor(line.colorHex))
+                                    .copy(alpha = 0.2f),
                                 shape = RoundedCornerShape(bottomStart = 10.dp, bottomEnd = 10.dp)
                             )
                         ) {

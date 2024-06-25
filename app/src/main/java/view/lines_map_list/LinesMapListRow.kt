@@ -1,6 +1,5 @@
 package view.lines_map_list
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -21,13 +20,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
+import coil.decode.SvgDecoder
+import coil.request.ImageRequest
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import model.DTO.*
@@ -39,7 +39,7 @@ import view.Screens.CartesScreens
 @Composable
 fun LinesMapListRow(
     rowLine: Line,
-    linesByGroup: SnapshotStateList<ArrayList<Line>>,
+    linesByGroup: SnapshotStateList<List<Line>>,
     navController: NavController,
     services: MutableList<Service>,
     isLoading: MutableState<Boolean>,
@@ -49,10 +49,9 @@ fun LinesMapListRow(
     searchText: MutableState<String> = mutableStateOf("")
 ) {
     val serviceCount = services.filter { it.lineId == rowLine.id }.size
-    val navetteTramServicesCount = remember {
+    val nestServicesCount = remember {
         mutableStateOf(0)
     }
-    val isNavetteTram = rowLine.id == 123
     val menuShown = remember {
         mutableStateOf(false)
     }
@@ -65,15 +64,10 @@ fun LinesMapListRow(
     val displayNotifCount = storeDisplayNotifCount.isEnabled.collectAsState(initial = false)
     val colorScheme = !isSystemInDarkTheme()
 
-    LaunchedEffect(rowLine) {
-        if(rowLine.id == 123) {
-            isLoading.value = true
-            while(true) {
-                Services.getNavetteTramServices { returnedServices ->
-                    navetteTramServicesCount.value = returnedServices.size
-                    isLoading.value = false
-                }
-                delay(30000)
+    LaunchedEffect(isLoading.value) {
+        if(rowLine.isNest) {
+            Lines.getChildLineIds(rowLine.id) { childLineIds ->
+                nestServicesCount.value = services.filter { childLineIds.contains(it.lineId) }.size
             }
         }
     }
@@ -85,7 +79,7 @@ fun LinesMapListRow(
             shape = RoundedCornerShape(10.dp)
         )
         .background(
-            colorResource(id = rowLine.lineColorResource).copy(alpha = 0.2f),
+            Color(android.graphics.Color.parseColor(rowLine.colorHex)).copy(alpha = 0.2f),
             shape = RoundedCornerShape(10.dp)
         )
         .fillMaxWidth()
@@ -99,7 +93,11 @@ fun LinesMapListRow(
                         navController.navigate(CartesScreens.HelloWorld.withArgs(rowLine.id.toString()))
                     }
                     else {
-                        navController.navigate(CartesScreens.HelloWorld.withArgs(Lines.getLinesBySearchText(text = searchText.value)[index].id.toString()))
+                        Lines.getLinesBySearchText(searchText.value) {
+                            scope.launch {
+                                navController.navigate(CartesScreens.HelloWorld.withArgs(it[index].id.toString()))
+                            }
+                        }
                     }
                 }
             )
@@ -108,16 +106,22 @@ fun LinesMapListRow(
         Row(modifier = Modifier
             .padding(start = 15.dp)
         ) {
-            Image(painterResource(id = rowLine.lineImageResource), contentDescription = null, modifier = Modifier
-                .size(70.dp)
-                .padding(vertical = 4.dp)
+            AsyncImage(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(rowLine.imageUrl)
+                    .decoderFactory(SvgDecoder.Factory())
+                    .build(),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(70.dp)
+                    .padding(vertical = 4.dp)
             )
 
             Column(modifier = Modifier
                 .align(Alignment.CenterVertically)
             ) {
                 Text(
-                    text = rowLine.lineName,
+                    text = rowLine.name,
                     fontWeight = FontWeight.Bold,
                     fontSize = 23.sp,
                     color = if (colorScheme) Color.Black else Color.White,
@@ -140,8 +144,8 @@ fun LinesMapListRow(
                     }
                     else {
                         ColorIndicatorDot(
-                            color = if ((if (isNavetteTram)
-                                navetteTramServicesCount.value
+                            color = if ((if (rowLine.isNest)
+                                nestServicesCount.value
                                 else
                                     serviceCount) == 0) Color.Red else Color.Green,
                             size = 10.dp,
@@ -154,14 +158,14 @@ fun LinesMapListRow(
                         )
 
                         Text(
-                            when(if (isNavetteTram)
-                                navetteTramServicesCount.value
+                            when(if (rowLine.isNest)
+                                nestServicesCount.value
                             else
                                 serviceCount) {
                                 0 -> "Aucun véhicule en service"
                                 1 -> "1 véhicule en service"
-                                else -> "${if (isNavetteTram) 
-                                    navetteTramServicesCount.value 
+                                else -> "${if (rowLine.isNest)
+                                    nestServicesCount.value 
                                 else 
                                     serviceCount} véhicules en service"
                             },
@@ -206,8 +210,10 @@ fun LinesMapListRow(
                 DropdownMenuItem(onClick = {
                     scope.launch {
                         storeFavLines.removeFromFavorites(rowLine.id.toString())
-                        linesByGroup.clear()
-                        linesByGroup.addAll(Lines.getLinesByGroup(context))
+                        Lines.getAllLinesBySection(context) {
+                            linesByGroup.clear()
+                            linesByGroup.addAll(it)
+                        }
                     }
                     menuShown.value = false
                 }) {
@@ -237,8 +243,10 @@ fun LinesMapListRow(
                 DropdownMenuItem(onClick = {
                     scope.launch {
                         storeFavLines.saveFavoriteLine(rowLine.id.toString())
-                        linesByGroup.clear()
-                        linesByGroup.addAll(Lines.getLinesByGroup(context))
+                        Lines.getAllLinesBySection(context) {
+                            linesByGroup.clear()
+                            linesByGroup.addAll(it)
+                        }
                     }
                     menuShown.value = false
                 }) {

@@ -10,10 +10,8 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.*
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.MutableLiveData
 import com.diplay.ouestmonbus.R
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -27,7 +25,7 @@ import model.DTO.Service
 @Composable
 fun LineMapView(
     services: SnapshotStateList<Service>,
-    line: Line,
+    line: Line?,
     selectedService: MutableState<Service?>,
     cameraPositionState: CameraPositionState,
     isUserLocationShown: Boolean,
@@ -53,7 +51,7 @@ fun LineMapView(
         services.forEach { service ->
             Marker(
                 state = MarkerState(position = LatLng(service.latitude, service.longitude)),
-                icon = setCustomMapServiceIcon(service.vehicle.parkId, colorScheme, LocalContext.current, vectorResId = when(line.lineName) {
+                icon = setCustomMapServiceIcon(service.vehicle.parkId, colorScheme, LocalContext.current, vectorResId = when(line?.name) {
                     "Tram A" -> R.drawable.map_logo_tram
                     "Tram B" -> R.drawable.map_logo_tram
                     "Tram C" -> R.drawable.map_logo_tram
@@ -79,7 +77,13 @@ fun LineMapView(
         }
 
         pathsCoordinates.forEach { coordinates ->
-            Polyline(points = coordinates, color = colorResource(id = line.lineColorResource))
+            Polyline(
+                points = coordinates,
+                color = if (line != null)
+                    androidx.compose.ui.graphics.Color(Color.parseColor(line.colorHex))
+                else
+                    androidx.compose.ui.graphics.Color.Transparent
+            )
         }
     }
 }

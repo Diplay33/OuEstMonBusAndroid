@@ -19,15 +19,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import model.DTO.Destinations
-import model.DTO.Lines
+import model.DTO.Line
 import model.DTO.Service
-import view.lines_map_list.line_map.service_detail.LineMapViewServiceDetailCurrentStopRow
 import view.more_view.all_services_list.service_detail.*
 import java.util.Date
 
 @Composable
-fun LineMapViewServiceDetail(selectedService: MutableState<Service?>) {
+fun LineMapViewServiceDetail(selectedService: MutableState<Service?>, line: Line?) {
     val service = selectedService.value ?: Service(
         id = 0,
         vehicleId = 0,
@@ -42,7 +40,6 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>) {
         path = 0,
         timestamp = Date()
     )
-    val line = Lines.getLine(service.lineId.toString())
     val colorScheme = !isSystemInDarkTheme()
 
     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
@@ -81,16 +78,13 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>) {
 
     LazyColumn {
         item {
-            ServiceDetailHeader(
-                line = Lines.getLine(line.id.toString()),
-                destination = Destinations.getDestinationFromRaw(service.destination, service.lineId)
-            )
+            ServiceDetailHeader(line, service.destination)
 
             Spacer(modifier = Modifier
                 .height(30.dp)
             )
 
-            ServiceDetailVehicleRow(service.vehicle.model, line.lineName)
+            ServiceDetailVehicleRow(service.vehicle.fullName, line?.name ?: "")
 
             Spacer(modifier = Modifier
                 .height(10.dp)
@@ -101,6 +95,14 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>) {
             Spacer(modifier = Modifier
                 .height(10.dp)
             )
+
+            service.vehicle.tciId?.let {
+                ServiceDetailTCIRow(it)
+
+                Spacer(modifier = Modifier
+                    .height(10.dp)
+                )
+            }
 
             LineMapViewServiceDetailCurrentStopRow(service.currentStop.toString())
 

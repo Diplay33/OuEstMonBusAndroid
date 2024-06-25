@@ -16,11 +16,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.zIndex
 import androidx.navigation.NavController
 import model.DTO.Line
 import model.DTO.Station
@@ -31,7 +29,7 @@ fun SearchStopListRow(
     stop: Station,
     stops: List<Station>,
     navController: NavController,
-    line: Line,
+    line: Line?,
     pathDirection: String
 ) {
     val colorScheme = !isSystemInDarkTheme()
@@ -42,21 +40,23 @@ fun SearchStopListRow(
             .padding(bottom = 10.dp)
             .height(45.dp)
             .clickable {
-                navController.navigate(
-                    ProchainsScreens.NextLineSchedules.withArgs(
-                        stop.name,
-                        stop.stationId,
-                        line.id.toString(),
-                        pathDirection
+                line?.let {
+                    navController.navigate(
+                        ProchainsScreens.NextLineSchedules.withArgs(
+                            stop.name,
+                            stop.stationId,
+                            line.id.toString(),
+                            pathDirection
+                        )
                     )
-                )
+                }
             }
             .background(
                 if (colorScheme) Color.Transparent else Color(0xff18191A),
                 shape = RoundedCornerShape(10.dp)
             )
             .background(
-                colorResource(id = line.lineColorResource).copy(alpha = 0.2f),
+                Color(android.graphics.Color.parseColor(line?.colorHex)).copy(alpha = 0.2f),
                 shape = RoundedCornerShape(10.dp)
             )
             .fillMaxWidth()
@@ -100,7 +100,7 @@ fun SearchStopListRow(
                             Box(modifier = Modifier
                                 .padding(top = 25.dp)
                                 .clip(RectangleShape)
-                                .background(colorResource(id = line.lineColorResource))
+                                .background(Color(android.graphics.Color.parseColor(line?.colorHex)))
                                 .fillMaxHeight()
                                 .width(8.dp)
                             )
@@ -109,7 +109,7 @@ fun SearchStopListRow(
                             Box(modifier = Modifier
                                 .padding(bottom = 30.dp)
                                 .clip(RectangleShape)
-                                .background(colorResource(id = line.lineColorResource))
+                                .background(Color(android.graphics.Color.parseColor(line?.colorHex)))
                                 .fillMaxHeight()
                                 .width(8.dp)
                             )
@@ -117,7 +117,7 @@ fun SearchStopListRow(
                         else -> {
                             Box(modifier = Modifier
                                 .clip(RectangleShape)
-                                .background(colorResource(id = line.lineColorResource))
+                                .background(Color(android.graphics.Color.parseColor(line?.colorHex)))
                                 .fillMaxHeight()
                                 .width(8.dp)
                             )
@@ -128,7 +128,7 @@ fun SearchStopListRow(
                 Box(contentAlignment = Alignment.Center, modifier = Modifier
                     .padding(bottom = 10.dp)
                     .clip(CircleShape)
-                    .background(colorResource(id = line.lineColorResource))
+                    .background(Color(android.graphics.Color.parseColor(line?.colorHex)))
                     .size(20.dp)
                 ) {
                     Box(modifier = Modifier

@@ -17,30 +17,24 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
-import model.DTO.Destinations
+import model.DTO.Line
 import model.DTO.Lines
 import model.DTO.Service
 import model.DTO.Services
-import model.DTO.Station
-import model.DTO.Stations
 import model.DTO.Vehicles
 import view.more_view.all_services_list.service_detail.ServiceDetailHeader
-import view.more_view.all_services_list.service_detail.ServiceDetailMapRow
 import view.more_view.all_services_list.service_detail.ServiceDetailOperatorRow
 import view.more_view.all_services_list.service_detail.ServiceDetailSpeedRow
 import view.more_view.all_services_list.service_detail.ServiceDetailStateRow
+import view.more_view.all_services_list.service_detail.ServiceDetailTCIRow
 import view.more_view.all_services_list.service_detail.ServiceDetailVehicleRow
-import java.time.format.DateTimeFormatter
 import java.util.Date
-import kotlin.time.Duration.Companion.hours
-import kotlin.time.Duration.Companion.minutes
 
 @Composable
 fun NextScheduleDetailsMain(
@@ -50,8 +44,10 @@ fun NextScheduleDetailsMain(
     stopName: String?,
     lineId: String?
 ) {
-    val vehicle = Vehicles.getVehicleById(vehicleId.toString())
-    val line = Lines.getLine(lineId)
+    val vehicle = Vehicles.getVehicle(vehicleId.toString())
+    val line = remember {
+        mutableStateOf<Line?>(null)
+    }
     val service = remember {
         mutableStateOf(Service(0, 0, 0, 0, "", 0, "", 0.0, 0.0, 0, 0, timestamp = Date()))
     }
@@ -59,8 +55,9 @@ fun NextScheduleDetailsMain(
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(vehicle) {
+        Lines.getLine(lineId?.toInt() ?: 0) { line.value = it }
         while(true) {
-            Services.getServiceByVehicleId(vehicle.id) {
+            Services.getServiceByVehicleId(vehicle.id.toInt()) {
                 it?.let { value -> service.value = value }
             }
             delay(5000)
@@ -80,7 +77,7 @@ fun NextScheduleDetailsMain(
                 NextScheduleDetailsArrivalTimeRow(
                     stopName = stopName ?: "Arrêt inconnu",
                     stopId = stopId ?: "",
-                    vehicleId = vehicle.id,
+                    vehicleId = vehicle.id.toInt(),
                     navController = navController
                 )
 
@@ -88,19 +85,13 @@ fun NextScheduleDetailsMain(
                     .height(30.dp)
                 )
 
-                ServiceDetailHeader(
-                    line = line,
-                    destination = Destinations.getDestinationFromRaw(
-                        destination = service.value.destination,
-                        lineId = line.id
-                    )
-                )
+                ServiceDetailHeader(line.value, service.value.destination)
 
                 Spacer(modifier = Modifier
                     .height(30.dp)
                 )
 
-                ServiceDetailVehicleRow(vehicle.model, line.lineName)
+                ServiceDetailVehicleRow(vehicle.fullName, line.value?.name ?: "")
 
                 Spacer(modifier = Modifier
                     .height(10.dp)
@@ -108,11 +99,19 @@ fun NextScheduleDetailsMain(
 
                 ServiceDetailOperatorRow(vehicle.operator)
 
+                vehicle.tciId?.let {
+                    Spacer(modifier = Modifier
+                        .height(10.dp)
+                    )
+
+                    ServiceDetailTCIRow(it)
+                }
+
                 Spacer(modifier = Modifier
                     .height(30.dp)
                 )
 
-                NextSchedulesDetailsMap(service.value)
+                NextSchedulesDetailsMap(service.value, line.value)
 
                 Spacer(modifier = Modifier
                     .height(30.dp)
