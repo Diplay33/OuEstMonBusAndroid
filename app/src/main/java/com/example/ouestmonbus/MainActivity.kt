@@ -36,6 +36,7 @@ import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.postgrest.from
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import model.DTO.AllerDestination
@@ -53,6 +54,7 @@ import model.DTO.RetourDestinations
 import model.DTO.Vehicle
 import model.DTO.Vehicles
 import model.SupabaseManager
+import model.preferences_data_store.StoreChosenNetwork
 import model.preferences_data_store.StoreDisplayNotifCountParam
 import model.preferences_data_store.StoreFirstLaunch
 import view.BottomNavigationBar
@@ -60,6 +62,7 @@ import view.Screens.BottomNavigationScreens
 import view.Screens.CartesScreens
 import view.Screens.PlusScreens
 import view.Screens.ProchainsScreens
+import view.Screens.SplashScreens
 import view.lines_map_list.LinesMapListMain
 import view.lines_map_list.line_map.LineMapViewMain
 import view.more_view.MoreViewMain
@@ -81,8 +84,12 @@ class MainActivity : ComponentActivity() {
             val scope = rememberCoroutineScope()
             val firstLaunchDataStore = StoreFirstLaunch(context)
             val displayNotifCountDataStore = StoreDisplayNotifCountParam(context)
+            val chosenNetworkDataStore = StoreChosenNetwork(context)
             val refreshLinesAction = remember {
                 mutableStateOf<String?>(null)
+            }
+            val showSplashScreen = remember {
+                mutableStateOf(false)
             }
 
             if(firstLaunchDataStore.isEnabled.collectAsState(initial = false).value != true) {
@@ -113,179 +120,193 @@ class MainActivity : ComponentActivity() {
             }
 
             LaunchedEffect(Unit) {
-                withContext(Dispatchers.IO) {
-                    SupabaseManager.beginSyncDatabaseProcess(context) { refreshLinesAction.value = it }
+                chosenNetworkDataStore.chosenNetwork.firstOrNull()?.let { network ->
+                    withContext(Dispatchers.IO) {
+                        SupabaseManager.beginSyncDatabaseProcess(context) { refreshLinesAction.value = it }
+                    }
+                } ?: run {
+                    showSplashScreen.value = true
                 }
             }
 
-            Scaffold(bottomBar = { BottomNavigationBar(navController, bottomNavigationItems) } ) {
-                NavHost(
-                    navController = navController,
-                    startDestination = BottomNavigationScreens.Cartes.route,
-                    enterTransition = { fadeIn(animationSpec = tween(300)) },
-                    exitTransition = { scaleOut(targetScale = 1.2f) },
-                    popEnterTransition = {
-                        fadeOut(animationSpec = tween(300))
-                        scaleIn(initialScale = 1.2f) },
-                    popExitTransition = { fadeOut(animationSpec = tween(300)) },
-                    modifier = Modifier
-                        .padding(it)
-                ) {
-                    //Cartes screen
-                    composable(BottomNavigationScreens.Cartes.route) {
-                        LinesMapListMain(
-                            navController = navController,
-                            refreshLinesAction = refreshLinesAction.value
-                        )
-                    }
-
-                    composable(route = CartesScreens.HelloWorld.route + "/{lineId}", arguments = listOf(
-                        navArgument("lineId") {
-                            type = NavType.StringType
-                            defaultValue = "0"
-                            nullable = true
+            if(showSplashScreen.value) {
+                //Splash screen
+                Scaffold { padding ->
+                    Text("Hello World!", modifier = Modifier
+                        .padding(padding)
+                    )
+                }
+            }
+            else {
+                Scaffold(bottomBar = { BottomNavigationBar(navController, bottomNavigationItems) } ) {
+                    NavHost(
+                        navController = navController,
+                        startDestination = BottomNavigationScreens.Cartes.route,
+                        enterTransition = { fadeIn(animationSpec = tween(300)) },
+                        exitTransition = { scaleOut(targetScale = 1.2f) },
+                        popEnterTransition = {
+                            fadeOut(animationSpec = tween(300))
+                            scaleIn(initialScale = 1.2f) },
+                        popExitTransition = { fadeOut(animationSpec = tween(300)) },
+                        modifier = Modifier
+                            .padding(it)
+                    ) {
+                        //Cartes screen
+                        composable(BottomNavigationScreens.Cartes.route) {
+                            LinesMapListMain(
+                                navController = navController,
+                                refreshLinesAction = refreshLinesAction.value
+                            )
                         }
-                    )) { entry ->
-                        LineMapViewMain(navController, entry.arguments?.getString("lineId"))
-                    }
 
-
-                    //BottomNavigationBar
-                    composable(BottomNavigationScreens.Plus.route) {
-                        MoreViewMain(navController)
-                    }
-
-
-                    //Prochains Passages screen
-                    composable(BottomNavigationScreens.Prochains.route) {
-                        NextSchedulesHomeViewMain(navController)
-                    }
-
-                    composable(
-                        route = ProchainsScreens.FavoriteStopDetail.route + "/{stopId}/{stopName}/{lineId}",
-                        arguments = listOf(
-                            navArgument("stopId") {
-                                type = NavType.StringType
-                                defaultValue = "0"
-                                nullable = true
-                            }
-                        )
-                    ) { entry ->
-                        FavoriteStopDetailMain(
-                            navController = navController,
-                            stopId = entry.arguments?.getString("stopId"),
-                            stopName = entry.arguments?.getString("stopName"),
-                            lineId = entry.arguments?.getString("lineId")
-                        )
-                    }
-
-                    composable(ProchainsScreens.SearchLineView.route) {
-                        SearchLineViewMain(navController)
-                    }
-
-                    composable(
-                        route = ProchainsScreens.SearchStopList.route
-                        + "/{lineId}/{pathDirection}",
-                        arguments = listOf(
+                        composable(route = CartesScreens.HelloWorld.route + "/{lineId}", arguments = listOf(
                             navArgument("lineId") {
                                 type = NavType.StringType
                                 defaultValue = "0"
                                 nullable = true
                             }
-                        )
-                    ) { entry ->
-                        SearchStopListMain(
-                            navController = navController,
-                            lineId = entry.arguments?.getString("lineId"),
-                            pathDirection = entry.arguments?.getString("pathDirection")
-                        )
-                    }
-
-                    composable(
-                        route = ProchainsScreens.NextLineSchedules.route + "/{stopName}/{stopId}/{lineId}/{pathDirection}",
-                        arguments = listOf(
-                            navArgument("stopName") {
-                                type = NavType.StringType
-                                defaultValue = "0"
-                                nullable = true
-                            }
-                        )
-                    ) { entry ->
-                        NextLineSchedulesMain(
-                            navController = navController,
-                            stopName = entry.arguments?.getString("stopName"),
-                            stopId = entry.arguments?.getString("stopId"),
-                            lineId = entry.arguments?.getString("lineId"),
-                            pathDirection = entry.arguments?.getString("pathDirection")
-                        )
-                    }
-
-                    composable(
-                        route = ProchainsScreens.NextScheduleDetails.route + "/{vehicleId}/{stopId}/{stopName}/{lineId}",
-                        arguments = listOf()
-                    ) { entry ->
-                        NextScheduleDetailsMain(
-                            navController = navController,
-                            vehicleId = entry.arguments?.getString("vehicleId"),
-                            stopId = entry.arguments?.getString("stopId"),
-                            stopName = entry.arguments?.getString("stopName"),
-                            lineId = entry.arguments?.getString("lineId")
-                        )
-                    }
-
-                    composable(
-                        route = ProchainsScreens.LineSchedules.route + "/{stopId}/{stopName}/{lineId}/{direction}/{selectedDate}",
-                        arguments = listOf(
-                            navArgument("stopId") {
-                                type = NavType.StringType
-                                defaultValue = "0"
-                                nullable = true
-                            }
-                        )
-                    ) { entry ->
-                        LineSchedulesMain(
-                            navController = navController,
-                            stationId = entry.arguments?.getString("stopId"),
-                            stationName = entry.arguments?.getString("stopName"),
-                            lineId = entry.arguments?.getString("lineId"),
-                            direction = entry.arguments?.getString("direction"),
-                            selectedDate = entry.arguments?.getString("selectedDate")
-                        )
-                    }
-
-
-                    //Plus screen
-                    composable(PlusScreens.AllServicesList.route) {
-                        Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-                            .fillMaxWidth()
-                        ) {
-                            AllServicesListMain(navController = navController)
+                        )) { entry ->
+                            LineMapViewMain(navController, entry.arguments?.getString("lineId"))
                         }
-                    }
 
-                    composable(
-                        route = PlusScreens.ServiceDetail.route + "/{lineId}/{vehicleId}/{destination}/{latitude}/{longitude}/{stationId}/{currentSpeed}/{state}/{stateTime}/{pathId}",
-                        arguments = listOf(
-                            navArgument("lineId") {
-                                type = NavType.StringType
-                                defaultValue = "0"
-                                nullable = true
+
+                        //BottomNavigationBar
+                        composable(BottomNavigationScreens.Plus.route) {
+                            MoreViewMain(navController)
+                        }
+
+
+                        //Prochains Passages screen
+                        composable(BottomNavigationScreens.Prochains.route) {
+                            NextSchedulesHomeViewMain(navController)
+                        }
+
+                        composable(
+                            route = ProchainsScreens.FavoriteStopDetail.route + "/{stopId}/{stopName}/{lineId}",
+                            arguments = listOf(
+                                navArgument("stopId") {
+                                    type = NavType.StringType
+                                    defaultValue = "0"
+                                    nullable = true
+                                }
+                            )
+                        ) { entry ->
+                            FavoriteStopDetailMain(
+                                navController = navController,
+                                stopId = entry.arguments?.getString("stopId"),
+                                stopName = entry.arguments?.getString("stopName"),
+                                lineId = entry.arguments?.getString("lineId")
+                            )
+                        }
+
+                        composable(ProchainsScreens.SearchLineView.route) {
+                            SearchLineViewMain(navController)
+                        }
+
+                        composable(
+                            route = ProchainsScreens.SearchStopList.route
+                                    + "/{lineId}/{pathDirection}",
+                            arguments = listOf(
+                                navArgument("lineId") {
+                                    type = NavType.StringType
+                                    defaultValue = "0"
+                                    nullable = true
+                                }
+                            )
+                        ) { entry ->
+                            SearchStopListMain(
+                                navController = navController,
+                                lineId = entry.arguments?.getString("lineId"),
+                                pathDirection = entry.arguments?.getString("pathDirection")
+                            )
+                        }
+
+                        composable(
+                            route = ProchainsScreens.NextLineSchedules.route + "/{stopName}/{stopId}/{lineId}/{pathDirection}",
+                            arguments = listOf(
+                                navArgument("stopName") {
+                                    type = NavType.StringType
+                                    defaultValue = "0"
+                                    nullable = true
+                                }
+                            )
+                        ) { entry ->
+                            NextLineSchedulesMain(
+                                navController = navController,
+                                stopName = entry.arguments?.getString("stopName"),
+                                stopId = entry.arguments?.getString("stopId"),
+                                lineId = entry.arguments?.getString("lineId"),
+                                pathDirection = entry.arguments?.getString("pathDirection")
+                            )
+                        }
+
+                        composable(
+                            route = ProchainsScreens.NextScheduleDetails.route + "/{vehicleId}/{stopId}/{stopName}/{lineId}",
+                            arguments = listOf()
+                        ) { entry ->
+                            NextScheduleDetailsMain(
+                                navController = navController,
+                                vehicleId = entry.arguments?.getString("vehicleId"),
+                                stopId = entry.arguments?.getString("stopId"),
+                                stopName = entry.arguments?.getString("stopName"),
+                                lineId = entry.arguments?.getString("lineId")
+                            )
+                        }
+
+                        composable(
+                            route = ProchainsScreens.LineSchedules.route + "/{stopId}/{stopName}/{lineId}/{direction}/{selectedDate}",
+                            arguments = listOf(
+                                navArgument("stopId") {
+                                    type = NavType.StringType
+                                    defaultValue = "0"
+                                    nullable = true
+                                }
+                            )
+                        ) { entry ->
+                            LineSchedulesMain(
+                                navController = navController,
+                                stationId = entry.arguments?.getString("stopId"),
+                                stationName = entry.arguments?.getString("stopName"),
+                                lineId = entry.arguments?.getString("lineId"),
+                                direction = entry.arguments?.getString("direction"),
+                                selectedDate = entry.arguments?.getString("selectedDate")
+                            )
+                        }
+
+
+                        //Plus screen
+                        composable(PlusScreens.AllServicesList.route) {
+                            Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
+                                .fillMaxWidth()
+                            ) {
+                                AllServicesListMain(navController = navController)
                             }
-                        )
-                    ) { entry ->
-                        ServiceDetailMain(
-                            navController = navController,
-                            lineId = entry.arguments?.getString("lineId"),
-                            vehicleId = entry.arguments?.getString("vehicleId"),
-                            destination = entry.arguments?.getString("destination"),
-                            latitude = entry.arguments?.getString("latitude"),
-                            longitude = entry.arguments?.getString("longitude"),
-                            stationId = entry.arguments?.getString("stationId"),
-                            currentSpeed = entry.arguments?.getString("currentSpeed"),
-                            state = entry.arguments?.getString("state"),
-                            stateTime = entry.arguments?.getString("stateTime"),
-                            pathId = entry.arguments?.getString("pathId")
-                        )
+                        }
+
+                        composable(
+                            route = PlusScreens.ServiceDetail.route + "/{lineId}/{vehicleId}/{destination}/{latitude}/{longitude}/{stationId}/{currentSpeed}/{state}/{stateTime}/{pathId}",
+                            arguments = listOf(
+                                navArgument("lineId") {
+                                    type = NavType.StringType
+                                    defaultValue = "0"
+                                    nullable = true
+                                }
+                            )
+                        ) { entry ->
+                            ServiceDetailMain(
+                                navController = navController,
+                                lineId = entry.arguments?.getString("lineId"),
+                                vehicleId = entry.arguments?.getString("vehicleId"),
+                                destination = entry.arguments?.getString("destination"),
+                                latitude = entry.arguments?.getString("latitude"),
+                                longitude = entry.arguments?.getString("longitude"),
+                                stationId = entry.arguments?.getString("stationId"),
+                                currentSpeed = entry.arguments?.getString("currentSpeed"),
+                                state = entry.arguments?.getString("state"),
+                                stateTime = entry.arguments?.getString("stateTime"),
+                                pathId = entry.arguments?.getString("pathId")
+                            )
+                        }
                     }
                 }
             }
