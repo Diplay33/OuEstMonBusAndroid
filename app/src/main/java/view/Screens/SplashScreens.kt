@@ -1,7 +1,7 @@
 package view.Screens
 
 sealed class SplashScreens(val route: String) {
-    object ChooseNetwork: SplashScreens(route = "choose_network")
+    object NetworkPicker: SplashScreens(route = "network_picker")
 
     fun withArgs(vararg args: String): String {
         return buildString {
