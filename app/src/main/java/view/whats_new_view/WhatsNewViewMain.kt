@@ -1,9 +1,13 @@
 package view.whats_new_view
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.gestures.scrollable
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -11,7 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Icon
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Language
@@ -46,9 +49,12 @@ fun WhatsNewViewMain() {
         )
     )
 
-    Column {
+    Column(verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier
+        .fillMaxHeight()
+    ) {
         Column(modifier = Modifier
             .verticalScroll(rememberScrollState())
+            .weight(0.1f)
         ) {
             Spacer(modifier = Modifier
                 .height(50.dp)
@@ -92,6 +98,31 @@ fun WhatsNewViewMain() {
                     .padding(bottom = 15.dp)
                 )
             }
+        }
+
+        Row(
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .padding(bottom = 50.dp)
+                .fillMaxWidth()
+                .height(45.dp)
+                .padding(horizontal = 20.dp)
+                .shadow(
+                    elevation = 10.dp,
+                    spotColor = Color.Black.copy(0.9f),
+                    ambientColor = Color.Black.copy(0.3f),
+                    shape = RoundedCornerShape(10.dp)
+                )
+                .clip(RoundedCornerShape(10.dp))
+                .background(Color(android.graphics.Color.parseColor("#007AFF")))
+        ) {
+            Text(
+                text = "Continuer",
+                color = Color.White,
+                fontWeight = FontWeight.Bold,
+                fontSize = 18.sp
+            )
         }
     }
 }
