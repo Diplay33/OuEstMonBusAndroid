@@ -93,6 +93,9 @@ class MainActivity : ComponentActivity() {
             val showSplashScreen = remember {
                 mutableStateOf(false)
             }
+            val network = remember {
+                mutableStateOf<String?>(null)
+            }
 
             if(firstLaunchDataStore.isEnabled.collectAsState(initial = false).value != true) {
                 scope.launch {
@@ -122,7 +125,8 @@ class MainActivity : ComponentActivity() {
             }
 
             LaunchedEffect(Unit) {
-                chosenNetworkDataStore.chosenNetwork.firstOrNull()?.let { network ->
+                chosenNetworkDataStore.chosenNetwork.firstOrNull()?.let { returnedNetwork ->
+                    network.value = returnedNetwork
                     withContext(Dispatchers.IO) {
                         SupabaseManager.beginSyncDatabaseProcess(context) { refreshLinesAction.value = it }
                     }
@@ -141,7 +145,7 @@ class MainActivity : ComponentActivity() {
                             .padding(padding)
                     ) {
                         composable(SplashScreens.WhatsNew.route) {
-                            WhatsNewViewMain()
+                            WhatsNewViewMain(showSplashScreen, network.value)
                         }
                     }
                 }

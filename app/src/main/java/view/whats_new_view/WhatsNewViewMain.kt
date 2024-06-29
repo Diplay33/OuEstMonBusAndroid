@@ -2,6 +2,7 @@ package view.whats_new_view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,7 @@ import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Language
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,7 +37,7 @@ import com.diplay.ouestmonbus.R
 import model.DTO.WhatsNewElement
 
 @Composable
-fun WhatsNewViewMain() {
+fun WhatsNewViewMain(showSplashScreen: MutableState<Boolean>, network: String?) {
     val whatsNewElements = listOf(
         WhatsNewElement(
             icon = Icons.Rounded.Language,
@@ -116,6 +118,14 @@ fun WhatsNewViewMain() {
                 )
                 .clip(RoundedCornerShape(10.dp))
                 .background(Color(android.graphics.Color.parseColor("#007AFF")))
+                .clickable {
+                    if(network != null) {
+                        showSplashScreen.value = false
+                    }
+                    else {
+                        //open network picker
+                    }
+                }
         ) {
             Text(
                 text = "Continuer",
