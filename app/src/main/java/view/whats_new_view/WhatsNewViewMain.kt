@@ -1,13 +1,20 @@
 package view.whats_new_view
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.Language
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -22,11 +29,27 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.diplay.ouestmonbus.BuildConfig
 import com.diplay.ouestmonbus.R
+import model.DTO.WhatsNewElement
 
 @Composable
 fun WhatsNewViewMain() {
+    val whatsNewElements = listOf(
+        WhatsNewElement(
+            icon = Icons.Rounded.Language,
+            title = "Données dynamiques",
+            bodyText = "Les mises à jour de vos lignes, ainsi que les données sur les véhicules, se font désormais à distance !"
+        ),
+        WhatsNewElement(
+            icon = Icons.Rounded.Info,
+            title = "Affichage TC Infos",
+            bodyText = "Lorsque vous êtes sur les détails d'un véhicule, vous pouvez afficher celui-ci sur TC Infos"
+        )
+    )
+
     Column {
-        Column {
+        Column(modifier = Modifier
+            .verticalScroll(rememberScrollState())
+        ) {
             Spacer(modifier = Modifier
                 .height(50.dp)
             )
@@ -55,6 +78,18 @@ fun WhatsNewViewMain() {
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .padding(top = 15.dp)
+                )
+
+            }
+
+            Spacer(modifier = Modifier
+                .height(50.dp)
+            )
+
+            whatsNewElements.forEach { element ->
+                WhatsNewViewRow(element, modifier = Modifier
+                    .padding(horizontal = 40.dp)
+                    .padding(bottom = 15.dp)
                 )
             }
         }
