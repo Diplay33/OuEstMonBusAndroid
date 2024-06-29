@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHost
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -75,6 +76,7 @@ import view.next_schedules.search_line.search_stop_list.SearchStopListMain
 import view.next_schedules.search_line.search_stop_list.next_line_schedules.NextLineSchedulesMain
 import view.next_schedules.search_line.search_stop_list.next_line_schedules.line_schedules.LineSchedulesMain
 import view.next_schedules.search_line.search_stop_list.next_line_schedules.next_schedule_details.NextScheduleDetailsMain
+import view.whats_new_view.WhatsNewViewMain
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -132,9 +134,16 @@ class MainActivity : ComponentActivity() {
             if(showSplashScreen.value) {
                 //Splash screen
                 Scaffold { padding ->
-                    Text("Hello World!", modifier = Modifier
-                        .padding(padding)
-                    )
+                    NavHost(
+                        navController = navController,
+                        startDestination = SplashScreens.WhatsNew.route,
+                        modifier = Modifier
+                            .padding(padding)
+                    ) {
+                        composable(SplashScreens.WhatsNew.route) {
+                            WhatsNewViewMain()
+                        }
+                    }
                 }
             }
             else {
