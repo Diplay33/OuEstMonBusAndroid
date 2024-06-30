@@ -21,6 +21,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -89,13 +90,13 @@ class MainActivity : ComponentActivity() {
             val firstLaunchDataStore = StoreFirstLaunch(context)
             val displayNotifCountDataStore = StoreDisplayNotifCountParam(context)
             val chosenNetworkDataStore = StoreChosenNetwork(context)
-            val refreshLinesAction = remember {
+            val refreshLinesAction = rememberSaveable {
                 mutableStateOf<String?>(null)
             }
-            val showSplashScreen = remember {
+            val showSplashScreen = rememberSaveable {
                 mutableStateOf(false)
             }
-            val network = remember {
+            val network = rememberSaveable {
                 mutableStateOf<String?>(null)
             }
 
