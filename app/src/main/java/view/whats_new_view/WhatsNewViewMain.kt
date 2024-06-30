@@ -32,12 +32,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.diplay.ouestmonbus.BuildConfig
 import com.diplay.ouestmonbus.R
 import model.DTO.WhatsNewElement
+import view.Screens.SplashScreens
 
 @Composable
-fun WhatsNewViewMain(showSplashScreen: MutableState<Boolean>, network: String?) {
+fun WhatsNewViewMain(navController: NavController, showSplashScreen: MutableState<Boolean>, network: String?) {
     val whatsNewElements = listOf(
         WhatsNewElement(
             icon = Icons.Rounded.Language,
@@ -123,7 +125,7 @@ fun WhatsNewViewMain(showSplashScreen: MutableState<Boolean>, network: String?) 
                         showSplashScreen.value = false
                     }
                     else {
-                        //open network picker
+                        navController.navigate(SplashScreens.NetworkPicker.route)
                     }
                 }
         ) {

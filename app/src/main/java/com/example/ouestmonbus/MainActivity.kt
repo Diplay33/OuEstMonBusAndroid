@@ -3,6 +3,7 @@ package com.diplay.ouestmonbus
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -77,6 +78,7 @@ import view.next_schedules.search_line.search_stop_list.next_line_schedules.Next
 import view.next_schedules.search_line.search_stop_list.next_line_schedules.line_schedules.LineSchedulesMain
 import view.next_schedules.search_line.search_stop_list.next_line_schedules.next_schedule_details.NextScheduleDetailsMain
 import view.whats_new_view.WhatsNewViewMain
+import view.whats_new_view.network_picker.NetworkPickerMain
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -141,11 +143,31 @@ class MainActivity : ComponentActivity() {
                     NavHost(
                         navController = navController,
                         startDestination = SplashScreens.WhatsNew.route,
+                        enterTransition = { slideIntoContainer(
+                            AnimatedContentTransitionScope.SlideDirection.Left,
+                            animationSpec = tween(300)
+                        ) },
+                        exitTransition = { slideOutOfContainer(
+                            AnimatedContentTransitionScope.SlideDirection.Left,
+                            animationSpec = tween(450)
+                        ) },
+                        popEnterTransition = { slideIntoContainer(
+                            AnimatedContentTransitionScope.SlideDirection.Right,
+                            animationSpec = tween(300)
+                        ) },
+                        popExitTransition = { slideOutOfContainer(
+                            AnimatedContentTransitionScope.SlideDirection.Right,
+                            animationSpec = tween(450)
+                        ) },
                         modifier = Modifier
                             .padding(padding)
                     ) {
                         composable(SplashScreens.WhatsNew.route) {
-                            WhatsNewViewMain(showSplashScreen, network.value)
+                            WhatsNewViewMain(navController, showSplashScreen, network.value)
+                        }
+
+                        composable(SplashScreens.NetworkPicker.route) {
+                            NetworkPickerMain()
                         }
                     }
                 }
