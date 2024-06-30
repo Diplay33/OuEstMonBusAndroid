@@ -114,7 +114,7 @@ fun WhatsNewViewMain(navController: NavController, showSplashScreen: MutableStat
                 .padding(horizontal = 20.dp)
                 .shadow(
                     elevation = 10.dp,
-                    spotColor = Color.Black.copy(0.9f),
+                    spotColor = Color.Black.copy(0.7f),
                     ambientColor = Color.Black.copy(0.3f),
                     shape = RoundedCornerShape(10.dp)
                 )

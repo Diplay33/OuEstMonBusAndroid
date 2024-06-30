@@ -72,6 +72,7 @@ fun NetworkPickerMain(
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth()
+                        .padding(horizontal = 15.dp)
                 )
 
                 Spacer(modifier = Modifier
@@ -96,14 +97,14 @@ fun NetworkPickerMain(
                     .padding(horizontal = 20.dp)
                     .shadow(
                         elevation = 10.dp,
-                        spotColor = Color.Black.copy(0.9f),
+                        spotColor = Color.Black.copy(0.7f),
                         ambientColor = Color.Black.copy(0.3f),
                         shape = RoundedCornerShape(10.dp)
                     )
                     .clip(RoundedCornerShape(10.dp))
                     .background(
                         if (selection.value == "")
-                            Color.Gray
+                            Color.LightGray
                         else
                             Color(android.graphics.Color.parseColor("#007AFF"))
                     )
