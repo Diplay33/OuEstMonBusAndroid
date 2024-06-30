@@ -167,7 +167,7 @@ class MainActivity : ComponentActivity() {
                         }
 
                         composable(SplashScreens.NetworkPicker.route) {
-                            NetworkPickerMain(navController)
+                            NetworkPickerMain(navController, refreshLinesAction, showSplashScreen)
                         }
                     }
                 }
