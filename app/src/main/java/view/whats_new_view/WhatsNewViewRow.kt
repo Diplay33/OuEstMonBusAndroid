@@ -1,5 +1,6 @@
 package view.whats_new_view
 
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -21,6 +22,8 @@ import model.DTO.WhatsNewElement
 
 @Composable
 fun WhatsNewViewRow(whatsNewElement: WhatsNewElement, modifier: Modifier = Modifier) {
+    val colorScheme = !isSystemInDarkTheme()
+
     Row(
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
@@ -44,6 +47,7 @@ fun WhatsNewViewRow(whatsNewElement: WhatsNewElement, modifier: Modifier = Modif
             Text(
                 text = whatsNewElement.title,
                 fontWeight = FontWeight.Bold,
+                color = if (colorScheme) Color.Black else Color.White,
                 fontSize = 15.sp
             )
 

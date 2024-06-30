@@ -3,6 +3,7 @@ package view.whats_new_view
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -40,6 +41,7 @@ import view.Screens.SplashScreens
 
 @Composable
 fun WhatsNewViewMain(navController: NavController, showSplashScreen: MutableState<Boolean>, network: String?) {
+    val colorScheme = !isSystemInDarkTheme()
     val whatsNewElements = listOf(
         WhatsNewElement(
             icon = Icons.Rounded.Language,
@@ -55,6 +57,7 @@ fun WhatsNewViewMain(navController: NavController, showSplashScreen: MutableStat
 
     Column(verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier
         .fillMaxHeight()
+        .background(if (colorScheme) Color.White else Color.Black)
     ) {
         Column(modifier = Modifier
             .verticalScroll(rememberScrollState())
@@ -86,6 +89,7 @@ fun WhatsNewViewMain(navController: NavController, showSplashScreen: MutableStat
                     fontSize = 34.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
+                    color = if (colorScheme) Color.Black else Color.White,
                     modifier = Modifier
                         .padding(top = 15.dp)
                 )
@@ -121,10 +125,9 @@ fun WhatsNewViewMain(navController: NavController, showSplashScreen: MutableStat
                 .clip(RoundedCornerShape(10.dp))
                 .background(Color(android.graphics.Color.parseColor("#007AFF")))
                 .clickable {
-                    if(network != null) {
+                    if (network != null) {
                         showSplashScreen.value = false
-                    }
-                    else {
+                    } else {
                         navController.navigate(SplashScreens.NetworkPicker.route)
                     }
                 }

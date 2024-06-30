@@ -2,6 +2,7 @@ package view.whats_new_view.network_picker
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -45,6 +46,7 @@ fun NetworkPickerMain(
     refreshLinesAction: MutableState<String?>,
     showSplashScreen: MutableState<Boolean>
 ) {
+    val colorScheme = !isSystemInDarkTheme()
     val scope = rememberCoroutineScope()
     val context = LocalContext.current
     val chosenNetworkDataStore = StoreChosenNetwork(context)
@@ -56,6 +58,7 @@ fun NetworkPickerMain(
         Column(verticalArrangement = Arrangement.SpaceBetween, modifier = Modifier
             .fillMaxHeight()
             .padding(padding)
+            .background(if (colorScheme) Color.White else Color.Black)
         ) {
             Column(modifier = Modifier
                 .verticalScroll(rememberScrollState())
@@ -70,6 +73,7 @@ fun NetworkPickerMain(
                     fontSize = 34.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,
+                    color = if (colorScheme) Color.Black else Color.White,
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 15.dp)
@@ -104,7 +108,10 @@ fun NetworkPickerMain(
                     .clip(RoundedCornerShape(10.dp))
                     .background(
                         if (selection.value == "")
-                            Color.LightGray
+                            if (colorScheme)
+                                Color.LightGray
+                            else
+                                Color.DarkGray
                         else
                             Color(android.graphics.Color.parseColor("#007AFF"))
                     )

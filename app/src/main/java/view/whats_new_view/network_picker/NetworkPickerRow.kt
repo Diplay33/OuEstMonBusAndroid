@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,6 +39,7 @@ import model.DTO.Network
 
 @Composable
 fun NetworkPickerRow(selection: MutableState<String>, network: Network) {
+    val colorScheme = !isSystemInDarkTheme()
     val isSelected = network.shortName == selection.value
 
     Row(
@@ -58,7 +60,12 @@ fun NetworkPickerRow(selection: MutableState<String>, network: Network) {
                 shape = RoundedCornerShape(15.dp)
             )
             .clip(RoundedCornerShape(15.dp))
-            .background(colorResource(id = R.color.light_grey))
+            .background(
+                if (colorScheme)
+                    colorResource(id = R.color.light_grey)
+                else
+                    Color.DarkGray
+            )
             .clickable { selection.value = network.shortName }
             .padding(vertical = 8.dp)
             .padding(horizontal = 15.dp)
@@ -78,7 +85,8 @@ fun NetworkPickerRow(selection: MutableState<String>, network: Network) {
                 text = network.fullName,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                textAlign = TextAlign.Left
+                textAlign = TextAlign.Left,
+                color = if (colorScheme) Color.Black else Color.White
             )
         }
 
@@ -109,7 +117,12 @@ fun NetworkPickerRow(selection: MutableState<String>, network: Network) {
                 Box(modifier = Modifier
                     .clip(CircleShape)
                     .size(14.dp)
-                    .background(colorResource(id = R.color.light_grey))
+                    .background(
+                        if (colorScheme)
+                            colorResource(id = R.color.light_grey)
+                        else
+                            Color.DarkGray
+                    )
                 )
 
                 if(isSelected) {
