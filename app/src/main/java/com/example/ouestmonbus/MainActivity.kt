@@ -60,6 +60,7 @@ import model.SupabaseManager
 import model.preferences_data_store.StoreChosenNetwork
 import model.preferences_data_store.StoreDisplayNotifCountParam
 import model.preferences_data_store.StoreFirstLaunch
+import model.preferences_data_store.StoreVersionCheck
 import view.BottomNavigationBar
 import view.Screens.BottomNavigationScreens
 import view.Screens.CartesScreens
@@ -90,6 +91,7 @@ class MainActivity : ComponentActivity() {
             val firstLaunchDataStore = StoreFirstLaunch(context)
             val displayNotifCountDataStore = StoreDisplayNotifCountParam(context)
             val chosenNetworkDataStore = StoreChosenNetwork(context)
+            val versionCheckDataStore = StoreVersionCheck(context)
             val refreshLinesAction = rememberSaveable {
                 mutableStateOf<String?>(null)
             }
@@ -135,6 +137,16 @@ class MainActivity : ComponentActivity() {
                     }
                 } ?: run {
                     showSplashScreen.value = true
+                }
+
+                versionCheckDataStore.versionIsChecked("3.5").firstOrNull()?.let {
+                    if(!it) {
+                        showSplashScreen.value = true
+                        scope.launch {
+                            versionCheckDataStore.markVersionAsChecked("3.5")
+                            versionCheckDataStore.unmarkVersionAsChecked("3.4")
+                        }
+                    }
                 }
             }
 

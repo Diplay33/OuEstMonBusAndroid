@@ -29,7 +29,7 @@ class StoreVersionCheck(private val context: Context) {
 
     fun versionIsChecked(version: String): Flow<Boolean> {
         return context.dataStore.data.map { preferences ->
-            preferences[stringPreferencesKey(version)] == null
+            preferences[stringPreferencesKey(version)] == "ok"
         }
     }
 }
