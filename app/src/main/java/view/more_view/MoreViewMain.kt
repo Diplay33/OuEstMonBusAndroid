@@ -43,7 +43,7 @@ fun MoreViewMain(navController: NavController) {
                     .height(30.dp)
                 )
 
-                MoreViewSettingsGroup()
+                MoreViewSettingsGroup(navController)
 
                 Spacer(modifier = Modifier
                     .height(30.dp)

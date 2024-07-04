@@ -18,6 +18,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -52,6 +53,10 @@ fun NetworkPickerMain(
     val chosenNetworkDataStore = StoreChosenNetwork(context)
     val selection = remember {
         mutableStateOf("")
+    }
+
+    LaunchedEffect(Unit) {
+        chosenNetworkDataStore.chosenNetwork.collect { selection.value = it ?: "" }
     }
 
     Scaffold(topBar = { NetworkPickerTopBar(navController = navController) }) { padding ->
@@ -123,7 +128,11 @@ fun NetworkPickerMain(
                                     refreshLinesAction.value = it
                                 }
                             }
-                            showSplashScreen.value = false
+                            if (!showSplashScreen.value) {
+                                navController.navigateUp()
+                            } else {
+                                showSplashScreen.value = false
+                            }
                         }
                     }
             ) {

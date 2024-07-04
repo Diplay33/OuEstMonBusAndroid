@@ -17,6 +17,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -353,6 +354,14 @@ class MainActivity : ComponentActivity() {
                                 state = entry.arguments?.getString("state"),
                                 stateTime = entry.arguments?.getString("stateTime"),
                                 pathId = entry.arguments?.getString("pathId")
+                            )
+                        }
+
+                        composable(SplashScreens.NetworkPicker.route) {
+                            NetworkPickerMain(
+                                navController = navController,
+                                refreshLinesAction = remember { mutableStateOf("") },
+                                showSplashScreen = remember { mutableStateOf(false) }
                             )
                         }
                     }
