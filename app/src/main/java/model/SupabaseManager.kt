@@ -67,7 +67,7 @@ class SupabaseManager {
             try {
                 return supabase
                     .from("table_version_descriptor")
-                    .select()
+                    .select { filter { eq("network", "tbm") } }
                     .decodeList<VersionDescriptor>()
             }
             catch(e: Exception) {
@@ -88,7 +88,7 @@ class SupabaseManager {
                         Lines.deleteContent()
                         val lines = supabase
                             .from("lines")
-                            .select()
+                            .select { filter { eq("network", "tbm") } }
                             .decodeList<Line>()
                         Lines.insertLines(lines)
                         callback("reload")
@@ -109,7 +109,7 @@ class SupabaseManager {
                         Destinations.deleteContent()
                         val destinations = supabase
                             .from("destinations")
-                            .select()
+                            .select { filter { eq("network", "tbm") } }
                             .decodeList<Destination>()
                         Destinations.insertDestinations(destinations)
                         storeDestinationPreferences.setCurrentVersion(onlineVersion)
@@ -129,7 +129,7 @@ class SupabaseManager {
                         AllerDestinations.deleteContent()
                         val allerDestinations = supabase
                             .from("aller_destinations")
-                            .select()
+                            .select { filter { eq("network", "tbm") } }
                             .decodeList<AllerDestination>()
                         AllerDestinations.insertAllerDestinations(allerDestinations)
                         storeAllerDestinationPreferences.setCurrentVersion(onlineVersion)
@@ -149,7 +149,7 @@ class SupabaseManager {
                         RetourDestinations.deleteContent()
                         val retourDestinations = supabase
                             .from("retour_destinations")
-                            .select()
+                            .select { filter { eq("network", "tbm") } }
                             .decodeList<RetourDestination>()
                         RetourDestinations.insertRetourDestinations(retourDestinations)
                         storeRetourDestinationPreferences.setCurrentVersion(onlineVersion)
@@ -173,7 +173,7 @@ class SupabaseManager {
                         NextSchedulesDestinations.deleteContent()
                         val nextSchedulesDestinations = supabase
                             .from("next_schedules_destinations")
-                            .select()
+                            .select { filter { eq("network", "tbm") } }
                             .decodeList<NextSchedulesDestination>()
                         NextSchedulesDestinations.insertNextSchedulesDestinations(
                             nsDestinations = nextSchedulesDestinations
@@ -195,7 +195,7 @@ class SupabaseManager {
                         PathDestinations.deleteContent()
                         val pathDestinations = supabase
                             .from("path_destinations")
-                            .select()
+                            .select { filter { eq("network", "tbm") } }
                             .decodeList<PathDestination>()
                         PathDestinations.insertPathDestinations(pathDestinations)
                         storePathDestinationPreferences.setCurrentVersion(onlineVersion)
@@ -215,7 +215,7 @@ class SupabaseManager {
                         Vehicles.deleteContent()
                         val vehicles = supabase
                             .from("vehicles")
-                            .select()
+                            .select { filter { eq("network", "tbm") } }
                             .decodeList<Vehicle>()
                         Vehicles.insertVehicles(vehicles)
                         storeVehiclePreferences.setCurrentVersion(onlineVersion)
