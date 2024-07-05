@@ -41,14 +41,22 @@ class SupabaseManager {
     companion object {
         private val supabase = MainApplication.supabase
 
-        suspend fun beginSyncDatabaseProcess(context: Context, callback: (String) -> Unit) {
-            checkTablesVersion(context) { callback(it) }
+        suspend fun beginSyncDatabaseProcess(
+            network: String,
+            context: Context,
+            callback: (String) -> Unit
+        ) {
+            checkTablesVersion(network, context) { callback(it) }
         }
 
-        private suspend fun checkTablesVersion(context: Context, callback: (String) -> Unit) {
-            getVersions().forEach { descriptor ->
+        private suspend fun checkTablesVersion(
+            network: String,
+            context: Context,
+            callback: (String) -> Unit
+        ) {
+            getVersions(network).forEach { descriptor ->
                 when(descriptor.tableName) {
-                    "lines" -> retrieveLines(descriptor.version, context) { callback(it) }
+                    "lines" -> retrieveLines(network, descriptor.version, context) { callback(it) }
                     "destinations" -> retrieveDestinations(descriptor.version, context)
                     "aller_destinations" -> retrieveAllerDestinations(descriptor.version, context)
                     "retour_destinations" -> retrieveRetourDestinations(descriptor.version, context)
@@ -63,11 +71,11 @@ class SupabaseManager {
             }
         }
 
-        private suspend fun getVersions(): List<VersionDescriptor> {
+        private suspend fun getVersions(network: String): List<VersionDescriptor> {
             try {
                 return supabase
                     .from("table_version_descriptor")
-                    .select { filter { eq("network", "tbm") } }
+                    .select { filter { eq("network", network) } }
                     .decodeList<VersionDescriptor>()
             }
             catch(e: Exception) {
@@ -77,6 +85,7 @@ class SupabaseManager {
         }
 
         private suspend fun retrieveLines(
+            network: String,
             onlineVersion: String,
             context: Context,
             callback: (String) -> Unit
@@ -88,7 +97,7 @@ class SupabaseManager {
                         Lines.deleteContent()
                         val lines = supabase
                             .from("lines")
-                            .select { filter { eq("network", "tbm") } }
+                            .select { filter { eq("network", network) } }
                             .decodeList<Line>()
                         Lines.insertLines(lines)
                         callback("reload")

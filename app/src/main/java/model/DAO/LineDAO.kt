@@ -14,6 +14,9 @@ interface LineDAO {
     @Query("SELECT * FROM Line WHERE parentId IS null")
     fun getAllLines(): List<Line>
 
+    @Query("SELECT * FROM Line WHERE parentId = 9999")
+    fun getAllAmetisLines(): List<Line> // to remove
+
     @Query("SELECT * FROM Line WHERE showSchedules = 1")
     fun getAllLinesForSchedules(): List<Line>
 

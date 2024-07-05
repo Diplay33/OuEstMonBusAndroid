@@ -5,8 +5,10 @@ import com.diplay.ouestmonbus.MainApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import model.preferences_data_store.StoreChosenNetwork
 import model.preferences_data_store.StoreFavoriteLines
 import java.text.Normalizer
 
@@ -24,9 +26,13 @@ class Lines {
 
         fun getAllLinesBySection(context: Context, forSchedules: Boolean = false, callback: (List<List<Line>>) -> Unit) {
             CoroutineScope(Dispatchers.IO).launch {
+                val network = StoreChosenNetwork(context).chosenNetwork.firstOrNull()
                 val lines = (if (forSchedules) lineDAO.getAllLinesForSchedules()
                 else
-                    lineDAO.getAllLines()).sortedBy { it.index }
+                    if (network == "tbm")
+                        lineDAO.getAllLines().sortedBy { it.index }
+                    else
+                        lineDAO.getAllAmetisLines().sortedBy { it.index })
                 val listSectionSet = lines.map { it.section }.toSet().toList()
                 val linesBySection: ArrayList<ArrayList<Line>> = ArrayList(listSectionSet.map { arrayListOf() })
                 linesBySection.add(arrayListOf())

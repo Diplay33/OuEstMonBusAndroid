@@ -134,7 +134,9 @@ class MainActivity : ComponentActivity() {
                 chosenNetworkDataStore.chosenNetwork.firstOrNull()?.let { returnedNetwork ->
                     network.value = returnedNetwork
                     withContext(Dispatchers.IO) {
-                        SupabaseManager.beginSyncDatabaseProcess(context) { refreshLinesAction.value = it }
+                        SupabaseManager.beginSyncDatabaseProcess(returnedNetwork, context) {
+                            refreshLinesAction.value = it
+                        }
                     }
                 } ?: run {
                     showSplashScreen.value = true

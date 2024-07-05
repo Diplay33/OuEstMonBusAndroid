@@ -124,7 +124,7 @@ fun NetworkPickerMain(
                         scope.launch {
                             chosenNetworkDataStore.setNetwork(selection.value)
                             withContext(Dispatchers.IO) {
-                                SupabaseManager.beginSyncDatabaseProcess(context) {
+                                SupabaseManager.beginSyncDatabaseProcess(selection.value, context) {
                                     refreshLinesAction.value = it
                                 }
                             }
