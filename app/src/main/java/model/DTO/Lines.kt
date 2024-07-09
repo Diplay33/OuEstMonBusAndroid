@@ -26,13 +26,9 @@ class Lines {
 
         fun getAllLinesBySection(context: Context, forSchedules: Boolean = false, callback: (List<List<Line>>) -> Unit) {
             CoroutineScope(Dispatchers.IO).launch {
-                val network = StoreChosenNetwork(context).chosenNetwork.firstOrNull()
-                val lines = (if (forSchedules) lineDAO.getAllLinesForSchedules()
+                val lines = if (forSchedules) lineDAO.getAllLinesForSchedules()
                 else
-                    if (network == "tbm")
-                        lineDAO.getAllLines().sortedBy { it.index }
-                    else
-                        lineDAO.getAllAmetisLines().sortedBy { it.index })
+                    lineDAO.getAllLines().sortedBy { it.index }
                 val listSectionSet = lines.map { it.section }.toSet().toList()
                 val linesBySection: ArrayList<ArrayList<Line>> = ArrayList(listSectionSet.map { arrayListOf() })
                 linesBySection.add(arrayListOf())
