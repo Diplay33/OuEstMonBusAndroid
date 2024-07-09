@@ -1,7 +1,10 @@
 package model.DAO
 
+import com.google.transit.realtime.GtfsRealtime
+import kotlinx.serialization.json.Json
 import model.CallAPI
 import model.DTO.Service
+import model.helpers.toASCIIDecimal
 import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -54,6 +57,48 @@ class ServiceDAO {
                 }
 
                 callback(services)
+            }
+        }
+
+        fun getAmetisRawServices(callback: (ArrayList<Service>) -> Unit) {
+            CallAPI.runGTFSRT("https://proxy.transport.data.gouv.fr/resource/ametis-amiens-gtfs-rt-vehicle-position") { response ->
+                response.body?.byteStream().use { inputStream ->
+                    inputStream?.let {
+                        val feedMessage = GtfsRealtime.FeedMessage.parseFrom(inputStream)
+                        feedMessage?.let { fm ->
+                            val services: ArrayList<Service> = arrayListOf()
+
+                            fm.entityList.forEach { feedEntity ->
+                                val vehicle = feedEntity.vehicle
+                                val trip = vehicle.trip
+                                val position = vehicle.position
+
+                                services.add(
+                                    Service(
+                                        id = feedEntity.id.toIntOrNull() ?: 0,
+                                        vehicleId = feedEntity.id.toIntOrNull() ?: 0,
+                                        lineId = trip.routeId.toASCIIDecimal(),
+                                        currentSpeed = position.speed.toInt(),
+                                        state = "",
+                                        stateTime = 0,
+                                        destination = trip.directionId.toString(),
+                                        latitude = position.latitude.toDouble(),
+                                        longitude = position.longitude.toDouble(),
+                                        currentStop = 0,
+                                        path = 0,
+                                        timestamp = Date()
+                                    )
+                                )
+                            }
+
+                            callback(services)
+                        } ?: run {
+                            callback(arrayListOf())
+                        }
+                    } ?: run {
+                        callback(arrayListOf())
+                    }
+                }
             }
         }
 

@@ -14,7 +14,7 @@ class CallAPI {
             client.newCall(request).enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     e.printStackTrace()
-                    if(retry) { run(url) { callback(it) } }
+                    if(retry) { run(url = url) { callback(it) } }
                 }
 
                 override fun onResponse(call: Call, response: Response) {
@@ -27,6 +27,37 @@ class CallAPI {
 
                         try {
                             callback(response.body!!.string())
+                        }
+                        catch(e: Exception) {
+                            println("FATAL ERROR: $e")
+                        }
+                    }
+                }
+            })
+        }
+
+        fun runGTFSRT(url: String, retry: Boolean = false, callback: (Response) -> Unit) {
+            val client = OkHttpClient()
+            val request = Request.Builder()
+                .url(url)
+                .build()
+
+            client.newCall(request).enqueue(object : Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    e.printStackTrace()
+                    if(retry) { runGTFSRT(url) { callback(it) } }
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    response.use {
+                        if(!response.isSuccessful) throw IOException("Unexpected code $response")
+
+                        for((name, value) in response.headers) {
+                            println("$name: $value")
+                        }
+
+                        try {
+                            callback(response)
                         }
                         catch(e: Exception) {
                             println("FATAL ERROR: $e")

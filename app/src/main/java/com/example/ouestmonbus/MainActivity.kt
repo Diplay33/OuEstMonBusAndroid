@@ -43,6 +43,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import model.DAO.ServiceDAO
 import model.DTO.AllerDestination
 import model.DTO.AllerDestinations
 import model.DTO.Destination
@@ -108,6 +109,10 @@ class MainActivity : ComponentActivity() {
                     firstLaunchDataStore.enable()
                     displayNotifCountDataStore.enable()
                 }
+            }
+
+            ServiceDAO.getAmetisRawServices {
+                print(it)
             }
 
             val navController = rememberNavController()

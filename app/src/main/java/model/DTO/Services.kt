@@ -12,9 +12,18 @@ class Services {
             }
         }
 
-        fun getServicesByLine(lineId: Int, callback: (ArrayList<Service>) -> Unit) {
-            ServiceDAO.getServicesByLine(lineId) { services ->
-                callback(services)
+        fun getServicesByLine(network: String, lineId: Int, callback: (ArrayList<Service>) -> Unit) {
+            when(network) {
+                "tbm" ->
+                    ServiceDAO.getServicesByLine(lineId) { services ->
+                        callback(services)
+                    }
+                "ametis" ->
+                    ServiceDAO.getAmetisRawServices { services ->
+                        callback(ArrayList(services.filter { it.lineId == lineId }))
+                    }
+                "" ->
+                    callback(arrayListOf())
             }
         }
 

@@ -64,9 +64,13 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
     val colorScheme = !isSystemInDarkTheme()
     val context = LocalContext.current
     val storeChosenNetwork = StoreChosenNetwork(context)
+    val network = remember {
+        mutableStateOf("")
+    }
 
     LaunchedEffect(Unit) {
         storeChosenNetwork.chosenNetwork.collect { storedNetwork ->
+            network.value = storedNetwork ?: ""
             Networks.getNetwork(storedNetwork ?: "")?.let { chosenNetwork ->
                 cameraPositionState.position = CameraPosition.fromLatLngZoom(
                     LatLng(chosenNetwork.latitude - 0.06, chosenNetwork.longitude), 10.8f
@@ -120,7 +124,7 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
             }
         }
 
-        LaunchedEffect(line.value) {
+        LaunchedEffect(line.value, network.value) {
             while(true) {
                 if(line.value?.isNest == true) {
                     line.value?.id?.let { lineId ->
@@ -135,7 +139,7 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
                     }
                 }
                 else {
-                    Services.getServicesByLine(line.value?.id ?: 0) { returnedServices ->
+                    Services.getServicesByLine(network.value, line.value?.id ?: 0) { returnedServices ->
                         services.clear()
                         services.addAll(returnedServices)
                         isLoading.value = false
