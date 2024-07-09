@@ -8,6 +8,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.android.gms.maps.model.CameraPosition
@@ -16,10 +17,13 @@ import com.google.maps.android.compose.rememberCameraPositionState
 import kotlinx.coroutines.delay
 import model.DTO.Line
 import model.DTO.Lines
+import model.DTO.Networks
 import model.DTO.Paths
 import model.DTO.ProgrammedMessages
 import model.DTO.Service
 import model.DTO.Services
+import model.preferences_data_store.StoreChosenNetwork
+import model.preferences_data_store.StoreFavoriteLines
 import java.util.*
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -58,6 +62,18 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
         mutableStateListOf<List<LatLng>>()
     }
     val colorScheme = !isSystemInDarkTheme()
+    val context = LocalContext.current
+    val storeChosenNetwork = StoreChosenNetwork(context)
+
+    LaunchedEffect(Unit) {
+        storeChosenNetwork.chosenNetwork.collect { storedNetwork ->
+            Networks.getNetwork(storedNetwork ?: "")?.let { chosenNetwork ->
+                cameraPositionState.position = CameraPosition.fromLatLngZoom(
+                    LatLng(chosenNetwork.latitude - 0.06, chosenNetwork.longitude), 10.8f
+                )
+            }
+        }
+    }
 
     BottomSheetScaffold(
         sheetContent = {
