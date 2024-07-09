@@ -66,7 +66,7 @@ class SupabaseManager {
                             context = context
                         )
                     "path_destinations" -> retrievePathDestinations(descriptor.version, context)
-                    "vehicles" -> retrieveVehicles(descriptor.version, context)
+                    "vehicles" -> retrieveVehicles(network, descriptor.version, context)
                 }
             }
         }
@@ -216,7 +216,11 @@ class SupabaseManager {
             }
         }
 
-        private suspend fun retrieveVehicles(onlineVersion: String, context: Context) {
+        private suspend fun retrieveVehicles(
+            network: String,
+            onlineVersion: String,
+            context: Context
+        ) {
             try {
                 val storeVehiclePreferences = StoreVehicleTableVersion(context)
                 storeVehiclePreferences.version.firstOrNull().let {
@@ -224,7 +228,7 @@ class SupabaseManager {
                         Vehicles.deleteContent()
                         val vehicles = supabase
                             .from("vehicles")
-                            .select { filter { eq("network", "tbm") } }
+                            .select { filter { eq("network", network) } }
                             .decodeList<Vehicle>()
                         Vehicles.insertVehicles(vehicles)
                         storeVehiclePreferences.setCurrentVersion(onlineVersion)
