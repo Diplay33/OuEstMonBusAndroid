@@ -21,6 +21,7 @@ import model.DTO.RetourDestination
 import model.DTO.RetourDestinations
 import model.DTO.Vehicle
 import model.DTO.Vehicles
+import model.preferences_data_store.StoreGTFSURL
 import model.preferences_data_store.store_tables_version.StoreAllerDestinationTableVersion
 import model.preferences_data_store.store_tables_version.StoreDestinationTableVersion
 import model.preferences_data_store.store_tables_version.StoreLineTableVersion
@@ -48,6 +49,8 @@ class SupabaseManager {
             callback: (String) -> Unit
         ) {
             checkTablesVersion(network, context) { callback(it) }
+            val gtfsTripsURL = getGTFSURL("trips", network)
+            StoreGTFSURL(context).setGTFSTripsURL(gtfsTripsURL)
         }
 
         private suspend fun checkTablesVersion(

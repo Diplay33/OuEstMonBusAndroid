@@ -25,7 +25,7 @@ class Services {
                         callback(services)
                     }
                 "ametis" ->
-                    ServiceDAO.getAmetisRawServices(context) { services ->
+                    ServiceDAO.getAmetisRawServices(network, context) { services ->
                         callback(ArrayList(services.filter { it.lineId == lineId }))
                     }
                 "" ->
@@ -42,43 +42,6 @@ class Services {
         fun getServiceByVehicleId(vehicleId: Int, callback: (Service?) -> Unit) {
             ServiceDAO.getServiceByVehicleId(vehicleId) { callback(it) }
         }
-
-        /*fun getServicesSortedByVehicle(callback: (ArrayList<Service>) -> Unit) {
-            ServiceDAO.getAllServices { services ->
-                val returnServices = arrayListOf<Service>()
-                returnServices.addAll(services.sortedBy { it.vehicle.id }.sortedBy { it.vehicle.model })
-                callback(returnServices)
-            }
-        }
-
-        fun getServicesByVehicle(callback: (ArrayList<ArrayList<Service>>) -> Unit) {
-            getServicesSortedByVehicle { services ->
-                val servicesToReturn = arrayListOf<ArrayList<Service>>()
-                var tempServices = arrayListOf<Service>()
-                var precedentVehicle = ""
-
-                services.forEach { service ->
-                    if(servicesToReturn.isEmpty() && tempServices.isEmpty()) {
-                        tempServices.add(service)
-                        precedentVehicle = service.vehicle.model
-                    }
-                    else {
-                        if(service.vehicle.model == precedentVehicle) {
-                            tempServices.add(service)
-                        }
-                        else {
-                            servicesToReturn.add(tempServices)
-                            tempServices = arrayListOf()
-                            tempServices.add(service)
-                            precedentVehicle = service.vehicle.model
-                        }
-                    }
-                }
-                servicesToReturn.add(tempServices)
-
-                callback(servicesToReturn)
-            }
-        }*/
 
         private fun filterServicesSortedByVehicle(services: List<Service>): List<Service> {
             return services.sortedBy { it.vehicle.parkId }.sortedBy { it.vehicle.fullName }

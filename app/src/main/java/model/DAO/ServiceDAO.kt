@@ -62,7 +62,7 @@ class ServiceDAO {
             }
         }
 
-        fun getAmetisRawServices(context: Context, callback: (ArrayList<Service>) -> Unit) {
+        fun getAmetisRawServices(network: String, context: Context, callback: (ArrayList<Service>) -> Unit) {
             CallAPI.runGTFSRT("https://proxy.transport.data.gouv.fr/resource/ametis-amiens-gtfs-rt-vehicle-position") { response ->
                 response.body?.byteStream().use { inputStream ->
                     inputStream?.let {
@@ -70,7 +70,7 @@ class ServiceDAO {
                         feedMessage?.let { fm ->
                             val services: ArrayList<Service> = arrayListOf()
 
-                            GTFSService.getTrips(context) { trips ->
+                            GTFSService.getTrips(network, context) { trips ->
                                 fm.entityList.forEach { feedEntity ->
                                     val vehicle = feedEntity.vehicle
                                     val trip = vehicle.trip

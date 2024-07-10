@@ -3,8 +3,11 @@ package model.DTO
 import android.content.Context
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import model.SupabaseManager
+import model.preferences_data_store.StoreGTFSURL
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.File
@@ -12,10 +15,12 @@ import java.io.IOException
 
 class GTFSService {
     companion object {
-        fun getTrips(context: Context, callback: (List<Map<String, String>>) -> Unit) {
+        fun getTrips(network: String, context: Context, callback: (List<Map<String, String>>) -> Unit) {
             CoroutineScope(Dispatchers.IO).launch {
-                val url = SupabaseManager.getGTFSURL("trips", "ametis")
-                val destinationPath = "ametis_gtfs_trips.txt"
+                val storeGTFSURL = StoreGTFSURL(context)
+                var url = storeGTFSURL.gtfsTripsURL.firstOrNull()
+                url = url ?: SupabaseManager.getGTFSURL("trips", network)
+                val destinationPath = "${network}_gtfs_trips.txt"
 
                 if(url.contains("http")) {
                     downloadFile(context, url, destinationPath) { error ->
