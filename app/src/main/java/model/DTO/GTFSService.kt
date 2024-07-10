@@ -4,6 +4,7 @@ import android.content.Context
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import model.SupabaseManager
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.io.File
@@ -12,19 +13,21 @@ import java.io.IOException
 class GTFSService {
     companion object {
         fun getTrips(context: Context, callback: (List<Map<String, String>>) -> Unit) {
-            val url = "https://www.dropbox.com/scl/fi/7bhvzonlfiwa5958xndjh/trips.txt?rlkey=xjbtpkt6dpscaf32dosfxc171&st=1284rzdu&raw=1"
-            val destinationPath = "ametis_gtfs_trips.txt"
-
             CoroutineScope(Dispatchers.IO).launch {
-                downloadFile(context, url, destinationPath) { error ->
-                    if (error != null) {
-                        println("Erreur lors du téléchargement: ${error.message}")
-                        callback(listOf())
-                        return@downloadFile
-                    }
+                val url = SupabaseManager.getGTFSURL("trips", "ametis")
+                val destinationPath = "ametis_gtfs_trips.txt"
 
-                    val content = readFile(context, destinationPath)
-                    callback(transformToDictionaryArray(content ?: ""))
+                if(url.contains("http")) {
+                    downloadFile(context, url, destinationPath) { error ->
+                        if (error != null) {
+                            println("Erreur lors du téléchargement: ${error.message}")
+                            callback(listOf())
+                            return@downloadFile
+                        }
+
+                        val content = readFile(context, destinationPath)
+                        callback(transformToDictionaryArray(content ?: ""))
+                    }
                 }
             }
         }

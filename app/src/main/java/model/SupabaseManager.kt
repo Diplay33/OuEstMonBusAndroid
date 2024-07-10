@@ -3,6 +3,7 @@ package model
 import android.content.Context
 import com.diplay.ouestmonbus.MainApplication
 import io.github.jan.supabase.postgrest.from
+import io.github.jan.supabase.postgrest.query.Columns
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -242,6 +243,21 @@ class SupabaseManager {
             catch(e: Exception) {
                 println(e.localizedMessage)
             }
+        }
+
+        suspend fun getGTFSURL(file: String, network: String): String {
+            val rawUrl = supabase
+                .from("gtfs_link_descriptor")
+                .select(Columns.list("url")) {
+                    filter {
+                        and {
+                            eq("network", network)
+                            eq("file", file)
+                        }
+                    }
+                }
+                .decodeList<Map<String, String>>()
+            return rawUrl.firstOrNull()?.values?.firstOrNull() ?: ""
         }
     }
 }
