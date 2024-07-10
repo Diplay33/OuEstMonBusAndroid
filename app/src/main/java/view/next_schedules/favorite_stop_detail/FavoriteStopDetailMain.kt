@@ -15,6 +15,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.android.gms.maps.model.LatLng
@@ -79,6 +80,7 @@ fun FavoriteStopDetailMain(
     val pathsCoordinates = remember {
         mutableStateListOf<List<LatLng>>()
     }
+    val context = LocalContext.current
 
     LaunchedEffect(stopName, line.value) {
         Lines.getLine((lineId ?: "0").toInt()) { line.value = it }
@@ -122,7 +124,7 @@ fun FavoriteStopDetailMain(
                     }
                     isLoading.value = false
 
-                    NSchedulesMapMarkers.retrieveVehicles(line.id, capFilteredNextSchedules.map { it.vehicleId ?: 0 }) { vehicles ->
+                    NSchedulesMapMarkers.retrieveVehicles(context, line.id, capFilteredNextSchedules.map { it.vehicleId ?: 0 }) { vehicles ->
                         mapMarkers.clear()
                         mapMarkers.addAll(vehicles + listOf(stationMarker.value))
                     }

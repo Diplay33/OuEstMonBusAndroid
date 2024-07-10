@@ -1,5 +1,6 @@
 package model.DTO
 
+import android.content.Context
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import model.DAO.ServiceDAO
 import java.text.Normalizer
@@ -12,14 +13,19 @@ class Services {
             }
         }
 
-        fun getServicesByLine(network: String, lineId: Int, callback: (ArrayList<Service>) -> Unit) {
+        fun getServicesByLine(
+            context: Context,
+            network: String,
+            lineId: Int,
+            callback: (ArrayList<Service>) -> Unit
+        ) {
             when(network) {
                 "tbm" ->
                     ServiceDAO.getServicesByLine(lineId) { services ->
                         callback(services)
                     }
                 "ametis" ->
-                    ServiceDAO.getAmetisRawServices { services ->
+                    ServiceDAO.getAmetisRawServices(context) { services ->
                         callback(ArrayList(services.filter { it.lineId == lineId }))
                     }
                 "" ->

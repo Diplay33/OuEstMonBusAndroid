@@ -57,7 +57,7 @@ class SupabaseManager {
             getVersions(network).forEach { descriptor ->
                 when(descriptor.tableName) {
                     "lines" -> retrieveLines(network, descriptor.version, context) { callback(it) }
-                    "destinations" -> retrieveDestinations(descriptor.version, context)
+                    "destinations" -> retrieveDestinations(network, descriptor.version, context)
                     "aller_destinations" -> retrieveAllerDestinations(descriptor.version, context)
                     "retour_destinations" -> retrieveRetourDestinations(descriptor.version, context)
                     "next_schedules_destinations" ->
@@ -110,7 +110,11 @@ class SupabaseManager {
             }
         }
 
-        private suspend fun retrieveDestinations(onlineVersion: String, context: Context) {
+        private suspend fun retrieveDestinations(
+            network: String,
+            onlineVersion: String,
+            context: Context
+        ) {
             try {
                 val storeDestinationPreferences = StoreDestinationTableVersion(context)
                 storeDestinationPreferences.version.firstOrNull().let {
@@ -118,7 +122,7 @@ class SupabaseManager {
                         Destinations.deleteContent()
                         val destinations = supabase
                             .from("destinations")
-                            .select { filter { eq("network", "tbm") } }
+                            .select { filter { eq("network", network) } }
                             .decodeList<Destination>()
                         Destinations.insertDestinations(destinations)
                         storeDestinationPreferences.setCurrentVersion(onlineVersion)

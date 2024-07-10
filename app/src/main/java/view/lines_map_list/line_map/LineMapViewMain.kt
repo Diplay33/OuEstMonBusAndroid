@@ -139,7 +139,7 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
                     }
                 }
                 else {
-                    Services.getServicesByLine(network.value, line.value?.id ?: 0) { returnedServices ->
+                    Services.getServicesByLine(context, network.value, line.value?.id ?: 0) { returnedServices ->
                         services.clear()
                         services.addAll(returnedServices)
                         isLoading.value = false

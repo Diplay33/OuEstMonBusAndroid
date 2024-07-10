@@ -8,6 +8,7 @@ import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.google.android.gms.maps.model.LatLng
@@ -53,6 +54,7 @@ fun NextLineSchedulesMain(
     val pathsCoordinates = remember {
         mutableStateListOf<List<LatLng>>()
     }
+    val context = LocalContext.current
 
     LaunchedEffect(lineId) {
         Lines.getLine(lineId?.toInt() ?: 0) { returnedLine ->
@@ -105,7 +107,7 @@ fun NextLineSchedulesMain(
                     }
                     isLoading.value = false
 
-                    NSchedulesMapMarkers.retrieveVehicles(line.id, capFilteredNextSchedules.map { it.vehicleId ?: 0 }) { vehicles ->
+                    NSchedulesMapMarkers.retrieveVehicles(context, line.id, capFilteredNextSchedules.map { it.vehicleId ?: 0 }) { vehicles ->
                         mapMarkers.clear()
                         mapMarkers.addAll(vehicles + listOf(stationMarker.value))
                     }

@@ -111,10 +111,6 @@ class MainActivity : ComponentActivity() {
                 }
             }
 
-            ServiceDAO.getAmetisRawServices {
-                print(it)
-            }
-
             val navController = rememberNavController()
             val bottomNavigationItems = listOf(
                 BottomNavigationScreens.Cartes,
