@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -19,6 +20,7 @@ import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import model.DTO.Service
 import model.DTO.Services
+import model.preferences_data_store.StoreChosenNetwork
 import view.lines_map_list.SearchDisplay
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -30,7 +32,7 @@ fun AllServicesListMain(
     navController: NavController
 ) {
     val filteredServices = remember {
-        mutableStateListOf<List<Service>>()
+        mutableStateOf<ArrayList<List<Service>>>(arrayListOf())
     }
     val isLoading = remember {
         mutableStateOf(true)
@@ -43,14 +45,25 @@ fun AllServicesListMain(
     val totalServicesCount = remember {
         mutableIntStateOf(0)
     }
+    val context = LocalContext.current
+    val storeChosenNetwork = StoreChosenNetwork(context)
+    val network = remember {
+        mutableStateOf("")
+    }
 
-    if(filteredServices.isEmpty()) {
-        Services.getAllServices {
-            filteredServices.clear()
-            filteredServices.addAll(Services.filterServicesByVehicle(it))
-            isLoading.value = false
-            refreshDate.value = Calendar.getInstance().time
-            totalServicesCount.intValue = it.count()
+    LaunchedEffect(Unit) {
+        storeChosenNetwork.chosenNetwork.collect { network.value = it ?: "" }
+    }
+
+    LaunchedEffect(network.value) {
+        if(network.value.isNotEmpty()) {
+            Services.getAllServices(context, network.value) {
+                filteredServices.value.clear()
+                filteredServices.value.addAll(Services.filterServicesByVehicle(it))
+                isLoading.value = false
+                refreshDate.value = Calendar.getInstance().time
+                totalServicesCount.intValue = it.count()
+            }
         }
     }
 
@@ -70,13 +83,13 @@ fun AllServicesListMain(
                 focused = state.focused
             )
 
-            LaunchedEffect(state.query.text) {
+            LaunchedEffect(state.query.text, isLoading.value) {
                 state.searching = true
                 delay(100)
                 state.searching = false
-            }
-            Services.filterServicesBySearchText(filteredServices, state.query.text) { results ->
-                state.searchResults = results
+                Services.filterServicesBySearchText(filteredServices.value, state.query.text) { results ->
+                    state.searchResults = results
+                }
             }
 
             when(state.searchDisplay) {

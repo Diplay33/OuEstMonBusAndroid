@@ -7,9 +7,18 @@ import java.text.Normalizer
 
 class Services {
     companion object {
-        fun getAllServices(callback: (ArrayList<Service>) -> Unit) {
-            ServiceDAO.getAllTBMServices { services ->
-                callback(services)
+        fun getAllServices(
+            context: Context,
+            network: String,
+            withoutDestination: Boolean = false,
+            callback: (ArrayList<Service>) -> Unit
+        ) {
+            when(network) {
+                "tbm" -> ServiceDAO.getAllTBMServices { callback(it) }
+                "ametis" -> ServiceDAO.getAllAmetisServices(network, context, withoutDestination) {
+                    callback(it)
+                }
+                "" -> callback(arrayListOf())
             }
         }
 
@@ -25,11 +34,10 @@ class Services {
                         callback(services)
                     }
                 "ametis" ->
-                    ServiceDAO.getAllAmetisRawServices(network, context) { services ->
+                    ServiceDAO.getAllAmetisServices(network, context, false) { services ->
                         callback(ArrayList(services.filter { it.lineId == lineId }))
                     }
-                "" ->
-                    callback(arrayListOf())
+                "" -> callback(arrayListOf())
             }
         }
 
@@ -75,7 +83,7 @@ class Services {
             return servicesToReturn
         }
 
-        fun filterServicesBySearchText(services: SnapshotStateList<List<Service>>, text: String, callback: (List<List<Service>>) -> Unit) {
+        fun filterServicesBySearchText(services: ArrayList<List<Service>>, text: String, callback: (List<List<Service>>) -> Unit) {
             val REGEX_UNACCENT = "\\p{InCombiningDiacriticalMarks}+".toRegex()
             fun CharSequence.unaccent(): String {
                 val temp = Normalizer.normalize(this, Normalizer.Form.NFD)

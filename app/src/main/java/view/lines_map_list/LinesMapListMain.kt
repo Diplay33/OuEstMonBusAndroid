@@ -17,8 +17,11 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.delay
 import model.DTO.*
+import model.preferences_data_store.StoreChosenNetwork
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -47,6 +50,14 @@ fun LinesMapListMain(
     val index = remember {
         mutableStateOf(0)
     }
+    val storeChosenNetwork = StoreChosenNetwork(context)
+    val network = remember {
+        mutableStateOf("")
+    }
+
+    LaunchedEffect(Unit) {
+        storeChosenNetwork.chosenNetwork.collect { network.value = it ?: "" }
+    }
 
     Scaffold(topBar = { LinesMapListTopBar() }) { padding ->
         Column(
@@ -65,9 +76,9 @@ fun LinesMapListMain(
                 focused = state.focused
             )
 
-            LaunchedEffect("") {
+            LaunchedEffect(network.value) {
                 while(true) {
-                    Services.getAllServices {
+                    Services.getAllServices(context, network.value, true) {
                         allServices.clear()
                         allServices.addAll(it)
                         isLoading.value = false

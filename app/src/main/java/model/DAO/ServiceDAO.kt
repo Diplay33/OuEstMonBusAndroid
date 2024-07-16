@@ -61,7 +61,12 @@ class ServiceDAO {
             }
         }
 
-        fun getAllAmetisRawServices(network: String, context: Context, callback: (ArrayList<Service>) -> Unit) {
+        fun getAllAmetisServices(
+            network: String,
+            context: Context,
+            withoutDestination: Boolean,
+            callback: (ArrayList<Service>) -> Unit
+        ) {
             CallAPI.runGTFSRT("https://proxy.transport.data.gouv.fr/resource/ametis-amiens-gtfs-rt-vehicle-position") { response ->
                 response.body?.byteStream().use { inputStream ->
                     inputStream?.let {
@@ -69,15 +74,11 @@ class ServiceDAO {
                         feedMessage?.let { fm ->
                             val services: ArrayList<Service> = arrayListOf()
 
-                            GTFSService.getTrips(network, context) { trips ->
+                            if(withoutDestination) {
                                 fm.entityList.forEach { feedEntity ->
                                     val vehicle = feedEntity.vehicle
                                     val trip = vehicle.trip
                                     val position = vehicle.position
-                                    val tripHeadsign = GTFSService.findTripHeadsign(
-                                        tripId = vehicle.trip.tripId,
-                                        trips = trips
-                                    ) ?: "Destination inconnue"
 
                                     services.add(
                                         Service(
@@ -87,7 +88,7 @@ class ServiceDAO {
                                             currentSpeed = position.speed.toInt(),
                                             state = "",
                                             stateTime = 0,
-                                            destination = tripHeadsign,
+                                            destination = vehicle.trip.directionId.toString(),
                                             latitude = position.latitude.toDouble(),
                                             longitude = position.longitude.toDouble(),
                                             currentStop = 0,
@@ -98,6 +99,38 @@ class ServiceDAO {
                                 }
 
                                 callback(services)
+                            }
+                            else {
+                                GTFSService.getTrips(network, context) { trips ->
+                                    fm.entityList.forEach { feedEntity ->
+                                        val vehicle = feedEntity.vehicle
+                                        val trip = vehicle.trip
+                                        val position = vehicle.position
+                                        val tripHeadsign = GTFSService.findTripHeadsign(
+                                            tripId = vehicle.trip.tripId,
+                                            trips = trips
+                                        ) ?: "Destination inconnue"
+
+                                        services.add(
+                                            Service(
+                                                id = feedEntity.id.toIntOrNull() ?: 0,
+                                                vehicleId = feedEntity.id.toIntOrNull() ?: 0,
+                                                lineId = trip.routeId.toASCIIDecimal(),
+                                                currentSpeed = position.speed.toInt(),
+                                                state = "",
+                                                stateTime = 0,
+                                                destination = tripHeadsign,
+                                                latitude = position.latitude.toDouble(),
+                                                longitude = position.longitude.toDouble(),
+                                                currentStop = 0,
+                                                path = 0,
+                                                timestamp = Date()
+                                            )
+                                        )
+                                    }
+
+                                    callback(services)
+                                }
                             }
                         } ?: run {
                             callback(arrayListOf())

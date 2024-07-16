@@ -8,27 +8,41 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.ArrowBack
 import androidx.compose.material.icons.rounded.Refresh
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import model.DTO.Service
 import model.DTO.Services
+import model.preferences_data_store.StoreChosenNetwork
 import java.util.*
 
 @Composable
 fun AllServicesListTopBar(
     navController: NavController,
-    services: SnapshotStateList<List<Service>>,
+    services: MutableState<ArrayList<List<Service>>>,
     isLoading: MutableState<Boolean>,
     refreshDate: MutableState<Date>
 ) {
     val colorScheme = !isSystemInDarkTheme()
+    val context = LocalContext.current
+    val storeChosenNetwork = StoreChosenNetwork(context)
+    val network = remember {
+        mutableStateOf("")
+    }
+
+    LaunchedEffect(Unit) {
+        storeChosenNetwork.chosenNetwork.collect { network.value = it ?: "" }
+    }
 
     TopAppBar(
         backgroundColor = if (colorScheme) Color.White else Color.Black,
@@ -75,9 +89,9 @@ fun AllServicesListTopBar(
                         modifier = Modifier
                             .clickable {
                                 isLoading.value = true
-                                Services.getAllServices {
-                                    services.clear()
-                                    services.addAll(Services.filterServicesByVehicle(it))
+                                Services.getAllServices(context, network.value) {
+                                    services.value.clear()
+                                    services.value.addAll(Services.filterServicesByVehicle(it))
                                     isLoading.value = false
                                     refreshDate.value = Calendar.getInstance().time
                                 }

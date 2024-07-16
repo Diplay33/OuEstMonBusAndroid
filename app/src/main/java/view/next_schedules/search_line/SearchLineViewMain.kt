@@ -24,6 +24,7 @@ import model.DTO.Line
 import model.DTO.Lines
 import model.DTO.Service
 import model.DTO.Services
+import model.preferences_data_store.StoreChosenNetwork
 import view.lines_map_list.LinesMapListSearchBar
 import view.lines_map_list.LinesMapListSearchState
 import view.lines_map_list.SearchDisplay
@@ -46,6 +47,14 @@ fun SearchLineViewMain(
     val areServicesLoading = remember {
         mutableStateOf(true)
     }
+    val storeChosenNetwork = StoreChosenNetwork(context)
+    val network = remember {
+        mutableStateOf("")
+    }
+
+    LaunchedEffect(Unit) {
+        storeChosenNetwork.chosenNetwork.collect { network.value = it ?: "" }
+    }
 
     Scaffold(topBar = { SearchLineViewTopBar(navController) }) { padding ->
         Column(modifier = Modifier
@@ -63,21 +72,23 @@ fun SearchLineViewMain(
                 focused = state.focused
             )
 
-            LaunchedEffect(state.query.text) {
-                linesBySection.clear()
-                Lines.getAllLinesBySection(context, true) { linesBySection.addAll(it) }
-                Services.getAllServices { values ->
-                    allServices.clear()
-                    allServices.addAll(values)
-                    areServicesLoading.value = false
-                }
+            LaunchedEffect(state.query.text, network.value) {
+                if(network.value.isNotEmpty()) {
+                    linesBySection.clear()
+                    Lines.getAllLinesBySection(context, true) { linesBySection.addAll(it) }
+                    Services.getAllServices(context, network.value, true) { values ->
+                        allServices.clear()
+                        allServices.addAll(values)
+                        areServicesLoading.value = false
+                    }
 
-                state.searching = true
-                delay(100)
-                Lines.getLinesBySearchText(state.query.text, true) {
-                    state.searchResults = it
+                    state.searching = true
+                    delay(100)
+                    Lines.getLinesBySearchText(state.query.text, true) {
+                        state.searchResults = it
+                    }
+                    state.searching = false
                 }
-                state.searching = false
             }
 
             when(state.searchDisplay) {
