@@ -26,7 +26,8 @@ class Lines {
 
         fun getAllLinesBySection(context: Context, forSchedules: Boolean = false, callback: (List<List<Line>>) -> Unit) {
             CoroutineScope(Dispatchers.IO).launch {
-                val lines = if (forSchedules) lineDAO.getAllLinesForSchedules()
+                val lines = if (forSchedules)
+                    lineDAO.getAllLinesForSchedules().sortedBy { it.index }
                 else
                     lineDAO.getAllLines().sortedBy { it.index }
                 val listSectionSet = lines.map { it.section }.toSet().toList()
