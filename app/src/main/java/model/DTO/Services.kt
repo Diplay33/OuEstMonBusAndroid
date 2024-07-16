@@ -8,7 +8,7 @@ import java.text.Normalizer
 class Services {
     companion object {
         fun getAllServices(callback: (ArrayList<Service>) -> Unit) {
-            ServiceDAO.getAllServices { services ->
+            ServiceDAO.getAllTBMServices { services ->
                 callback(services)
             }
         }
@@ -21,11 +21,11 @@ class Services {
         ) {
             when(network) {
                 "tbm" ->
-                    ServiceDAO.getServicesByLine(lineId) { services ->
+                    ServiceDAO.getTBMServicesByLine(lineId) { services ->
                         callback(services)
                     }
                 "ametis" ->
-                    ServiceDAO.getAmetisRawServices(network, context) { services ->
+                    ServiceDAO.getAllAmetisRawServices(network, context) { services ->
                         callback(ArrayList(services.filter { it.lineId == lineId }))
                     }
                 "" ->
@@ -34,13 +34,13 @@ class Services {
         }
 
         fun getServicesFilteredBy(ids: List<Int>, callback: (List<Service>) -> Unit) {
-            ServiceDAO.getAllServices { returnedServices ->
+            ServiceDAO.getAllTBMServices { returnedServices ->
                 callback(returnedServices.filter { ids.contains(it.lineId) })
             }
         }
 
         fun getServiceByVehicleId(vehicleId: Int, callback: (Service?) -> Unit) {
-            ServiceDAO.getServiceByVehicleId(vehicleId) { callback(it) }
+            ServiceDAO.getTBMServiceByVehicleId(vehicleId) { callback(it) }
         }
 
         private fun filterServicesSortedByVehicle(services: List<Service>): List<Service> {

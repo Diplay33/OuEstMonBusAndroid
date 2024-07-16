@@ -2,7 +2,6 @@ package model.DAO
 
 import android.content.Context
 import com.google.transit.realtime.GtfsRealtime
-import kotlinx.serialization.json.Json
 import model.CallAPI
 import model.DTO.GTFSService
 import model.DTO.Service
@@ -16,7 +15,7 @@ class ServiceDAO {
     companion object {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX")
 
-        fun getAllServices(callback: (ArrayList<Service>) -> Unit) {
+        fun getAllTBMServices(callback: (ArrayList<Service>) -> Unit) {
             CallAPI.run("https://data.bordeaux-metropole.fr/geojson?key=0234ABEFGH&typename=sv_vehic_p") { responseBody ->
                 val services: ArrayList<Service> = arrayListOf()
                 val welcomeJSONObject = JSONObject(responseBody)
@@ -62,7 +61,7 @@ class ServiceDAO {
             }
         }
 
-        fun getAmetisRawServices(network: String, context: Context, callback: (ArrayList<Service>) -> Unit) {
+        fun getAllAmetisRawServices(network: String, context: Context, callback: (ArrayList<Service>) -> Unit) {
             CallAPI.runGTFSRT("https://proxy.transport.data.gouv.fr/resource/ametis-amiens-gtfs-rt-vehicle-position") { response ->
                 response.body?.byteStream().use { inputStream ->
                     inputStream?.let {
@@ -110,7 +109,7 @@ class ServiceDAO {
             }
         }
 
-        fun getServicesByLine(lineId: Int, callback: (ArrayList<Service>) -> Unit) {
+        fun getTBMServicesByLine(lineId: Int, callback: (ArrayList<Service>) -> Unit) {
             CallAPI.run("https://data.bordeaux-metropole.fr/geojson/features/sv_vehic_p?key=0234ABEFGH&filter={\"rs_sv_ligne_a\":$lineId}") { responseBody ->
                 val services: ArrayList<Service> = arrayListOf()
                 val welcomeJSONObject = JSONObject(responseBody)
@@ -156,7 +155,7 @@ class ServiceDAO {
             }
         }
 
-        fun getServiceByVehicleId(vehicleId: Int, callback: (Service?) -> Unit) {
+        fun getTBMServiceByVehicleId(vehicleId: Int, callback: (Service?) -> Unit) {
             CallAPI.run("https://data.bordeaux-metropole.fr/geojson?key=0234ABEFGH&typename=sv_vehic_p&filter={\"gid\":$vehicleId}") { responseBody ->
                 val welcomeJSONObject = JSONObject(responseBody)
                 val featuresJSONArray = welcomeJSONObject.getJSONArray("features")
