@@ -41,9 +41,26 @@ class Services {
             }
         }
 
-        fun getServicesFilteredBy(ids: List<Int>, callback: (List<Service>) -> Unit) {
-            ServiceDAO.getAllTBMServices { returnedServices ->
-                callback(returnedServices.filter { ids.contains(it.lineId) })
+        fun getServicesFilteredBy(
+            context: Context,
+            network: String,
+            ids: List<Int>,
+            callback: (List<Service>) -> Unit
+        ) {
+            when(network) {
+                "tbm" ->
+                    ServiceDAO.getAllTBMServices { returnedServices ->
+                        callback(returnedServices.filter { ids.contains(it.lineId) })
+                    }
+                "ametis" ->
+                    ServiceDAO.getAllAmetisServices(
+                        network = network,
+                        context = context,
+                        withoutDestination = false
+                    ) { returnedServices ->
+                        callback(returnedServices.filter { ids.contains(it.lineId) })
+                    }
+                "" -> callback(listOf())
             }
         }
 
