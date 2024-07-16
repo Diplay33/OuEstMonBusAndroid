@@ -7,17 +7,31 @@ import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.diplay.ouestmonbus.BuildConfig
+import model.preferences_data_store.StoreChosenNetwork
 import view.Screens.BottomNavigationScreens
 import view.advert_view.AdvertView
 
 @Composable
 fun BottomNavigationBar(navController: NavController, items: List<BottomNavigationScreens>) {
     val colorScheme = !isSystemInDarkTheme()
+    val context = LocalContext.current
+    val storeChosenNetwork = StoreChosenNetwork(context)
+    val network = remember {
+        mutableStateOf("")
+    }
+
+    LaunchedEffect(Unit) {
+        storeChosenNetwork.chosenNetwork.collect { network.value = it ?: "" }
+    }
 
     Column {
         if(!BuildConfig.DEBUG) {
@@ -27,7 +41,7 @@ fun BottomNavigationBar(navController: NavController, items: List<BottomNavigati
         BottomNavigation(backgroundColor = if (colorScheme) Color.White else Color(0xff18191A)) {
             val currentRoute = currentRoute(navController)
 
-            items.forEach { screen ->
+            items.filter { if (it == BottomNavigationScreens.Prochains) (network.value == "tbm") else true }.forEach { screen ->
                 BottomNavigationItem(
                     icon = {
                         Icon(
