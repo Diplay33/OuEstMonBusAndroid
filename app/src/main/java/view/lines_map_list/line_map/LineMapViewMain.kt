@@ -125,28 +125,30 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
         }
 
         LaunchedEffect(line.value, network.value) {
-            while(true) {
-                if(line.value?.isNest == true) {
-                    line.value?.id?.let { lineId ->
-                        Lines.getChildLineIds(lineId) { childLineIds ->
-                            Services.getServicesFilteredBy(context, network.value, childLineIds) { returnedServices ->
-                                services.clear()
-                                services.addAll(returnedServices)
-                                isLoading.value = false
-                                refreshDate.value = Calendar.getInstance().time
+            if(network.value.isNotEmpty()) {
+                while(true) {
+                    if(line.value?.isNest == true) {
+                        line.value?.id?.let { lineId ->
+                            Lines.getChildLineIds(lineId) { childLineIds ->
+                                Services.getServicesFilteredBy(context, network.value, childLineIds) { returnedServices ->
+                                    services.clear()
+                                    services.addAll(returnedServices)
+                                    isLoading.value = false
+                                    refreshDate.value = Calendar.getInstance().time
+                                }
                             }
                         }
                     }
-                }
-                else {
-                    Services.getServicesByLine(context, network.value, line.value?.id ?: 0) { returnedServices ->
-                        services.clear()
-                        services.addAll(returnedServices)
-                        isLoading.value = false
-                        refreshDate.value = Calendar.getInstance().time
+                    else {
+                        Services.getServicesByLine(context, network.value, line.value?.id ?: 0) { returnedServices ->
+                            services.clear()
+                            services.addAll(returnedServices)
+                            isLoading.value = false
+                            refreshDate.value = Calendar.getInstance().time
+                        }
                     }
+                    delay(5000)
                 }
-                delay(5000)
             }
         }
 

@@ -77,13 +77,15 @@ fun LinesMapListMain(
             )
 
             LaunchedEffect(network.value) {
-                while(true) {
-                    Services.getAllServices(context, network.value, true) {
-                        allServices.clear()
-                        allServices.addAll(it)
-                        isLoading.value = false
+                if(network.value.isNotEmpty()) {
+                    while(true) {
+                        Services.getAllServices(context, network.value, true) {
+                            allServices.clear()
+                            allServices.addAll(it)
+                            isLoading.value = false
+                        }
+                        delay(30000)
                     }
-                    delay(30000)
                 }
             }
 
