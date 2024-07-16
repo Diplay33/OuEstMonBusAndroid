@@ -6,16 +6,30 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import model.preferences_data_store.StoreChosenNetwork
 
 @Composable
 fun MoreViewSettingsGroup(navController: NavController) {
     val colorScheme = !isSystemInDarkTheme()
+    val context = LocalContext.current
+    val storeChosenNetwork = StoreChosenNetwork(context)
+    val network = remember {
+        mutableStateOf("")
+    }
+
+    LaunchedEffect(Unit) {
+        storeChosenNetwork.chosenNetwork.collect { network.value = it ?: "" }
+    }
 
     Text(
         text = "Réglages",
@@ -29,9 +43,11 @@ fun MoreViewSettingsGroup(navController: NavController) {
 
     MoreViewSettingsChosenNetworkRow(navController)
 
-    Spacer(modifier = Modifier
-        .height(30.dp)
-    )
+    if(network.value == "tbm") {
+        Spacer(modifier = Modifier
+            .height(30.dp)
+        )
 
-    MoreViewSettingsDisplayNotifCountRow()
+        MoreViewSettingsDisplayNotifCountRow()
+    }
 }

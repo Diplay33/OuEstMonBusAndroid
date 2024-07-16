@@ -100,13 +100,15 @@ fun LinesMapListMain(
                 }
             }
 
-            LaunchedEffect(state.query.text) {
+            LaunchedEffect(state.query.text, network.value) {
                 searchText.value = state.query.text
                 index.value = 0
                 Lines.getAllLinesBySection(context) { linesBySection.addAll(it) }
-                ProgrammedMessages.getAllProgrammedMessages { values ->
-                    programmedMessages.clear()
-                    programmedMessages.addAll(values)
+                if(network.value == "tbm") {
+                    ProgrammedMessages.getAllProgrammedMessages { values ->
+                        programmedMessages.clear()
+                        programmedMessages.addAll(values)
+                    }
                 }
                 state.searching = true
                 delay(100)

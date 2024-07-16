@@ -102,11 +102,13 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
         ),
         backgroundColor = if (colorScheme) Color.White else Color.Black
     ) { padding ->
-        LaunchedEffect(lineId) {
+        LaunchedEffect(lineId, network.value) {
             Lines.getLine((lineId ?: "0").toInt()) { returnedLine ->
                 line.value = returnedLine
-                ProgrammedMessages.getNumberOfMessagesByLine(returnedLine.id.toString()) { count ->
-                    programmedMessagesCount.value = count
+                if(network.value == "tbm") {
+                    ProgrammedMessages.getNumberOfMessagesByLine(returnedLine.id.toString()) { count ->
+                        programmedMessagesCount.value = count
+                    }
                 }
                 if(!returnedLine.isNest) {
                     Paths.getOrderedPathsByLine(returnedLine.id, true) { paths ->
