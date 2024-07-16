@@ -141,6 +141,7 @@ fun computeNetworkDescription(network: Network): String {
     when(network.shortName) {
         "tbm" -> return "MÉTROPOLE BORDELAISE"
         "ametis" -> return "COMMUNAUTÉ D'AGGLO. AMIÉNOISE"
+        "star" -> return "MÉTROPOLE RENNAISE"
     }
     return ""
 }
@@ -149,6 +150,7 @@ fun computeNetworkImage(network: Network): Int {
     when(network.shortName) {
         "tbm" -> return R.drawable.tbm
         "ametis" -> return R.drawable.ametis
+        "star" -> return R.drawable.star
     }
     return R.drawable.question_mark_box
 }
