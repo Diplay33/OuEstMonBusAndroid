@@ -6,5 +6,6 @@ class Network(
     var fullName: String,
     var latitude: Double,
     var longitude: Double,
-    var tintColorHex: String
+    var tintColorHex: String,
+    var darkTintColorHex: String
 )

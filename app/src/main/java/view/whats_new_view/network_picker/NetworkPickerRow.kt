@@ -56,7 +56,7 @@ fun NetworkPickerRow(selection: MutableState<String>, network: Network) {
             )
             .border(
                 width = (if (isSelected) 5 else -1).dp,
-                color = Color(android.graphics.Color.parseColor(network.tintColorHex)),
+                color = Color(android.graphics.Color.parseColor(if (colorScheme) network.tintColorHex else network.darkTintColorHex)),
                 shape = RoundedCornerShape(15.dp)
             )
             .clip(RoundedCornerShape(15.dp))
@@ -111,7 +111,7 @@ fun NetworkPickerRow(selection: MutableState<String>, network: Network) {
                 Box(modifier = Modifier
                     .clip(CircleShape)
                     .size(20.dp)
-                    .background(Color(android.graphics.Color.parseColor(network.tintColorHex)))
+                    .background(Color(android.graphics.Color.parseColor(if (colorScheme) network.tintColorHex else network.darkTintColorHex)))
                 )
                 
                 Box(modifier = Modifier
@@ -129,7 +129,7 @@ fun NetworkPickerRow(selection: MutableState<String>, network: Network) {
                     Box(modifier = Modifier
                         .clip(CircleShape)
                         .size(10.dp)
-                        .background(Color(android.graphics.Color.parseColor(network.tintColorHex)))
+                        .background(Color(android.graphics.Color.parseColor(if (colorScheme) network.tintColorHex else network.darkTintColorHex)))
                     )
                 }
             }
