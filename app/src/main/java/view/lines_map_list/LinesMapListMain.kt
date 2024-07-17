@@ -103,7 +103,10 @@ fun LinesMapListMain(
             LaunchedEffect(state.query.text, network.value) {
                 searchText.value = state.query.text
                 index.value = 0
-                Lines.getAllLinesBySection(context) { linesBySection.addAll(it) }
+                Lines.getAllLinesBySection(context) {
+                    linesBySection.clear()
+                    linesBySection.addAll(it)
+                }
                 if(network.value == "tbm") {
                     ProgrammedMessages.getAllProgrammedMessages { values ->
                         programmedMessages.clear()
