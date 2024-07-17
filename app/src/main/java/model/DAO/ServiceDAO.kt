@@ -61,13 +61,18 @@ class ServiceDAO {
             }
         }
 
-        fun getAllAmetisServices(
+        fun getAllServicesFromGTFSRT(
             network: String,
             context: Context,
             withoutDestination: Boolean,
             callback: (ArrayList<Service>) -> Unit
         ) {
-            CallAPI.runGTFSRT("https://proxy.transport.data.gouv.fr/resource/ametis-amiens-gtfs-rt-vehicle-position") { response ->
+            var urlToCall = ""
+            when(network) {
+                "ametis" -> urlToCall = "https://proxy.transport.data.gouv.fr/resource/ametis-amiens-gtfs-rt-vehicle-position"
+                "star" -> urlToCall = "https://proxy.transport.data.gouv.fr/resource/star-rennes-integration-gtfs-rt-vehicle-position"
+            }
+            CallAPI.runGTFSRT(urlToCall) { response ->
                 response.body?.byteStream().use { inputStream ->
                     inputStream?.let {
                         val feedMessage = GtfsRealtime.FeedMessage.parseFrom(inputStream)
@@ -79,12 +84,16 @@ class ServiceDAO {
                                     val vehicle = feedEntity.vehicle
                                     val trip = vehicle.trip
                                     val position = vehicle.position
+                                    val rawRouteId = (trip.routeId ?: "").drop(2)
 
                                     services.add(
                                         Service(
                                             id = feedEntity.id.toIntOrNull() ?: 0,
                                             vehicleId = feedEntity.id.toIntOrNull() ?: 0,
-                                            lineId = trip.routeId.toASCIIDecimal(),
+                                            lineId = if (network == "ametis")
+                                                trip.routeId.toASCIIDecimal()
+                                            else
+                                                rawRouteId.toInt(),
                                             currentSpeed = position.speed.toInt(),
                                             state = "",
                                             stateTime = 0,
@@ -110,12 +119,16 @@ class ServiceDAO {
                                             tripId = vehicle.trip.tripId,
                                             trips = trips
                                         ) ?: "Destination inconnue"
+                                        val rawRouteId = (trip.routeId ?: "").drop(2)
 
                                         services.add(
                                             Service(
                                                 id = feedEntity.id.toIntOrNull() ?: 0,
                                                 vehicleId = feedEntity.id.toIntOrNull() ?: 0,
-                                                lineId = trip.routeId.toASCIIDecimal(),
+                                                lineId = if (network == "ametis")
+                                                    trip.routeId.toASCIIDecimal()
+                                                else
+                                                    rawRouteId.toInt(),
                                                 currentSpeed = position.speed.toInt(),
                                                 state = "",
                                                 stateTime = 0,

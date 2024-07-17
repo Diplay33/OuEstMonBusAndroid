@@ -1,7 +1,6 @@
 package model.DTO
 
 import android.content.Context
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import model.DAO.ServiceDAO
 import java.text.Normalizer
 
@@ -15,7 +14,7 @@ class Services {
         ) {
             when(network) {
                 "tbm" -> ServiceDAO.getAllTBMServices { callback(it) }
-                "ametis" -> ServiceDAO.getAllAmetisServices(network, context, withoutDestination) {
+                "ametis" -> ServiceDAO.getAllServicesFromGTFSRT(network, context, withoutDestination) {
                     callback(it)
                 }
                 "" -> callback(arrayListOf())
@@ -34,8 +33,14 @@ class Services {
                         callback(services)
                     }
                 "ametis" ->
-                    ServiceDAO.getAllAmetisServices(network, context, false) { services ->
+                    ServiceDAO.getAllServicesFromGTFSRT(network, context, false) { services ->
                         callback(ArrayList(services.filter { it.lineId == lineId }))
+                    }
+                "star" ->
+                    ServiceDAO.getAllServicesFromGTFSRT(network, context, false) { services ->
+                        callback(ArrayList(services.filter {
+                            it.lineId == lineId
+                        }))
                     }
                 "" -> callback(arrayListOf())
             }
@@ -53,7 +58,7 @@ class Services {
                         callback(returnedServices.filter { ids.contains(it.lineId) })
                     }
                 "ametis" ->
-                    ServiceDAO.getAllAmetisServices(
+                    ServiceDAO.getAllServicesFromGTFSRT(
                         network = network,
                         context = context,
                         withoutDestination = false
