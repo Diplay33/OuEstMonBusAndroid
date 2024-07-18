@@ -95,7 +95,7 @@ class ServiceDAO {
                                             else
                                                 rawRouteId.toInt(),
                                             currentSpeed = position.speed.toInt(),
-                                            state = "",
+                                            state = "UNKNOWN",
                                             stateTime = 0,
                                             destination = vehicle.trip.directionId.toString(),
                                             latitude = position.latitude.toDouble(),
@@ -130,7 +130,7 @@ class ServiceDAO {
                                                 else
                                                     rawRouteId.toIntOrNull() ?: 0,
                                                 currentSpeed = position.speed.toInt(),
-                                                state = "",
+                                                state = "UNKNOWN",
                                                 stateTime = 0,
                                                 destination = tripHeadsign,
                                                 latitude = position.latitude.toDouble(),
