@@ -87,7 +87,7 @@ class GTFSService {
         }
 
         fun findTripHeadsign(tripId: String, trips: List<Map<String, String>>): String? {
-            return trips.first { it["trip_id"] == tripId}["trip_headsign\r"]?.dropLast(1)
+            return trips.firstOrNull { it["trip_id"] == tripId }?.get("trip_headsign\r")?.dropLast(1)
         }
     }
 }
