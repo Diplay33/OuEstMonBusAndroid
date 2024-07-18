@@ -93,7 +93,7 @@ class ServiceDAO {
                                             lineId = if (network == "ametis")
                                                 trip.routeId.toASCIIDecimal()
                                             else
-                                                rawRouteId.toInt(),
+                                                rawRouteId.toIntOrNull() ?: 0,
                                             currentSpeed = position.speed.toInt(),
                                             state = "UNKNOWN",
                                             stateTime = 0,
