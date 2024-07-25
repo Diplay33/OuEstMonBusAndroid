@@ -2,6 +2,7 @@ package model.DAO
 
 import android.content.Context
 import com.google.transit.realtime.GtfsRealtime
+import com.google.transit.realtime.GtfsRealtime.FeedMessage
 import model.CallAPI
 import model.DTO.GTFSService
 import model.DTO.Service
@@ -10,6 +11,9 @@ import org.json.JSONObject
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.TimeZone
+
+const val AMETIS_GTFS_RT_VEHICLE_POSITIONS_URL = "https://proxy.transport.data.gouv.fr/resource/ametis-amiens-gtfs-rt-vehicle-position"
+const val STAR_GTFS_RT_VEHICLE_POSITIONS_URL = "https://proxy.transport.data.gouv.fr/resource/star-rennes-integration-gtfs-rt-vehicle-position"
 
 class ServiceDAO {
     companion object {
@@ -67,82 +71,30 @@ class ServiceDAO {
             withoutDestination: Boolean,
             callback: (ArrayList<Service>) -> Unit
         ) {
-            var urlToCall = ""
-            when(network) {
-                "ametis" -> urlToCall = "https://proxy.transport.data.gouv.fr/resource/ametis-amiens-gtfs-rt-vehicle-position"
-                "star" -> urlToCall = "https://proxy.transport.data.gouv.fr/resource/star-rennes-integration-gtfs-rt-vehicle-position"
+            val urlToCall = when(network) {
+                "ametis" -> AMETIS_GTFS_RT_VEHICLE_POSITIONS_URL
+                "star" -> STAR_GTFS_RT_VEHICLE_POSITIONS_URL
+                else -> ""
             }
             CallAPI.runGTFSRT(urlToCall) { response ->
                 response.body?.byteStream().use { inputStream ->
                     inputStream?.let {
-                        val feedMessage = GtfsRealtime.FeedMessage.parseFrom(inputStream)
+                        val feedMessage = FeedMessage.parseFrom(inputStream)
                         feedMessage?.let { fm ->
-                            val services: ArrayList<Service> = arrayListOf()
-
                             if(withoutDestination) {
-                                fm.entityList.forEach { feedEntity ->
-                                    val vehicle = feedEntity.vehicle
-                                    val trip = vehicle.trip
-                                    val position = vehicle.position
-                                    val rawRouteId = (trip.routeId ?: "").drop(2)
-
-                                    services.add(
-                                        Service(
-                                            id = feedEntity.id.toIntOrNull() ?: 0,
-                                            vehicleId = feedEntity.id.toIntOrNull() ?: 0,
-                                            lineId = if (network == "ametis")
-                                                trip.routeId.toASCIIDecimal()
-                                            else
-                                                rawRouteId.toIntOrNull() ?: 0,
-                                            currentSpeed = position.speed.toInt(),
-                                            state = "UNKNOWN",
-                                            stateTime = 0,
-                                            destination = vehicle.trip.directionId.toString(),
-                                            latitude = position.latitude.toDouble(),
-                                            longitude = position.longitude.toDouble(),
-                                            currentStop = 0,
-                                            path = 0,
-                                            timestamp = Date()
-                                        )
-                                    )
-                                }
-
-                                callback(services)
-                            }
-                            else {
+                                rawGTFSToServices(
+                                    feedMessage = fm,
+                                    network = network,
+                                    callback = callback
+                                )
+                            } else {
                                 GTFSService.getTrips(network, context) { trips ->
-                                    fm.entityList.forEach { feedEntity ->
-                                        val vehicle = feedEntity.vehicle
-                                        val trip = vehicle.trip
-                                        val position = vehicle.position
-                                        val tripHeadsign = GTFSService.findTripHeadsign(
-                                            tripId = vehicle.trip.tripId,
-                                            trips = trips
-                                        ) ?: "Destination inconnue"
-                                        val rawRouteId = (trip.routeId ?: "").drop(2)
-
-                                        services.add(
-                                            Service(
-                                                id = feedEntity.id.toIntOrNull() ?: 0,
-                                                vehicleId = feedEntity.id.toIntOrNull() ?: 0,
-                                                lineId = if (network == "ametis")
-                                                    trip.routeId.toASCIIDecimal()
-                                                else
-                                                    rawRouteId.toIntOrNull() ?: 0,
-                                                currentSpeed = position.speed.toInt(),
-                                                state = "UNKNOWN",
-                                                stateTime = 0,
-                                                destination = tripHeadsign,
-                                                latitude = position.latitude.toDouble(),
-                                                longitude = position.longitude.toDouble(),
-                                                currentStop = 0,
-                                                path = 0,
-                                                timestamp = Date()
-                                            )
-                                        )
-                                    }
-
-                                    callback(services)
+                                    rawGTFSToServices(
+                                        feedMessage = fm,
+                                        network = network,
+                                        trips = trips,
+                                        callback = callback
+                                    )
                                 }
                             }
                         } ?: run {
@@ -153,6 +105,52 @@ class ServiceDAO {
                     }
                 }
             }
+        }
+
+        private fun rawGTFSToServices(
+            feedMessage: FeedMessage,
+            network: String,
+            trips: List<Map<String, String>>? = null,
+            callback: (ArrayList<Service>) -> Unit
+        ) {
+            val services: ArrayList<Service> = arrayListOf()
+
+            feedMessage.entityList.forEach { feedEntity ->
+                val vehicle = feedEntity.vehicle
+                val position = vehicle.position
+                val trip = vehicle.trip
+                val tripHeadsign = GTFSService.findTripHeadsign(
+                    tripId = trip.tripId,
+                    trips = trips ?: listOf()
+                ) ?: "Destination inconnue"
+                val lineId = when(network) {
+                    "ametis" -> trip.routeId.toASCIIDecimal()
+                    "star" -> (trip.routeId ?: "").drop(2).toIntOrNull() ?: 0
+                    else -> 0
+                }
+
+                services.add(
+                    Service(
+                        id = feedEntity.id.toIntOrNull() ?: 0,
+                        vehicleId = feedEntity.id.toIntOrNull() ?: 0,
+                        lineId = lineId,
+                        currentSpeed = position.speed.toInt(),
+                        state = "UNKNOWN",
+                        stateTime = 0,
+                        destination = if (trips == null)
+                            vehicle.trip.directionId.toString()
+                        else
+                            tripHeadsign,
+                        latitude = position.latitude.toDouble(),
+                        longitude = position.longitude.toDouble(),
+                        currentStop = 0,
+                        path = 0,
+                        timestamp = Date()
+                    )
+                )
+            }
+
+            callback(services)
         }
 
         fun getTBMServicesByLine(lineId: Int, callback: (ArrayList<Service>) -> Unit) {
