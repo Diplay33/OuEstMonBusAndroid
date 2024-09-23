@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -24,6 +25,7 @@ import model.DTO.Service
 import model.DTO.Services
 import model.preferences_data_store.StoreChosenNetwork
 import model.preferences_data_store.StoreFavoriteLines
+import view.advert_view.AdvertView
 import java.util.*
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -79,95 +81,102 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
         }
     }
 
-    BottomSheetScaffold(
-        sheetContent = {
-            LineMapViewBottomSheet(
-                services = services,
-                programmedMessagesCount = programmedMessagesCount.value,
-                isLoading = isLoading.value,
-                refreshDate = refreshDate.value,
-                selectedService = selectedService,
-                line = line.value,
-                cameraPositionState = cameraPositionState
-            )
-        },
-        sheetBackgroundColor = if (colorScheme)
-            Color.White.copy(alpha = 0.9f)
-        else
-            Color.Black.copy(alpha = 0.9f),
-        sheetShape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp),
-        sheetElevation = 0.dp,
-        scaffoldState = rememberBottomSheetScaffoldState(
-            bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Expanded)
-        ),
-        backgroundColor = if (colorScheme) Color.White else Color.Black
-    ) { padding ->
-        LaunchedEffect(lineId, network.value) {
-            Lines.getLine((lineId ?: "0").toInt()) { returnedLine ->
-                line.value = returnedLine
-                if(network.value == "tbm") {
-                    ProgrammedMessages.getNumberOfMessagesByLine(returnedLine.id.toString()) { count ->
-                        programmedMessagesCount.value = count
-                    }
-                }
-                if(!returnedLine.isNest) {
-                    Paths.getOrderedPathsByLine(returnedLine.id, true) { paths ->
-                        paths.forEach { backAndForthPaths ->
-                            backAndForthPaths.forEach { path ->
-                                pathsCoordinates.addAll(
-                                    path.coordinates.map { coordinates ->
-                                        coordinates.map { LatLng(it[1], it[0]) }
-                                    }
-                                )
-                            }
+    Box(contentAlignment = Alignment.BottomCenter) {
+        BottomSheetScaffold(
+            sheetContent = {
+                LineMapViewBottomSheet(
+                    services = services,
+                    programmedMessagesCount = programmedMessagesCount.value,
+                    isLoading = isLoading.value,
+                    refreshDate = refreshDate.value,
+                    selectedService = selectedService,
+                    line = line.value,
+                    cameraPositionState = cameraPositionState
+                )
+            },
+            sheetBackgroundColor = if (colorScheme)
+                Color.White.copy(alpha = 0.9f)
+            else
+                Color.Black.copy(alpha = 0.9f),
+            sheetShape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp),
+            sheetElevation = 0.dp,
+            sheetPeekHeight = 125.dp,
+            scaffoldState = rememberBottomSheetScaffoldState(
+                bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Expanded)
+            ),
+            backgroundColor = if (colorScheme) Color.White else Color.Black
+        ) { padding ->
+            LaunchedEffect(lineId, network.value) {
+                Lines.getLine((lineId ?: "0").toInt()) { returnedLine ->
+                    line.value = returnedLine
+                    if(network.value == "tbm") {
+                        ProgrammedMessages.getNumberOfMessagesByLine(returnedLine.id.toString()) { count ->
+                            programmedMessagesCount.value = count
                         }
                     }
-                }
-            }
-        }
-
-        LaunchedEffect(line.value, network.value) {
-            if(network.value.isNotEmpty()) {
-                while(true) {
-                    if(line.value?.isNest == true) {
-                        line.value?.id?.let { lineId ->
-                            Lines.getChildLineIds(lineId) { childLineIds ->
-                                Services.getServicesFilteredBy(context, network.value, childLineIds) { returnedServices ->
-                                    services.clear()
-                                    services.addAll(returnedServices)
-                                    isLoading.value = false
-                                    refreshDate.value = Calendar.getInstance().time
+                    if(!returnedLine.isNest) {
+                        Paths.getOrderedPathsByLine(returnedLine.id, true) { paths ->
+                            paths.forEach { backAndForthPaths ->
+                                backAndForthPaths.forEach { path ->
+                                    pathsCoordinates.addAll(
+                                        path.coordinates.map { coordinates ->
+                                            coordinates.map { LatLng(it[1], it[0]) }
+                                        }
+                                    )
                                 }
                             }
                         }
                     }
-                    else {
-                        Services.getServicesByLine(context, network.value, line.value?.id ?: 0) { returnedServices ->
-                            services.clear()
-                            services.addAll(returnedServices)
-                            isLoading.value = false
-                            refreshDate.value = Calendar.getInstance().time
-                        }
-                    }
-                    delay(5000)
                 }
+            }
+
+            LaunchedEffect(line.value, network.value) {
+                if(network.value.isNotEmpty()) {
+                    while(true) {
+                        if(line.value?.isNest == true) {
+                            line.value?.id?.let { lineId ->
+                                Lines.getChildLineIds(lineId) { childLineIds ->
+                                    Services.getServicesFilteredBy(context, network.value, childLineIds) { returnedServices ->
+                                        services.clear()
+                                        services.addAll(returnedServices)
+                                        isLoading.value = false
+                                        refreshDate.value = Calendar.getInstance().time
+                                    }
+                                }
+                            }
+                        }
+                        else {
+                            Services.getServicesByLine(context, network.value, line.value?.id ?: 0) { returnedServices ->
+                                services.clear()
+                                services.addAll(returnedServices)
+                                isLoading.value = false
+                                refreshDate.value = Calendar.getInstance().time
+                            }
+                        }
+                        delay(5000)
+                    }
+                }
+            }
+
+            Box(modifier = Modifier
+                .padding(padding)
+            ) {
+                LineMapView(
+                    services = services,
+                    line = line.value,
+                    selectedService = selectedService,
+                    cameraPositionState = cameraPositionState,
+                    isUserLocationShown = isUserLocationShown.value,
+                    userPosition = userPosition.value,
+                    pathsCoordinates = pathsCoordinates
+                )
+
+                LineMapViewTopBar(navController, line.value, isUserLocationShown, cameraPositionState, userPosition)
             }
         }
 
-        Box(modifier = Modifier
-            .padding(padding)
-        ) {
-            LineMapView(
-                services = services,
-                line = line.value,
-                selectedService = selectedService,
-                cameraPositionState = cameraPositionState,
-                isUserLocationShown = isUserLocationShown.value,
-                userPosition = userPosition.value,
-                pathsCoordinates = pathsCoordinates
-            )
-
-            LineMapViewTopBar(navController, line.value, isUserLocationShown, cameraPositionState, userPosition)
-        }
+        AdvertView(modifier = Modifier
+            .align(Alignment.BottomCenter)
+        )
     }
 }

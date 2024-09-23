@@ -119,7 +119,7 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>, line: Line
             ServiceDetailStateRow(service.state, service.stateTime)
 
             Spacer(modifier = Modifier
-                .height(20.dp)
+                .height(60.dp)
             )
         }
     }

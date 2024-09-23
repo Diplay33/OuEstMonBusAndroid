@@ -34,10 +34,6 @@ fun BottomNavigationBar(navController: NavController, items: List<BottomNavigati
     }
 
     Column {
-        if(!BuildConfig.DEBUG) {
-            AdvertView()
-        }
-
         BottomNavigation(backgroundColor = if (colorScheme) Color.White else Color(0xff18191A)) {
             val currentRoute = currentRoute(navController)
 

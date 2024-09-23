@@ -2,7 +2,9 @@ package view.lines_map_list
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -16,6 +18,7 @@ import androidx.navigation.NavController
 import model.DTO.Line
 import model.DTO.ProgrammedMessage
 import model.DTO.Service
+import view.advert_view.AdvertView
 
 @Composable
 fun LinesMapListGroup(
@@ -44,15 +47,36 @@ fun LinesMapListGroup(
         }
 
         lines.forEach { line ->
-            LinesMapListRow(
-                rowLine = line,
-                linesByGroup = linesByGroup,
-                navController = navController,
-                services = services,
-                isLoading = isLoading,
-                programmedMessagesCount = programmedMessages.filter { it.lineId == line.id }.size,
-                clickRowLine = true
-            )
+            if(line == lines.last() && lines != linesByGroup.last()) {
+                Column {
+                    LinesMapListRow(
+                        rowLine = line,
+                        linesByGroup = linesByGroup,
+                        navController = navController,
+                        services = services,
+                        isLoading = isLoading,
+                        programmedMessagesCount = programmedMessages.filter { it.lineId == line.id }.size,
+                        clickRowLine = true
+                    )
+
+                    Spacer(modifier = Modifier
+                        .size(25.dp)
+                    )
+
+                    AdvertView()
+                }
+            }
+            else {
+                LinesMapListRow(
+                    rowLine = line,
+                    linesByGroup = linesByGroup,
+                    navController = navController,
+                    services = services,
+                    isLoading = isLoading,
+                    programmedMessagesCount = programmedMessages.filter { it.lineId == line.id }.size,
+                    clickRowLine = true
+                )
+            }
         }
     }
 }

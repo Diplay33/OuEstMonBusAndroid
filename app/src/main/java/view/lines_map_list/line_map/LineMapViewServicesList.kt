@@ -128,6 +128,10 @@ fun LineMapViewServicesList(
                     fontSize = 18.sp
                 )
             }
+
+            Spacer(modifier = Modifier
+                .height(60.dp)
+            )
         }
     }
 }

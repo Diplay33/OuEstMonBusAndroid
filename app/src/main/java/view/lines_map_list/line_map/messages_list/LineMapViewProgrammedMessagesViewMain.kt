@@ -97,6 +97,12 @@ fun LineMapViewProgrammedMessagesViewMain(line: Line?, areMessagesDisplayed: Mut
             items(programmedMessages) { programmedMessage ->
                 LineMapViewProgrammedMessagesViewRow(programmedMessage)
             }
+
+            item {
+                Spacer(modifier = Modifier
+                    .height(60.dp)
+                )
+            }
         }
     }
 }

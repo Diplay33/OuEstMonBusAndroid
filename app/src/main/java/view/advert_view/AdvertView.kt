@@ -36,9 +36,7 @@ fun AdvertView(modifier: Modifier = Modifier) {
         )
     }
     else {
-        Row(modifier = Modifier
-            .background(if (colorScheme) Color.White else Color(0xff18191A))
-        ) {
+        Row {
             AndroidView(
                 factory = { context ->
                     AdView(context).apply {
