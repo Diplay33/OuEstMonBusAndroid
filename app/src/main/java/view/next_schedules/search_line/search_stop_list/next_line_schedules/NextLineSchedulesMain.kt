@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -14,6 +15,7 @@ import androidx.navigation.NavController
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.delay
 import model.DTO.*
+import view.advert_view.AdvertView
 
 @Composable
 fun NextLineSchedulesMain(
@@ -116,39 +118,47 @@ fun NextLineSchedulesMain(
             }
         }
     }
-    
-    Scaffold(topBar = { NextLineSchedulesTopBar(
-        navController = navController,
-        stopId = stopId.toString(),
-        stopName = stopName ?: "Arrêt inconnu",
-        line = line.value
-    ) }) { padding ->
-        LazyColumn(modifier = Modifier
-            .padding(padding)
-            .fillMaxHeight()
-            .background(if (colorScheme) Color.White else Color.Black)
-        ) {
-            item {
-                NextLineSchedulesHeader(line.value, paths, destinations)
 
-                Spacer(modifier = Modifier
-                    .height(30.dp)
-                )
+    Box(contentAlignment = Alignment.BottomCenter) {
+        Scaffold(topBar = { NextLineSchedulesTopBar(
+            navController = navController,
+            stopId = stopId.toString(),
+            stopName = stopName ?: "Arrêt inconnu",
+            line = line.value
+        ) }) { padding ->
+            LazyColumn(modifier = Modifier
+                .padding(padding)
+                .fillMaxHeight()
+                .background(if (colorScheme) Color.White else Color.Black)
+            ) {
+                item {
+                    NextLineSchedulesHeader(line.value, paths, destinations)
 
-                NextLineSchedulesView(capFilteredNextSchedules, line.value, isLoading.value, focusedVehicle)
+                    Spacer(modifier = Modifier
+                        .height(30.dp)
+                    )
 
-                Spacer(modifier = Modifier
-                    .height(30.dp)
-                )
+                    NextLineSchedulesView(capFilteredNextSchedules, line.value, isLoading.value, focusedVehicle)
 
-                NextLineSchedulesMap(station.value, line.value, mapMarkers, focusedVehicle, navController, pathsCoordinates)
+                    Spacer(modifier = Modifier
+                        .height(30.dp)
+                    )
 
-                Spacer(modifier = Modifier
-                    .height(30.dp)
-                )
+                    NextLineSchedulesMap(station.value, line.value, mapMarkers, focusedVehicle, navController, pathsCoordinates)
 
-                NextLineSchedulesSchdlGroup(navController, line.value, stopId, stopName, pathDirection)
+                    Spacer(modifier = Modifier
+                        .height(30.dp)
+                    )
+
+                    NextLineSchedulesSchdlGroup(navController, line.value, stopId, stopName, pathDirection)
+
+                    Spacer(modifier = Modifier
+                        .height(60.dp)
+                    )
+                }
             }
         }
+
+        AdvertView()
     }
 }

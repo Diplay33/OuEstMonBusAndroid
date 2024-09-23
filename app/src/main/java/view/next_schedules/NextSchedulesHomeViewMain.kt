@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import view.advert_view.AdvertView
 
 @Composable
 fun NextSchedulesHomeViewMain(navController: NavController) {
@@ -27,7 +28,13 @@ fun NextSchedulesHomeViewMain(navController: NavController) {
                 NextSchedulesHomeViewSearchGroup(navController)
 
                 Spacer(modifier = Modifier
-                    .height(30.dp)
+                    .height(20.dp)
+                )
+
+                AdvertView()
+
+                Spacer(modifier = Modifier
+                    .height(20.dp)
                 )
 
                 NextSchedulesHomeViewFavoritesGroup(navController)

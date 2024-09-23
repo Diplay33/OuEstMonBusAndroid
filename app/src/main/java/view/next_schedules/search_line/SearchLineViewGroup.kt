@@ -2,6 +2,8 @@ package view.next_schedules.search_line
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -14,6 +16,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import model.DTO.Line
 import model.DTO.Service
+import view.advert_view.AdvertView
 
 @Composable
 fun SearchLineViewGroup(
@@ -41,15 +44,36 @@ fun SearchLineViewGroup(
         }
 
         lines.forEach { line ->
-            SearchLineViewRow(
-                linesByGroup = linesByGroup,
-                line = line,
-                navController = navController,
-                isLineInService = if (areServicesLoading)
-                    null
-                else
-                    !allServices.none { it.lineId == line.id }
-            )
+            if(line == lines.last() && lines != linesByGroup.last()) {
+                Column {
+                    SearchLineViewRow(
+                        linesByGroup = linesByGroup,
+                        line = line,
+                        navController = navController,
+                        isLineInService = if (areServicesLoading)
+                            null
+                        else
+                            !allServices.none { it.lineId == line.id }
+                    )
+
+                    Spacer(modifier = Modifier
+                        .height(25.dp)
+                    )
+
+                    AdvertView()
+                }
+            }
+            else {
+                SearchLineViewRow(
+                    linesByGroup = linesByGroup,
+                    line = line,
+                    navController = navController,
+                    isLineInService = if (areServicesLoading)
+                        null
+                    else
+                        !allServices.none { it.lineId == line.id }
+                )
+            }
         }
     }
 }
