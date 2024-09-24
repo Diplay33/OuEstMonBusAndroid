@@ -19,6 +19,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.diplay.ouestmonbus.BuildConfig
 import model.DTO.Line
 import model.DTO.Service
 import view.more_view.all_services_list.service_detail.*
@@ -119,7 +120,7 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>, line: Line
             ServiceDetailStateRow(service.state, service.stateTime)
 
             Spacer(modifier = Modifier
-                .height(60.dp)
+                .height((if (BuildConfig.DEBUG) 20 else 60).dp)
             )
         }
     }

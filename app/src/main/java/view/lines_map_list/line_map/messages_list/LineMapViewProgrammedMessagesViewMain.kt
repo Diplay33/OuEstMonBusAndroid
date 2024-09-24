@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.diplay.ouestmonbus.BuildConfig
 import model.DTO.Line
 import model.DTO.ProgrammedMessage
 import model.DTO.ProgrammedMessages
@@ -98,10 +99,12 @@ fun LineMapViewProgrammedMessagesViewMain(line: Line?, areMessagesDisplayed: Mut
                 LineMapViewProgrammedMessagesViewRow(programmedMessage)
             }
 
-            item {
-                Spacer(modifier = Modifier
-                    .height(60.dp)
-                )
+            if(!BuildConfig.DEBUG) {
+                item {
+                    Spacer(modifier = Modifier
+                        .height(60.dp)
+                    )
+                }
             }
         }
     }

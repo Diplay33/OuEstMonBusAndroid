@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.diplay.ouestmonbus.BuildConfig
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.rememberCameraPositionState
@@ -100,7 +101,7 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
                 Color.Black.copy(alpha = 0.9f),
             sheetShape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp),
             sheetElevation = 0.dp,
-            sheetPeekHeight = 125.dp,
+            sheetPeekHeight = if (BuildConfig.DEBUG) 75.dp else 125.dp,
             scaffoldState = rememberBottomSheetScaffoldState(
                 bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Expanded)
             ),
@@ -175,8 +176,10 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
             }
         }
 
-        AdvertView(modifier = Modifier
-            .align(Alignment.BottomCenter)
-        )
+        if(!BuildConfig.DEBUG) {
+            AdvertView(modifier = Modifier
+                .align(Alignment.BottomCenter)
+            )
+        }
     }
 }

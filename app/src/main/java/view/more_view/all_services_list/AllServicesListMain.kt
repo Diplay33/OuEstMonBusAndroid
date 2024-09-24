@@ -17,6 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.diplay.ouestmonbus.BuildConfig
 import kotlinx.coroutines.delay
 import model.DTO.Service
 import model.DTO.Services
@@ -136,7 +137,7 @@ fun AllServicesListMain(
                                 }
 
                                 Spacer(modifier = Modifier
-                                    .height(65.dp)
+                                    .height((if (BuildConfig.DEBUG) 15 else 65).dp)
                                 )
                             }
                         }
@@ -202,6 +203,8 @@ fun AllServicesListMain(
             }
         }
 
-        AdvertView()
+        if(!BuildConfig.DEBUG) {
+            AdvertView()
+        }
     }
 }

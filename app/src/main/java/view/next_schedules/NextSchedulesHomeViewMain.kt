@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.diplay.ouestmonbus.BuildConfig
 import view.advert_view.AdvertView
 
 @Composable
@@ -31,7 +32,9 @@ fun NextSchedulesHomeViewMain(navController: NavController) {
                     .height(20.dp)
                 )
 
-                AdvertView()
+                if(!BuildConfig.DEBUG) {
+                    AdvertView()
+                }
 
                 Spacer(modifier = Modifier
                     .height(20.dp)

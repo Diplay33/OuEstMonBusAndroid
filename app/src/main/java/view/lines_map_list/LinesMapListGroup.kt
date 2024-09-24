@@ -15,6 +15,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.diplay.ouestmonbus.BuildConfig
 import model.DTO.Line
 import model.DTO.ProgrammedMessage
 import model.DTO.Service
@@ -47,7 +48,7 @@ fun LinesMapListGroup(
         }
 
         lines.forEach { line ->
-            if(line == lines.last() && lines != linesByGroup.last()) {
+            if(line == lines.last() && lines != linesByGroup.last() && !BuildConfig.DEBUG) {
                 Column {
                     LinesMapListRow(
                         rowLine = line,

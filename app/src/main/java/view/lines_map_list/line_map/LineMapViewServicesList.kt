@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.diplay.ouestmonbus.BuildConfig
 import com.google.maps.android.compose.CameraPositionState
 import model.DTO.Service
 import model.DTO.Services
@@ -130,7 +131,7 @@ fun LineMapViewServicesList(
             }
 
             Spacer(modifier = Modifier
-                .height(60.dp)
+                .height((if (BuildConfig.DEBUG) 15 else 60).dp)
             )
         }
     }

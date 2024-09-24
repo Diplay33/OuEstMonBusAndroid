@@ -14,6 +14,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.diplay.ouestmonbus.BuildConfig
 import model.DTO.Line
 import model.DTO.Service
 import view.advert_view.AdvertView
@@ -44,7 +45,7 @@ fun SearchLineViewGroup(
         }
 
         lines.forEach { line ->
-            if(line == lines.last() && lines != linesByGroup.last()) {
+            if(line == lines.last() && lines != linesByGroup.last() && !BuildConfig.DEBUG) {
                 Column {
                     SearchLineViewRow(
                         linesByGroup = linesByGroup,

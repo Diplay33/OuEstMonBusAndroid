@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.diplay.ouestmonbus.BuildConfig
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.delay
 import model.DTO.*
@@ -153,12 +154,14 @@ fun NextLineSchedulesMain(
                     NextLineSchedulesSchdlGroup(navController, line.value, stopId, stopName, pathDirection)
 
                     Spacer(modifier = Modifier
-                        .height(60.dp)
+                        .height((if (BuildConfig.DEBUG) 15 else 60).dp)
                     )
                 }
             }
         }
 
-        AdvertView()
+        if(!BuildConfig.DEBUG) {
+            AdvertView()
+        }
     }
 }
