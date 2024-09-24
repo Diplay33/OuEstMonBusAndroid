@@ -3,6 +3,7 @@ package view.lines_map_list
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
@@ -48,7 +49,18 @@ fun LinesMapListGroup(
         }
 
         lines.forEach { line ->
-            if(line == lines.last() && lines != linesByGroup.last() && !BuildConfig.DEBUG) {
+            if(BuildConfig.DEBUG) {
+                LinesMapListRow(
+                    rowLine = line,
+                    linesByGroup = linesByGroup,
+                    navController = navController,
+                    services = services,
+                    isLoading = isLoading,
+                    programmedMessagesCount = programmedMessages.filter { it.lineId == line.id }.size,
+                    clickRowLine = true
+                )
+            }
+            else {
                 Column {
                     LinesMapListRow(
                         rowLine = line,
@@ -60,23 +72,16 @@ fun LinesMapListGroup(
                         clickRowLine = true
                     )
 
-                    Spacer(modifier = Modifier
-                        .size(25.dp)
-                    )
+                    if(line == lines.last() && lines != linesByGroup.last()) {
+                        Spacer(modifier = Modifier
+                            .size(25.dp)
+                        )
 
-                    AdvertView()
+                        AdvertView(modifier = Modifier
+                            .height(50.dp)
+                        )
+                    }
                 }
-            }
-            else {
-                LinesMapListRow(
-                    rowLine = line,
-                    linesByGroup = linesByGroup,
-                    navController = navController,
-                    services = services,
-                    isLoading = isLoading,
-                    programmedMessagesCount = programmedMessages.filter { it.lineId == line.id }.size,
-                    clickRowLine = true
-                )
             }
         }
     }

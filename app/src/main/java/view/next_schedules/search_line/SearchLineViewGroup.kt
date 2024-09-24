@@ -45,7 +45,18 @@ fun SearchLineViewGroup(
         }
 
         lines.forEach { line ->
-            if(line == lines.last() && lines != linesByGroup.last() && !BuildConfig.DEBUG) {
+            if(BuildConfig.DEBUG) {
+                SearchLineViewRow(
+                    linesByGroup = linesByGroup,
+                    line = line,
+                    navController = navController,
+                    isLineInService = if (areServicesLoading)
+                        null
+                    else
+                        !allServices.none { it.lineId == line.id }
+                )
+            }
+            else {
                 Column {
                     SearchLineViewRow(
                         linesByGroup = linesByGroup,
@@ -57,23 +68,16 @@ fun SearchLineViewGroup(
                             !allServices.none { it.lineId == line.id }
                     )
 
-                    Spacer(modifier = Modifier
-                        .height(25.dp)
-                    )
+                    if(line == lines.last() && lines != linesByGroup.last()) {
+                        Spacer(modifier = Modifier
+                            .height(25.dp)
+                        )
 
-                    AdvertView()
+                        AdvertView(modifier = Modifier
+                            .height(50.dp)
+                        )
+                    }
                 }
-            }
-            else {
-                SearchLineViewRow(
-                    linesByGroup = linesByGroup,
-                    line = line,
-                    navController = navController,
-                    isLineInService = if (areServicesLoading)
-                        null
-                    else
-                        !allServices.none { it.lineId == line.id }
-                )
             }
         }
     }

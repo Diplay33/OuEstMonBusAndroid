@@ -48,7 +48,7 @@ fun AdvertView(modifier: Modifier = Modifier) {
                         loadAd(AdRequest.Builder().build())
                     }
                 },
-                modifier = Modifier
+                modifier = modifier
                     .fillMaxWidth()
             )
         }
