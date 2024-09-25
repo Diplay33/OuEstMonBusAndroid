@@ -30,7 +30,7 @@ class Lines {
                     lineDAO.getAllLinesForSchedules().sortedBy { it.index }
                 else
                     lineDAO.getAllLines().sortedBy { it.index }
-                val listSectionSet = lines.map { it.section }.toSet().toList()
+                val listSectionSet = lines.map { it.section }.toSet().toList().filterNotNull()
                 val linesBySection: ArrayList<ArrayList<Line>> = ArrayList(listSectionSet.map { arrayListOf() })
                 linesBySection.add(arrayListOf())
 
