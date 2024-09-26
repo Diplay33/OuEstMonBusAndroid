@@ -140,7 +140,7 @@ class ServiceDAO {
                         destination = if (trips == null)
                             vehicle.trip.directionId.toString()
                         else
-                            tripHeadsign,
+                            tripHeadsign.replace(oldValue = "/", newValue = ""),
                         latitude = position.latitude.toDouble(),
                         longitude = position.longitude.toDouble(),
                         currentStop = 0,
