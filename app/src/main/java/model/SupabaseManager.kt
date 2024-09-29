@@ -48,9 +48,14 @@ class SupabaseManager {
             context: Context,
             callback: (String) -> Unit
         ) {
-            checkTablesVersion(network, context) { callback(it) }
-            val gtfsTripsURL = getGTFSURL("trips", network)
-            StoreGTFSURL(context).setGTFSTripsURL(gtfsTripsURL)
+            try {
+                checkTablesVersion(network, context) { callback(it) }
+                val gtfsTripsURL = getGTFSURL("trips", network)
+                StoreGTFSURL(context).setGTFSTripsURL(gtfsTripsURL)
+            }
+            catch (e: Exception) {
+                print("Error : ${e.localizedMessage}")
+            }
         }
 
         private suspend fun checkTablesVersion(
