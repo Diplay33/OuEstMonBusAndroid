@@ -84,13 +84,15 @@ fun ServiceDetailMapRow(
             }
         }
 
-        Paths.getPath(pathId?.toInt() ?: 0, true) { returnedPath ->
-            returnedPath?.let { nonNullPath ->
-                pathCoordinates.addAll(
-                    nonNullPath.coordinates.map { coordinates ->
-                        coordinates.map { LatLng(it[1], it[0]) }
-                    }
-                )
+        if(network.value == "tbm") {
+            Paths.getPath(pathId?.toInt() ?: 0, true) { returnedPath ->
+                returnedPath?.let { nonNullPath ->
+                    pathCoordinates.addAll(
+                        nonNullPath.coordinates.map { coordinates ->
+                            coordinates.map { LatLng(it[1], it[0]) }
+                        }
+                    )
+                }
             }
         }
     }

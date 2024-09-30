@@ -115,7 +115,7 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
                             programmedMessagesCount.value = count
                         }
                     }
-                    if(!returnedLine.isNest) {
+                    if(!returnedLine.isNest && network.value == "tbm") {
                         Paths.getOrderedPathsByLine(returnedLine.id, true) { paths ->
                             paths.forEach { backAndForthPaths ->
                                 backAndForthPaths.forEach { path ->
