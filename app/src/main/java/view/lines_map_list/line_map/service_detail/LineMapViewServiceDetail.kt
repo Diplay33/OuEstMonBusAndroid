@@ -129,11 +129,13 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>, line: Line
 
             ServiceDetailSpeedRow(service.currentSpeed)
 
-            Spacer(modifier = Modifier
-                .height(10.dp)
-            )
+            if(network.value == "tbm") {
+                Spacer(modifier = Modifier
+                    .height(10.dp)
+                )
 
-            ServiceDetailStateRow(service.state, service.stateTime)
+                ServiceDetailStateRow(service.state, service.stateTime)
+            }
 
             Spacer(modifier = Modifier
                 .height((if (BuildConfig.DEBUG) 20 else 60).dp)

@@ -12,11 +12,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import model.DTO.Line
 import model.DTO.Lines
 import model.DTO.Vehicles
+import model.preferences_data_store.StoreChosenNetwork
 
 @Composable
 fun ServiceDetailMain(
@@ -37,6 +39,15 @@ fun ServiceDetailMain(
     }
     val vehicle = Vehicles.getVehicle(vehicleId ?: "")
     val colorScheme = !isSystemInDarkTheme()
+    val context = LocalContext.current
+    val storeChosenNetwork = StoreChosenNetwork(context)
+    val network = remember {
+        mutableStateOf("")
+    }
+
+    LaunchedEffect(Unit) {
+        storeChosenNetwork.chosenNetwork.collect { network.value = it ?: "" }
+    }
 
     LaunchedEffect(lineId) {
         Lines.getLine(lineId?.toInt() ?: 0) { line.value = it }
@@ -89,11 +100,13 @@ fun ServiceDetailMain(
 
             ServiceDetailSpeedRow(currentSpeed?.toInt() ?: 0)
 
-            Spacer(modifier = Modifier
-                .height(30.dp)
-            )
+            if(network.value == "tbm") {
+                Spacer(modifier = Modifier
+                    .height(30.dp)
+                )
 
-            ServiceDetailStateRow(state ?: "", stateTime?.toInt() ?: 0)
+                ServiceDetailStateRow(state ?: "", stateTime?.toInt() ?: 0)
+            }
         }
     }
 }

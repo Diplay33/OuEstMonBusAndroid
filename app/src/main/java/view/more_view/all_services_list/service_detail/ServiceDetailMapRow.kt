@@ -64,7 +64,6 @@ fun ServiceDetailMapRow(
     val pathCoordinates = remember {
         mutableStateListOf<List<LatLng>>()
     }
-
     val context = LocalContext.current
     val storeChosenNetwork = StoreChosenNetwork(context)
     val network = remember {
