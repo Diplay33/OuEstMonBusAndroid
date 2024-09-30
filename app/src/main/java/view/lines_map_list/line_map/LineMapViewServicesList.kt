@@ -12,12 +12,14 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.MailOutline
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,6 +27,7 @@ import com.diplay.ouestmonbus.BuildConfig
 import com.google.maps.android.compose.CameraPositionState
 import model.DTO.Service
 import model.DTO.Services
+import model.preferences_data_store.StoreChosenNetwork
 import view.lines_map_list.NotificationCountBadge
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -44,6 +47,15 @@ fun LineMapViewServicesList(
     val formatter = SimpleDateFormat("HH:mm")
     val colorScheme = !isSystemInDarkTheme()
     val lateAverage = if (services.isEmpty()) 0 else services.map { it.stateTime }.reduce { x, y -> x + y } / services.count()
+    val context = LocalContext.current
+    val storeChosenNetwork = StoreChosenNetwork(context)
+    val network = remember {
+        mutableStateOf("")
+    }
+
+    LaunchedEffect(Unit) {
+        storeChosenNetwork.chosenNetwork.collect { network.value = it ?: "" }
+    }
 
     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
         .fillMaxWidth()
@@ -117,11 +129,13 @@ fun LineMapViewServicesList(
                     fontSize = 18.sp
                 )
 
-                Text(
-                    text = "Retard moyen sur la ligne : ${lateAverageFormatter(lateAverage)}",
-                    color = Color.Gray,
-                    fontSize = 18.sp
-                )
+                if(network.value == "tbm") {
+                    Text(
+                        text = "Retard moyen sur la ligne : ${lateAverageFormatter(lateAverage)}",
+                        color = Color.Gray,
+                        fontSize = 18.sp
+                    )
+                }
 
                 Text(
                     text = "Dernière actualisation à ${formatter.format(refreshDate)}",
