@@ -56,20 +56,6 @@ fun MoreViewContactGroup() {
                 .height(1.dp)
             )
 
-            MoreViewContactTwitterRow()
-
-            Box(modifier = Modifier
-                .padding(start = 50.dp)
-                .clip(RectangleShape)
-                .background(if (colorScheme)
-                    Color.LightGray
-                else
-                    Color.Gray
-                )
-                .fillMaxWidth()
-                .height(1.dp)
-            )
-
             MoreViewContactInstaRow()
         }
     }
