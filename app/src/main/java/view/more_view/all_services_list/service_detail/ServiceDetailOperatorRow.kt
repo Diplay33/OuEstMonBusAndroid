@@ -42,7 +42,13 @@ fun ServiceDetailOperatorRow(operator: String) {
                         if (operator.contains("River Cruise"))
                             R.drawable.river_cruise
                         else
-                            R.drawable.evadys),
+                            if (operator.contains("RGO Mobilités"))
+                                R.drawable.rgo_mobilites
+                            else
+                                if (operator.contains("Linevia"))
+                                    R.drawable.linevia
+                                else
+                                    R.drawable.evadys),
                 contentDescription = null, modifier = Modifier
                     .size(20.dp)
                     .align(Alignment.CenterVertically)
