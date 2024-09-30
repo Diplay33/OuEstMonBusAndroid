@@ -27,6 +27,7 @@ import model.DTO.Line
 import model.DTO.Paths
 import model.DTO.Station
 import model.DTO.Stations
+import model.preferences_data_store.StoreChosenNetwork
 import view.lines_map_list.line_map.MapStyle
 
 @Composable
@@ -62,6 +63,16 @@ fun ServiceDetailMapRow(
     }
     val pathCoordinates = remember {
         mutableStateListOf<List<LatLng>>()
+    }
+
+    val context = LocalContext.current
+    val storeChosenNetwork = StoreChosenNetwork(context)
+    val network = remember {
+        mutableStateOf("")
+    }
+
+    LaunchedEffect(Unit) {
+        storeChosenNetwork.chosenNetwork.collect { network.value = it ?: "" }
     }
 
     LaunchedEffect(line?.name) {
@@ -120,49 +131,51 @@ fun ServiceDetailMapRow(
             }
         }
 
-        Row(modifier = Modifier
-            .padding(horizontal = 15.dp)
-            .height(45.dp)
-            .fillMaxWidth()
-            .background(
-                Color(if (colorScheme) 0xffF5F5F5 else 0xff18191A).copy(alpha = 0.8f),
-                shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp)
-            )
-        ) {
+        if(network.value == "tbm") {
             Row(modifier = Modifier
                 .padding(horizontal = 15.dp)
-                .align(Alignment.CenterVertically)
+                .height(45.dp)
+                .fillMaxWidth()
+                .background(
+                    Color(if (colorScheme) 0xffF5F5F5 else 0xff18191A).copy(alpha = 0.8f),
+                    shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp)
+                )
             ) {
-                if(station.value.name.isEmpty()) {
-                    CircularProgressIndicator(modifier = Modifier
-                        .size(20.dp)
-                        .align(Alignment.CenterVertically)
-                    )
-                }
-                else {
-                    Image(
-                        painter = painterResource(id = R.drawable.mappin),
-                        contentDescription = null,
-                        colorFilter = ColorFilter.tint(if (colorScheme)
-                            Color.Black
-                        else
-                            Color.White),
-                        modifier = Modifier
+                Row(modifier = Modifier
+                    .padding(horizontal = 15.dp)
+                    .align(Alignment.CenterVertically)
+                ) {
+                    if(station.value.name.isEmpty()) {
+                        CircularProgressIndicator(modifier = Modifier
                             .size(20.dp)
                             .align(Alignment.CenterVertically)
-                    )
+                        )
+                    }
+                    else {
+                        Image(
+                            painter = painterResource(id = R.drawable.mappin),
+                            contentDescription = null,
+                            colorFilter = ColorFilter.tint(if (colorScheme)
+                                Color.Black
+                            else
+                                Color.White),
+                            modifier = Modifier
+                                .size(20.dp)
+                                .align(Alignment.CenterVertically)
+                        )
 
-                    Spacer(modifier = Modifier
-                        .width(15.dp)
-                    )
+                        Spacer(modifier = Modifier
+                            .width(15.dp)
+                        )
 
-                    Text(
-                        text = station.value.name,
-                        fontSize = 18.sp,
-                        color = if (colorScheme) Color.Black else Color.White,
-                        modifier = Modifier
-                            .align(Alignment.CenterVertically)
-                    )
+                        Text(
+                            text = station.value.name,
+                            fontSize = 18.sp,
+                            color = if (colorScheme) Color.Black else Color.White,
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically)
+                        )
+                    }
                 }
             }
         }

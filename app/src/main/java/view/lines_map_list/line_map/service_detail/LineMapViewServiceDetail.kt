@@ -11,17 +11,22 @@ import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.diplay.ouestmonbus.BuildConfig
 import model.DTO.Line
 import model.DTO.Service
+import model.preferences_data_store.StoreChosenNetwork
 import view.more_view.all_services_list.service_detail.*
 import java.util.Date
 
@@ -42,6 +47,15 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>, line: Line
         timestamp = Date()
     )
     val colorScheme = !isSystemInDarkTheme()
+    val context = LocalContext.current
+    val storeChosenNetwork = StoreChosenNetwork(context)
+    val network = remember {
+        mutableStateOf("")
+    }
+
+    LaunchedEffect(Unit) {
+        storeChosenNetwork.chosenNetwork.collect { network.value = it ?: "" }
+    }
 
     Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
         .fillMaxWidth()
@@ -105,11 +119,13 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>, line: Line
                 )
             }
 
-            LineMapViewServiceDetailCurrentStopRow(service.currentStop.toString())
+            if(network.value == "tbm") {
+                LineMapViewServiceDetailCurrentStopRow(service.currentStop.toString())
 
-            Spacer(modifier = Modifier
-                .height(10.dp)
-            )
+                Spacer(modifier = Modifier
+                    .height(10.dp)
+                )
+            }
 
             ServiceDetailSpeedRow(service.currentSpeed)
 
