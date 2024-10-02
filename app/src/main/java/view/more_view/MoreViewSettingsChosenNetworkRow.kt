@@ -20,7 +20,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -76,9 +78,11 @@ fun MoreViewSettingsChosenNetworkRow(navController: NavController) {
                     Image(
                         painter = painterResource(id = computeNetworkImage(network)),
                         contentDescription = null,
+                        colorFilter = if (!colorScheme) ColorFilter.tint(Color.White) else null,
                         modifier = Modifier
                             .height(32.dp)
                             .padding(end = 8.dp)
+                            .alpha(if (colorScheme) 1f else 0.8f)
                     )
                 }
 

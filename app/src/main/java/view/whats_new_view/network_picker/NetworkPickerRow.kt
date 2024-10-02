@@ -24,9 +24,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -99,9 +101,11 @@ fun NetworkPickerRow(selection: MutableState<String>, network: Network) {
             Image(
                 painter = painterResource(id = computeNetworkImage(network)),
                 contentDescription = null,
+                colorFilter = if (!colorScheme) ColorFilter.tint(Color.White) else null,
                 modifier = Modifier
                     .sizeIn(maxWidth = 150.dp, maxHeight = 80.dp)
                     .height(80.dp)
+                    .alpha(if (colorScheme) 1f else 0.8f)
             )
 
             Spacer(modifier = Modifier
