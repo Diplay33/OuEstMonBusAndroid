@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -99,7 +100,7 @@ fun NetworkPickerRow(selection: MutableState<String>, network: Network) {
                 painter = painterResource(id = computeNetworkImage(network)),
                 contentDescription = null,
                 modifier = Modifier
-                    .width(150.dp)
+                    .sizeIn(maxWidth = 150.dp, maxHeight = 80.dp)
                     .height(80.dp)
             )
 
