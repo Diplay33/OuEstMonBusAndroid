@@ -28,6 +28,9 @@ fun MoreViewContactMailRow() {
     Row(modifier = Modifier
         .height(45.dp)
         .fillMaxWidth()
+        .clickable {
+            context.sendMail(to = "ouestmonbusoff@gmail.com")
+        }
     ) {
         Row(modifier = Modifier
             .padding(horizontal = 15.dp)
@@ -49,11 +52,7 @@ fun MoreViewContactMailRow() {
             Text(
                 text = "ouestmonbusoff@gmail.com",
                 fontSize = 18.sp,
-                color = Color(android.graphics.Color.parseColor("#007AFF")),
-                modifier = Modifier
-                    .clickable {
-                        context.sendMail(to = "ouestmonbusoff@gmail.com")
-                    }
+                color = Color(android.graphics.Color.parseColor("#007AFF"))
             )
         }
     }

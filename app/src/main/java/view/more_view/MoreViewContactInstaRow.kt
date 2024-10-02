@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -25,6 +26,10 @@ fun MoreViewContactInstaRow() {
 
     Row(modifier = Modifier
         .height(45.dp)
+        .fillMaxWidth()
+        .clickable {
+            uriHandler.openUri("https://www.instagram.com/ou_est_mon_bus/")
+        }
         .padding(horizontal = 15.dp)
     ) {
         Row(Modifier
@@ -42,11 +47,7 @@ fun MoreViewContactInstaRow() {
             Text(
                 text = "Où est mon bus (@ou_est_mon_bus)",
                 color = Color(android.graphics.Color.parseColor("#007AFF")),
-                fontSize = 18.sp,
-                modifier = Modifier
-                    .clickable {
-                        uriHandler.openUri("https://www.instagram.com/ou_est_mon_bus/")
-                    }
+                fontSize = 18.sp
             )
         }
     }
