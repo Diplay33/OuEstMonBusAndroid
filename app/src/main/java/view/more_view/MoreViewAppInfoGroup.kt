@@ -27,29 +27,26 @@ fun MoreViewAppInfoGroup() {
         )
 
         Text(
-            text = "Cette application n'est ni affiliée à TBM," +
-                " ni à Keolis Bordeaux Métropole Mobilités.",
+            text = "Cette application ne contient aucune affiliation avec les organismes qu'elle présente.",
             fontSize = 18.sp,
             color = Color.LightGray,
-            textAlign = TextAlign.Center
-        )
+            textAlign = TextAlign.Center)
 
         Spacer(modifier = Modifier
             .height(30.dp)
         )
 
         Text(
-            text = "Données fournies par Bordeaux Métropole, via leur programme OpenData.",
+            text = "Les données sont fournies par des sources libres d'utilisation. Toute responsabilité concernant d'éventuelles données erronnées, sera déclinée.",
             fontSize = 18.sp,
             color = Color.LightGray,
             textAlign = TextAlign.Center
         )
 
         Text(
-            text = "Où est mon bus se dédouane de toute responsabilité concernant d'éventuelles " +
-                    "données erronées.",
+            text = "Où est mon bus",
             fontSize = 18.sp,
-            color = Color.LightGray,
+            color = Color(0xffE3E3E3),
             textAlign = TextAlign.Center
         )
 
