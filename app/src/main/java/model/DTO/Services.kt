@@ -14,14 +14,7 @@ class Services {
         ) {
             when(network) {
                 "tbm" -> ServiceDAO.getAllTBMServices { callback(it) }
-                "ametis" -> ServiceDAO.getAllServicesFromGTFSRT(
-                    network = network,
-                    context = context,
-                    withoutDestination = withoutDestination
-                ) {
-                    callback(it)
-                }
-                "star" -> ServiceDAO.getAllServicesFromGTFSRT(
+                "ametis", "star", "corolis" -> ServiceDAO.getAllServicesFromGTFSRT(
                     network = network,
                     context = context,
                     withoutDestination = withoutDestination
@@ -43,15 +36,7 @@ class Services {
                     ServiceDAO.getTBMServicesByLine(lineId) { services ->
                         callback(services)
                     }
-                "ametis" ->
-                    ServiceDAO.getAllServicesFromGTFSRT(
-                        network = network,
-                        context = context,
-                        withoutDestination = false
-                    ) { services ->
-                        callback(ArrayList(services.filter { it.lineId == lineId }))
-                    }
-                "star" ->
+                "ametis", "star", "corolis" ->
                     ServiceDAO.getAllServicesFromGTFSRT(
                         network = network,
                         context = context,

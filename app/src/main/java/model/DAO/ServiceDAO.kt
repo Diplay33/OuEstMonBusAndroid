@@ -14,6 +14,7 @@ import java.util.TimeZone
 
 const val AMETIS_GTFS_RT_VEHICLE_POSITIONS_URL = "https://proxy.transport.data.gouv.fr/resource/ametis-amiens-gtfs-rt-vehicle-position"
 const val STAR_GTFS_RT_VEHICLE_POSITIONS_URL = "https://proxy.transport.data.gouv.fr/resource/star-rennes-integration-gtfs-rt-vehicle-position"
+const val COROLIS_GTFS_RT_VEHICLE_POSITIONS_URL = "https://api.oisemob.cityway.fr/dataflow/vehicule-tc-tr/download?provider=COROLIS_URB&dataFormat=gtfs-rt"
 
 class ServiceDAO {
     companion object {
@@ -74,6 +75,7 @@ class ServiceDAO {
             val urlToCall = when(network) {
                 "ametis" -> AMETIS_GTFS_RT_VEHICLE_POSITIONS_URL
                 "star" -> STAR_GTFS_RT_VEHICLE_POSITIONS_URL
+                "corolis" -> COROLIS_GTFS_RT_VEHICLE_POSITIONS_URL
                 else -> ""
             }
             CallAPI.runGTFSRT(urlToCall) { response ->
@@ -116,6 +118,11 @@ class ServiceDAO {
             val services: ArrayList<Service> = arrayListOf()
 
             feedMessage.entityList.forEach { feedEntity ->
+                val id = when(network) {
+                    "ametis", "star" -> feedEntity.id.toIntOrNull() ?: 0
+                    "corolis" -> feedEntity.id.removeRange(0..2).toIntOrNull() ?: 0
+                    else -> 0
+                }
                 val vehicle = feedEntity.vehicle
                 val position = vehicle.position
                 val trip = vehicle.trip
@@ -124,15 +131,20 @@ class ServiceDAO {
                     trips = trips ?: listOf()
                 ) ?: "Destination inconnue"
                 val lineId = when(network) {
-                    "ametis" -> trip.routeId.toASCIIDecimal()
+                    "ametis", "corolis" -> trip.routeId.toASCIIDecimal()
                     "star" -> (trip.routeId ?: "").drop(2).toIntOrNull() ?: 0
+                    else -> 0
+                }
+                val vehicleId = when(network) {
+                    "ametis", "star" -> feedEntity.id.toIntOrNull() ?: 0
+                    "corolis" -> vehicle.vehicle.id.removeRange(0..2).toIntOrNull() ?: 0
                     else -> 0
                 }
 
                 services.add(
                     Service(
-                        id = feedEntity.id.toIntOrNull() ?: 0,
-                        vehicleId = feedEntity.id.toIntOrNull() ?: 0,
+                        id = id,
+                        vehicleId = vehicleId,
                         lineId = lineId,
                         currentSpeed = position.speed.toInt(),
                         state = "UNKNOWN",
