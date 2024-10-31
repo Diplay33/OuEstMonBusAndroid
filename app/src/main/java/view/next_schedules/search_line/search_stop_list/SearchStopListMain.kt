@@ -33,9 +33,7 @@ fun SearchStopListMain(
     pathDirection: String?,
     state: SearchStopListSearchState = rememberSearchState()
 ) {
-    val line = remember {
-        mutableStateOf<Line?>(null)
-    }
+    val line = Lines.getLine(lineId?.toInt() ?: 0)
     val paths = remember {
         mutableStateListOf<Path>()
     }
@@ -53,17 +51,15 @@ fun SearchStopListMain(
     }
     val colorScheme = !isSystemInDarkTheme()
 
-    LaunchedEffect(line.value, pathDirectionState.value) {
-        line.value?.let { line ->
-            if(pathDirectionState.value == "ALLER") {
-                AllerDestinations.getListOfDestinations(line.id) {
-                    destinations.addAll(it)
-                }
+    LaunchedEffect(line, pathDirectionState.value) {
+        if(pathDirectionState.value == "ALLER") {
+            AllerDestinations.getListOfDestinations(line.id) {
+                destinations.addAll(it)
             }
-            else {
-                RetourDestinations.getListOfDestinations(line.id) {
-                    destinations.addAll(it)
-                }
+        }
+        else {
+            RetourDestinations.getListOfDestinations(line.id) {
+                destinations.addAll(it)
             }
         }
     }
@@ -108,17 +104,13 @@ fun SearchStopListMain(
                 searchText = state.query.text
             )
 
-            LaunchedEffect(lineId) {
-                Lines.getLine(lineId?.toInt() ?: 0) { line.value = it }
-            }
-
             when(state.searchDisplay) {
                 SearchDisplay.INITIALRESULTS -> {
                     Column(modifier = Modifier
                         .verticalScroll(rememberScrollState())
                         .fillMaxWidth()
                     ) {
-                        SearchStopListHeader(line.value, paths, destinations, pathDirectionState, isLoading, stops)
+                        SearchStopListHeader(line, paths, destinations, pathDirectionState, isLoading, stops)
 
                         Spacer(modifier = Modifier
                             .height(30.dp)
@@ -152,7 +144,7 @@ fun SearchStopListMain(
                                     stop = stop,
                                     stops = stops.sortedBy { it.name },
                                     navController = navController,
-                                    line = line.value,
+                                    line = line,
                                     pathDirection = pathDirectionState.value
                                 )
                             }
@@ -181,7 +173,7 @@ fun SearchStopListMain(
                         .verticalScroll(rememberScrollState())
                         .fillMaxWidth()
                     ) {
-                        SearchStopListHeader(line.value, paths, destinations, pathDirectionState, isLoading, stops)
+                        SearchStopListHeader(line, paths, destinations, pathDirectionState, isLoading, stops)
 
                         Spacer(modifier = Modifier
                             .height(30.dp)
@@ -215,7 +207,7 @@ fun SearchStopListMain(
                                     stop = stop,
                                     stops = state.searchResults,
                                     navController = navController,
-                                    line = line.value,
+                                    line = line,
                                     pathDirection = pathDirectionState.value
                                 )
                             }

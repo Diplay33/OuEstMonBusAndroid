@@ -11,18 +11,11 @@ class Destinations {
 
         //MARK: - GET
 
-        fun getDestination(input: String, lineId: Int, callback: (Destination?) -> Unit) {
-            CoroutineScope(Dispatchers.IO).launch {
-                destinationDAO.getLineRelatedDestination(input, lineId)?.let {
-                    callback(it)
-                    return@launch
-                }
-                destinationDAO.getDestination(input)?.let {
-                    callback(it)
-                    return@launch
-                }
-                callback(null)
+        fun getDestination(input: String, lineId: Int): Destination? {
+            destinationDAO.getLineRelatedDestination(input, lineId)?.let {
+                return it
             }
+            return destinationDAO.getDestination(input)
         }
 
         //MARK: - SET

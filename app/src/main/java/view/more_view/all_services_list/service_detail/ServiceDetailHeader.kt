@@ -31,17 +31,9 @@ import model.DTO.Destinations
 import model.DTO.Line
 
 @Composable
-fun ServiceDetailHeader(line: Line?, rawDestination: String) {
+fun ServiceDetailHeader(line: Line, rawDestination: String) {
     val colorScheme = !isSystemInDarkTheme()
-    val destination = remember {
-        mutableStateOf<Destination?>(null)
-    }
-
-    LaunchedEffect(line, rawDestination) {
-        line?.let { line ->
-            Destinations.getDestination(rawDestination, line.id) { destination.value = it }
-        }
-    }
+    val destination = Destinations.getDestination(rawDestination, line.id)
 
     Row(modifier = Modifier
         .padding(horizontal = 15.dp)
@@ -113,7 +105,7 @@ fun ServiceDetailHeader(line: Line?, rawDestination: String) {
                 Column(modifier = Modifier
                     .padding(horizontal = 10.dp)
                 ) {
-                    destination.value?.let { destination ->
+                    destination?.let { destination ->
                         Text(
                             text = destination.city,
                             fontSize = 13.sp,
@@ -126,11 +118,11 @@ fun ServiceDetailHeader(line: Line?, rawDestination: String) {
                     }
 
                     Text(
-                        text = destination.value?.destination ?: rawDestination,
+                        text = destination?.destination ?: rawDestination,
                         fontSize = 18.sp,
                         color = if (colorScheme) Color.Black else Color.White,
                         modifier = Modifier
-                            .offset(y = if (destination.value == null) 0.dp else (-2).dp)
+                            .offset(y = if (destination == null) 0.dp else (-2).dp)
                     )
                 }
             }

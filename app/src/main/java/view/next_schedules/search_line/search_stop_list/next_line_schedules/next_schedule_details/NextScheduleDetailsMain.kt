@@ -45,9 +45,7 @@ fun NextScheduleDetailsMain(
     lineId: String?
 ) {
     val vehicle = Vehicles.getVehicle(vehicleId.toString())
-    val line = remember {
-        mutableStateOf<Line?>(null)
-    }
+    val line = Lines.getLine(lineId?.toInt() ?: 0)
     val service = remember {
         mutableStateOf(Service(0, 0, 0, 0, "", 0, "", 0.0, 0.0, 0, 0, timestamp = Date()))
     }
@@ -55,7 +53,6 @@ fun NextScheduleDetailsMain(
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(vehicle) {
-        Lines.getLine(lineId?.toInt() ?: 0) { line.value = it }
         while(true) {
             Services.getServiceByVehicleId(vehicle.id.toInt()) {
                 it?.let { value -> service.value = value }
@@ -85,13 +82,13 @@ fun NextScheduleDetailsMain(
                     .height(30.dp)
                 )
 
-                ServiceDetailHeader(line.value, service.value.destination)
+                ServiceDetailHeader(line, service.value.destination)
 
                 Spacer(modifier = Modifier
                     .height(30.dp)
                 )
 
-                ServiceDetailVehicleRow(vehicle.fullName, line.value?.name ?: "")
+                ServiceDetailVehicleRow(vehicle.fullName, line.name ?: "")
 
                 Spacer(modifier = Modifier
                     .height(10.dp)
@@ -111,7 +108,7 @@ fun NextScheduleDetailsMain(
                     .height(30.dp)
                 )
 
-                NextSchedulesDetailsMap(service.value, line.value)
+                NextSchedulesDetailsMap(service.value, line)
 
                 Spacer(modifier = Modifier
                     .height(30.dp)

@@ -18,10 +18,8 @@ class Lines {
 
         //MARK: - GET
 
-        fun getAllLines(callback: (List<Line>) -> Unit) {
-            CoroutineScope(Dispatchers.IO).launch {
-                callback(lineDAO.getAllLines())
-            }
+        fun getAllLines(): List<Line> {
+            return lineDAO.getAllLines()
         }
 
         fun getAllLinesBySection(context: Context, forSchedules: Boolean = false, callback: (List<List<Line>>) -> Unit) {
@@ -73,10 +71,8 @@ class Lines {
             CoroutineScope(Dispatchers.IO).launch { callback(lineDAO.getChildLineIds(parentId)) }
         }
 
-        fun getLine(id: Int, callback: (Line) -> Unit) {
-            CoroutineScope(Dispatchers.IO).launch {
-                callback(lineDAO.getLine(id) ?: getEmptyLine())
-            }
+        fun getLine(id: Int): Line {
+            return lineDAO.getLine(id) ?: getEmptyLine()
         }
 
         fun getEmptyLine(): Line {

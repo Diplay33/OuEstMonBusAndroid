@@ -115,22 +115,18 @@ class Services {
             return servicesToReturn
         }
 
-        fun filterServicesBySearchText(services: ArrayList<List<Service>>, text: String, callback: (List<List<Service>>) -> Unit) {
+        fun filterServicesBySearchText(services: ArrayList<List<Service>>, text: String): List<List<Service>> {
             val REGEX_UNACCENT = "\\p{InCombiningDiacriticalMarks}+".toRegex()
             fun CharSequence.unaccent(): String {
                 val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
                 return REGEX_UNACCENT.replace(temp, "")
             }
 
-            Lines.getAllLines { allLines ->
-                callback(
-                    services.map { servicesSection ->
-                        servicesSection.filter { service ->
-                            val line = allLines.firstOrNull { it.id == service.lineId } ?: Lines.getEmptyLine()
-                            service.vehicle.parkId.contains(text.trim()) || line.name.lowercase().unaccent().contains(text.lowercase().unaccent().trim())
-                        }
-                    }
-                )
+            return services.map { servicesSection ->
+                servicesSection.filter { service ->
+                    val line = Lines.getAllLines().firstOrNull { it.id == service.lineId } ?: Lines.getEmptyLine()
+                    service.vehicle.parkId.contains(text.trim()) || line.name.lowercase().unaccent().contains(text.lowercase().unaccent().trim())
+                }
             }
         }
     }

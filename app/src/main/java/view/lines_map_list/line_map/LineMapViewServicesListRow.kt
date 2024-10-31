@@ -35,23 +35,14 @@ fun LineMapViewServicesListRow(
     selectedService: MutableState<Service?>,
     cameraPositionState: CameraPositionState,
 ) {
-    val line = remember {
-        mutableStateOf<Line?>(null)
-    }
-    val destination = remember {
-        mutableStateOf<Destination?>(null)
-    }
+    var line = Lines.getLine(service.lineId)
+    val destination = Destinations.getDestination(service.destination, service.lineId)
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(service) {
-        Lines.getLine(service.lineId) { returnedLine ->
-            returnedLine.parentId?.let { parentId ->
-                Lines.getLine(parentId) { line.value = it }
-                return@getLine
-            }
-            line.value = returnedLine
+        line.parentId?.let { parentId ->
+            line = Lines.getLine(parentId)
         }
-        Destinations.getDestination(service.destination, service.lineId) { destination.value = it }
     }
 
     Row(modifier = Modifier
@@ -65,14 +56,11 @@ fun LineMapViewServicesListRow(
                 shape = RoundedCornerShape(10.dp)
             )
             .background(
-                color = if (line.value == null)
-                    Color.Transparent
-                else
-                    Color(android.graphics.Color.parseColor(line.value?.colorHex)).copy(alpha = 0.2f),
+                color = Color(android.graphics.Color.parseColor(line.colorHex)).copy(alpha = 0.2f),
                 shape = RoundedCornerShape(10.dp)
             )
             .padding(horizontal = 15.dp)
-            .padding(top = 7.dp, bottom = if (destination.value == null) 7.dp else 5.dp)
+            .padding(top = 7.dp, bottom = if (destination == null) 7.dp else 5.dp)
             .fillMaxWidth()
             .clickable {
                 selectedService.value = service
@@ -97,7 +85,7 @@ fun LineMapViewServicesListRow(
                 )
 
                 Column {
-                    destination.value?.let { destination ->
+                    destination?.let { destination ->
                         Text(
                             text = destination.city,
                             fontSize = 13.sp,
@@ -110,11 +98,11 @@ fun LineMapViewServicesListRow(
                     }
 
                     Text(
-                        text = destination.value?.destination ?: service.destination,
+                        text = destination?.destination ?: service.destination,
                         fontSize = 18.sp,
                         color = if (colorScheme) Color.Black else Color.White,
                         modifier = Modifier
-                            .offset(y = if (destination.value == null) 0.dp else (-2).dp)
+                            .offset(y = if (destination == null) 0.dp else (-2).dp)
                     )
                 }
             }

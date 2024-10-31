@@ -47,9 +47,7 @@ fun FavoriteStopDetailMain(
     lineId: String?
 ) {
     val colorScheme = !isSystemInDarkTheme()
-    val line = remember {
-        mutableStateOf<Line?>(null)
-    }
+    val line = Lines.getLine((lineId ?: "0").toInt())
     val paths = remember {
         mutableStateListOf<Path>()
     }
@@ -82,26 +80,23 @@ fun FavoriteStopDetailMain(
     }
     val context = LocalContext.current
 
-    LaunchedEffect(stopName, line.value) {
-        Lines.getLine((lineId ?: "0").toInt()) { line.value = it }
-        line.value?.let { line ->
-            Paths.getOrderedPathsByLine(line.id) { orderedPaths ->
-                orderedPaths.forEach { returnedPaths ->
-                    Stations.getSortedStationsByPaths(returnedPaths) { stations ->
-                        if(stations.map { it.stationId }.contains(stopId.toString())) {
-                            paths.clear()
-                            paths.addAll(returnedPaths)
-                            destinations.clear()
-                            pathDirection.value = paths.first().direction
-                            if(pathDirection.value == "ALLER") {
-                                AllerDestinations.getListOfDestinations(lineId?.toInt() ?: 0) {
-                                    destinations.addAll(it)
-                                }
+    LaunchedEffect(stopName, line) {
+        Paths.getOrderedPathsByLine(line.id) { orderedPaths ->
+            orderedPaths.forEach { returnedPaths ->
+                Stations.getSortedStationsByPaths(returnedPaths) { stations ->
+                    if(stations.map { it.stationId }.contains(stopId.toString())) {
+                        paths.clear()
+                        paths.addAll(returnedPaths)
+                        destinations.clear()
+                        pathDirection.value = paths.first().direction
+                        if(pathDirection.value == "ALLER") {
+                            AllerDestinations.getListOfDestinations(lineId?.toInt() ?: 0) {
+                                destinations.addAll(it)
                             }
-                            else {
-                                RetourDestinations.getListOfDestinations(lineId?.toInt() ?: 0) {
-                                    destinations.addAll(it)
-                                }
+                        }
+                        else {
+                            RetourDestinations.getListOfDestinations(lineId?.toInt() ?: 0) {
+                                destinations.addAll(it)
                             }
                         }
                     }
@@ -114,20 +109,18 @@ fun FavoriteStopDetailMain(
             mapMarkers.add(stationMarker.value)
         }
         while(true) {
-            line.value?.let { line ->
-                NextSchedules.getNextSchedulesByStationId(stopId.toString()) { nextSchedules ->
-                    capFilteredNextSchedules.clear()
-                    nextSchedules.forEach { ns ->
-                        if(capFilteredNextSchedules.size < 5 && ns.lineId == line.id) {
-                            capFilteredNextSchedules.add(ns)
-                        }
+            NextSchedules.getNextSchedulesByStationId(stopId.toString()) { nextSchedules ->
+                capFilteredNextSchedules.clear()
+                nextSchedules.forEach { ns ->
+                    if(capFilteredNextSchedules.size < 5 && ns.lineId == line.id) {
+                        capFilteredNextSchedules.add(ns)
                     }
-                    isLoading.value = false
+                }
+                isLoading.value = false
 
-                    NSchedulesMapMarkers.retrieveVehicles(context, line.id, capFilteredNextSchedules.map { it.vehicleId ?: 0 }) { vehicles ->
-                        mapMarkers.clear()
-                        mapMarkers.addAll(vehicles + listOf(stationMarker.value))
-                    }
+                NSchedulesMapMarkers.retrieveVehicles(context, line.id, capFilteredNextSchedules.map { it.vehicleId ?: 0 }) { vehicles ->
+                    mapMarkers.clear()
+                    mapMarkers.addAll(vehicles + listOf(stationMarker.value))
                 }
             }
             delay(10000)
@@ -135,23 +128,21 @@ fun FavoriteStopDetailMain(
     }
 
     LaunchedEffect(pathDirection.value) {
-        line.value?.let { line ->
-            if(pathDirection.value != "") {
-                Paths.getOrderedPathsByLine(line.id, true) { returnedPaths ->
-                    returnedPaths[if (pathDirection.value == "ALLER") 0 else 1].forEach { path ->
-                        pathsCoordinates.addAll(
-                            path.coordinates.map { coordinates ->
-                                coordinates.map { LatLng(it[1], it[0]) }
-                            }
-                        )
-                    }
+        if(pathDirection.value != "") {
+            Paths.getOrderedPathsByLine(line.id, true) { returnedPaths ->
+                returnedPaths[if (pathDirection.value == "ALLER") 0 else 1].forEach { path ->
+                    pathsCoordinates.addAll(
+                        path.coordinates.map { coordinates ->
+                            coordinates.map { LatLng(it[1], it[0]) }
+                        }
+                    )
                 }
             }
         }
     }
 
     Scaffold(topBar = {
-        NextLineSchedulesTopBar(navController, stopId.toString(), stopName.toString(), line.value)
+        NextLineSchedulesTopBar(navController, stopId.toString(), stopName.toString(), line)
     }) { padding ->
         LazyColumn(modifier = Modifier
             .padding(padding)
@@ -159,25 +150,25 @@ fun FavoriteStopDetailMain(
             .background(if (colorScheme) Color.White else Color.Black)
         ) {
             item {
-                NextLineSchedulesHeader(line.value, paths, destinations)
+                NextLineSchedulesHeader(line, paths, destinations)
 
                 Spacer(modifier = Modifier
                     .height(30.dp)
                 )
 
-                NextLineSchedulesView(capFilteredNextSchedules, line.value, isLoading.value, focusedVehicle)
+                NextLineSchedulesView(capFilteredNextSchedules, line, isLoading.value, focusedVehicle)
 
                 Spacer(modifier = Modifier
                     .height(30.dp)
                 )
 
-                NextLineSchedulesMap(station.value, line.value, mapMarkers, focusedVehicle, navController, pathsCoordinates)
+                NextLineSchedulesMap(station.value, line, mapMarkers, focusedVehicle, navController, pathsCoordinates)
 
                 Spacer(modifier = Modifier
                     .height(30.dp)
                 )
 
-                NextLineSchedulesSchdlGroup(navController, line.value, stopId, stopName, pathDirection.value)
+                NextLineSchedulesSchdlGroup(navController, line, stopId, stopName, pathDirection.value)
             }
         }
     }

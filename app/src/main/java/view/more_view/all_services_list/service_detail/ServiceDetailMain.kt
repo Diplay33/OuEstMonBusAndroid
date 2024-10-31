@@ -34,9 +34,7 @@ fun ServiceDetailMain(
     stateTime: String?,
     pathId: String?
 ) {
-    val line = remember {
-        mutableStateOf<Line?>(null)
-    }
+    val line = Lines.getLine(lineId?.toInt() ?: 0)
     val vehicle = Vehicles.getVehicle(vehicleId ?: "")
     val colorScheme = !isSystemInDarkTheme()
     val context = LocalContext.current
@@ -49,10 +47,6 @@ fun ServiceDetailMain(
         storeChosenNetwork.chosenNetwork.collect { network.value = it ?: "" }
     }
 
-    LaunchedEffect(lineId) {
-        Lines.getLine(lineId?.toInt() ?: 0) { line.value = it }
-    }
-
     Scaffold(topBar = { ServiceDetailTopBar(vehicle.parkId, navController) }) { padding ->
         Column(modifier = Modifier
             .fillMaxHeight()
@@ -60,13 +54,13 @@ fun ServiceDetailMain(
             .padding(padding)
             .background(if (colorScheme) Color.White else Color.Black)
         ) {
-            ServiceDetailHeader(line = line.value, destination ?: "")
+            ServiceDetailHeader(line = line, destination ?: "")
 
             Spacer(modifier = Modifier
                 .height(30.dp)
             )
 
-            ServiceDetailVehicleRow(vehicle.fullName, line.value?.name ?: "")
+            ServiceDetailVehicleRow(vehicle.fullName, line.name)
 
             Spacer(modifier = Modifier
                 .height(10.dp)
@@ -87,7 +81,7 @@ fun ServiceDetailMain(
             )
 
             ServiceDetailMapRow(
-                line = line.value,
+                line = line,
                 stationId = stationId ?: "",
                 latitude = latitude?.toDouble() ?: 0.0,
                 longitude = longitude?.toDouble() ?: 0.0,

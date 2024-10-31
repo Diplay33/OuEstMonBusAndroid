@@ -32,9 +32,7 @@ import java.util.*
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun LineMapViewMain(navController: NavController, lineId: String?) {
-    val line = remember {
-        mutableStateOf<Line?>(null)
-    }
+    val line = Lines.getLine((lineId ?: "0").toInt())
     val services = remember {
         mutableStateListOf<Service>()
     }
@@ -91,7 +89,7 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
                     isLoading = isLoading.value,
                     refreshDate = refreshDate.value,
                     selectedService = selectedService,
-                    line = line.value,
+                    line = line,
                     cameraPositionState = cameraPositionState
                 )
             },
@@ -108,46 +106,41 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
             backgroundColor = if (colorScheme) Color.White else Color.Black
         ) { padding ->
             LaunchedEffect(lineId, network.value) {
-                Lines.getLine((lineId ?: "0").toInt()) { returnedLine ->
-                    line.value = returnedLine
-                    if(network.value == "tbm") {
-                        ProgrammedMessages.getNumberOfMessagesByLine(returnedLine.id.toString()) { count ->
-                            programmedMessagesCount.value = count
-                        }
+                if(network.value == "tbm") {
+                    ProgrammedMessages.getNumberOfMessagesByLine(line.id.toString()) { count ->
+                        programmedMessagesCount.value = count
                     }
-                    if(!returnedLine.isNest && network.value == "tbm") {
-                        Paths.getOrderedPathsByLine(returnedLine.id, true) { paths ->
-                            paths.forEach { backAndForthPaths ->
-                                backAndForthPaths.forEach { path ->
-                                    pathsCoordinates.addAll(
-                                        path.coordinates.map { coordinates ->
-                                            coordinates.map { LatLng(it[1], it[0]) }
-                                        }
-                                    )
-                                }
+                }
+                if(!line.isNest && network.value == "tbm") {
+                    Paths.getOrderedPathsByLine(line.id, true) { paths ->
+                        paths.forEach { backAndForthPaths ->
+                            backAndForthPaths.forEach { path ->
+                                pathsCoordinates.addAll(
+                                    path.coordinates.map { coordinates ->
+                                        coordinates.map { LatLng(it[1], it[0]) }
+                                    }
+                                )
                             }
                         }
                     }
                 }
             }
 
-            LaunchedEffect(line.value, network.value) {
+            LaunchedEffect(line, network.value) {
                 if(network.value.isNotEmpty()) {
                     while(true) {
-                        if(line.value?.isNest == true) {
-                            line.value?.id?.let { lineId ->
-                                Lines.getChildLineIds(lineId) { childLineIds ->
-                                    Services.getServicesFilteredBy(context, network.value, childLineIds) { returnedServices ->
-                                        services.clear()
-                                        services.addAll(returnedServices)
-                                        isLoading.value = false
-                                        refreshDate.value = Calendar.getInstance().time
-                                    }
+                        if(line.isNest) {
+                            Lines.getChildLineIds(line.id) { childLineIds ->
+                                Services.getServicesFilteredBy(context, network.value, childLineIds) { returnedServices ->
+                                    services.clear()
+                                    services.addAll(returnedServices)
+                                    isLoading.value = false
+                                    refreshDate.value = Calendar.getInstance().time
                                 }
                             }
                         }
                         else {
-                            Services.getServicesByLine(context, network.value, line.value?.id ?: 0) { returnedServices ->
+                            Services.getServicesByLine(context, network.value, line.id) { returnedServices ->
                                 services.clear()
                                 services.addAll(returnedServices)
                                 isLoading.value = false
@@ -164,7 +157,7 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
             ) {
                 LineMapView(
                     services = services,
-                    line = line.value,
+                    line = line,
                     selectedService = selectedService,
                     cameraPositionState = cameraPositionState,
                     isUserLocationShown = isUserLocationShown.value,
@@ -172,7 +165,7 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
                     pathsCoordinates = pathsCoordinates
                 )
 
-                LineMapViewTopBar(navController, line.value, isUserLocationShown, cameraPositionState, userPosition)
+                LineMapViewTopBar(navController, line, isUserLocationShown, cameraPositionState, userPosition)
             }
         }
 
