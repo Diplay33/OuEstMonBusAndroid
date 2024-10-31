@@ -5,9 +5,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,6 +19,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.diplay.ouestmonbus.BuildConfig
 import kotlinx.coroutines.delay
@@ -33,24 +37,27 @@ fun AllServicesListMain(
     state: AllServicesListSearchState = rememberSearchState(),
     navController: NavController
 ) {
-    val filteredServices = remember {
+    val filteredServices = rememberSaveable {
         mutableStateOf<ArrayList<List<Service>>>(arrayListOf())
     }
-    val isLoading = remember {
+    val isLoading = rememberSaveable {
         mutableStateOf(true)
     }
-    val refreshDate = remember {
+    val refreshDate = rememberSaveable {
         mutableStateOf(Calendar.getInstance().time)
     }
     val formatter = SimpleDateFormat("HH:mm")
     val colorScheme = !isSystemInDarkTheme()
-    val totalServicesCount = remember {
+    val totalServicesCount = rememberSaveable {
         mutableIntStateOf(0)
     }
     val context = LocalContext.current
     val storeChosenNetwork = StoreChosenNetwork(context)
-    val network = remember {
+    val network = rememberSaveable {
         mutableStateOf("")
+    }
+    val listState = rememberSaveable(saver = LazyListState.Saver) {
+        LazyListState()
     }
 
     LaunchedEffect(Unit) {
@@ -90,25 +97,27 @@ fun AllServicesListMain(
                     state.searching = true
                     delay(100)
                     state.searching = false
-                    Services.filterServicesBySearchText(filteredServices.value, state.query.text) { results ->
-                        state.searchResults = results
-                    }
+                    println(totalServicesCount)
+                    state.searchResults = Services.filterServicesBySearchText(filteredServices.value, state.query.text)
                 }
 
                 when(state.searchDisplay) {
                     SearchDisplay.INITIALRESULTS -> {
-                        val collapsedGroupHandler: MutableList<Boolean> = state.searchResults.map {
+                        val collapsedGroupHandler: MutableList<Boolean> = filteredServices.value.map {
                             false
                         }.toMutableList()
 
-                        LazyColumn(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-                            .fillMaxWidth()
+                        LazyColumn(
+                            state = listState,
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier
+                                .fillMaxWidth()
                         ) {
-                            if(state.searchResults.size == collapsedGroupHandler.size) {
-                                items(state.searchResults.size) { groupIndex ->
-                                    if(state.searchResults[groupIndex].isNotEmpty()) {
+                            if(filteredServices.value.size == collapsedGroupHandler.size) {
+                                items(filteredServices.value.size) { groupIndex ->
+                                    if(filteredServices.value[groupIndex].isNotEmpty()) {
                                         AllServicesListGroup(
-                                            services = state.searchResults[groupIndex],
+                                            services = filteredServices.value[groupIndex],
                                             navController = navController,
                                             collapsedGroupHandler = collapsedGroupHandler,
                                             groupIndex = groupIndex
@@ -158,8 +167,11 @@ fun AllServicesListMain(
                             false
                         }.toMutableList()
 
-                        LazyColumn(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
-                            .fillMaxWidth()
+                        LazyColumn(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            state = listState,
+                            modifier = Modifier
+                                .fillMaxWidth()
                         ) {
                             var servicesCount = 0
                             state.searchResults.forEach { servicesCount += it.size }

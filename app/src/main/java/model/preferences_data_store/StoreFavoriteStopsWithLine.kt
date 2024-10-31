@@ -29,12 +29,10 @@ class StoreFavoriteStopsWithLine(private val context: Context) {
     suspend fun checkMaxStopCountReached(callback: (Boolean) -> Unit) {
         context.dataStore.data.collect { preferences ->
             val favoriteStopsSet = mutableSetOf<String>()
-            Lines.getAllLines { allLines ->
-                allLines.forEach {  line ->
-                    favoriteStopsSet.addAll(preferences[stringSetPreferencesKey(line.id.toString())]?.toList() ?: listOf())
-                }
-                callback(favoriteStopsSet.count() >= 10 )
+            Lines.getAllLines().forEach {  line ->
+                favoriteStopsSet.addAll(preferences[stringSetPreferencesKey(line.id.toString())]?.toList() ?: listOf())
             }
+            callback(favoriteStopsSet.count() >= 10 )
         }
     }
 

@@ -31,7 +31,7 @@ import view.more_view.all_services_list.service_detail.*
 import java.util.Date
 
 @Composable
-fun LineMapViewServiceDetail(selectedService: MutableState<Service?>, line: Line?) {
+fun LineMapViewServiceDetail(selectedService: MutableState<Service?>, line: Line) {
     val service = selectedService.value ?: Service(
         id = 0,
         vehicleId = 0,

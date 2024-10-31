@@ -34,26 +34,21 @@ fun NextSchedulesHomeViewFavoritesGroup(navController: NavController) {
     val isLoading = remember {
         mutableStateOf(false)
     }
-    val lines = remember {
-        mutableStateListOf<Line>()
-    }
+    val lines = Lines.getAllLines()
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect("a") {
         favoriteStopsSet.clear()
 
-        Lines.getAllLines { allLines ->
-            lines.addAll(allLines)
-            allLines.forEach { line ->
-                scope.launch {
-                    storeFavStopsWithLine.getFavoriteStopsForLine(line.id.toString()) { set ->
-                        favoriteStopsWithLine[line.id.toString()] = set.toList()
-                        set.forEach { stationId ->
-                            isLoading.value = true
-                            Stations.getStationByStationId(stationId) { station ->
-                                favoriteStopsSet.add(station)
-                                isLoading.value = false
-                            }
+        lines.forEach { line ->
+            scope.launch {
+                storeFavStopsWithLine.getFavoriteStopsForLine(line.id.toString()) { set ->
+                    favoriteStopsWithLine[line.id.toString()] = set.toList()
+                    set.forEach { stationId ->
+                        isLoading.value = true
+                        Stations.getStationByStationId(stationId) { station ->
+                            favoriteStopsSet.add(station)
+                            isLoading.value = false
                         }
                     }
                 }

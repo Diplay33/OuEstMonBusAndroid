@@ -15,6 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -33,27 +34,20 @@ import view.Screens.PlusScreens
 
 @Composable
 fun AllServicesListRow(service: Service, navController: NavController) {
-    val line = remember {
-        mutableStateOf<Line?>(null)
-    }
-    val destination = remember {
-        mutableStateOf<Destination?>(null)
-    }
+    var line = Lines.getLine(service.lineId)
+    val destination = Destinations.getDestination(service.destination, service.lineId)
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(service) {
-        Lines.getLine(service.lineId) { returnedLine ->
-            if(returnedLine.parentId != null) {
-                Lines.getLine(returnedLine.parentId ?: 0) {
-                    it.name = returnedLine.name
-                    line.value = it
-                }
-            }
-            else {
-                line.value = returnedLine
-            }
+        val tempLine = Lines.getLine(service.lineId)
+        if(tempLine.parentId != null) {
+            val childLine = Lines.getLine(tempLine.parentId ?: 0)
+            childLine.name = tempLine.name
+            line = childLine
         }
-        Destinations.getDestination(service.destination, service.lineId) { destination.value = it }
+        else {
+            line = tempLine
+        }
     }
 
     Row(modifier = Modifier
@@ -67,19 +61,19 @@ fun AllServicesListRow(service: Service, navController: NavController) {
                 shape = RoundedCornerShape(10.dp)
             )
             .background(
-                color = if (line.value == null)
+                color = if (line == null)
                     Color.Transparent
                 else
-                    Color(android.graphics.Color.parseColor(line.value?.colorHex)).copy(alpha = 0.2f),
+                    Color(android.graphics.Color.parseColor(line?.colorHex)).copy(alpha = 0.2f),
                 shape = RoundedCornerShape(10.dp)
             )
             .padding(horizontal = 15.dp)
-            .padding(top = 7.dp, bottom = if (destination.value == null) 7.dp else 5.dp)
+            .padding(top = 7.dp, bottom = if (destination == null) 7.dp else 5.dp)
             .fillMaxWidth()
             .clickable {
                 navController.navigate(
                     PlusScreens.ServiceDetail.withArgs(
-                        line.value?.id.toString(),
+                        line.id.toString(),
                         service.vehicleId.toString(),
                         service.destination,
                         service.latitude.toString(),
@@ -95,7 +89,7 @@ fun AllServicesListRow(service: Service, navController: NavController) {
         ) {
             Column {
                 Row {
-                    if(line.value?.name == "Ligne inconnue") {
+                    if(line?.name == "Ligne inconnue") {
                         Image(
                             painter = painterResource(id = R.drawable.question_mark_box),
                             contentDescription = null,
@@ -107,7 +101,7 @@ fun AllServicesListRow(service: Service, navController: NavController) {
                     else {
                         AsyncImage(
                             model = ImageRequest.Builder(LocalContext.current)
-                                .data(line.value?.imageUrl)
+                                .data(line?.imageUrl)
                                 .decoderFactory(SvgDecoder.Factory())
                                 .build(),
                             contentDescription = null,
@@ -122,7 +116,7 @@ fun AllServicesListRow(service: Service, navController: NavController) {
                     )
 
                     Text(
-                        text = line.value?.name ?: "",
+                        text = line?.name ?: "",
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
                         color = if (colorScheme) Color.Black else Color.White,
@@ -142,7 +136,7 @@ fun AllServicesListRow(service: Service, navController: NavController) {
                     )
 
                     Column {
-                        destination.value?.let { destination ->
+                        destination?.let { destination ->
                             Text(
                                 text = destination.city,
                                 fontSize = 13.sp,
@@ -155,11 +149,11 @@ fun AllServicesListRow(service: Service, navController: NavController) {
                         }
 
                         Text(
-                            text = destination.value?.destination ?: service.destination,
+                            text = destination?.destination ?: service.destination,
                             fontSize = 18.sp,
                             color = if (colorScheme) Color.Black else Color.White,
                             modifier = Modifier
-                                .offset(y = if (destination.value == null) 0.dp else (-2).dp)
+                                .offset(y = if (destination == null) 0.dp else (-2).dp)
                         )
                     }
                 }
