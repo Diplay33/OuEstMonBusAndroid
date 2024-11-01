@@ -32,7 +32,7 @@ import view.lines_map_list.line_map.MapStyle
 
 @Composable
 fun ServiceDetailMapRow(
-    line: Line?,
+    line: Line,
     stationId: String,
     latitude: Double,
     longitude: Double,
@@ -71,28 +71,30 @@ fun ServiceDetailMapRow(
     }
 
     LaunchedEffect(Unit) {
-        storeChosenNetwork.chosenNetwork.collect { network.value = it ?: "" }
+        storeChosenNetwork.chosenNetwork.collect {
+            network.value = it ?: ""
+
+            if(it == "tbm") {
+                Paths.getPath(pathId?.toInt() ?: 0, true) { returnedPath ->
+                    returnedPath?.let { nonNullPath ->
+                        pathCoordinates.addAll(
+                            nonNullPath.coordinates.map { coordinates ->
+                                coordinates.map { LatLng(it[1], it[0]) }
+                            }
+                        )
+                    }
+                }
+            }
+        }
     }
 
-    LaunchedEffect(line?.name) {
+    LaunchedEffect(line.name) {
         if(stationId == "") {
             station.value = Station(0, "", "Arrêt inconnu",  0.0, 0.0)
         }
         else {
             Stations.getStationById(stationId) { returnedStation ->
                 station.value = returnedStation
-            }
-        }
-
-        if(network.value == "tbm") {
-            Paths.getPath(pathId?.toInt() ?: 0, true) { returnedPath ->
-                returnedPath?.let { nonNullPath ->
-                    pathCoordinates.addAll(
-                        nonNullPath.coordinates.map { coordinates ->
-                            coordinates.map { LatLng(it[1], it[0]) }
-                        }
-                    )
-                }
             }
         }
     }
@@ -113,7 +115,7 @@ fun ServiceDetailMapRow(
             ) {
                 Marker(
                     state = MarkerState(position = LatLng(latitude, longitude)),
-                    icon = bitmapDescriptor(LocalContext.current, when(line?.name) {
+                    icon = bitmapDescriptor(LocalContext.current, when(line.name) {
                         "Tram A" -> R.drawable.map_logo_tram
                         "Tram B" -> R.drawable.map_logo_tram
                         "Tram C" -> R.drawable.map_logo_tram
@@ -124,10 +126,10 @@ fun ServiceDetailMapRow(
                 )
 
                 pathCoordinates.forEach { coordinates ->
-                    Polyline(points = coordinates, color = if (line == null)
-                        Color.Transparent
-                    else
-                        Color(android.graphics.Color.parseColor(line.colorHex)))
+                    Polyline(
+                        points = coordinates,
+                        color = Color(android.graphics.Color.parseColor(line.colorHex))
+                    )
                 }
             }
         }
