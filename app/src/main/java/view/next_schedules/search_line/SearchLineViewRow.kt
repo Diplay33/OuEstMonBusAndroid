@@ -221,10 +221,8 @@ fun SearchLineViewRow(
                 DropdownMenuItem(onClick = {
                     scope.launch {
                         storeFavLines.removeFromFavorites(line.id.toString())
-                        Lines.getAllLinesBySection(context, true) {
-                            linesByGroup.clear()
-                            linesByGroup.addAll(it)
-                        }
+                        linesByGroup.clear()
+                        linesByGroup.addAll(Lines.getAllLinesBySection(context, true))
                     }
                     menuShown.value = false
                 }) {
@@ -254,10 +252,8 @@ fun SearchLineViewRow(
                 DropdownMenuItem(onClick = {
                     scope.launch {
                         storeFavLines.saveFavoriteLine(line.id.toString())
-                        Lines.getAllLinesBySection(context, true) {
-                            linesByGroup.clear()
-                            linesByGroup.addAll(it)
-                        }
+                        linesByGroup.clear()
+                        linesByGroup.addAll(Lines.getAllLinesBySection(context, true))
                     }
                     menuShown.value = false
                 }) {

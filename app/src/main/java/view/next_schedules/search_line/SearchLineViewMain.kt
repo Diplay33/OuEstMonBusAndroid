@@ -75,7 +75,7 @@ fun SearchLineViewMain(
             LaunchedEffect(state.query.text, network.value) {
                 if(network.value.isNotEmpty()) {
                     linesBySection.clear()
-                    Lines.getAllLinesBySection(context, true) { linesBySection.addAll(it) }
+                    linesBySection.addAll(Lines.getAllLinesBySection(context, true))
                     Services.getAllServices(context, network.value, true) { values ->
                         allServices.clear()
                         allServices.addAll(values)

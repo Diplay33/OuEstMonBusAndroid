@@ -26,7 +26,7 @@ import view.advert_view.AdvertView
 fun LinesMapListGroup(
     lines: List<Line>,
     isFavorite: Boolean,
-    linesByGroup: SnapshotStateList<List<Line>>,
+    linesByGroup: MutableState<MutableList<List<Line>>>,
     navController: NavController,
     services: MutableList<Service>,
     isLoading: MutableState<Boolean>,
@@ -72,7 +72,7 @@ fun LinesMapListGroup(
                         clickRowLine = true
                     )
 
-                    if(line == lines.last() && lines != linesByGroup.last()) {
+                    if(line == lines.last() && lines != linesByGroup.value.last()) {
                         Spacer(modifier = Modifier
                             .size(25.dp)
                         )
