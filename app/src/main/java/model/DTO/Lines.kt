@@ -22,32 +22,30 @@ class Lines {
             return lineDAO.getAllLines()
         }
 
-        fun getAllLinesBySection(context: Context, forSchedules: Boolean = false, callback: (List<List<Line>>) -> Unit) {
-            CoroutineScope(Dispatchers.IO).launch {
-                val lines = if (forSchedules)
-                    lineDAO.getAllLinesForSchedules().sortedBy { it.index }
-                else
-                    lineDAO.getAllLines().sortedBy { it.index }
-                val listSectionSet = lines.map { it.section }.toSet().toList().filterNotNull()
-                val linesBySection: ArrayList<ArrayList<Line>> = ArrayList(listSectionSet.map { arrayListOf() })
-                linesBySection.add(arrayListOf())
+        fun getAllLinesBySection(context: Context, forSchedules: Boolean = false): List<List<Line>> {
+            val lines = if (forSchedules)
+                lineDAO.getAllLinesForSchedules().sortedBy { it.index }
+            else
+                lineDAO.getAllLines().sortedBy { it.index }
+            val listSectionSet = lines.map { it.section }.toSet().toList().filterNotNull()
+            val linesBySection: ArrayList<ArrayList<Line>> = ArrayList(listSectionSet.map { arrayListOf() })
+            linesBySection.add(arrayListOf())
 
-                lines.forEach { line ->
-                    runBlocking(Dispatchers.IO) {
-                        if(StoreFavoriteLines(context, line.id.toString()).isFavorite.first()!!) {
-                            linesBySection[0].add(line)
-                        }
-                    }
-
-                    for(i in 0 until listSectionSet.count()) {
-                        if(line.section == listSectionSet[i]) {
-                            linesBySection[i + 1].add(line)
-                        }
+            lines.forEach { line ->
+                runBlocking(Dispatchers.IO) {
+                    if(StoreFavoriteLines(context, line.id.toString()).isFavorite.first()!!) {
+                        linesBySection[0].add(line)
                     }
                 }
 
-                callback(linesBySection)
+                for(i in 0 until listSectionSet.count()) {
+                    if(line.section == listSectionSet[i]) {
+                        linesBySection[i + 1].add(line)
+                    }
+                }
             }
+
+            return linesBySection
         }
 
         fun getLinesBySearchText(searchText: String, forSchedules: Boolean = false, callback: (List<Line>) -> Unit) {

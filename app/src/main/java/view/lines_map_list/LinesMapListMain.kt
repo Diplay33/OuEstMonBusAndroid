@@ -5,10 +5,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,28 +33,31 @@ fun LinesMapListMain(
     refreshLinesAction: String?
 ) {
     val context = LocalContext.current
-    val linesBySection = remember {
-        mutableStateListOf<List<Line>>()
+    val linesBySection = rememberSaveable {
+        mutableStateOf(Lines.getAllLinesBySection(context).toMutableList())
     }
     val colorScheme = !isSystemInDarkTheme()
-    val allServices = remember {
-        mutableStateListOf<Service>()
+    val allServices = rememberSaveable {
+        mutableStateOf<ArrayList<Service>>(arrayListOf())
     }
-    val isLoading = remember {
+    val isLoading = rememberSaveable {
         mutableStateOf(true)
     }
     val programmedMessages = remember {
         mutableStateListOf<ProgrammedMessage>()
     }
-    val searchText = remember {
+    val searchText = rememberSaveable {
         mutableStateOf("")
     }
-    val index = remember {
+    val index = rememberSaveable {
         mutableStateOf(0)
     }
     val storeChosenNetwork = StoreChosenNetwork(context)
-    val network = remember {
+    val network = rememberSaveable {
         mutableStateOf("")
+    }
+    val listState = rememberSaveable(saver = LazyListState.Saver) {
+        LazyListState()
     }
 
     LaunchedEffect(Unit) {
@@ -80,8 +85,8 @@ fun LinesMapListMain(
                 if(network.value.isNotEmpty()) {
                     while(true) {
                         Services.getAllServices(context, network.value, true) {
-                            allServices.clear()
-                            allServices.addAll(it)
+                            allServices.value.clear()
+                            allServices.value.addAll(it)
                             isLoading.value = false
                         }
                         delay(30000)
@@ -92,10 +97,8 @@ fun LinesMapListMain(
             LaunchedEffect(refreshLinesAction) {
                 refreshLinesAction?.let { action ->
                     if(action == "reload") {
-                        Lines.getAllLinesBySection(context) {
-                            linesBySection.clear()
-                            linesBySection.addAll(it)
-                        }
+                        linesBySection.value.clear()
+                        linesBySection.value.addAll(Lines.getAllLinesBySection(context))
                     }
                 }
             }
@@ -103,10 +106,6 @@ fun LinesMapListMain(
             LaunchedEffect(state.query.text, network.value) {
                 searchText.value = state.query.text
                 index.value = 0
-                Lines.getAllLinesBySection(context) {
-                    linesBySection.clear()
-                    linesBySection.addAll(it)
-                }
                 if(network.value == "tbm") {
                     ProgrammedMessages.getAllProgrammedMessages { values ->
                         programmedMessages.clear()
@@ -121,16 +120,16 @@ fun LinesMapListMain(
 
             when(state.searchDisplay) {
                 SearchDisplay.INITIALRESULTS -> {
-                    LazyColumn(modifier = Modifier
+                    LazyColumn(state = listState, modifier = Modifier
                         .background(if (colorScheme) Color.White else Color.Black)
                     ) {
-                        items(linesBySection.size) { index ->
+                        items(linesBySection.value.size) { index ->
                             LinesMapListGroup(
-                                lines = linesBySection[index],
-                                isFavorite = linesBySection[0].containsAll(linesBySection[index]) && linesBySection[0].isNotEmpty(),
+                                lines = linesBySection.value[index],
+                                isFavorite = linesBySection.value[0].containsAll(linesBySection.value[index]) && linesBySection.value[0].isNotEmpty(),
                                 linesByGroup = linesBySection,
                                 navController = navController,
-                                services = allServices,
+                                services = allServices.value,
                                 isLoading = isLoading,
                                 programmedMessages = programmedMessages
                             )
@@ -165,7 +164,7 @@ fun LinesMapListMain(
                                 rowLine = line,
                                 linesByGroup = linesBySection,
                                 navController = navController,
-                                services = allServices,
+                                services = allServices.value,
                                 isLoading = isLoading,
                                 programmedMessagesCount = programmedMessages
                                     .filter { it.lineId == line.id }

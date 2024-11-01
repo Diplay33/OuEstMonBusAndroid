@@ -39,7 +39,7 @@ import view.Screens.CartesScreens
 @Composable
 fun LinesMapListRow(
     rowLine: Line,
-    linesByGroup: SnapshotStateList<List<Line>>,
+    linesByGroup: MutableState<MutableList<List<Line>>>,
     navController: NavController,
     services: MutableList<Service>,
     isLoading: MutableState<Boolean>,
@@ -210,10 +210,8 @@ fun LinesMapListRow(
                 DropdownMenuItem(onClick = {
                     scope.launch {
                         storeFavLines.removeFromFavorites(rowLine.id.toString())
-                        Lines.getAllLinesBySection(context) {
-                            linesByGroup.clear()
-                            linesByGroup.addAll(it)
-                        }
+                        linesByGroup.value.clear()
+                        linesByGroup.value.addAll(Lines.getAllLinesBySection(context))
                     }
                     menuShown.value = false
                 }) {
@@ -243,10 +241,8 @@ fun LinesMapListRow(
                 DropdownMenuItem(onClick = {
                     scope.launch {
                         storeFavLines.saveFavoriteLine(rowLine.id.toString())
-                        Lines.getAllLinesBySection(context) {
-                            linesByGroup.clear()
-                            linesByGroup.addAll(it)
-                        }
+                        linesByGroup.value.clear()
+                        linesByGroup.value.addAll(Lines.getAllLinesBySection(context))
                     }
                     menuShown.value = false
                 }) {
