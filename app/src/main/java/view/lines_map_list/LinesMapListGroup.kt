@@ -28,7 +28,7 @@ fun LinesMapListGroup(
     isFavorite: Boolean,
     linesByGroup: MutableState<MutableList<List<Line>>>,
     navController: NavController,
-    services: MutableList<Service>,
+    services: MutableState<MutableList<Service>>,
     isLoading: MutableState<Boolean>,
     programmedMessages: List<ProgrammedMessage>
 ) {

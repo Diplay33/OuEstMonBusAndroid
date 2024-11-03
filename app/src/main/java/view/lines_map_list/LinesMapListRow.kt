@@ -41,14 +41,14 @@ fun LinesMapListRow(
     rowLine: Line,
     linesByGroup: MutableState<MutableList<List<Line>>>,
     navController: NavController,
-    services: MutableList<Service>,
+    services: MutableState<MutableList<Service>>,
     isLoading: MutableState<Boolean>,
     programmedMessagesCount: Int,
     clickRowLine: Boolean,
     index: Int = 0,
     searchText: MutableState<String> = mutableStateOf("")
 ) {
-    val serviceCount = services.filter { it.lineId == rowLine.id }.size
+    val serviceCount = services.value.filter { it.lineId == rowLine.id }.size
     val nestServicesCount = remember {
         mutableStateOf(0)
     }
@@ -67,7 +67,7 @@ fun LinesMapListRow(
     LaunchedEffect(isLoading.value) {
         if(rowLine.isNest) {
             Lines.getChildLineIds(rowLine.id) { childLineIds ->
-                nestServicesCount.value = services.filter { childLineIds.contains(it.lineId) }.size
+                nestServicesCount.value = services.value.filter { childLineIds.contains(it.lineId) }.size
             }
         }
     }

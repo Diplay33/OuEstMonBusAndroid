@@ -38,7 +38,7 @@ fun LinesMapListMain(
     }
     val colorScheme = !isSystemInDarkTheme()
     val allServices = rememberSaveable {
-        mutableStateOf<ArrayList<Service>>(arrayListOf())
+        mutableStateOf<MutableList<Service>>(arrayListOf())
     }
     val isLoading = rememberSaveable {
         mutableStateOf(true)
@@ -85,7 +85,7 @@ fun LinesMapListMain(
                 if(network.value.isNotEmpty()) {
                     while(true) {
                         Services.getAllServices(context, network.value, true) {
-                            allServices.value.clear()
+                            allServices.value = mutableListOf()
                             allServices.value.addAll(it)
                             isLoading.value = false
                         }
@@ -129,7 +129,7 @@ fun LinesMapListMain(
                                 isFavorite = linesBySection.value[0].containsAll(linesBySection.value[index]) && linesBySection.value[0].isNotEmpty(),
                                 linesByGroup = linesBySection,
                                 navController = navController,
-                                services = allServices.value,
+                                services = allServices,
                                 isLoading = isLoading,
                                 programmedMessages = programmedMessages
                             )
@@ -164,7 +164,7 @@ fun LinesMapListMain(
                                 rowLine = line,
                                 linesByGroup = linesBySection,
                                 navController = navController,
-                                services = allServices.value,
+                                services = allServices,
                                 isLoading = isLoading,
                                 programmedMessagesCount = programmedMessages
                                     .filter { it.lineId == line.id }
