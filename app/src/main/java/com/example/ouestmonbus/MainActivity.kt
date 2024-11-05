@@ -36,6 +36,10 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.diplay.ouestmonbus.ui.theme.OùEstMonBusTheme
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.android.ump.ConsentForm
+import com.google.android.ump.ConsentInformation
+import com.google.android.ump.ConsentRequestParameters
+import com.google.android.ump.UserMessagingPlatform
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.postgrest.from
@@ -85,8 +89,15 @@ import view.whats_new_view.WhatsNewViewMain
 import view.whats_new_view.network_picker.NetworkPickerMain
 
 class MainActivity : ComponentActivity() {
+    private lateinit var consentInformation: ConsentInformation
+    private var consentForm: ConsentForm? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if(!BuildConfig.DEBUG) {
+            consentInformation = UserMessagingPlatform.getConsentInformation(this)
+            requestConsent()
+        }
         setContent {
             val context = LocalContext.current
             val scope = rememberCoroutineScope()
@@ -371,6 +382,27 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    private fun requestConsent() {
+        val params = ConsentRequestParameters.Builder()
+            .setTagForUnderAgeOfConsent(false)
+            .build()
+
+        consentInformation.requestConsentInfoUpdate(this, params, {
+            if(consentInformation.isConsentFormAvailable) {
+                loadConsentForm()
+            }
+        }, { println("error ump consent: $it") })
+    }
+
+    private fun loadConsentForm() {
+        UserMessagingPlatform.loadConsentForm(this, {
+            consentForm = it
+            if (consentInformation.consentStatus == ConsentInformation.ConsentStatus.REQUIRED) {
+                it.show(this) { loadConsentForm() }
+            }
+        }, { println("error ump consent: $it") })
     }
 }
 
