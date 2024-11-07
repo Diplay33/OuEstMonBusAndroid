@@ -114,7 +114,7 @@ fun LinesMapListMain(
                 }
                 state.searching = true
                 delay(100)
-                Lines.getLinesBySearchText(state.query.text) { state.searchResults = it }
+                state.searchResults = Lines.getLinesBySearchText(state.query.text)
                 state.searching = false
             }
 

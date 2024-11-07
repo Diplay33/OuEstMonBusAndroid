@@ -84,9 +84,7 @@ fun SearchLineViewMain(
 
                     state.searching = true
                     delay(100)
-                    Lines.getLinesBySearchText(state.query.text, true) {
-                        state.searchResults = it
-                    }
+                    state.searchResults = Lines.getLinesBySearchText(state.query.text, true)
                     state.searching = false
                 }
             }

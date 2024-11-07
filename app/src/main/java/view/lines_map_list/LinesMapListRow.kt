@@ -93,10 +93,9 @@ fun LinesMapListRow(
                         navController.navigate(CartesScreens.HelloWorld.withArgs(rowLine.id.toString()))
                     }
                     else {
-                        Lines.getLinesBySearchText(searchText.value) {
-                            scope.launch {
-                                navController.navigate(CartesScreens.HelloWorld.withArgs(it[index].id.toString()))
-                            }
+                        val lines = Lines.getLinesBySearchText(searchText.value)
+                        scope.launch {
+                            navController.navigate(CartesScreens.HelloWorld.withArgs(lines[index].id.toString()))
                         }
                     }
                 }

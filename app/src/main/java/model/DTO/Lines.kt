@@ -48,20 +48,18 @@ class Lines {
             return linesBySection
         }
 
-        fun getLinesBySearchText(searchText: String, forSchedules: Boolean = false, callback: (List<Line>) -> Unit) {
-            CoroutineScope(Dispatchers.IO).launch {
-                val REGEX_UNACCENT = "\\p{InCombiningDiacriticalMarks}+".toRegex()
-                fun CharSequence.unaccent(): String {
-                    val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
-                    return REGEX_UNACCENT.replace(temp, "")
-                }
+        fun getLinesBySearchText(searchText: String, forSchedules: Boolean = false): List<Line> {
+            val REGEX_UNACCENT = "\\p{InCombiningDiacriticalMarks}+".toRegex()
+            fun CharSequence.unaccent(): String {
+                val temp = Normalizer.normalize(this, Normalizer.Form.NFD)
+                return REGEX_UNACCENT.replace(temp, "")
+            }
 
-                val lines = (if (forSchedules) lineDAO.getAllLinesForSchedules()
-                else
-                    lineDAO.getAllLines()).sortedBy { it.index }
-                callback(lines.filter { line ->
-                    line.name.lowercase().unaccent().contains(searchText.trim().lowercase().unaccent())
-                })
+            val lines = (if (forSchedules) lineDAO.getAllLinesForSchedules()
+            else
+                lineDAO.getAllLines()).sortedBy { it.index }
+            return lines.filter { line ->
+                line.name.lowercase().unaccent().contains(searchText.trim().lowercase().unaccent())
             }
         }
 
