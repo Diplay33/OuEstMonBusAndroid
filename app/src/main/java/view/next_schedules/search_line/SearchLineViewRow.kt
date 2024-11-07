@@ -15,6 +15,7 @@ import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.FavoriteBorder
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,23 +38,23 @@ import view.lines_map_list.ColorIndicatorDot
 
 @Composable
 fun SearchLineViewRow(
-    linesByGroup: SnapshotStateList<List<Line>>,
+    linesByGroup: MutableState<MutableList<List<Line>>>,
     line: Line,
     navController: NavController,
     isLineInService: Boolean?
 ) {
-    val isCollapsed = remember {
+    val isCollapsed = rememberSaveable {
         mutableStateOf(true)
     }
-    val currentRotation = remember {
+    val currentRotation = rememberSaveable {
         mutableStateOf(0f)
     }
     val rotation = remember {
         Animatable(currentRotation.value)
     }
     val scope = rememberCoroutineScope()
-    val paths = remember {
-        mutableStateListOf<List<Path>>()
+    val paths = rememberSaveable {
+        mutableStateOf<MutableList<List<Path>>>(mutableListOf())
     }
     val isLoading = remember {
         mutableStateOf(false)
@@ -65,6 +66,17 @@ fun SearchLineViewRow(
     val storeFavLines = StoreFavoriteLines(context, line.id.toString())
     val isFavorite = storeFavLines.isFavorite.collectAsState(initial = false)
     val colorScheme = !isSystemInDarkTheme()
+
+    LaunchedEffect(Unit) {
+        if(!isCollapsed.value && currentRotation.value == 0f) {
+            scope.launch {
+                rotation.animateTo(
+                    targetValue = 90f,
+                    animationSpec = tween(0)
+                )
+            }
+        }
+    }
 
     Column(modifier = Modifier
         .padding(horizontal = 15.dp)
@@ -87,11 +99,10 @@ fun SearchLineViewRow(
                     onDoubleTap = { },
                     onLongPress = { menuShown.value = true },
                     onTap = {
-                        if (isCollapsed.value && paths.isEmpty()) {
+                        if (isCollapsed.value && paths.value.isEmpty()) {
                             isLoading.value = true
                             Paths.getOrderedPathsByLine(line.id) { returnedPaths ->
-                                paths.clear()
-                                paths.addAll(returnedPaths)
+                                paths.value = returnedPaths.toMutableList()
                                 isLoading.value = false
                                 isCollapsed.value = !isCollapsed.value
                                 scope.launch {
@@ -203,7 +214,7 @@ fun SearchLineViewRow(
                 .padding(horizontal = 15.dp)
                 .padding(top = 15.dp)
             ) {
-                paths.forEach { paths ->
+                paths.value.forEach { paths ->
                     if(paths.isNotEmpty()) {
                         SearchLineViewDestination(paths, line, navController)
                     }
@@ -221,8 +232,7 @@ fun SearchLineViewRow(
                 DropdownMenuItem(onClick = {
                     scope.launch {
                         storeFavLines.removeFromFavorites(line.id.toString())
-                        linesByGroup.clear()
-                        linesByGroup.addAll(Lines.getAllLinesBySection(context, true))
+                        linesByGroup.value = Lines.getAllLinesBySection(context, true).toMutableList()
                     }
                     menuShown.value = false
                 }) {
@@ -252,8 +262,7 @@ fun SearchLineViewRow(
                 DropdownMenuItem(onClick = {
                     scope.launch {
                         storeFavLines.saveFavoriteLine(line.id.toString())
-                        linesByGroup.clear()
-                        linesByGroup.addAll(Lines.getAllLinesBySection(context, true))
+                        linesByGroup.value = Lines.getAllLinesBySection(context, true).toMutableList()
                     }
                     menuShown.value = false
                 }) {

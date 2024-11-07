@@ -11,6 +11,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -37,8 +38,8 @@ fun SearchLineViewMain(
     state: LinesMapListSearchState = rememberSearchState()
 ) {
     val context = LocalContext.current
-    val linesBySection = remember {
-        mutableStateListOf<List<Line>>()
+    val linesBySection = rememberSaveable {
+        mutableStateOf(Lines.getAllLinesBySection(context, true).toMutableList())
     }
     val colorScheme = !isSystemInDarkTheme()
     val allServices = remember {
@@ -74,12 +75,12 @@ fun SearchLineViewMain(
 
             LaunchedEffect(state.query.text, network.value) {
                 if(network.value.isNotEmpty()) {
-                    linesBySection.clear()
-                    linesBySection.addAll(Lines.getAllLinesBySection(context, true))
-                    Services.getAllServices(context, network.value, true) { values ->
-                        allServices.clear()
-                        allServices.addAll(values)
-                        areServicesLoading.value = false
+                    if(allServices.isEmpty()) {
+                        Services.getAllServices(context, network.value, true) { values ->
+                            allServices.clear()
+                            allServices.addAll(values)
+                            areServicesLoading.value = false
+                        }
                     }
 
                     state.searching = true
@@ -96,11 +97,11 @@ fun SearchLineViewMain(
                         .fillMaxWidth()
                         .verticalScroll(rememberScrollState())
                     ) {
-                        linesBySection.forEach { lines ->
+                        linesBySection.value.forEach { lines ->
                             SearchLineViewGroup(
                                 linesByGroup = linesBySection,
                                 lines = lines,
-                                isFavorite = linesBySection[0].containsAll(lines) && linesBySection[0].isNotEmpty(),
+                                isFavorite = linesBySection.value[0].containsAll(lines) && linesBySection.value[0].isNotEmpty(),
                                 navController = navController,
                                 allServices = allServices,
                                 areServicesLoading = areServicesLoading.value
