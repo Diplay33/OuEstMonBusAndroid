@@ -10,6 +10,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,16 +35,16 @@ fun SearchStopListMain(
     state: SearchStopListSearchState = rememberSearchState()
 ) {
     val line = Lines.getLine(lineId?.toInt() ?: 0)
-    val paths = remember {
-        mutableStateListOf<Path>()
+    val paths = rememberSaveable {
+        mutableStateOf<MutableList<Path>>(mutableListOf())
     }
-    val stops = remember {
-        mutableStateListOf<Station>()
+    val stops = rememberSaveable {
+        mutableStateOf<MutableList<Station>>(mutableListOf())
     }
-    val isLoading = remember {
+    val isLoading = rememberSaveable {
         mutableStateOf(true)
     }
-    val pathDirectionState = remember {
+    val pathDirectionState = rememberSaveable {
         mutableStateOf(pathDirection ?: "")
     }
     val destinations = remember {
@@ -82,13 +83,13 @@ fun SearchStopListMain(
 
             LaunchedEffect(state.query.text, pathDirectionState.value) {
                 Paths.getOrderedPathsByLine(lineId?.toInt() ?: 0) { returnedPaths ->
-                    paths.clear()
-                    returnedPaths.map { if (it.first().direction == pathDirectionState.value) paths.addAll(it) }
+                    paths.value = mutableListOf()
+                    returnedPaths.map { if (it.first().direction == pathDirectionState.value) paths.value.addAll(it) }
 
-                    Stations.getSortedStationsByPaths(paths) { returnedStations ->
+                    Stations.getSortedStationsByPaths(paths.value) { returnedStations ->
                         returnedStations.forEach { station ->  
-                            if(!stops.map { it.stationId }.contains(station.stationId)) {
-                                stops.add(station)
+                            if(!stops.value.map { it.stationId }.contains(station.stationId)) {
+                                stops.value.add(station)
                             }
                         }
                         isLoading.value = false
@@ -100,7 +101,7 @@ fun SearchStopListMain(
                 state.searching = false
             }
             state.searchResults = Stations.filterStationsBySearchText(
-                stations = stops.sortedBy { it.name },
+                stations = stops.value.sortedBy { it.name },
                 searchText = state.query.text
             )
 
@@ -110,7 +111,7 @@ fun SearchStopListMain(
                         .verticalScroll(rememberScrollState())
                         .fillMaxWidth()
                     ) {
-                        SearchStopListHeader(line, paths, destinations, pathDirectionState, isLoading, stops)
+                        SearchStopListHeader(line, paths.value, destinations, pathDirectionState, isLoading, stops)
 
                         Spacer(modifier = Modifier
                             .height(30.dp)
@@ -139,10 +140,10 @@ fun SearchStopListMain(
                             }
                         }
                         else {
-                            stops.sortedBy { it.name }.forEach { stop ->
+                            stops.value.sortedBy { it.name }.forEach { stop ->
                                 SearchStopListRow(
                                     stop = stop,
-                                    stops = stops.sortedBy { it.name },
+                                    stops = stops.value.sortedBy { it.name },
                                     navController = navController,
                                     line = line,
                                     pathDirection = pathDirectionState.value
@@ -173,7 +174,7 @@ fun SearchStopListMain(
                         .verticalScroll(rememberScrollState())
                         .fillMaxWidth()
                     ) {
-                        SearchStopListHeader(line, paths, destinations, pathDirectionState, isLoading, stops)
+                        SearchStopListHeader(line, paths.value, destinations, pathDirectionState, isLoading, stops)
 
                         Spacer(modifier = Modifier
                             .height(30.dp)
