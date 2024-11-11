@@ -209,8 +209,8 @@ fun LinesMapListRow(
                 DropdownMenuItem(onClick = {
                     scope.launch {
                         storeFavLines.removeFromFavorites(rowLine.id.toString())
-                        linesByGroup.value.clear()
-                        linesByGroup.value.addAll(Lines.getAllLinesBySection(context))
+                        linesByGroup.value = mutableListOf()
+                        linesByGroup.value = Lines.getAllLinesBySection(context).toMutableList()
                     }
                     menuShown.value = false
                 }) {
@@ -240,8 +240,8 @@ fun LinesMapListRow(
                 DropdownMenuItem(onClick = {
                     scope.launch {
                         storeFavLines.saveFavoriteLine(rowLine.id.toString())
-                        linesByGroup.value.clear()
-                        linesByGroup.value.addAll(Lines.getAllLinesBySection(context))
+                        linesByGroup.value = mutableListOf()
+                        linesByGroup.value = Lines.getAllLinesBySection(context).toMutableList()
                     }
                     menuShown.value = false
                 }) {
