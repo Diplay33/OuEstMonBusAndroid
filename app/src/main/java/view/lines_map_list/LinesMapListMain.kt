@@ -126,7 +126,7 @@ fun LinesMapListMain(
                         items(linesBySection.value.size) { index ->
                             LinesMapListGroup(
                                 lines = linesBySection.value[index],
-                                isFavorite = linesBySection.value[0].containsAll(linesBySection.value[index]) && linesBySection.value[0].isNotEmpty(),
+                                isFavorite = index == 0 && linesBySection.value[0].isNotEmpty(),
                                 linesByGroup = linesBySection,
                                 navController = navController,
                                 services = allServices,
