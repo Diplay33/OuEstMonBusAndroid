@@ -15,6 +15,7 @@ import java.util.TimeZone
 const val AMETIS_GTFS_RT_VEHICLE_POSITIONS_URL = "https://proxy.transport.data.gouv.fr/resource/ametis-amiens-gtfs-rt-vehicle-position"
 const val STAR_GTFS_RT_VEHICLE_POSITIONS_URL = "https://proxy.transport.data.gouv.fr/resource/star-rennes-integration-gtfs-rt-vehicle-position"
 const val COROLIS_GTFS_RT_VEHICLE_POSITIONS_URL = "https://api.oisemob.cityway.fr/dataflow/vehicule-tc-tr/download?provider=COROLIS_URB&dataFormat=gtfs-rt"
+const val TAM_GTFS_RT_VEHICLE_POSITIONS_URL = "https://data.montpellier3m.fr/TAM_MMM_GTFSRT/VehiclePosition.pb"
 
 class ServiceDAO {
     companion object {
@@ -76,6 +77,7 @@ class ServiceDAO {
                 "ametis" -> AMETIS_GTFS_RT_VEHICLE_POSITIONS_URL
                 "star" -> STAR_GTFS_RT_VEHICLE_POSITIONS_URL
                 "corolis" -> COROLIS_GTFS_RT_VEHICLE_POSITIONS_URL
+                "tam" -> TAM_GTFS_RT_VEHICLE_POSITIONS_URL
                 else -> ""
             }
             CallAPI.runGTFSRT(urlToCall) { response ->
@@ -119,24 +121,29 @@ class ServiceDAO {
 
             feedMessage.entityList.forEach { feedEntity ->
                 val id = when(network) {
-                    "ametis", "star" -> feedEntity.id.toIntOrNull() ?: 0
+                    "ametis", "star", "tam" -> feedEntity.id.toIntOrNull() ?: 0
                     "corolis" -> feedEntity.id.removeRange(0..2).toIntOrNull() ?: 0
                     else -> 0
                 }
                 val vehicle = feedEntity.vehicle
                 val position = vehicle.position
                 val trip = vehicle.trip
+
+                val tripId = when(network) {
+                    "tam" -> processTamTripId(trip.tripId)
+                    else -> trip.tripId
+                }
                 val tripHeadsign = GTFSService.findTripHeadsign(
-                    tripId = trip.tripId,
+                    tripId = tripId,
                     trips = trips ?: listOf()
                 ) ?: "Destination inconnue"
                 val lineId = when(network) {
                     "ametis", "corolis" -> trip.routeId.toASCIIDecimal()
-                    "star" -> (trip.routeId ?: "").drop(2).toIntOrNull() ?: 0
+                    "star", "tam" -> (trip.routeId ?: "").drop(2).toIntOrNull() ?: 0
                     else -> 0
                 }
                 val vehicleId = when(network) {
-                    "ametis", "star" -> feedEntity.id.toIntOrNull() ?: 0
+                    "ametis", "star", "tam" -> feedEntity.id.toIntOrNull() ?: 0
                     "corolis" -> vehicle.vehicle.id.removeRange(0..2).toIntOrNull() ?: 0
                     else -> 0
                 }
@@ -163,6 +170,18 @@ class ServiceDAO {
             }
 
             callback(services)
+        }
+
+        private fun processTamTripId(tripId: String): String {
+            var processedTripId = ""
+            for(i in tripId.indices) {
+                val char = tripId[i]
+                if(char == '-') {
+                    return processedTripId
+                }
+                processedTripId += tripId[i]
+            }
+            return processedTripId
         }
 
         fun getTBMServicesByLine(lineId: Int, callback: (ArrayList<Service>) -> Unit) {
