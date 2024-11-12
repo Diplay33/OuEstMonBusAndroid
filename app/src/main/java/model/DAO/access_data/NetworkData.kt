@@ -7,4 +7,5 @@ val networks = listOf(
     Network(2, "ametis", "Ametis", 49.894067, 2.295753, "#005F7D", "#5292C9"),
     Network(3, "star", "STAR", 48.117266, -1.6777926, "#173166", "#63FD9A"),
     Network(4, "corolis", "Corolis", 49.433331, 2.08333, "#E29429", "#E29429"),
+    Network(5, "tam", "Transports de l'agglo. de Montpellier", 43.610769, 3.876716, "#004494", "#004494"),
 )

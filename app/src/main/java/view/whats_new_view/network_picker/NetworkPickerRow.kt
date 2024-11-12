@@ -148,6 +148,7 @@ fun computeNetworkDescription(network: Network): String {
         "ametis" -> return "COMMUNAUTÉ D'AGGLO. AMIÉNOISE"
         "star" -> return "MÉTROPOLE RENNAISE"
         "corolis" -> return "COMMUNAUTÉ D'AGGLO. DU BEAUVAISIS"
+        "tam" -> return "MÉTROPOLE MONTPELLIÉRAINE"
     }
     return ""
 }
@@ -158,6 +159,7 @@ fun computeNetworkImage(network: Network): Int {
         "ametis" -> return R.drawable.ametis
         "star" -> return R.drawable.star
         "corolis" -> return R.drawable.corolis
+        "tam" -> return R.drawable.tam
     }
     return R.drawable.question_mark_box
 }
