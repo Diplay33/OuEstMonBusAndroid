@@ -39,6 +39,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.diplay.ouestmonbus.R
 import model.DTO.Network
+import view.helpers.AutoSizeText
 
 @Composable
 fun NetworkPickerRow(selection: MutableState<String>, network: Network) {
@@ -84,11 +85,12 @@ fun NetworkPickerRow(selection: MutableState<String>, network: Network) {
 
             )
 
-            Text(
+            AutoSizeText(
                 text = network.fullName,
-                fontSize = 18.sp,
+                fontSizeRange = 15f..18f,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Left,
+                maxLines = 2,
                 color = if (colorScheme) Color.Black else Color.White
             )
         }
@@ -103,7 +105,7 @@ fun NetworkPickerRow(selection: MutableState<String>, network: Network) {
                 contentDescription = null,
                 colorFilter = if (!colorScheme) ColorFilter.tint(Color.White) else null,
                 modifier = Modifier
-                    .sizeIn(maxWidth = 150.dp, maxHeight = 80.dp)
+                    .sizeIn(maxWidth = 135.dp, maxHeight = 80.dp)
                     .height(80.dp)
                     .alpha(if (colorScheme) 1f else 0.8f)
             )
