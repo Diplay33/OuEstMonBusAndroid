@@ -154,12 +154,12 @@ class MainActivity : ComponentActivity() {
                     showSplashScreen.value = true
                 }
 
-                versionCheckDataStore.versionIsChecked("3.5").firstOrNull()?.let {
+                versionCheckDataStore.versionIsChecked("3.8").firstOrNull()?.let {
                     if(!it) {
                         showSplashScreen.value = true
                         scope.launch {
-                            versionCheckDataStore.markVersionAsChecked("3.5")
-                            versionCheckDataStore.unmarkVersionAsChecked("3.4")
+                            versionCheckDataStore.markVersionAsChecked("3.8")
+                            versionCheckDataStore.unmarkVersionAsChecked("3.5")
                         }
                     }
                 }
