@@ -38,8 +38,6 @@ fun SearchStopListMain(
     val paths = rememberSaveable {
         mutableStateOf<MutableList<Path>>(mutableListOf())
     }
-    val stops = remember {
-        mutableStateListOf<Station>()
     val stops = rememberSaveable {
         mutableStateOf<MutableList<Station>>(mutableListOf())
     }
