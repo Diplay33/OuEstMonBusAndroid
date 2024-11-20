@@ -13,8 +13,8 @@ android {
         applicationId "com.diplay.ouestmonbus"
         minSdk 26
         targetSdk 34
-        versionCode 32
-        versionName "3.8"
+        versionCode 33
+        versionName "3.8.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
