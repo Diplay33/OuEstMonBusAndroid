@@ -35,13 +35,15 @@ fun LineMapViewServicesListRow(
     selectedService: MutableState<Service?>,
     cameraPositionState: CameraPositionState,
 ) {
-    var line = Lines.getLine(service.lineId)
+    var line = remember {
+        mutableStateOf(Lines.getLine(service.lineId))
+    }
     val destination = Destinations.getDestination(service.destination, service.lineId)
     val colorScheme = !isSystemInDarkTheme()
 
     LaunchedEffect(service) {
-        line.parentId?.let { parentId ->
-            line = Lines.getLine(parentId)
+        line.value.parentId?.let { parentId ->
+            line.value = Lines.getLine(parentId)
         }
     }
 
@@ -56,7 +58,7 @@ fun LineMapViewServicesListRow(
                 shape = RoundedCornerShape(10.dp)
             )
             .background(
-                color = Color(android.graphics.Color.parseColor(line.colorHex)).copy(alpha = 0.2f),
+                color = Color(android.graphics.Color.parseColor(line.value.colorHex ?: "#FFFFFF")).copy(alpha = 0.2f),
                 shape = RoundedCornerShape(10.dp)
             )
             .padding(horizontal = 15.dp)
