@@ -20,6 +20,9 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Language
+import androidx.compose.material.icons.rounded.PhonelinkRing
+import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material.icons.rounded.Stars
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -44,14 +47,19 @@ fun WhatsNewViewMain(navController: NavController, showSplashScreen: MutableStat
     val colorScheme = !isSystemInDarkTheme()
     val whatsNewElements = listOf(
         WhatsNewElement(
-            icon = Icons.Rounded.Language,
-            title = "Données dynamiques",
-            bodyText = "Les mises à jour de vos lignes, ainsi que les données sur les véhicules, se font désormais à distance !"
+            icon = Icons.Rounded.Search,
+            title = "Recherche par modèle",
+            bodyText = "Dans la liste de tous les véhicules en circulation, vous pouvez rechercher par modèle de véhicule."
         ),
         WhatsNewElement(
-            icon = Icons.Rounded.Info,
-            title = "Affichage TC Infos",
-            bodyText = "Lorsque vous êtes sur les détails d'un véhicule, vous pouvez afficher celui-ci sur TC Infos"
+            icon = Icons.Rounded.Stars,
+            title = "Ajout d'un nouveau réseau !",
+            bodyText = "Les habitants de la métropole de Montpellier peuvent désormais localiser leurs trams et bus !"
+        ),
+        WhatsNewElement(
+            icon = Icons.Rounded.PhonelinkRing,
+            title = "Navigation améliorée",
+            bodyText = "La navigation au sein de l'application a été améliorée, un retour en arrière ne recharge plus forcément la page."
         )
     )
 

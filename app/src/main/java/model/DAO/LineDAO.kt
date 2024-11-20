@@ -11,7 +11,7 @@ import model.DTO.Line
 interface LineDAO {
     //MARK : - SELECT
 
-    @Query("SELECT * FROM Line WHERE parentId IS null")
+    @Query("SELECT * FROM Line WHERE parentId IS null AND `index` IS NOT NULL")
     fun getAllLines(): List<Line>
 
     @Query("SELECT * FROM Line WHERE showSchedules = 1")

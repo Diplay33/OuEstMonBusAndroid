@@ -39,11 +39,11 @@ import model.DTO.Station
 @Composable
 fun SearchStopListHeader(
     line: Line?,
-    paths: List<Path>,
+    paths: MutableList<Path>,
     destinations: SnapshotStateList<List<String>> = mutableStateListOf(),
     pathDirectionState: MutableState<String>,
     isLoading: MutableState<Boolean>,
-    stops: SnapshotStateList<Station>
+    stops: MutableState<MutableList<Station>>
 ) {
     val destinationsSet = remember {
         mutableSetOf<String>()
@@ -230,7 +230,7 @@ fun SearchStopListHeader(
                         headerMenuShown.value = false
                         isLoading.value = true
                         destinations.clear()
-                        stops.clear()
+                        stops.value = mutableListOf()
                     }) {
                         Row {
                             Icon(

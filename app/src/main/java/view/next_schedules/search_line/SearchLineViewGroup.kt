@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,7 +22,7 @@ import view.advert_view.AdvertView
 
 @Composable
 fun SearchLineViewGroup(
-    linesByGroup: SnapshotStateList<List<Line>>,
+    linesByGroup: MutableState<MutableList<List<Line>>>,
     lines: List<Line>,
     isFavorite: Boolean,
     navController: NavController,
@@ -68,7 +69,7 @@ fun SearchLineViewGroup(
                             !allServices.none { it.lineId == line.id }
                     )
 
-                    if(line == lines.last() && lines != linesByGroup.last()) {
+                    if(line == lines.last() && lines != linesByGroup.value.last()) {
                         Spacer(modifier = Modifier
                             .height(25.dp)
                         )

@@ -93,10 +93,9 @@ fun LinesMapListRow(
                         navController.navigate(CartesScreens.HelloWorld.withArgs(rowLine.id.toString()))
                     }
                     else {
-                        Lines.getLinesBySearchText(searchText.value) {
-                            scope.launch {
-                                navController.navigate(CartesScreens.HelloWorld.withArgs(it[index].id.toString()))
-                            }
+                        val lines = Lines.getLinesBySearchText(searchText.value)
+                        scope.launch {
+                            navController.navigate(CartesScreens.HelloWorld.withArgs(lines[index].id.toString()))
                         }
                     }
                 }
@@ -210,8 +209,8 @@ fun LinesMapListRow(
                 DropdownMenuItem(onClick = {
                     scope.launch {
                         storeFavLines.removeFromFavorites(rowLine.id.toString())
-                        linesByGroup.value.clear()
-                        linesByGroup.value.addAll(Lines.getAllLinesBySection(context))
+                        linesByGroup.value = mutableListOf()
+                        linesByGroup.value = Lines.getAllLinesBySection(context).toMutableList()
                     }
                     menuShown.value = false
                 }) {
@@ -241,8 +240,8 @@ fun LinesMapListRow(
                 DropdownMenuItem(onClick = {
                     scope.launch {
                         storeFavLines.saveFavoriteLine(rowLine.id.toString())
-                        linesByGroup.value.clear()
-                        linesByGroup.value.addAll(Lines.getAllLinesBySection(context))
+                        linesByGroup.value = mutableListOf()
+                        linesByGroup.value = Lines.getAllLinesBySection(context).toMutableList()
                     }
                     menuShown.value = false
                 }) {
