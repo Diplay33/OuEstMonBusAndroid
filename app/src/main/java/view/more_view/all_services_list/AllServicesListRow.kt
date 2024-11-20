@@ -34,7 +34,9 @@ import view.Screens.PlusScreens
 
 @Composable
 fun AllServicesListRow(service: Service, navController: NavController) {
-    var line = Lines.getLine(service.lineId)
+    var line = remember {
+        mutableStateOf(Lines.getLine(service.lineId))
+    }
     val destination = Destinations.getDestination(service.destination, service.lineId)
     val colorScheme = !isSystemInDarkTheme()
 
@@ -43,10 +45,10 @@ fun AllServicesListRow(service: Service, navController: NavController) {
         if(tempLine.parentId != null) {
             val childLine = Lines.getLine(tempLine.parentId ?: 0)
             childLine.name = tempLine.name
-            line = childLine
+            line.value = childLine
         }
         else {
-            line = tempLine
+            line.value = tempLine
         }
     }
 
@@ -61,10 +63,7 @@ fun AllServicesListRow(service: Service, navController: NavController) {
                 shape = RoundedCornerShape(10.dp)
             )
             .background(
-                color = if (line == null)
-                    Color.Transparent
-                else
-                    Color(android.graphics.Color.parseColor(line?.colorHex)).copy(alpha = 0.2f),
+                color = Color(android.graphics.Color.parseColor(line.value.colorHex ?: "#FFFFFF")).copy(alpha = 0.2f),
                 shape = RoundedCornerShape(10.dp)
             )
             .padding(horizontal = 15.dp)
@@ -73,7 +72,7 @@ fun AllServicesListRow(service: Service, navController: NavController) {
             .clickable {
                 navController.navigate(
                     PlusScreens.ServiceDetail.withArgs(
-                        line.id.toString(),
+                        line.value.id.toString(),
                         service.vehicleId.toString(),
                         service.destination,
                         service.latitude.toString(),
@@ -89,7 +88,7 @@ fun AllServicesListRow(service: Service, navController: NavController) {
         ) {
             Column {
                 Row {
-                    if(line?.name == "Ligne inconnue") {
+                    if(line.value.name == "Ligne inconnue") {
                         Image(
                             painter = painterResource(id = R.drawable.question_mark_box),
                             contentDescription = null,
@@ -101,7 +100,7 @@ fun AllServicesListRow(service: Service, navController: NavController) {
                     else {
                         AsyncImage(
                             model = ImageRequest.Builder(LocalContext.current)
-                                .data(line?.imageUrl)
+                                .data(line.value.imageUrl)
                                 .decoderFactory(SvgDecoder.Factory())
                                 .build(),
                             contentDescription = null,
@@ -116,7 +115,7 @@ fun AllServicesListRow(service: Service, navController: NavController) {
                     )
 
                     Text(
-                        text = line?.name ?: "",
+                        text = line.value.name ?: "",
                         fontWeight = FontWeight.Bold,
                         fontSize = 18.sp,
                         color = if (colorScheme) Color.Black else Color.White,
