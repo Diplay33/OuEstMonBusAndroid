@@ -97,11 +97,11 @@ fun SearchLineViewMain(
                         .fillMaxWidth()
                         .verticalScroll(rememberScrollState())
                     ) {
-                        linesBySection.value.forEach { lines ->
+                        for(i in 0 until linesBySection.value.size) {
                             SearchLineViewGroup(
                                 linesByGroup = linesBySection,
-                                lines = lines,
-                                isFavorite = linesBySection.value[0].containsAll(lines) && linesBySection.value[0].isNotEmpty(),
+                                lines = linesBySection.value[i],
+                                isFavorite = i == 0 && linesBySection.value[0].isNotEmpty(),
                                 navController = navController,
                                 allServices = allServices,
                                 areServicesLoading = areServicesLoading.value
