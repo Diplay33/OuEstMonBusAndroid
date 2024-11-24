@@ -49,7 +49,7 @@ fun ServiceDetailMapRow(
         ))
     }
     val station = remember {
-        mutableStateOf(Station(0, "", "", 0.0, 0.0))
+        mutableStateOf(Station("", "", "", 0.0, 0.0))
     }
     val mapUISettings by remember {
         mutableStateOf(MapUiSettings(
@@ -71,30 +71,29 @@ fun ServiceDetailMapRow(
     }
 
     LaunchedEffect(Unit) {
-        storeChosenNetwork.chosenNetwork.collect {
-            network.value = it ?: ""
+        storeChosenNetwork.chosenNetwork.collect { network.value = it ?: "" }
+    }
 
-            if(it == "tbm") {
-                Paths.getPath(pathId?.toInt() ?: 0, true) { returnedPath ->
-                    returnedPath?.let { nonNullPath ->
-                        pathCoordinates.addAll(
-                            nonNullPath.coordinates.map { coordinates ->
-                                coordinates.map { LatLng(it[1], it[0]) }
-                            }
-                        )
-                    }
+    LaunchedEffect(network.value) {
+        if(network.value.isNotEmpty()) {
+            if(stationId == "") {
+                station.value = Station("", "", "Arrêt inconnu",  0.0, 0.0)
+            }
+            else {
+                Stations.getStationById(stationId, network.value) { returnedStation ->
+                    station.value = returnedStation
                 }
             }
         }
-    }
-
-    LaunchedEffect(line.name) {
-        if(stationId == "") {
-            station.value = Station(0, "", "Arrêt inconnu",  0.0, 0.0)
-        }
-        else {
-            Stations.getStationById(stationId) { returnedStation ->
-                station.value = returnedStation
+        if(network.value == "tbm") {
+            Paths.getPath(pathId?.toInt() ?: 0, true) { returnedPath ->
+                returnedPath?.let { nonNullPath ->
+                    pathCoordinates.addAll(
+                        nonNullPath.coordinates.map { coordinates ->
+                            coordinates.map { LatLng(it[1], it[0]) }
+                        }
+                    )
+                }
             }
         }
     }
@@ -134,51 +133,49 @@ fun ServiceDetailMapRow(
             }
         }
 
-        if(network.value == "tbm") {
+        Row(modifier = Modifier
+            .padding(horizontal = 15.dp)
+            .height(45.dp)
+            .fillMaxWidth()
+            .background(
+                Color(if (colorScheme) 0xffF5F5F5 else 0xff18191A).copy(alpha = 0.8f),
+                shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp)
+            )
+        ) {
             Row(modifier = Modifier
                 .padding(horizontal = 15.dp)
-                .height(45.dp)
-                .fillMaxWidth()
-                .background(
-                    Color(if (colorScheme) 0xffF5F5F5 else 0xff18191A).copy(alpha = 0.8f),
-                    shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp)
-                )
+                .align(Alignment.CenterVertically)
             ) {
-                Row(modifier = Modifier
-                    .padding(horizontal = 15.dp)
-                    .align(Alignment.CenterVertically)
-                ) {
-                    if(station.value.name.isEmpty()) {
-                        CircularProgressIndicator(modifier = Modifier
+                if(station.value.name.isEmpty()) {
+                    CircularProgressIndicator(modifier = Modifier
+                        .size(20.dp)
+                        .align(Alignment.CenterVertically)
+                    )
+                }
+                else {
+                    Image(
+                        painter = painterResource(id = R.drawable.mappin),
+                        contentDescription = null,
+                        colorFilter = ColorFilter.tint(if (colorScheme)
+                            Color.Black
+                        else
+                            Color.White),
+                        modifier = Modifier
                             .size(20.dp)
                             .align(Alignment.CenterVertically)
-                        )
-                    }
-                    else {
-                        Image(
-                            painter = painterResource(id = R.drawable.mappin),
-                            contentDescription = null,
-                            colorFilter = ColorFilter.tint(if (colorScheme)
-                                Color.Black
-                            else
-                                Color.White),
-                            modifier = Modifier
-                                .size(20.dp)
-                                .align(Alignment.CenterVertically)
-                        )
+                    )
 
-                        Spacer(modifier = Modifier
-                            .width(15.dp)
-                        )
+                    Spacer(modifier = Modifier
+                        .width(15.dp)
+                    )
 
-                        Text(
-                            text = station.value.name,
-                            fontSize = 18.sp,
-                            color = if (colorScheme) Color.Black else Color.White,
-                            modifier = Modifier
-                                .align(Alignment.CenterVertically)
-                        )
-                    }
+                    Text(
+                        text = station.value.name,
+                        fontSize = 18.sp,
+                        color = if (colorScheme) Color.Black else Color.White,
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                    )
                 }
             }
         }

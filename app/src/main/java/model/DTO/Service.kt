@@ -14,7 +14,7 @@ class Service (val id: Int,
                val destination: String,
                val latitude: Double,
                val longitude: Double,
-               val currentStop: Int,
+               val currentStop: String,
                val path: Int,
                val timestamp: Date,
                val vehicle: Vehicle = Vehicles.getVehicle(vehicleId.toString())

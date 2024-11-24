@@ -43,10 +43,13 @@ import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.Polyline
 import com.google.maps.android.compose.rememberCameraPositionState
 import model.DTO.Line
+import model.DTO.Network
+import model.DTO.Networks
 import model.DTO.Paths
 import model.DTO.Service
 import model.DTO.Station
 import model.DTO.Stations
+import model.preferences_data_store.StoreChosenNetwork
 import view.lines_map_list.line_map.MapStyle
 import view.more_view.all_services_list.service_detail.bitmapDescriptor
 
@@ -73,30 +76,39 @@ fun NextSchedulesDetailsMap(service: Service, line: Line?) {
         ))
     }
     val station = remember {
-        mutableStateOf(Station(0, "", "", 0.0, 0.0))
+        mutableStateOf(Station("", "", "", 0.0, 0.0))
     }
     val currentStationId = remember {
-        mutableIntStateOf(0)
+        mutableStateOf("")
     }
     val pathCoordinates = remember {
         mutableStateListOf<List<LatLng>>()
     }
+    val context = LocalContext.current
+    val storeChosenNetwork = StoreChosenNetwork(context)
+    val network = remember {
+        mutableStateOf("")
+    }
 
     LaunchedEffect(service) {
-        cameraPositionState.position = CameraPosition.fromLatLngZoom(LatLng(service.latitude + 0.0005, service.longitude), 15.5f)
+        storeChosenNetwork.chosenNetwork.collect {
+            network.value = it ?: ""
 
-        if(service.currentStop != currentStationId.intValue) {
-            Stations.getStationById(service.currentStop.toString()) { station.value = it }
-            currentStationId.intValue = service.currentStop
-        }
+            cameraPositionState.position = CameraPosition.fromLatLngZoom(LatLng(service.latitude + 0.0005, service.longitude), 15.5f)
 
-        Paths.getPath(service.path, true) { returnedPath ->
-            returnedPath?.let { nonNullPath ->
-                pathCoordinates.addAll(
-                    nonNullPath.coordinates.map { coordinates ->
-                        coordinates.map { LatLng(it[1], it[0]) }
-                    }
-                )
+            if(service.currentStop != currentStationId.toString()) {
+                Stations.getStationById(service.currentStop.toString(), network.value) { station.value = it }
+                currentStationId.value = service.currentStop
+            }
+
+            Paths.getPath(service.path, true) { returnedPath ->
+                returnedPath?.let { nonNullPath ->
+                    pathCoordinates.addAll(
+                        nonNullPath.coordinates.map { coordinates ->
+                            coordinates.map { LatLng(it[1], it[0]) }
+                        }
+                    )
+                }
             }
         }
     }

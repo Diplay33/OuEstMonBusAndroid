@@ -1,13 +1,17 @@
 package model.DTO
 
+import kotlinx.coroutines.runBlocking
 import model.DAO.StationDAO
 import java.text.Normalizer
 
 class Stations {
     companion object {
-        fun getStationById(stationId: String, callback: (Station) -> Unit) {
-            StationDAO.getStationById(stationId) { station ->
-                callback(station)
+        fun getStationById(stationId: String, network: String, callback: (Station) -> Unit) {
+            if(network == "tbm") {
+                StationDAO.getStationById(stationId) { callback(it) }
+            }
+            else {
+                callback(StationDAO.getGTFSStationById(stationId, network))
             }
         }
 

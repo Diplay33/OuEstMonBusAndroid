@@ -47,7 +47,7 @@ fun NextScheduleDetailsMain(
     val vehicle = Vehicles.getVehicle(vehicleId.toString())
     val line = Lines.getLine(lineId?.toInt() ?: 0)
     val service = remember {
-        mutableStateOf(Service(0, 0, 0, 0, "", 0, "", 0.0, 0.0, 0, 0, timestamp = Date()))
+        mutableStateOf(Service(0, 0, 0, 0, "", 0, "", 0.0, 0.0, "", 0, timestamp = Date()))
     }
     val cal = Calendar.getInstance()
     val colorScheme = !isSystemInDarkTheme()

@@ -51,9 +51,9 @@ class ServiceDAO {
                             latitude = latitude,
                             longitude = longitude,
                             currentStop = if (propertiesJSONObject.isNull("rs_sv_arret_p_actu"))
-                                0
+                                ""
                             else
-                                propertiesJSONObject.getInt("rs_sv_arret_p_actu"),
+                                propertiesJSONObject.getInt("rs_sv_arret_p_actu").toString(),
                             path = propertiesJSONObject.getInt("rs_sv_chem_l"),
                             timestamp = dateFormat.parse(propertiesJSONObject.getString("mdate")) ?: Date()
                         ))
@@ -162,7 +162,7 @@ class ServiceDAO {
                             tripHeadsign.replace(oldValue = "/", newValue = ""),
                         latitude = position.latitude.toDouble(),
                         longitude = position.longitude.toDouble(),
-                        currentStop = 0,
+                        currentStop = vehicle.stopId,
                         path = 0,
                         timestamp = Date()
                     )
@@ -214,9 +214,9 @@ class ServiceDAO {
                             latitude = latitude,
                             longitude = longitude,
                             currentStop = if (propertiesJSONObject.isNull("rs_sv_arret_p_actu"))
-                                0
+                                ""
                             else
-                                propertiesJSONObject.getInt("rs_sv_arret_p_actu"),
+                                propertiesJSONObject.getInt("rs_sv_arret_p_actu").toString(),
                             path = propertiesJSONObject.getInt("rs_sv_chem_l"),
                             timestamp = dateFormat.parse(propertiesJSONObject.getString("mdate")) ?: Date()
                         ))
@@ -259,9 +259,9 @@ class ServiceDAO {
                             latitude = latitude,
                             longitude = longitude,
                             currentStop = if (propertiesJSONObject.isNull("rs_sv_arret_p_actu"))
-                                0
+                                ""
                             else
-                                propertiesJSONObject.getInt("rs_sv_arret_p_actu"),
+                                propertiesJSONObject.getInt("rs_sv_arret_p_actu").toString(),
                             path = propertiesJSONObject.getInt("rs_sv_chem_l"),
                             timestamp = dateFormat.parse(propertiesJSONObject.getString("mdate")) ?: Date()
                         )

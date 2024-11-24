@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-class Station(val id: Int,
+class Station(val id: String,
               val stationId: String,
               val name: String,
               val latitude: Double,

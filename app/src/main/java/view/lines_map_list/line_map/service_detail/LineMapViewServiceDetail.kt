@@ -42,7 +42,7 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>, line: Line
         destination = "",
         latitude = 0.0,
         longitude = 0.0,
-        currentStop = 0,
+        currentStop = "",
         path = 0,
         timestamp = Date()
     )
@@ -99,7 +99,7 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>, line: Line
                 .height(30.dp)
             )
 
-            ServiceDetailVehicleRow(service.vehicle.fullName, line?.name ?: "")
+            ServiceDetailVehicleRow(service.vehicle.fullName, line.name)
 
             Spacer(modifier = Modifier
                 .height(10.dp)
@@ -119,13 +119,11 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>, line: Line
                 )
             }
 
-            if(network.value == "tbm") {
-                LineMapViewServiceDetailCurrentStopRow(service.currentStop.toString())
+            LineMapViewServiceDetailCurrentStopRow(service.currentStop, network.value)
 
-                Spacer(modifier = Modifier
-                    .height(10.dp)
-                )
-            }
+            Spacer(modifier = Modifier
+                .height(10.dp)
+            )
 
             ServiceDetailSpeedRow(service.currentSpeed)
 

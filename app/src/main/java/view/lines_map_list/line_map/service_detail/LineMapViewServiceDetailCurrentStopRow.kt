@@ -23,16 +23,18 @@ import model.DTO.Station
 import model.DTO.Stations
 
 @Composable
-fun LineMapViewServiceDetailCurrentStopRow(stationId: String) {
+fun LineMapViewServiceDetailCurrentStopRow(stationId: String, network: String) {
     val station = remember {
-        mutableStateOf(Station(id = 0, stationId = "", name = "", latitude = 0.0, longitude = 0.0))
+        mutableStateOf(Station(id = "", stationId = "", name = "", latitude = 0.0, longitude = 0.0))
     }
     val colorScheme = !isSystemInDarkTheme()
 
-    LaunchedEffect(stationId) {
-        station.value = Station(id = 0, stationId = "", name = "", latitude = 0.0, longitude = 0.0)
-        Stations.getStationById(stationId) {
-            station.value = it
+    LaunchedEffect(network) {
+        if(network.isNotEmpty()) {
+            station.value = Station(id = "", stationId = "", name = "", latitude = 0.0, longitude = 0.0)
+            Stations.getStationById(stationId, network) {
+                station.value = it
+            }
         }
     }
 
