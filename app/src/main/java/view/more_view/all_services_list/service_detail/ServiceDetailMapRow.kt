@@ -133,49 +133,51 @@ fun ServiceDetailMapRow(
             }
         }
 
-        Row(modifier = Modifier
-            .padding(horizontal = 15.dp)
-            .height(45.dp)
-            .fillMaxWidth()
-            .background(
-                Color(if (colorScheme) 0xffF5F5F5 else 0xff18191A).copy(alpha = 0.8f),
-                shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp)
-            )
-        ) {
+        if(stationId != "0") {
             Row(modifier = Modifier
                 .padding(horizontal = 15.dp)
-                .align(Alignment.CenterVertically)
+                .height(45.dp)
+                .fillMaxWidth()
+                .background(
+                    Color(if (colorScheme) 0xffF5F5F5 else 0xff18191A).copy(alpha = 0.8f),
+                    shape = RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp)
+                )
             ) {
-                if(station.value.name.isEmpty()) {
-                    CircularProgressIndicator(modifier = Modifier
-                        .size(20.dp)
-                        .align(Alignment.CenterVertically)
-                    )
-                }
-                else {
-                    Image(
-                        painter = painterResource(id = R.drawable.mappin),
-                        contentDescription = null,
-                        colorFilter = ColorFilter.tint(if (colorScheme)
-                            Color.Black
-                        else
-                            Color.White),
-                        modifier = Modifier
+                Row(modifier = Modifier
+                    .padding(horizontal = 15.dp)
+                    .align(Alignment.CenterVertically)
+                ) {
+                    if(station.value.name.isEmpty()) {
+                        CircularProgressIndicator(modifier = Modifier
                             .size(20.dp)
                             .align(Alignment.CenterVertically)
-                    )
+                        )
+                    }
+                    else {
+                        Image(
+                            painter = painterResource(id = R.drawable.mappin),
+                            contentDescription = null,
+                            colorFilter = ColorFilter.tint(if (colorScheme)
+                                Color.Black
+                            else
+                                Color.White),
+                            modifier = Modifier
+                                .size(20.dp)
+                                .align(Alignment.CenterVertically)
+                        )
 
-                    Spacer(modifier = Modifier
-                        .width(15.dp)
-                    )
+                        Spacer(modifier = Modifier
+                            .width(15.dp)
+                        )
 
-                    Text(
-                        text = station.value.name,
-                        fontSize = 18.sp,
-                        color = if (colorScheme) Color.Black else Color.White,
-                        modifier = Modifier
-                            .align(Alignment.CenterVertically)
-                    )
+                        Text(
+                            text = station.value.name,
+                            fontSize = 18.sp,
+                            color = if (colorScheme) Color.Black else Color.White,
+                            modifier = Modifier
+                                .align(Alignment.CenterVertically)
+                        )
+                    }
                 }
             }
         }

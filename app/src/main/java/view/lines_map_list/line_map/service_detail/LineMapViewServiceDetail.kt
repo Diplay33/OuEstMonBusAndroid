@@ -119,11 +119,13 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>, line: Line
                 )
             }
 
-            LineMapViewServiceDetailCurrentStopRow(service.currentStop, network.value)
+            if(service.currentStop.isNotEmpty()) {
+                LineMapViewServiceDetailCurrentStopRow(service.currentStop, network.value)
 
-            Spacer(modifier = Modifier
-                .height(10.dp)
-            )
+                Spacer(modifier = Modifier
+                    .height(10.dp)
+                )
+            }
 
             ServiceDetailSpeedRow(service.currentSpeed)
 

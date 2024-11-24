@@ -162,7 +162,8 @@ class ServiceDAO {
                             tripHeadsign.replace(oldValue = "/", newValue = ""),
                         latitude = position.latitude.toDouble(),
                         longitude = position.longitude.toDouble(),
-                        currentStop = vehicle.stopId,
+                        //needs to be set at a default value, in order for Compose Navigation to work properly
+                        currentStop = vehicle.stopId.ifEmpty { "0" },
                         path = 0,
                         timestamp = Date()
                     )
