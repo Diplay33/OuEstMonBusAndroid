@@ -33,10 +33,7 @@ fun ServiceDetailOperatorRow(operator: String) {
                     if (operator.contains("Linevia"))
                         R.drawable.linevia
                     else
-                        if (operator.contains("Evadys"))
-                            R.drawable.evadys
-                        else
-                            0
+                        0
 
     Row(modifier = Modifier
         .padding(horizontal = 15.dp)
