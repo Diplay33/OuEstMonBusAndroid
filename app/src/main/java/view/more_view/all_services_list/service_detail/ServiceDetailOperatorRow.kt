@@ -18,6 +18,25 @@ import com.diplay.ouestmonbus.R
 @Composable
 fun ServiceDetailOperatorRow(operator: String) {
     val colorScheme = !isSystemInDarkTheme()
+    val id = if (operator.contains("Keolis"))
+        R.drawable.keolis
+    else
+        if (operator.contains("TRANSDEV"))
+            R.drawable.transdev
+        else
+            if (operator.contains("River Cruise"))
+                R.drawable.river_cruise
+            else
+                if (operator.contains("RGO Mobilités"))
+                    R.drawable.rgo_mobilites
+                else
+                    if (operator.contains("Linevia"))
+                        R.drawable.linevia
+                    else
+                        if (operator.contains("Evadys"))
+                            R.drawable.evadys
+                        else
+                            0
 
     Row(modifier = Modifier
         .padding(horizontal = 15.dp)
@@ -32,30 +51,17 @@ fun ServiceDetailOperatorRow(operator: String) {
             .padding(horizontal = 15.dp)
             .align(Alignment.CenterVertically)
         ) {
-            Image(
-                painter = painterResource(id = if (operator.contains("Keolis"))
-                    R.drawable.keolis
-                else
-                    if (operator.contains("TRANSDEV"))
-                        R.drawable.transdev
-                    else
-                        if (operator.contains("River Cruise"))
-                            R.drawable.river_cruise
-                        else
-                            if (operator.contains("RGO Mobilités"))
-                                R.drawable.rgo_mobilites
-                            else
-                                if (operator.contains("Linevia"))
-                                    R.drawable.linevia
-                                else
-                                    R.drawable.evadys),
-                contentDescription = null, modifier = Modifier
-                    .size(20.dp)
-                    .align(Alignment.CenterVertically)
-            )
+            if(id != 0) {
+                Image(
+                    painter = painterResource(id = id),
+                    contentDescription = null, modifier = Modifier
+                        .size(20.dp)
+                        .align(Alignment.CenterVertically)
+                )
+            }
 
             Spacer(modifier = Modifier
-                .width(15.dp)
+                .width((if (id == 0) 35 else 15).dp)
             )
 
             Text(
