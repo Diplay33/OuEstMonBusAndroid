@@ -51,14 +51,15 @@ fun LineMapView(
         services.forEach { service ->
             Marker(
                 state = MarkerState(position = LatLng(service.latitude, service.longitude)),
-                icon = setCustomMapServiceIcon(service.vehicle.parkId, colorScheme, LocalContext.current, vectorResId = when(line?.name) {
-                    "Tram A" -> R.drawable.map_logo_tram
-                    "Tram B" -> R.drawable.map_logo_tram
-                    "Tram C" -> R.drawable.map_logo_tram
-                    "Tram D" -> R.drawable.map_logo_tram
-                    "BatCUB" -> R.drawable.map_logo_ferry
-                    else -> R.drawable.map_logo_bus
-                }),
+                icon = setCustomMapServiceIcon(service.vehicle.parkId, colorScheme, LocalContext.current, vectorResId =
+                if ((line?.name ?: "").contains("Tram"))
+                    R.drawable.map_logo_tram
+                else
+                    if ((line?.name ?: "").contains("BATO"))
+                        R.drawable.map_logo_ferry
+                    else
+                        R.drawable.map_logo_bus
+                ),
                 onClick = {
                     selectedService.value = service
                     cameraPositionState.position = CameraPosition.fromLatLngZoom(
