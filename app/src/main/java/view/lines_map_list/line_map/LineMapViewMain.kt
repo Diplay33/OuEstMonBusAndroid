@@ -131,7 +131,7 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
                     while(true) {
                         if(line.isNest) {
                             Lines.getChildLineIds(line.id) { childLineIds ->
-                                Services.getServicesFilteredBy(context, network.value, childLineIds) { returnedServices ->
+                                Services.getServicesFilteredBy(network.value, childLineIds) { returnedServices ->
                                     services.clear()
                                     services.addAll(returnedServices)
                                     isLoading.value = false
@@ -140,7 +140,7 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
                             }
                         }
                         else {
-                            Services.getServicesByLine(context, network.value, line.id) { returnedServices ->
+                            Services.getServicesByLine(network.value, line.id) { returnedServices ->
                                 services.clear()
                                 services.addAll(returnedServices)
                                 isLoading.value = false

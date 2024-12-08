@@ -76,7 +76,7 @@ fun SearchLineViewMain(
             LaunchedEffect(state.query.text, network.value) {
                 if(network.value.isNotEmpty()) {
                     if(allServices.isEmpty()) {
-                        Services.getAllServices(context, network.value, true) { values ->
+                        Services.getAllServices(network.value) { values ->
                             allServices.clear()
                             allServices.addAll(values)
                             areServicesLoading.value = false

@@ -4,6 +4,7 @@ import com.diplay.ouestmonbus.MainApplication
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import model.DAO.TripDAO
 
 class Destinations {
     companion object {
@@ -26,6 +27,11 @@ class Destinations {
 
         fun deleteContent() {
             destinationDAO.deleteContent()
+        }
+
+        //MARK: - Trip
+        fun getTripHeadsigns(ids: List<String>, network: String, callback: (List<Map<String, String>>) -> Unit) {
+            TripDAO.getTripHeadsigns(ids, network) { callback(it) }
         }
     }
 }

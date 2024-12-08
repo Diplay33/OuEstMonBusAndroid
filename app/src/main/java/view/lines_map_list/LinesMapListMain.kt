@@ -84,7 +84,7 @@ fun LinesMapListMain(
             LaunchedEffect(network.value) {
                 if(network.value.isNotEmpty()) {
                     while(true) {
-                        Services.getAllServices(context, network.value, true) {
+                        Services.getAllServices(network.value) {
                             allServices.value = mutableListOf()
                             allServices.value.addAll(it)
                             isLoading.value = false

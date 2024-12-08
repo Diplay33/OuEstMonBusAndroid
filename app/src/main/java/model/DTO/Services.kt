@@ -6,18 +6,11 @@ import java.text.Normalizer
 
 class Services {
     companion object {
-        fun getAllServices(
-            context: Context,
-            network: String,
-            withoutDestination: Boolean = false,
-            callback: (ArrayList<Service>) -> Unit
-        ) {
+        fun getAllServices(network: String, callback: (ArrayList<Service>) -> Unit ) {
             when(network) {
                 "tbm" -> ServiceDAO.getAllTBMServices { callback(it) }
                 "ametis", "star", "corolis", "tam" -> ServiceDAO.getAllServicesFromGTFSRT(
                     network = network,
-                    context = context,
-                    withoutDestination = withoutDestination
                 ) {
                     callback(it)
                 }
@@ -26,30 +19,20 @@ class Services {
         }
 
         fun getServicesByLine(
-            context: Context,
             network: String,
             lineId: Int,
             callback: (ArrayList<Service>) -> Unit
         ) {
             when(network) {
                 "tbm" ->
-                    ServiceDAO.getTBMServicesByLine(lineId) { services ->
-                        callback(services)
-                    }
+                    ServiceDAO.getTBMServicesByLine(lineId) { callback(it) }
                 "ametis", "star", "corolis", "tam" ->
-                    ServiceDAO.getAllServicesFromGTFSRT(
-                        network = network,
-                        context = context,
-                        withoutDestination = false
-                    ) { services ->
-                        callback(ArrayList(services.filter { it.lineId == lineId }))
-                    }
+                    ServiceDAO.getServicesFromGTFSRT(lineId, network) { callback(ArrayList(it)) }
                 "" -> callback(arrayListOf())
             }
         }
 
         fun getServicesFilteredBy(
-            context: Context,
             network: String,
             ids: List<Int>,
             callback: (List<Service>) -> Unit
@@ -60,11 +43,7 @@ class Services {
                         callback(returnedServices.filter { ids.contains(it.lineId) })
                     }
                 "ametis", "star", "corolis", "tam" ->
-                    ServiceDAO.getAllServicesFromGTFSRT(
-                        network = network,
-                        context = context,
-                        withoutDestination = false
-                    ) { returnedServices ->
+                    ServiceDAO.getAllServicesFromGTFSRT(network) { returnedServices ->
                         callback(returnedServices.filter { ids.contains(it.lineId) })
                     }
                 "" -> callback(listOf())

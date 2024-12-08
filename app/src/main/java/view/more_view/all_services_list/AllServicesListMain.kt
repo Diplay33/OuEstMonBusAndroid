@@ -66,7 +66,7 @@ fun AllServicesListMain(
 
     LaunchedEffect(network.value) {
         if(network.value.isNotEmpty() && filteredServices.value.isEmpty()) {
-            Services.getAllServices(context, network.value) {
+            Services.getAllServices(network.value) {
                 filteredServices.value.clear()
                 filteredServices.value.addAll(Services.filterServicesByVehicle(it))
                 isLoading.value = false

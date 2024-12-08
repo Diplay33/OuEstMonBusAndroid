@@ -89,7 +89,7 @@ fun AllServicesListTopBar(
                         modifier = Modifier
                             .clickable {
                                 isLoading.value = true
-                                Services.getAllServices(context, network.value) {
+                                Services.getAllServices(network.value) {
                                     services.value.clear()
                                     services.value.addAll(Services.filterServicesByVehicle(it))
                                     isLoading.value = false

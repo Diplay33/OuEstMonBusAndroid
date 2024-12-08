@@ -78,7 +78,6 @@ fun FavoriteStopDetailMain(
     val pathsCoordinates = remember {
         mutableStateListOf<List<LatLng>>()
     }
-    val context = LocalContext.current
 
     LaunchedEffect(stopName, line) {
         Paths.getOrderedPathsByLine(line.id) { orderedPaths ->
@@ -118,7 +117,7 @@ fun FavoriteStopDetailMain(
                 }
                 isLoading.value = false
 
-                NSchedulesMapMarkers.retrieveVehicles(context, line.id, capFilteredNextSchedules.map { it.vehicleId ?: 0 }) { vehicles ->
+                NSchedulesMapMarkers.retrieveVehicles(line.id, capFilteredNextSchedules.map { it.vehicleId ?: 0 }) { vehicles ->
                     mapMarkers.clear()
                     mapMarkers.addAll(vehicles + listOf(stationMarker.value))
                 }

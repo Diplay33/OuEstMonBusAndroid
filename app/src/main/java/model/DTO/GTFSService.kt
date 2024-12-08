@@ -13,7 +13,9 @@ import okhttp3.Request
 import java.io.File
 import java.io.IOException
 
-class GTFSService {
+//Keeping this in case of, might delete that in the future
+
+/*class GTFSService {
     companion object {
         fun getTrips(network: String, context: Context, callback: (List<Map<String, String>>) -> Unit) {
             CoroutineScope(Dispatchers.IO).launch {
@@ -90,4 +92,4 @@ class GTFSService {
             return trips.firstOrNull { it["trip_id"] == tripId }?.get("trip_headsign\r")?.dropLast(1)
         }
     }
-}
+}*/
