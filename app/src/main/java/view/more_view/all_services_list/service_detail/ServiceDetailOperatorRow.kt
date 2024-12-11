@@ -21,7 +21,7 @@ fun ServiceDetailOperatorRow(operator: String) {
     val id = if (operator.contains("Keolis"))
         R.drawable.keolis
     else
-        if (operator.contains("TRANSDEV"))
+        if (operator.contains("Transdev"))
             R.drawable.transdev
         else
             if (operator.contains("River Cruise"))
