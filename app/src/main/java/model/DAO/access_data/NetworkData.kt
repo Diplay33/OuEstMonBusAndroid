@@ -8,4 +8,5 @@ val networks = listOf(
     Network(3, "star", "Service des Transports de l'Agglomération Rennaise", 48.117266, -1.6777926, "#173166", "#63FD9A"),
     Network(4, "corolis", "Corolis", 49.433331, 2.08333, "#E29429", "#E29429"),
     Network(5, "tam", "Transports de l'agglo. de Montpellier", 43.610769, 3.876716, "#004494", "#66961B"),
+    Network(6, "met", "LE MET'", 49.1193089, 6.1757156, "#00A8BE", "#00A8BE"),
 )
