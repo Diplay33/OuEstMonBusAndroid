@@ -77,7 +77,7 @@ fun LinesMapListGroup(
                             .size(25.dp)
                         )
 
-                        AdvertView(modifier = Modifier
+                        AdvertView(id = "4506533901", modifier = Modifier
                             .height(50.dp)
                         )
                     }

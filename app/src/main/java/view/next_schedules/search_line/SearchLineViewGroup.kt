@@ -74,7 +74,7 @@ fun SearchLineViewGroup(
                             .height(25.dp)
                         )
 
-                        AdvertView(modifier = Modifier
+                        AdvertView(id = "1260557496", modifier = Modifier
                             .height(50.dp)
                         )
                     }

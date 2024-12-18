@@ -216,7 +216,7 @@ fun AllServicesListMain(
         }
 
         if(!BuildConfig.DEBUG) {
-            AdvertView()
+            AdvertView(id = "4506533901")
         }
     }
 }

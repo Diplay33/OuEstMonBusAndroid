@@ -150,7 +150,7 @@ fun NextLineSchedulesMain(
         }
 
         if(!BuildConfig.DEBUG) {
-            AdvertView()
+            AdvertView(id = "5819615572")
         }
     }
 }

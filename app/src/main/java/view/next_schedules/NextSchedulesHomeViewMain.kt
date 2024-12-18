@@ -33,7 +33,7 @@ fun NextSchedulesHomeViewMain(navController: NavController) {
                 )
 
                 if(!BuildConfig.DEBUG) {
-                    AdvertView()
+                    AdvertView(id = "9758860580")
                 }
 
                 Spacer(modifier = Modifier

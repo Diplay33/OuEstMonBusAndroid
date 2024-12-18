@@ -170,7 +170,7 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
         }
 
         if(!BuildConfig.DEBUG) {
-            AdvertView(modifier = Modifier
+            AdvertView(id = "8429467043", modifier = Modifier
                 .align(Alignment.BottomCenter)
             )
         }

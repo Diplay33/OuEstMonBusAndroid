@@ -20,7 +20,7 @@ import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 
 @Composable
-fun AdvertView(modifier: Modifier = Modifier) {
+fun AdvertView(id: String, modifier: Modifier = Modifier) {
     val isInEditMode = LocalInspectionMode.current
 
     if(isInEditMode) {
@@ -43,7 +43,7 @@ fun AdvertView(modifier: Modifier = Modifier) {
                         adUnitId = if (BuildConfig.DEBUG)
                             "ca-app-pub-3940256099942544/6300978111"
                         else
-                            "ca-app-pub-7236221140829494/2080454618"
+                            "ca-app-pub-7236221140829494/$id"
                         loadAd(AdRequest.Builder().build())
                     }
                 },
