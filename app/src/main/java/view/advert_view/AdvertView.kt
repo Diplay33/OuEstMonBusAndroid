@@ -22,7 +22,6 @@ import com.google.android.gms.ads.AdView
 @Composable
 fun AdvertView(modifier: Modifier = Modifier) {
     val isInEditMode = LocalInspectionMode.current
-    val colorScheme = !isSystemInDarkTheme()
 
     if(isInEditMode) {
         Text(
