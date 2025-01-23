@@ -57,7 +57,7 @@ fun MoreViewAllServicesRow(navController: NavController) {
             }
         }
 
-        Text(text = "Affiche la liste de tous les véhicules actuellement en circulation sur le réseau TBM",
+        Text(text = "Affiche la liste de tous les véhicules actuellement en circulation sur le réseau actuellement sélectionné",
             color = Color.Gray,
             modifier = Modifier
                 .padding(horizontal = 30.dp)
