@@ -30,7 +30,7 @@ class Destinations {
         }
 
         //MARK: - Trip
-        fun getTripHeadsigns(ids: List<String>, network: String, callback: (List<Map<String, String>>) -> Unit) {
+        fun getTripHeadsigns(ids: List<String>, network: String, callback: (List<Map<String, String?>>) -> Unit) {
             TripDAO.getTripHeadsigns(ids, network) { callback(it) }
         }
     }

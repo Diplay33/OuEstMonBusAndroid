@@ -9,7 +9,7 @@ class TripDAO {
     companion object {
         private val supabase = MainApplication.gtfsSupabase
 
-        fun getTripHeadsigns(ids: List<String>, network: String, callback: (List<Map<String, String>>) -> Unit) {
+        fun getTripHeadsigns(ids: List<String>, network: String, callback: (List<Map<String, String?>>) -> Unit) {
             try {
                 runBlocking {
                     val results = supabase
@@ -22,7 +22,7 @@ class TripDAO {
                                 }
                             }
                         }
-                        .decodeList<Map<String, String>>()
+                        .decodeList<Map<String, String?>>()
                     callback(results)
                 }
             }
