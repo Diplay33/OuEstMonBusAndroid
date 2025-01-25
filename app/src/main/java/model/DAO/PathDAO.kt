@@ -60,7 +60,7 @@ class PathDAO {
 
                         paths.add(
                             Path(
-                                id = propertiesJSONObject.getInt("gid"),
+                                id = propertiesJSONObject.getInt("gid").toString(),
                                 name = propertiesJSONObject.getString("libelle"),
                                 direction = propertiesJSONObject.getString("sens"),
                                 coordinates = coordinates
@@ -93,7 +93,7 @@ class PathDAO {
 
                         paths.add(
                             Path(
-                                id = propertiesJSONObject.getInt("gid"),
+                                id = propertiesJSONObject.getInt("gid").toString(),
                                 name = propertiesJSONObject.getString("libelle"),
                                 direction = propertiesJSONObject.getString("sens"),
                                 coordinates = listOf()
@@ -159,7 +159,7 @@ class PathDAO {
 
                         callback(
                             Path(
-                                id = propertiesJSONObject.getInt("gid"),
+                                id = propertiesJSONObject.getInt("gid").toString(),
                                 name = propertiesJSONObject.getString("libelle"),
                                 direction = propertiesJSONObject.getString("sens"),
                                 coordinates = coordinates

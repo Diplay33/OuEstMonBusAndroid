@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 class Path(
-    val id: Int,
+    val id: String,
     val name: String,
     val direction: String,
     val coordinates: List<List<List<Double>>>

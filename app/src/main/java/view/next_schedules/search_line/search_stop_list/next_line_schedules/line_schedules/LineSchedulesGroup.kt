@@ -105,7 +105,7 @@ fun LineSchedulesGroup(
         ) {
             if(!isCollapsed.value) {
                 schedules.forEach { schedule ->
-                    LineSchedulesRow(line, schedule, paths.first { it.id == schedule.pathId })
+                    LineSchedulesRow(line, schedule, paths.first { it.id == schedule.pathId.toString() })
 
                     if(schedule != schedules.last()) {
                         Row {

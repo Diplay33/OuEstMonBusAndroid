@@ -29,7 +29,7 @@ class Schedules {
 
             getSchedulesByStationAndDate(stationId, formatter.format(date)) { schedules ->
                 callback(schedules
-                    .filter { value -> paths.map { it.id }.contains(value.pathId) }
+                    .filter { value -> paths.map { it.id }.contains(value.pathId.toString()) }
                     .filter { value ->
                         val cal = Calendar.getInstance()
                         cal.time = value.getTime()
@@ -40,7 +40,7 @@ class Schedules {
                     if(!isTBNight) {
                         callback(
                             values
-                                .filter { value -> paths.map { it.id }.contains(value.pathId) }
+                                .filter { value -> paths.map { it.id }.contains(value.pathId.toString()) }
                                 .filter { value ->
                                     val cal = Calendar.getInstance()
                                     cal.time = value.getTime()

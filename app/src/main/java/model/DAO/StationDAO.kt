@@ -115,7 +115,7 @@ class StationDAO {
             }
         }*/
 
-        fun getStationsByPath(pathId: Int, callback: (List<Station>) -> Unit) {
+        fun getStationsByPath(pathId: String, callback: (List<Station>) -> Unit) {
             CallAPI.run("https://data.bordeaux-metropole.fr/geojson/process/saeiv_arrets_chemin?key=0234ABEFGH&datainputs={\"gid\":$pathId}") { responseBody ->
                 try {
                     val stations: MutableList<Station> = mutableListOf()
