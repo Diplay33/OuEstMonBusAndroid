@@ -5,24 +5,26 @@ import model.DAO.PathDAO
 class Paths {
     companion object {
         fun getOrderedPathsByLine(network: String, lineId: Int, withCoordinates: Boolean = false, callback: (List<List<Path>>) -> Unit) {
-            PathDAO.getPathsByLine(lineId, withCoordinates) { paths ->
-                val pathsAller: MutableList<Path> = mutableListOf()
-                val pathsRetour: MutableList<Path> = mutableListOf()
+            PathDAO.getPathsByLine(lineId, withCoordinates) { callback(orderPaths(it)) }
+        }
 
-                paths.forEach { path ->
-                    if(path.direction == "ALLER") {
-                        pathsAller.add(path)
-                    }
-                    else {
-                        pathsRetour.add(path)
-                    }
-                }
-                if(pathsRetour.isEmpty()) {
-                    callback(listOf(pathsAller))
+        private fun orderPaths(paths: List<Path>): List<List<Path>> {
+            val pathsAller: MutableList<Path> = mutableListOf()
+            val pathsRetour: MutableList<Path> = mutableListOf()
+
+            paths.forEach { path ->
+                if(path.direction == "ALLER") {
+                    pathsAller.add(path)
                 }
                 else {
-                    callback(listOf(pathsAller, pathsRetour))
+                    pathsRetour.add(path)
                 }
+            }
+            if(pathsRetour.isEmpty()) {
+                return listOf(pathsAller)
+            }
+            else {
+                return listOf(pathsAller, pathsRetour)
             }
         }
 
