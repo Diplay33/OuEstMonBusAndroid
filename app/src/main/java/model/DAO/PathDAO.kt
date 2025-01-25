@@ -1,11 +1,14 @@
 package model.DAO
 
+import com.diplay.ouestmonbus.MainApplication
 import model.CallAPI
 import model.DTO.Path
 import org.json.JSONObject
 
 class PathDAO {
     companion object {
+        private val supabase = MainApplication.gtfsSupabase
+
         fun getTBMPathsByLine(lineId: Int, withCoordinates: Boolean, callback: (List<Path>) -> Unit) {
             var url = "https://data.bordeaux-metropole.fr/geojson/features/sv_chem_l?key=0234ABEFGH&filter={\"rs_sv_ligne_a\":$lineId,\"principal\":true}"
             if(!withCoordinates) {
@@ -71,6 +74,10 @@ class PathDAO {
 
                 callback(paths)
             }
+        }
+
+        fun getPathsByLineFromGTFS(network: String, lineId: Int): List<Path> {
+            return listOf()
         }
 
         fun getAllPathsByLine(lineId: Int, callback: (List<Path>) -> Unit) {
