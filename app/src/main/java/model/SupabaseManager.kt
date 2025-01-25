@@ -67,8 +67,8 @@ class SupabaseManager {
                 when(descriptor.tableName) {
                     "lines" -> retrieveLines(network, descriptor.version, context) { callback(it) }
                     "destinations" -> retrieveDestinations(network, descriptor.version, context)
-                    "aller_destinations" -> retrieveAllerDestinations(descriptor.version, context)
-                    "retour_destinations" -> retrieveRetourDestinations(descriptor.version, context)
+                    "aller_destinations" -> retrieveAllerDestinations(network, descriptor.version, context)
+                    "retour_destinations" -> retrieveRetourDestinations(network, descriptor.version, context)
                     "next_schedules_destinations" ->
                         retrieveNextSchedulesDestinations(
                             onlineVersion = descriptor.version,
@@ -143,7 +143,11 @@ class SupabaseManager {
             }
         }
 
-        private suspend fun retrieveAllerDestinations(onlineVersion: String, context: Context) {
+        private suspend fun retrieveAllerDestinations(
+            network: String,
+            onlineVersion: String,
+            context: Context
+        ) {
             try {
                 val storeAllerDestinationPreferences = StoreAllerDestinationTableVersion(context)
                 storeAllerDestinationPreferences.version.firstOrNull().let {
@@ -151,7 +155,7 @@ class SupabaseManager {
                         AllerDestinations.deleteContent()
                         val allerDestinations = supabase
                             .from("aller_destinations")
-                            .select { filter { eq("network", "tbm") } }
+                            .select { filter { eq("network", network) } }
                             .decodeList<AllerDestination>()
                         AllerDestinations.insertAllerDestinations(allerDestinations)
                         storeAllerDestinationPreferences.setCurrentVersion(onlineVersion)
@@ -163,7 +167,11 @@ class SupabaseManager {
             }
         }
 
-        private suspend fun retrieveRetourDestinations(onlineVersion: String, context: Context) {
+        private suspend fun retrieveRetourDestinations(
+            network: String,
+            onlineVersion: String,
+            context: Context
+        ) {
             try {
                 val storeRetourDestinationPreferences = StoreRetourDestinationTableVersion(context)
                 storeRetourDestinationPreferences.version.firstOrNull().let {
@@ -171,7 +179,7 @@ class SupabaseManager {
                         RetourDestinations.deleteContent()
                         val retourDestinations = supabase
                             .from("retour_destinations")
-                            .select { filter { eq("network", "tbm") } }
+                            .select { filter { eq("network", network) } }
                             .decodeList<RetourDestination>()
                         RetourDestinations.insertRetourDestinations(retourDestinations)
                         storeRetourDestinationPreferences.setCurrentVersion(onlineVersion)
