@@ -12,17 +12,22 @@ import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import model.DTO.Path
+import model.preferences_data_store.StoreChosenNetwork
+import model.preferences_data_store.StoreFavoriteLines
 import view.Screens.ProchainsScreens
 
 @Composable
@@ -36,10 +41,14 @@ fun SearchLineViewDestinationRow(
         mutableSetOf<String>()
     }
     val colorScheme = !isSystemInDarkTheme()
+    val context = LocalContext.current
+    val storeChosenNetwork = StoreChosenNetwork(context)
 
     LaunchedEffect(paths) {
-        paths.forEach { path ->
-            destinationsSet.add(path.getDestinationName())
+        storeChosenNetwork.chosenNetwork.collect { network ->
+            paths.forEach { path ->
+                destinationsSet.add(if (network == "tbm") path.getDestinationName() else path.name)
+            }
         }
     }
 

@@ -7,7 +7,7 @@ class Paths {
         fun getOrderedPathsByLine(network: String, lineId: Int, withCoordinates: Boolean = false, callback: (List<List<Path>>) -> Unit) {
             when(network) {
                 "tbm" -> PathDAO.getTBMPathsByLine(lineId, withCoordinates) { callback(orderPaths(it)) }
-                "star" -> PathDAO.getPathsByLineFromGTFS(network, lineId)
+                "star" -> callback(orderPaths(PathDAO.getPathsByLineFromGTFS(network, lineId)))
                 "" -> callback(listOf())
             }
         }

@@ -1,8 +1,15 @@
 package model.DAO
 
+import androidx.compose.material.Text
 import com.diplay.ouestmonbus.MainApplication
+import io.github.jan.supabase.postgrest.from
+import io.github.jan.supabase.postgrest.postgrest
+import io.github.jan.supabase.postgrest.query.Columns
+import io.github.jan.supabase.postgrest.rpc
+import kotlinx.coroutines.runBlocking
 import model.CallAPI
 import model.DTO.Path
+import org.json.JSONArray
 import org.json.JSONObject
 
 class PathDAO {
@@ -77,7 +84,30 @@ class PathDAO {
         }
 
         fun getPathsByLineFromGTFS(network: String, lineId: Int): List<Path> {
-            return listOf()
+            val pathsToReturn = mutableListOf<Path>()
+            try {
+                runBlocking {
+                    val rawResult = supabase.postgrest
+                        .rpc("get_paths_by_route", mapOf("p_route_id" to "5-000$lineId", "network" to network))
+                    val jsonPaths = JSONArray(rawResult.data)
+                    for(i in 0 until jsonPaths.length()) {
+                        val jsonPath = jsonPaths.getJSONObject(i)
+                        pathsToReturn.add(
+                            Path(
+                                id = jsonPath.getString("id"),
+                                name = jsonPath.getString("name"),
+                                direction = jsonPath.getString("direction"),
+                                coordinates = listOf()
+                            )
+                        )
+                    }
+                }
+                return pathsToReturn
+            }
+            catch(e: Exception) {
+                println(e.localizedMessage)
+            }
+            return pathsToReturn
         }
 
         fun getAllPathsByLine(lineId: Int, callback: (List<Path>) -> Unit) {
