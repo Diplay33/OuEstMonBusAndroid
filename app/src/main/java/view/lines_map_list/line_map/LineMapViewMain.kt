@@ -112,7 +112,7 @@ fun LineMapViewMain(navController: NavController, lineId: String?) {
                     }
                 }
                 if(!line.isNest && network.value == "tbm") {
-                    Paths.getOrderedPathsByLine(line.id, true) { paths ->
+                    Paths.getOrderedPathsByLine("tbm", line.id, true) { paths ->
                         paths.forEach { backAndForthPaths ->
                             backAndForthPaths.forEach { path ->
                                 pathsCoordinates.addAll(

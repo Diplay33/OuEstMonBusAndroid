@@ -33,6 +33,7 @@ import coil.decode.SvgDecoder
 import coil.request.ImageRequest
 import kotlinx.coroutines.launch
 import model.DTO.*
+import model.preferences_data_store.StoreChosenNetwork
 import model.preferences_data_store.StoreFavoriteLines
 import view.lines_map_list.ColorIndicatorDot
 
@@ -66,8 +67,13 @@ fun SearchLineViewRow(
     val storeFavLines = StoreFavoriteLines(context, line.id.toString())
     val isFavorite = storeFavLines.isFavorite.collectAsState(initial = false)
     val colorScheme = !isSystemInDarkTheme()
+    val storeChosenNetwork = StoreChosenNetwork(context)
+    val network = rememberSaveable {
+        mutableStateOf("")
+    }
 
     LaunchedEffect(Unit) {
+        storeChosenNetwork.chosenNetwork.collect { network.value = it ?: "" }
         if(!isCollapsed.value && currentRotation.value == 0f) {
             scope.launch {
                 rotation.animateTo(
@@ -101,7 +107,7 @@ fun SearchLineViewRow(
                     onTap = {
                         if (isCollapsed.value && paths.value.isEmpty()) {
                             isLoading.value = true
-                            Paths.getOrderedPathsByLine(line.id) { returnedPaths ->
+                            Paths.getOrderedPathsByLine(network.value, line.id) { returnedPaths ->
                                 paths.value = returnedPaths.toMutableList()
                                 isLoading.value = false
                                 isCollapsed.value = !isCollapsed.value

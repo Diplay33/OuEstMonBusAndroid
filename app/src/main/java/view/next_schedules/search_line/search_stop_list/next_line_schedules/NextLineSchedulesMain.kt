@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,6 +17,7 @@ import com.diplay.ouestmonbus.BuildConfig
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.delay
 import model.DTO.*
+import model.preferences_data_store.StoreChosenNetwork
 import view.advert_view.AdvertView
 
 @Composable
@@ -55,8 +57,14 @@ fun NextLineSchedulesMain(
     val pathsCoordinates = remember {
         mutableStateListOf<List<LatLng>>()
     }
+    val context = LocalContext.current
+    val storeChosenNetwork = StoreChosenNetwork(context)
+    val network = rememberSaveable {
+        mutableStateOf("")
+    }
 
     LaunchedEffect(lineId) {
+        storeChosenNetwork.chosenNetwork.collect { network.value = it ?: "" }
         if(pathDirection == "ALLER") {
             AllerDestinations.getListOfDestinations(line.id) {
                 destinations.addAll(it)
@@ -70,7 +78,7 @@ fun NextLineSchedulesMain(
     }
 
     LaunchedEffect(stopName, line) {
-        Paths.getOrderedPathsByLine(line.id, true) { returnedPaths ->
+        Paths.getOrderedPathsByLine(network.value, line.id, true) { returnedPaths ->
             paths.clear()
             returnedPaths.map {
                 if(it.first().direction == pathDirection) {

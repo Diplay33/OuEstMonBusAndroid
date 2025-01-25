@@ -4,7 +4,7 @@ import model.DAO.PathDAO
 
 class Paths {
     companion object {
-        fun getOrderedPathsByLine(lineId: Int, withCoordinates: Boolean = false, callback: (List<List<Path>>) -> Unit) {
+        fun getOrderedPathsByLine(network: String, lineId: Int, withCoordinates: Boolean = false, callback: (List<List<Path>>) -> Unit) {
             PathDAO.getPathsByLine(lineId, withCoordinates) { paths ->
                 val pathsAller: MutableList<Path> = mutableListOf()
                 val pathsRetour: MutableList<Path> = mutableListOf()

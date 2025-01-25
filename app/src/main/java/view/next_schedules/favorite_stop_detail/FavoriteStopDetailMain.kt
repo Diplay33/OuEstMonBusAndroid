@@ -13,6 +13,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -33,6 +34,7 @@ import model.DTO.Paths
 import model.DTO.RetourDestinations
 import model.DTO.Station
 import model.DTO.Stations
+import model.preferences_data_store.StoreChosenNetwork
 import view.next_schedules.search_line.search_stop_list.next_line_schedules.NextLineSchedulesHeader
 import view.next_schedules.search_line.search_stop_list.next_line_schedules.NextLineSchedulesMap
 import view.next_schedules.search_line.search_stop_list.next_line_schedules.NextLineSchedulesSchdlGroup
@@ -78,9 +80,16 @@ fun FavoriteStopDetailMain(
     val pathsCoordinates = remember {
         mutableStateListOf<List<LatLng>>()
     }
+    val context = LocalContext.current
+    val storeChosenNetwork = StoreChosenNetwork(context)
+    val network = rememberSaveable {
+        mutableStateOf("")
+    }
 
-    LaunchedEffect(stopName, line) {
-        Paths.getOrderedPathsByLine(line.id) { orderedPaths ->
+    LaunchedEffect(network.value, stopName, line) {
+        storeChosenNetwork.chosenNetwork.collect { network.value = it ?: "" }
+
+        Paths.getOrderedPathsByLine(network.value, line.id) { orderedPaths ->
             orderedPaths.forEach { returnedPaths ->
                 Stations.getSortedStationsByPaths(returnedPaths) { stations ->
                     if(stations.map { it.stationId }.contains(stopId.toString())) {
@@ -128,7 +137,7 @@ fun FavoriteStopDetailMain(
 
     LaunchedEffect(pathDirection.value) {
         if(pathDirection.value != "") {
-            Paths.getOrderedPathsByLine(line.id, true) { returnedPaths ->
+            Paths.getOrderedPathsByLine(network.value, line.id, true) { returnedPaths ->
                 returnedPaths[if (pathDirection.value == "ALLER") 0 else 1].forEach { path ->
                     pathsCoordinates.addAll(
                         path.coordinates.map { coordinates ->

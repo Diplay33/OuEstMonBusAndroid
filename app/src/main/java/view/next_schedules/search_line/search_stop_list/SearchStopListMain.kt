@@ -14,6 +14,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -21,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import kotlinx.coroutines.delay
 import model.DTO.*
+import model.preferences_data_store.StoreChosenNetwork
 import view.lines_map_list.SearchDisplay
 import view.next_schedules.search_line.search_stop_list.next_line_schedules.SearchStopListSearchBar
 import view.next_schedules.search_line.search_stop_list.next_line_schedules.SearchStopListSearchState
@@ -51,8 +53,14 @@ fun SearchStopListMain(
         mutableStateListOf<List<String>>()
     }
     val colorScheme = !isSystemInDarkTheme()
+    val context = LocalContext.current
+    val storeChosenNetwork = StoreChosenNetwork(context)
+    val network = rememberSaveable {
+        mutableStateOf("")
+    }
 
     LaunchedEffect(line, pathDirectionState.value) {
+        storeChosenNetwork.chosenNetwork.collect { network.value = it ?: "" }
         if(pathDirectionState.value == "ALLER") {
             AllerDestinations.getListOfDestinations(line.id) {
                 destinations.addAll(it)
@@ -82,7 +90,7 @@ fun SearchStopListMain(
             )
 
             LaunchedEffect(state.query.text, pathDirectionState.value) {
-                Paths.getOrderedPathsByLine(lineId?.toInt() ?: 0) { returnedPaths ->
+                Paths.getOrderedPathsByLine(network.value, lineId?.toInt() ?: 0) { returnedPaths ->
                     paths.value = mutableListOf()
                     returnedPaths.map { if (it.first().direction == pathDirectionState.value) paths.value.addAll(it) }
 
