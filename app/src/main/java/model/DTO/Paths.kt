@@ -5,7 +5,10 @@ import model.DAO.PathDAO
 class Paths {
     companion object {
         fun getOrderedPathsByLine(network: String, lineId: Int, withCoordinates: Boolean = false, callback: (List<List<Path>>) -> Unit) {
-            PathDAO.getPathsByLine(lineId, withCoordinates) { callback(orderPaths(it)) }
+            when(network) {
+                "tbm" -> PathDAO.getTBMPathsByLine(lineId, withCoordinates) { callback(orderPaths(it)) }
+                "" -> callback(listOf())
+            }
         }
 
         private fun orderPaths(paths: List<Path>): List<List<Path>> {
