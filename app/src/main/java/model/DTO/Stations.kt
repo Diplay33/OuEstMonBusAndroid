@@ -31,11 +31,14 @@ class Stations {
             }
         }*/
 
-        fun getSortedStationsByPaths(paths: List<Path>, callback: (List<Station>) -> Unit) {
-            paths.forEach { path ->
-                StationDAO.getStationsByPath(path.id) { returnedStations ->
-                    callback(returnedStations)
+        fun getSortedStationsByPaths(network: String, paths: List<Path>, callback: (List<Station>) -> Unit) {
+            when(network) {
+                "tbm" -> paths.forEach { path ->
+                    StationDAO.getStationsByPath(path.id) { returnedStations ->
+                        callback(returnedStations)
+                    }
                 }
+                "" -> callback(listOf())
             }
         }
 

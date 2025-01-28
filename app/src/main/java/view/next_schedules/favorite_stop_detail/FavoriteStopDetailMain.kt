@@ -91,7 +91,7 @@ fun FavoriteStopDetailMain(
 
         Paths.getOrderedPathsByLine(network.value, line.id) { orderedPaths ->
             orderedPaths.forEach { returnedPaths ->
-                Stations.getSortedStationsByPaths(returnedPaths) { stations ->
+                Stations.getSortedStationsByPaths(network.value, returnedPaths) { stations ->
                     if(stations.map { it.stationId }.contains(stopId.toString())) {
                         paths.clear()
                         paths.addAll(returnedPaths)

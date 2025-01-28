@@ -92,7 +92,7 @@ fun SearchStopListMain(
                             paths.value = mutableListOf()
                             returnedPaths.map { if (it.first().direction == pathDirectionState.value) paths.value.addAll(it) }
 
-                            Stations.getSortedStationsByPaths(paths.value) { returnedStations ->
+                            Stations.getSortedStationsByPaths(storedNetwork, paths.value) { returnedStations ->
                                 returnedStations.forEach { station ->
                                     if(!stops.value.map { it.stationId }.contains(station.stationId)) {
                                         stops.value.add(station)
