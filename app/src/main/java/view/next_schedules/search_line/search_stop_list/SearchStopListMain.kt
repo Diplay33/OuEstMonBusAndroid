@@ -55,12 +55,8 @@ fun SearchStopListMain(
     val colorScheme = !isSystemInDarkTheme()
     val context = LocalContext.current
     val storeChosenNetwork = StoreChosenNetwork(context)
-    val network = rememberSaveable {
-        mutableStateOf("")
-    }
 
     LaunchedEffect(line, pathDirectionState.value) {
-        storeChosenNetwork.chosenNetwork.collect { network.value = it ?: "" }
         if(pathDirectionState.value == "ALLER") {
             AllerDestinations.getListOfDestinations(line.id) {
                 destinations.addAll(it)
@@ -90,17 +86,21 @@ fun SearchStopListMain(
             )
 
             LaunchedEffect(state.query.text, pathDirectionState.value) {
-                Paths.getOrderedPathsByLine(network.value, lineId?.toInt() ?: 0) { returnedPaths ->
-                    paths.value = mutableListOf()
-                    returnedPaths.map { if (it.first().direction == pathDirectionState.value) paths.value.addAll(it) }
+                storeChosenNetwork.chosenNetwork.collect { storedNetwork ->
+                    storedNetwork?.let {
+                        Paths.getOrderedPathsByLine(storedNetwork, lineId?.toInt() ?: 0) { returnedPaths ->
+                            paths.value = mutableListOf()
+                            returnedPaths.map { if (it.first().direction == pathDirectionState.value) paths.value.addAll(it) }
 
-                    Stations.getSortedStationsByPaths(paths.value) { returnedStations ->
-                        returnedStations.forEach { station ->  
-                            if(!stops.value.map { it.stationId }.contains(station.stationId)) {
-                                stops.value.add(station)
+                            Stations.getSortedStationsByPaths(paths.value) { returnedStations ->
+                                returnedStations.forEach { station ->
+                                    if(!stops.value.map { it.stationId }.contains(station.stationId)) {
+                                        stops.value.add(station)
+                                    }
+                                }
+                                isLoading.value = false
                             }
                         }
-                        isLoading.value = false
                     }
                 }
 

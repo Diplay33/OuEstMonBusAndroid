@@ -35,6 +35,7 @@ import coil.request.ImageRequest
 import model.DTO.Line
 import model.DTO.Path
 import model.DTO.Station
+import model.preferences_data_store.StoreChosenNetwork
 
 @Composable
 fun SearchStopListHeader(
@@ -52,10 +53,14 @@ fun SearchStopListHeader(
         mutableStateOf(false)
     }
     val colorScheme = !isSystemInDarkTheme()
+    val context = LocalContext.current
+    val storeChosenNetwork = StoreChosenNetwork(context)
 
-    LaunchedEffect(isLoading.value) {
-        destinationsSet.clear()
-        paths.forEach { destinationsSet.add(it.getDestinationName()) }
+    LaunchedEffect(isLoading.value, paths) {
+        storeChosenNetwork.chosenNetwork.collect { storedNetwork ->
+            destinationsSet.clear()
+            paths.forEach { destinationsSet.add(if (storedNetwork == "tbm") it.getDestinationName() else it.name) }
+        }
     }
 
     Column(modifier = Modifier
