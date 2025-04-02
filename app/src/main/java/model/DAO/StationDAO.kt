@@ -2,6 +2,8 @@ package model.DAO
 
 import com.diplay.ouestmonbus.MainApplication
 import io.github.jan.supabase.postgrest.from
+import io.github.jan.supabase.postgrest.postgrest
+import io.github.jan.supabase.postgrest.rpc
 import kotlinx.coroutines.runBlocking
 import model.CallAPI
 import model.DTO.Station
@@ -148,6 +150,31 @@ class StationDAO {
                     println("Error during decoding process : $e")
                 }
             }
+        }
+
+        fun getGTFSStationByPaths(pathIds: List<String>, network: String): List<Station> {
+            val stationsToReturn = mutableListOf<Station>()
+            try {
+                runBlocking {
+                    val rawResult = supabase.postgrest
+                        .rpc("get_stops_by_shape", mapOf("shape_ids" to pathIds, "network" to network))
+                    val jsonStations = JSONArray(rawResult.data)
+                    for(i in 0 until jsonStations.length()) {
+                        //val jsonStation = jsonStations.getJSONObject(i)
+                        /*stationsToRetu/n.add(
+                            Station(
+                                jsonStation.getString("id"),
+                                //jsonStation.
+                            )*/
+                        //)
+                    }
+                }
+                return stationsToReturn
+            }
+            catch(e: Exception) {
+                println(e.localizedMessage)
+            }
+            return stationsToReturn
         }
 
         fun getGTFSStationById(id: String, network: String): Station {

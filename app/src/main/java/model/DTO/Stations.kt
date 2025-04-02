@@ -38,6 +38,7 @@ class Stations {
                         callback(returnedStations)
                     }
                 }
+                "star" -> callback(StationDAO.getGTFSStationByPaths(paths.map { it.id }, network))
                 "" -> callback(listOf())
             }
         }
