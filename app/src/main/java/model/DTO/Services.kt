@@ -42,7 +42,7 @@ class Services {
                     ServiceDAO.getAllTBMServices { returnedServices ->
                         callback(returnedServices.filter { ids.contains(it.lineId) })
                     }
-                "ametis", "star", "corolis", "tam", "met" ->
+                "ametis", "star", "corolis", "tam", "met", "kiceo" ->
                     ServiceDAO.getAllServicesFromGTFSRT(network) { returnedServices ->
                         callback(returnedServices.filter { ids.contains(it.lineId) })
                     }
