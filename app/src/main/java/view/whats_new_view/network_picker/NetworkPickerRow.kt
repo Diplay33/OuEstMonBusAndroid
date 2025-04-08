@@ -152,6 +152,7 @@ fun computeNetworkDescription(network: Network): String {
         "corolis" -> return "COMMUNAUTÉ D'AGGLO. DU BEAUVAISIS"
         "tam" -> return "MÉTROPOLE MONTPELLIÉRAINE"
         "met" -> return "MÉTROPOLE MESSINE"
+        "kiceo" -> return "COMMUNAUTÉ D'AGGLO. VANNETAISE"
     }
     return ""
 }
@@ -164,6 +165,7 @@ fun computeNetworkImage(network: Network): Int {
         "corolis" -> return R.drawable.corolis
         "tam" -> return R.drawable.tam
         "met" -> return R.drawable.met
+        "kiceo" -> return R.drawable.kiceo
     }
     return R.drawable.question_mark_box
 }
