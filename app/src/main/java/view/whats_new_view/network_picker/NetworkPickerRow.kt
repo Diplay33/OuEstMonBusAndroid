@@ -153,6 +153,7 @@ fun computeNetworkDescription(network: Network): String {
         "tam" -> return "MÉTROPOLE MONTPELLIÉRAINE"
         "met" -> return "MÉTROPOLE MESSINE"
         "kiceo" -> return "COMMUNAUTÉ D'AGGLO. VANNETAISE"
+        "irigo" -> return "ANGERS LOIRE MÉTROPOLE"
     }
     return ""
 }
@@ -166,6 +167,7 @@ fun computeNetworkImage(network: Network): Int {
         "tam" -> return R.drawable.tam
         "met" -> return R.drawable.met
         "kiceo" -> return R.drawable.kiceo
+        "irigo" -> return R.drawable.irigo
     }
     return R.drawable.question_mark_box
 }

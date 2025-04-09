@@ -16,6 +16,7 @@ const val COROLIS_GTFS_RT_VEHICLE_POSITIONS_URL = "https://api.oisemob.cityway.f
 const val TAM_GTFS_RT_VEHICLE_POSITIONS_URL = "https://data.montpellier3m.fr/TAM_MMM_GTFSRT/VehiclePosition.pb"
 const val MET_GTFS_RT_VEHICLE_POSITIONS_URL = "https://proxy.transport.data.gouv.fr/resource/lemet-metz-gtfs-rt-vehicle-position"
 const val KICEO_GTFS_RT_VEHICLE_POSITIONS_URL = "https://proxy.transport.data.gouv.fr/resource/kiceo-vannes-gtfs-rt-vehicle-position"
+const val IRIGO_GTFS_RT_VEHICLE_POSITIONS_URL = "https://ara-api.enroute.mobi/irigo/gtfs/vehicle-positions"
 
 class ServiceDAO {
     companion object {
@@ -75,6 +76,7 @@ class ServiceDAO {
                 "tam" -> TAM_GTFS_RT_VEHICLE_POSITIONS_URL
                 "met" -> MET_GTFS_RT_VEHICLE_POSITIONS_URL
                 "kiceo" -> KICEO_GTFS_RT_VEHICLE_POSITIONS_URL
+                "irigo" -> IRIGO_GTFS_RT_VEHICLE_POSITIONS_URL
                 else -> ""
             }
             CallAPI.runGTFSRT(urlToCall) { response ->
@@ -108,6 +110,7 @@ class ServiceDAO {
                 "tam" -> TAM_GTFS_RT_VEHICLE_POSITIONS_URL
                 "met" -> MET_GTFS_RT_VEHICLE_POSITIONS_URL
                 "kiceo" -> KICEO_GTFS_RT_VEHICLE_POSITIONS_URL
+                "irigo" -> IRIGO_GTFS_RT_VEHICLE_POSITIONS_URL
                 else -> ""
             }
             CallAPI.runGTFSRT(urlToCall) { response ->
@@ -136,7 +139,7 @@ class ServiceDAO {
             val filteredEntities = lineId?.let {
                 feedMessage.entityList.filter {
                     val processedLineId = when(network) {
-                        "ametis", "corolis", "met" -> it.vehicle.trip.routeId.toASCIIDecimal()
+                        "ametis", "corolis", "met", "irigo" -> it.vehicle.trip.routeId.toASCIIDecimal()
                         "star", "tam" -> (it.vehicle.trip.routeId ?: "").drop(2).toIntOrNull() ?: 0
                         "kiceo" -> {
                             val routeId = it.vehicle.trip.routeId
@@ -159,7 +162,7 @@ class ServiceDAO {
             Destinations.getTripHeadsigns(tripIds, network) { headsigns ->
                 filteredEntities.forEach { feedEntity ->
                     val id = when(network) {
-                        "ametis", "star", "tam", "met", "kiceo" -> feedEntity.id.toIntOrNull() ?: 0
+                        "ametis", "star", "tam", "met", "kiceo", "irigo" -> feedEntity.id.toIntOrNull() ?: 0
                         "corolis" -> feedEntity.id.removeRange(0..2).toIntOrNull() ?: 0
                         else -> 0
                     }
@@ -172,7 +175,7 @@ class ServiceDAO {
                         else -> trip.tripId
                     }
                     val serviceLineId = when(network) {
-                        "ametis", "corolis", "met" -> trip.routeId.split(Regex("\\p{Punct}+")).joinToString(separator = "").toASCIIDecimal()
+                        "ametis", "corolis", "met", "irigo" -> trip.routeId.toASCIIDecimal()
                         "star", "tam" -> (trip.routeId ?: "").drop(2).toIntOrNull() ?: 0
                         "kiceo" -> {
                             val routeId = trip.routeId
@@ -184,6 +187,7 @@ class ServiceDAO {
                         "ametis", "star", "tam", "met" -> feedEntity.id.toIntOrNull() ?: 0
                         "corolis" -> vehicle.vehicle.id.removeRange(0..2).toIntOrNull() ?: 0
                         "kiceo" -> vehicle.vehicle.label.toIntOrNull() ?: 0
+                        "irigo" -> vehicle.vehicle.id.toIntOrNull() ?: 0
                         else -> 0
                     }
 
