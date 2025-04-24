@@ -92,7 +92,9 @@ fun ServiceDetailMain(
                 .height(30.dp)
             )
 
-            ServiceDetailSpeedRow(currentSpeed?.toInt() ?: 0)
+            if(network.value != "filbleu") {
+                ServiceDetailSpeedRow(currentSpeed?.toInt() ?: 0)
+            }
 
             if(network.value == "tbm") {
                 Spacer(modifier = Modifier

@@ -31,5 +31,28 @@ class TripDAO {
                 callback(listOf())
             }
         }
+
+        fun getRouteIds(tripIds: List<String>, network: String, callback: (List<Map<String, String>>) -> Unit) {
+            try {
+                runBlocking {
+                    val results = supabase
+                        .from("trips")
+                        .select(Columns.list("trip_id", "route_id")) {
+                            filter {
+                                and {
+                                    isIn("trip_id", tripIds)
+                                    eq("network", network)
+                                }
+                            }
+                        }
+                        .decodeList<Map<String, String>>()
+                    callback(results)
+                }
+            }
+            catch(e: Exception) {
+                println(e.localizedMessage)
+                callback(listOf())
+            }
+        }
     }
 }

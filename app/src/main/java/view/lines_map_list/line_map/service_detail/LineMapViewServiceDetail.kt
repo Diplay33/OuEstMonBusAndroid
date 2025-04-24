@@ -127,7 +127,9 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>, line: Line
                 )
             }
 
-            ServiceDetailSpeedRow(service.currentSpeed)
+            if(network.value != "filbleu") {
+                ServiceDetailSpeedRow(service.currentSpeed)
+            }
 
             if(network.value == "tbm") {
                 Spacer(modifier = Modifier

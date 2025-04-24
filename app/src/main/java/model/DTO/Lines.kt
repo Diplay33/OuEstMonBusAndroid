@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import model.DAO.TripDAO
 import model.preferences_data_store.StoreChosenNetwork
 import model.preferences_data_store.StoreFavoriteLines
 import java.text.Normalizer
@@ -69,6 +70,10 @@ class Lines {
 
         fun getLine(id: Int): Line {
             return lineDAO.getLine(id) ?: getEmptyLine()
+        }
+
+        fun getLineIds(tripIds: List<String>, network: String, callback: (List<Map<String, String>>) -> Unit) {
+            return TripDAO.getRouteIds(tripIds, network, callback)
         }
 
         fun getEmptyLine(): Line {

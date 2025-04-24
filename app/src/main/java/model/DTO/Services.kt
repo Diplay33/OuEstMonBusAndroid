@@ -9,7 +9,7 @@ class Services {
         fun getAllServices(network: String, callback: (ArrayList<Service>) -> Unit ) {
             when(network) {
                 "tbm" -> ServiceDAO.getAllTBMServices { callback(it) }
-                "ametis", "star", "corolis", "tam", "met", "kiceo", "irigo" -> ServiceDAO.getAllServicesFromGTFSRT(
+                "ametis", "star", "corolis", "tam", "met", "kiceo", "irigo", "filbleu" -> ServiceDAO.getAllServicesFromGTFSRT(
                     network = network,
                 ) {
                     callback(it)
@@ -26,7 +26,7 @@ class Services {
             when(network) {
                 "tbm" ->
                     ServiceDAO.getTBMServicesByLine(lineId) { callback(it) }
-                "ametis", "star", "corolis", "tam", "met", "kiceo", "irigo" ->
+                "ametis", "star", "corolis", "tam", "met", "kiceo", "irigo", "filbleu" ->
                     ServiceDAO.getServicesFromGTFSRT(lineId, network) { callback(ArrayList(it)) }
                 "" -> callback(arrayListOf())
             }
@@ -42,7 +42,7 @@ class Services {
                     ServiceDAO.getAllTBMServices { returnedServices ->
                         callback(returnedServices.filter { ids.contains(it.lineId) })
                     }
-                "ametis", "star", "corolis", "tam", "met", "kiceo", "irigo" ->
+                "ametis", "star", "corolis", "tam", "met", "kiceo", "irigo", "filbleu" ->
                     ServiceDAO.getAllServicesFromGTFSRT(network) { returnedServices ->
                         callback(returnedServices.filter { ids.contains(it.lineId) })
                     }
