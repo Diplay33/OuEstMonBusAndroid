@@ -155,6 +155,7 @@ fun computeNetworkDescription(network: Network): String {
         "kiceo" -> return "COMMUNAUTÉ D'AGGLO. VANNETAISE"
         "irigo" -> return "ANGERS LOIRE MÉTROPOLE"
         "filbleu" -> return "TOURS MÉTROPOLE VAL DE LOIRE"
+        "astuce" -> return "MÉTROPOLE ROUEN NORMANDIE"
     }
     return ""
 }
@@ -170,6 +171,7 @@ fun computeNetworkImage(network: Network): Int {
         "kiceo" -> return R.drawable.kiceo
         "irigo" -> return R.drawable.irigo
         "filbleu" -> return R.drawable.filbleu
+        "astuce" -> return R.drawable.astuce
     }
     return R.drawable.question_mark_box
 }
