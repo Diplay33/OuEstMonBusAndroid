@@ -11,7 +11,8 @@ class Stations {
                 StationDAO.getStationById(stationId) { callback(it) }
             }
             else {
-                callback(StationDAO.getGTFSStationById(stationId, network))
+                val processedId = if (network == "tango") stationId.drop(2) else stationId
+                callback(StationDAO.getGTFSStationById(processedId, network))
             }
         }
 

@@ -157,6 +157,7 @@ fun computeNetworkDescription(network: Network): String {
         "filbleu" -> return "TOURS MÉTROPOLE VAL DE LOIRE"
         "astuce" -> return "MÉTROPOLE ROUEN NORMANDIE"
         "palmbus" -> return "CANNES PAYS DE LÉRINS"
+        "tango" -> return "NÎMES MÉTROPOLE"
     }
     return ""
 }
@@ -174,6 +175,7 @@ fun computeNetworkImage(network: Network): Int {
         "filbleu" -> return R.drawable.filbleu
         "astuce" -> return R.drawable.astuce
         "palmbus" -> return R.drawable.palmbus
+        "tango" -> return R.drawable.tango
     }
     return R.drawable.question_mark_box
 }

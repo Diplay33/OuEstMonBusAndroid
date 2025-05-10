@@ -21,6 +21,7 @@ const val IRIGO_GTFS_RT_VEHICLE_POSITIONS_URL = "https://ara-api.enroute.mobi/ir
 const val FILBLEU_GTFS_RT_VEHICLE_POSITIONS_URL = "https://data.filbleu.fr/ws-tr/gtfs-rt/opendata/vehicle-positions"
 const val ASTUCE_GTFS_RT_VEHICLE_POSITIONS_URL = "https://www.reseau-astuce.fr/ftp/gtfsrt/Astuce.VehiclePosition.pb"
 const val PALMBUS_GTFS_RT_VEHICLE_POSITIONS_URL = "https://proxy.transport.data.gouv.fr/resource/palmbus-cannes-gtfs-rt-vehicle-position"
+const val TANGO_GTFS_RT_VEHICLE_POSITIONS_URL = "https://transport.data.gouv.fr/resources/80732/download"
 
 class ServiceDAO {
     companion object {
@@ -84,6 +85,7 @@ class ServiceDAO {
                 "filbleu" -> FILBLEU_GTFS_RT_VEHICLE_POSITIONS_URL
                 "astuce" -> ASTUCE_GTFS_RT_VEHICLE_POSITIONS_URL
                 "palmbus" -> PALMBUS_GTFS_RT_VEHICLE_POSITIONS_URL
+                "tango" -> TANGO_GTFS_RT_VEHICLE_POSITIONS_URL
                 else -> ""
             }
             CallAPI.runGTFSRT(urlToCall) { response ->
@@ -121,6 +123,7 @@ class ServiceDAO {
                 "filbleu" -> FILBLEU_GTFS_RT_VEHICLE_POSITIONS_URL
                 "astuce" -> ASTUCE_GTFS_RT_VEHICLE_POSITIONS_URL
                 "palmbus" -> PALMBUS_GTFS_RT_VEHICLE_POSITIONS_URL
+                "tango" -> TANGO_GTFS_RT_VEHICLE_POSITIONS_URL
                 else -> ""
             }
             CallAPI.runGTFSRT(urlToCall) { response ->
@@ -176,7 +179,7 @@ class ServiceDAO {
             val filteredEntities = lineId?.let {
                 feedMessage.entityList.filter {
                     val processedLineId = when(network) {
-                        "ametis", "corolis", "met", "irigo", "astuce", "palmbus" -> it.vehicle.trip.routeId.toASCIIDecimal()
+                        "ametis", "corolis", "met", "irigo", "astuce", "palmbus", "tango" -> it.vehicle.trip.routeId.toASCIIDecimal()
                         "star", "tam" -> (it.vehicle.trip.routeId ?: "").drop(2).toIntOrNull() ?: 0
                         "kiceo" -> {
                             val routeId = it.vehicle.trip.routeId
@@ -194,13 +197,14 @@ class ServiceDAO {
                 val tripId = it.vehicle.trip.tripId
                 when (network) {
                     "tam" -> processTamTripId(tripId)
+                    "tango" -> tripId.drop(3)
                     else -> tripId
                 }
             }
             Destinations.getTripHeadsigns(tripIds, network) { headsigns ->
                 filteredEntities.forEach { feedEntity ->
                     val id = when(network) {
-                        "ametis", "star", "tam", "met", "kiceo", "irigo", "filbleu", "palmbus" -> feedEntity.id.toIntOrNull() ?: 0
+                        "ametis", "star", "tam", "met", "kiceo", "irigo", "filbleu", "palmbus", "tango" -> feedEntity.id.toIntOrNull() ?: 0
                         "corolis", "astuce" -> feedEntity.id.removeRange(0..2).toIntOrNull() ?: 0
                         else -> 0
                     }
@@ -210,10 +214,11 @@ class ServiceDAO {
 
                     val tripId = when(network) {
                         "tam" -> processTamTripId(trip.tripId)
+                        "tango" -> trip.tripId.drop(3)
                         else -> trip.tripId
                     }
                     val serviceLineId = when(network) {
-                        "ametis", "corolis", "met", "irigo", "astuce", "palmbus" -> trip.routeId.toASCIIDecimal()
+                        "ametis", "corolis", "met", "irigo", "astuce", "palmbus", "tango" -> trip.routeId.toASCIIDecimal()
                         "star", "tam" -> (trip.routeId ?: "").drop(2).toIntOrNull() ?: 0
                         "kiceo" -> {
                             val routeId = trip.routeId
@@ -223,7 +228,7 @@ class ServiceDAO {
                         else -> 0
                     }
                     val vehicleId = when(network) {
-                        "ametis", "star", "tam", "met", "palmbus" -> feedEntity.id.toIntOrNull() ?: 0
+                        "ametis", "star", "tam", "met", "palmbus", "tango" -> feedEntity.id.toIntOrNull() ?: 0
                         "corolis" -> vehicle.vehicle.id.removeRange(0..2).toIntOrNull() ?: 0
                         "kiceo", "filbleu" -> vehicle.vehicle.label.toIntOrNull() ?: 0
                         "irigo", "astuce" -> vehicle.vehicle.id.toIntOrNull() ?: 0
