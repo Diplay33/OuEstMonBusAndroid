@@ -193,7 +193,7 @@ class ServiceDAO {
                     val processedLineId = when(network) {
                         "ametis", "corolis", "met", "irigo", "astuce", "palmbus", "tango", "vib",
                             "surf", "capcotentin" -> it.vehicle.trip.routeId.toASCIIDecimal()
-                        "star", "tam" -> (it.vehicle.trip.routeId ?: "").drop(2).toIntOrNull() ?: 0
+                        "star", "tam" -> (it.vehicle.trip.routeId ?: "").drop(2).toASCIIDecimal()
                         "kiceo" -> {
                             val routeId = it.vehicle.trip.routeId
                             if (routeId == "MOBICEO") 999 else routeId.filter { !it.isWhitespace() && it.isLetterOrDigit() }.replace("SAEIV", "").toASCIIDecimal()
@@ -236,7 +236,7 @@ class ServiceDAO {
                     val serviceLineId = when(network) {
                         "ametis", "corolis", "met", "irigo", "astuce", "palmbus", "tango", "vib",
                              "surf", "capcotentin" -> trip.routeId.toASCIIDecimal()
-                        "star", "tam" -> (trip.routeId ?: "").drop(2).toIntOrNull() ?: 0
+                        "star", "tam" -> (trip.routeId ?: "").drop(2).toASCIIDecimal()
                         "kiceo" -> {
                             val routeId = trip.routeId
                             if (routeId == "MOBICEO") 999 else routeId.filter { !it.isWhitespace() && it.isLetterOrDigit() }.replace("SAEIV", "").toASCIIDecimal()
