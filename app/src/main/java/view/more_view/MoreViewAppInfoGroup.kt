@@ -19,7 +19,7 @@ fun MoreViewAppInfoGroup() {
         .padding(horizontal = 15.dp)
     ) {
         Text(
-            text ="©2022 - 2024 Jacques HU",
+            text ="©2022 - 2025 Jacques HU",
             fontSize = 18.sp,
             color = Color.Gray,
             fontWeight = FontWeight.Bold,
