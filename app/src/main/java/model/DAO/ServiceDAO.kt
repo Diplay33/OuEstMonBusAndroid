@@ -134,7 +134,7 @@ class ServiceDAO {
                 feedMessage.entityList.filter {
                     val processedLineId = when(network) {
                         "ametis", "corolis", "met" -> it.vehicle.trip.routeId.toASCIIDecimal()
-                        "star", "tam" -> (it.vehicle.trip.routeId ?: "").drop(2).toIntOrNull() ?: 0
+                        "star", "tam" -> (it.vehicle.trip.routeId ?: "").drop(2).toASCIIDecimal()
                         else -> 0
                     }
                     lineId == processedLineId
@@ -166,7 +166,7 @@ class ServiceDAO {
                     }
                     val serviceLineId = when(network) {
                         "ametis", "corolis", "met" -> trip.routeId.toASCIIDecimal()
-                        "star", "tam" -> (trip.routeId ?: "").drop(2).toIntOrNull() ?: 0
+                        "star", "tam" -> (trip.routeId ?: "").drop(2).toASCIIDecimal()
                         else -> 0
                     }
                     val vehicleId = when(network) {
