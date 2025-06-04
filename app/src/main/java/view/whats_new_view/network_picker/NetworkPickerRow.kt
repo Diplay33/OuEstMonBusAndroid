@@ -161,6 +161,7 @@ fun computeNetworkDescription(network: Network): String {
         "vib" -> return "VIERZON SOLOGNE BERRY"
         "surf" -> return "FOUGÈRES AGGLOMÉRATION"
         "capcotentin" -> return "COMMUNAUTÉ D'AGGLO. DU COTENTIN"
+        "bibus" -> return "BREST MÉTROPOLE"
     }
     return ""
 }
@@ -182,6 +183,7 @@ fun computeNetworkImage(network: Network): Int {
         "vib" -> return R.drawable.vib
         "surf" -> return R.drawable.surf
         "capcotentin" -> return R.drawable.capcotentin
+        "bibus" -> return R.drawable.bibus
     }
     return R.drawable.question_mark_box
 }

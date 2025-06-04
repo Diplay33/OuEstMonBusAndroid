@@ -18,4 +18,5 @@ val networks = listOf(
     Network(13, "vib", "Le Vib'", 47.221438, 2.069791, "#E6007E", "#E6007E"),
     Network(14, "surf", "Service Urbain de la Région Fougeraise", 48.351561, -1.204626, "#00A7B8", "#00A7B8"),
     Network(15, "capcotentin", "Cap Cotentin", 49.633731, -1.622137, "#EB5D4D", "#EB5D4D"),
+    Network(16, "bibus", "Bibus", 48.390394, -4.486076, "#BEBB1E", "#BEBB1E"),
 )

@@ -26,6 +26,7 @@ const val TANGO_GTFS_RT_VEHICLE_POSITIONS_URL = "https://transport.data.gouv.fr/
 const val VIB_GTFS_RT_VEHICLE_POSITIONS_URL = "https://proxy.transport.data.gouv.fr/resource/le-vib-vierzon-gtfs-rt-vehicle-position"
 const val SURF_GTFS_RT_VEHICLE_POSITIONS_URL = "https://proxy.transport.data.gouv.fr/resource/surf-fougeres-gtfs-rt-vehicle-position"
 const val CAPCOTENTIN_GTFS_RT_VEHICLE_POSITIONS_URL = "https://app.pysae.com/api/v2/groups/transdev-cotentin/gtfs-rt"
+const val BIBUS_GTFS_RT_VEHICLE_POSITIONS_URL = "https://proxy.transport.data.gouv.fr/resource/bibus-brest-gtfs-rt-vehicle-position"
 
 class ServiceDAO {
     companion object {
@@ -93,6 +94,7 @@ class ServiceDAO {
                 "vib" -> VIB_GTFS_RT_VEHICLE_POSITIONS_URL
                 "surf" -> SURF_GTFS_RT_VEHICLE_POSITIONS_URL
                 "capcotentin" -> CAPCOTENTIN_GTFS_RT_VEHICLE_POSITIONS_URL
+                "bibus" -> BIBUS_GTFS_RT_VEHICLE_POSITIONS_URL
                 else -> ""
             }
             CallAPI.runGTFSRT(urlToCall) { response ->
@@ -134,6 +136,7 @@ class ServiceDAO {
                 "vib" -> VIB_GTFS_RT_VEHICLE_POSITIONS_URL
                 "surf" -> SURF_GTFS_RT_VEHICLE_POSITIONS_URL
                 "capcotentin" -> CAPCOTENTIN_GTFS_RT_VEHICLE_POSITIONS_URL
+                "bibus" -> BIBUS_GTFS_RT_VEHICLE_POSITIONS_URL
                 else -> ""
             }
             CallAPI.runGTFSRT(urlToCall) { response ->
@@ -192,7 +195,7 @@ class ServiceDAO {
                 gtfsEntities.filter {
                     val processedLineId = when(network) {
                         "ametis", "corolis", "met", "irigo", "astuce", "palmbus", "tango", "vib",
-                            "surf", "capcotentin" -> it.vehicle.trip.routeId.toASCIIDecimal()
+                            "surf", "capcotentin", "bibus" -> it.vehicle.trip.routeId.toASCIIDecimal()
                         "star", "tam" -> (it.vehicle.trip.routeId ?: "").drop(2).toASCIIDecimal()
                         "kiceo" -> {
                             val routeId = it.vehicle.trip.routeId
@@ -219,7 +222,7 @@ class ServiceDAO {
                 filteredEntities.forEach { feedEntity ->
                     val id = when(network) {
                         "ametis", "star", "tam", "met", "kiceo", "irigo", "filbleu", "palmbus",
-                            "tango", "vib", "surf", "capcotentin" -> feedEntity.id.toIntOrNull() ?: 0
+                            "tango", "vib", "surf", "capcotentin", "bibus" -> feedEntity.id.toIntOrNull() ?: 0
                         "corolis", "astuce" -> feedEntity.id.removeRange(0..2).toIntOrNull() ?: 0
                         else -> 0
                     }
@@ -235,7 +238,7 @@ class ServiceDAO {
                     }
                     val serviceLineId = when(network) {
                         "ametis", "corolis", "met", "irigo", "astuce", "palmbus", "tango", "vib",
-                             "surf", "capcotentin" -> trip.routeId.toASCIIDecimal()
+                             "surf", "capcotentin", "bibus" -> trip.routeId.toASCIIDecimal()
                         "star", "tam" -> (trip.routeId ?: "").drop(2).toASCIIDecimal()
                         "kiceo" -> {
                             val routeId = trip.routeId
@@ -248,7 +251,7 @@ class ServiceDAO {
                         "ametis", "star", "tam", "met", "palmbus", "tango" -> feedEntity.id.toIntOrNull() ?: 0
                         "corolis" -> vehicle.vehicle.id.removeRange(0..2).toIntOrNull() ?: 0
                         "kiceo", "filbleu", "vib", "surf", "capcotentin" -> vehicle.vehicle.label.toASCIIDecimal() ?: 0
-                        "irigo", "astuce" -> vehicle.vehicle.id.toIntOrNull() ?: 0
+                        "irigo", "astuce", "bibus" -> vehicle.vehicle.id.toIntOrNull() ?: 0
                         else -> 0
                     }
 
