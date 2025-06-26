@@ -162,6 +162,7 @@ fun computeNetworkDescription(network: Network): String {
         "surf" -> return "FOUGÈRES AGGLOMÉRATION"
         "capcotentin" -> return "COMMUNAUTÉ D'AGGLO. DU COTENTIN"
         "bibus" -> return "BREST MÉTROPOLE"
+        "axo" -> return "AGGLOMÉRATION CREIL SUD OISE"
     }
     return ""
 }
@@ -184,6 +185,7 @@ fun computeNetworkImage(network: Network): Int {
         "surf" -> return R.drawable.surf
         "capcotentin" -> return R.drawable.capcotentin
         "bibus" -> return R.drawable.bibus
+        "axo" -> return R.drawable.axo
     }
     return R.drawable.question_mark_box
 }
