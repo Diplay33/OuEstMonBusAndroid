@@ -20,4 +20,5 @@ val networks = listOf(
     Network(15, "capcotentin", "Cap Cotentin", 49.633731, -1.622137, "#EB5D4D", "#EB5D4D"),
     Network(16, "bibus", "Bibus", 48.390394, -4.486076, "#BEBB1E", "#BEBB1E"),
     Network(18, "axo", "AXO", 49.2576872, 2.4783913, "#FDCC19", "#FDCC19"),
+    Network(20, "zest", "Zest Bus", 43.774481, 7.49754, "#3582EF", "#3582EF"),
 )
