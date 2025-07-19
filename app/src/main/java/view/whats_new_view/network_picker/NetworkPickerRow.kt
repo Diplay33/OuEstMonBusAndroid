@@ -165,6 +165,7 @@ fun computeNetworkDescription(network: Network): String {
         "axo" -> return "AGGLOMÉRATION CREIL SUD OISE"
         "zest" -> return "RIVIERA FRANÇAISE"
         "tcat" -> return "TROYES CHAMPAGNE MÉTROPOLE"
+        "divia" -> return "DIJON MÉTROPOLE"
     }
     return ""
 }
@@ -190,6 +191,7 @@ fun computeNetworkImage(network: Network): Int {
         "axo" -> return R.drawable.axo
         "zest" -> return R.drawable.zest
         "tcat" -> return R.drawable.tcat
+        "divia" -> return R.drawable.divia
     }
     return R.drawable.question_mark_box
 }
