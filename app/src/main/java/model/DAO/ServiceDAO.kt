@@ -31,6 +31,7 @@ const val AXO_GTFS_RT_VEHICLE_POSITIONS_URL = "https://api.oisemob.cityway.fr/da
 const val ZEST_GTFS_RT_VEHICLE_POSITIONS_URL = "https://proxy.transport.data.gouv.fr/resource/zest-menton-riviera-gtfs-rt-vehicle-position"
 const val TCAT_GTFS_RT_VEHICLE_POSITIONS_URL = "https://transport.data.gouv.fr/resources/81543/download"
 const val DIVIA_GTFS_RT_VEHICLE_POSITIONS_URL = "https://proxy.transport.data.gouv.fr/resource/divia-dijon-gtfs-rt-vehicle-position"
+const val CITEA_GTFS_RT_VEHICLE_POSITIONS_URL = "https://proxy.transport.data.gouv.fr/resource/citea-valence-gtfs-rt-vehicle-position"
 
 class ServiceDAO {
     companion object {
@@ -103,6 +104,7 @@ class ServiceDAO {
                 "zest" -> ZEST_GTFS_RT_VEHICLE_POSITIONS_URL
                 "tcat" -> TCAT_GTFS_RT_VEHICLE_POSITIONS_URL
                 "divia" -> DIVIA_GTFS_RT_VEHICLE_POSITIONS_URL
+                "citea" -> CITEA_GTFS_RT_VEHICLE_POSITIONS_URL
                 else -> ""
             }
             CallAPI.runGTFSRT(urlToCall) { response ->
@@ -149,6 +151,7 @@ class ServiceDAO {
                 "zest" -> ZEST_GTFS_RT_VEHICLE_POSITIONS_URL
                 "tcat" -> TCAT_GTFS_RT_VEHICLE_POSITIONS_URL
                 "divia" -> DIVIA_GTFS_RT_VEHICLE_POSITIONS_URL
+                "citea" -> CITEA_GTFS_RT_VEHICLE_POSITIONS_URL
                 else -> ""
             }
             CallAPI.runGTFSRT(urlToCall) { response ->
@@ -207,7 +210,7 @@ class ServiceDAO {
                 gtfsEntities.filter {
                     val processedLineId = when(network) {
                         "ametis", "corolis", "met", "irigo", "astuce", "palmbus", "tango", "vib",
-                            "surf", "capcotentin", "bibus", "axo", "zest", "tcat" -> it.vehicle.trip.routeId.toASCIIDecimal()
+                            "surf", "capcotentin", "bibus", "axo", "zest", "tcat", "citea" -> it.vehicle.trip.routeId.toASCIIDecimal()
                         "star", "tam", "divia" -> (it.vehicle.trip.routeId ?: "").drop(2).toASCIIDecimal()
                         "kiceo" -> {
                             val routeId = it.vehicle.trip.routeId
@@ -234,7 +237,8 @@ class ServiceDAO {
                 filteredEntities.forEach { feedEntity ->
                     val id = when(network) {
                         "ametis", "star", "tam", "met", "kiceo", "irigo", "filbleu", "palmbus",
-                            "tango", "vib", "surf", "capcotentin", "bibus", "zest", "tcat", "divia" -> feedEntity.id.toIntOrNull() ?: 0
+                            "tango", "vib", "surf", "capcotentin", "bibus", "zest", "tcat", "divia",
+                            "citea" -> feedEntity.id.toIntOrNull() ?: 0
                         "corolis", "astuce", "axo" -> feedEntity.id.removeRange(0..2).toIntOrNull() ?: 0
                         else -> 0
                     }
@@ -250,7 +254,7 @@ class ServiceDAO {
                     }
                     val serviceLineId = when(network) {
                         "ametis", "corolis", "met", "irigo", "astuce", "palmbus", "tango", "vib",
-                             "surf", "capcotentin", "bibus", "axo", "zest", "tcat" -> trip.routeId.toASCIIDecimal()
+                             "surf", "capcotentin", "bibus", "axo", "zest", "tcat", "citea" -> trip.routeId.toASCIIDecimal()
                         "star", "tam", "divia" -> (trip.routeId ?: "").drop(2).toASCIIDecimal()
                         "kiceo" -> {
                             val routeId = trip.routeId
@@ -262,7 +266,8 @@ class ServiceDAO {
                     val vehicleId = when(network) {
                         "ametis", "star", "tam", "met", "palmbus", "tango" -> feedEntity.id.toIntOrNull() ?: 0
                         "corolis", "axo" -> vehicle.vehicle.id.removeRange(0..2).toIntOrNull() ?: 0
-                        "kiceo", "filbleu", "vib", "surf", "capcotentin", "zest", "tcat", "divia" -> vehicle.vehicle.label.toASCIIDecimal()
+                        "kiceo", "filbleu", "vib", "surf", "capcotentin", "zest", "tcat", "divia",
+                            "citea" -> vehicle.vehicle.label.toASCIIDecimal()
                         "irigo", "astuce", "bibus" -> vehicle.vehicle.id.toIntOrNull() ?: 0
                         else -> 0
                     }

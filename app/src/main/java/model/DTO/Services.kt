@@ -10,7 +10,8 @@ class Services {
             when(network) {
                 "tbm" -> ServiceDAO.getAllTBMServices { callback(it) }
                 "ametis", "star", "corolis", "tam", "met", "kiceo", "irigo", "filbleu", "astuce",
-                    "palmbus", "tango", "vib", "surf", "capcotentin", "bibus", "axo", "zest", "tcat", "divia" ->
+                    "palmbus", "tango", "vib", "surf", "capcotentin", "bibus", "axo", "zest",
+                    "tcat", "divia", "citea" ->
                     ServiceDAO.getAllServicesFromGTFSRT(network) { callback(it) }
                 "" -> callback(arrayListOf())
             }
@@ -25,7 +26,8 @@ class Services {
                 "tbm" ->
                     ServiceDAO.getTBMServicesByLine(lineId) { callback(it) }
                 "ametis", "star", "corolis", "tam", "met", "kiceo", "irigo", "filbleu", "astuce",
-                    "palmbus", "tango", "vib", "surf", "capcotentin", "bibus", "axo", "zest", "tcat", "divia" ->
+                    "palmbus", "tango", "vib", "surf", "capcotentin", "bibus", "axo", "zest",
+                    "tcat", "divia", "citea" ->
                     ServiceDAO.getServicesFromGTFSRT(lineId, network) { callback(ArrayList(it)) }
                 "" -> callback(arrayListOf())
             }
@@ -42,7 +44,8 @@ class Services {
                         callback(returnedServices.filter { ids.contains(it.lineId) })
                     }
                 "ametis", "star", "corolis", "tam", "met", "kiceo", "irigo", "filbleu", "astuce",
-                    "palmbus", "tango", "vib", "surf", "capcotentin", "bibus", "axo", "zest", "tcat", "divia" ->
+                    "palmbus", "tango", "vib", "surf", "capcotentin", "bibus", "axo", "zest",
+                    "tcat", "divia", "citea" ->
                     ServiceDAO.getAllServicesFromGTFSRT(network) { returnedServices ->
                         callback(returnedServices.filter { ids.contains(it.lineId) })
                     }

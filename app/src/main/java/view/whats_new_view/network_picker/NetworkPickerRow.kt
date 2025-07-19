@@ -166,6 +166,7 @@ fun computeNetworkDescription(network: Network): String {
         "zest" -> return "RIVIERA FRANÇAISE"
         "tcat" -> return "TROYES CHAMPAGNE MÉTROPOLE"
         "divia" -> return "DIJON MÉTROPOLE"
+        "citea" -> return "VALENCE ROMANS MOBILITÉS"
     }
     return ""
 }
@@ -192,6 +193,7 @@ fun computeNetworkImage(network: Network): Int {
         "zest" -> return R.drawable.zest
         "tcat" -> return R.drawable.tcat
         "divia" -> return R.drawable.divia
+        "citea" -> return R.drawable.citea
     }
     return R.drawable.question_mark_box
 }
