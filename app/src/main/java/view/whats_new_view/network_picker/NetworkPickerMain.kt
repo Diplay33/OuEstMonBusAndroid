@@ -14,8 +14,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.TextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -29,11 +32,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.diplay.ouestmonbus.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -52,6 +58,9 @@ fun NetworkPickerMain(
     val context = LocalContext.current
     val chosenNetworkDataStore = StoreChosenNetwork(context)
     val selection = remember {
+        mutableStateOf("")
+    }
+    val searchString = remember {
         mutableStateOf("")
     }
 
@@ -85,7 +94,31 @@ fun NetworkPickerMain(
                 )
 
                 Spacer(modifier = Modifier
-                    .size(50.dp)
+                    .size(25.dp)
+                )
+
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    Surface(
+                        color = if (colorScheme) colorResource(id = R.color.light_grey) else Color.DarkGray,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 15.dp)
+                            .clip(RoundedCornerShape(15.dp))
+                            .height(50.dp)
+                    ) {
+                        BasicTextField(
+                            value = searchString.value,
+                            onValueChange = { searchString.value += it }
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier
+                    .size(25.dp)
                 )
 
                 Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
