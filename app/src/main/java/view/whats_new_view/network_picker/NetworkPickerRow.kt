@@ -167,6 +167,7 @@ fun computeNetworkDescription(network: Network): String {
         "tcat" -> return "TROYES CHAMPAGNE MÉTROPOLE"
         "divia" -> return "DIJON MÉTROPOLE"
         "citea" -> return "VALENCE ROMANS MOBILITÉS"
+        "tbk" -> return "QUIMPERLÉ COMMUNAUTÉ"
     }
     return ""
 }
@@ -194,6 +195,7 @@ fun computeNetworkImage(network: Network): Int {
         "tcat" -> return R.drawable.tcat
         "divia" -> return R.drawable.divia
         "citea" -> return R.drawable.citea
+        "tbk" -> return R.drawable.tbk
     }
     return R.drawable.question_mark_box
 }

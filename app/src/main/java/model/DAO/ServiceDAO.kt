@@ -32,6 +32,7 @@ const val ZEST_GTFS_RT_VEHICLE_POSITIONS_URL = "https://proxy.transport.data.gou
 const val TCAT_GTFS_RT_VEHICLE_POSITIONS_URL = "https://transport.data.gouv.fr/resources/81543/download"
 const val DIVIA_GTFS_RT_VEHICLE_POSITIONS_URL = "https://proxy.transport.data.gouv.fr/resource/divia-dijon-gtfs-rt-vehicle-position"
 const val CITEA_GTFS_RT_VEHICLE_POSITIONS_URL = "https://proxy.transport.data.gouv.fr/resource/citea-valence-gtfs-rt-vehicle-position"
+const val TBK_GTFS_RT_VEHICLE_POSITIONS_URL = "https://pysae.com/api/v2/groups/quimperle/gtfs-rt"
 
 class ServiceDAO {
     companion object {
@@ -105,6 +106,7 @@ class ServiceDAO {
                 "tcat" -> TCAT_GTFS_RT_VEHICLE_POSITIONS_URL
                 "divia" -> DIVIA_GTFS_RT_VEHICLE_POSITIONS_URL
                 "citea" -> CITEA_GTFS_RT_VEHICLE_POSITIONS_URL
+                "tbk" -> TBK_GTFS_RT_VEHICLE_POSITIONS_URL
                 else -> ""
             }
             CallAPI.runGTFSRT(urlToCall) { response ->
@@ -152,6 +154,7 @@ class ServiceDAO {
                 "tcat" -> TCAT_GTFS_RT_VEHICLE_POSITIONS_URL
                 "divia" -> DIVIA_GTFS_RT_VEHICLE_POSITIONS_URL
                 "citea" -> CITEA_GTFS_RT_VEHICLE_POSITIONS_URL
+                "tbk" -> TBK_GTFS_RT_VEHICLE_POSITIONS_URL
                 else -> ""
             }
             CallAPI.runGTFSRT(urlToCall) { response ->
@@ -217,6 +220,7 @@ class ServiceDAO {
                             if (routeId == "MOBICEO") 999 else routeId.filter { !it.isWhitespace() && it.isLetterOrDigit() }.replace("SAEIV", "").toASCIIDecimal()
                         }
                         "filbleu" -> trips[it.vehicle.trip.tripId ?: ""]?.replace("TTR:LINE:", "")?.toASCIIDecimal() ?: 0
+                        "tbk" -> (it.vehicle.trip.routeId ?: "").dropLast(4).toASCIIDecimal()
                         else -> 0
                     }
                     lineId == processedLineId
@@ -238,7 +242,7 @@ class ServiceDAO {
                     val id = when(network) {
                         "ametis", "star", "tam", "met", "kiceo", "irigo", "filbleu", "palmbus",
                             "tango", "vib", "surf", "capcotentin", "bibus", "zest", "tcat", "divia",
-                            "citea" -> feedEntity.id.toIntOrNull() ?: 0
+                            "citea", "tbk" -> feedEntity.id.toIntOrNull() ?: 0
                         "corolis", "astuce", "axo" -> feedEntity.id.removeRange(0..2).toIntOrNull() ?: 0
                         else -> 0
                     }
@@ -261,6 +265,7 @@ class ServiceDAO {
                             if (routeId == "MOBICEO") 999 else routeId.filter { !it.isWhitespace() && it.isLetterOrDigit() }.replace("SAEIV", "").toASCIIDecimal()
                         }
                         "filbleu" -> trips[trip.tripId ?: ""]?.replace("TTR:LINE:", "")?.toASCIIDecimal() ?: 0
+                        "tbk" -> (trip.routeId ?: "").dropLast(4).toASCIIDecimal()
                         else -> 0
                     }
                     val vehicleId = when(network) {
@@ -269,6 +274,7 @@ class ServiceDAO {
                         "kiceo", "filbleu", "vib", "surf", "capcotentin", "zest", "tcat", "divia",
                             "citea" -> vehicle.vehicle.label.toASCIIDecimal()
                         "irigo", "astuce", "bibus" -> vehicle.vehicle.id.toIntOrNull() ?: 0
+                        "tbk" -> vehicle.vehicle.label.replace(" ", "").toASCIIDecimal()
                         else -> 0
                     }
 
