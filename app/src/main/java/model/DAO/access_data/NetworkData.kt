@@ -25,4 +25,5 @@ val networks = listOf(
     Network(22, "divia", "Divia Mobilités", 47.322047, 5.04148, "#CE007C", "#CE007C"),
     Network(23, "citea", "Citéa", 44.933393, 4.89236, "#CC4314", "#CC4314"),
     Network(24, "tbk", "Tro Bro Kemperlé", 47.875776, -3.551320, "#009FE3", "#009FE3"),
+    Network(25, "sam", "Sète Agglopôle Mobilité", 43.4078758, 3.7008219, "#477FB2", "#477FB2"),
 )

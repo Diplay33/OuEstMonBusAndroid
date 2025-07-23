@@ -168,6 +168,7 @@ fun computeNetworkDescription(network: Network): String {
         "divia" -> return "DIJON MÉTROPOLE"
         "citea" -> return "VALENCE ROMANS MOBILITÉS"
         "tbk" -> return "QUIMPERLÉ COMMUNAUTÉ"
+        "sam" -> return "SÈTE AGGLOPÔLE MÉDITERRANÉE"
     }
     return ""
 }
@@ -196,6 +197,7 @@ fun computeNetworkImage(network: Network): Int {
         "divia" -> return R.drawable.divia
         "citea" -> return R.drawable.citea
         "tbk" -> return R.drawable.tbk
+        "sam" -> return R.drawable.sam
     }
     return R.drawable.question_mark_box
 }

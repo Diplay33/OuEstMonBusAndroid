@@ -33,6 +33,7 @@ const val TCAT_GTFS_RT_VEHICLE_POSITIONS_URL = "https://transport.data.gouv.fr/r
 const val DIVIA_GTFS_RT_VEHICLE_POSITIONS_URL = "https://proxy.transport.data.gouv.fr/resource/divia-dijon-gtfs-rt-vehicle-position"
 const val CITEA_GTFS_RT_VEHICLE_POSITIONS_URL = "https://proxy.transport.data.gouv.fr/resource/citea-valence-gtfs-rt-vehicle-position"
 const val TBK_GTFS_RT_VEHICLE_POSITIONS_URL = "https://pysae.com/api/v2/groups/quimperle/gtfs-rt"
+const val SAM_GTFS_RT_VEHICLE_POSITIONS_URL = "https://sete.ceccli.com/gtfs/VehiclePositions.pb"
 
 class ServiceDAO {
     companion object {
@@ -107,6 +108,7 @@ class ServiceDAO {
                 "divia" -> DIVIA_GTFS_RT_VEHICLE_POSITIONS_URL
                 "citea" -> CITEA_GTFS_RT_VEHICLE_POSITIONS_URL
                 "tbk" -> TBK_GTFS_RT_VEHICLE_POSITIONS_URL
+                "sam" -> SAM_GTFS_RT_VEHICLE_POSITIONS_URL
                 else -> ""
             }
             CallAPI.runGTFSRT(urlToCall) { response ->
@@ -155,6 +157,7 @@ class ServiceDAO {
                 "divia" -> DIVIA_GTFS_RT_VEHICLE_POSITIONS_URL
                 "citea" -> CITEA_GTFS_RT_VEHICLE_POSITIONS_URL
                 "tbk" -> TBK_GTFS_RT_VEHICLE_POSITIONS_URL
+                "sam" -> SAM_GTFS_RT_VEHICLE_POSITIONS_URL
                 else -> ""
             }
             CallAPI.runGTFSRT(urlToCall) { response ->
@@ -213,7 +216,7 @@ class ServiceDAO {
                 gtfsEntities.filter {
                     val processedLineId = when(network) {
                         "ametis", "corolis", "met", "irigo", "astuce", "palmbus", "tango", "vib",
-                            "surf", "capcotentin", "bibus", "axo", "zest", "tcat", "citea" -> it.vehicle.trip.routeId.toASCIIDecimal()
+                            "surf", "capcotentin", "bibus", "axo", "zest", "tcat", "citea", "sam" -> it.vehicle.trip.routeId.toASCIIDecimal()
                         "star", "tam", "divia" -> (it.vehicle.trip.routeId ?: "").drop(2).toASCIIDecimal()
                         "kiceo" -> {
                             val routeId = it.vehicle.trip.routeId
@@ -242,7 +245,7 @@ class ServiceDAO {
                     val id = when(network) {
                         "ametis", "star", "tam", "met", "kiceo", "irigo", "filbleu", "palmbus",
                             "tango", "vib", "surf", "capcotentin", "bibus", "zest", "tcat", "divia",
-                            "citea", "tbk" -> feedEntity.id.toIntOrNull() ?: 0
+                            "citea", "tbk", "sam" -> feedEntity.id.toIntOrNull() ?: 0
                         "corolis", "astuce", "axo" -> feedEntity.id.removeRange(0..2).toIntOrNull() ?: 0
                         else -> 0
                     }
@@ -258,7 +261,7 @@ class ServiceDAO {
                     }
                     val serviceLineId = when(network) {
                         "ametis", "corolis", "met", "irigo", "astuce", "palmbus", "tango", "vib",
-                             "surf", "capcotentin", "bibus", "axo", "zest", "tcat", "citea" -> trip.routeId.toASCIIDecimal()
+                             "surf", "capcotentin", "bibus", "axo", "zest", "tcat", "citea", "sam" -> trip.routeId.toASCIIDecimal()
                         "star", "tam", "divia" -> (trip.routeId ?: "").drop(2).toASCIIDecimal()
                         "kiceo" -> {
                             val routeId = trip.routeId
@@ -272,7 +275,7 @@ class ServiceDAO {
                         "ametis", "star", "tam", "met", "palmbus", "tango" -> feedEntity.id.toIntOrNull() ?: 0
                         "corolis", "axo" -> vehicle.vehicle.id.removeRange(0..2).toIntOrNull() ?: 0
                         "kiceo", "filbleu", "vib", "surf", "capcotentin", "zest", "tcat", "divia",
-                            "citea" -> vehicle.vehicle.label.toASCIIDecimal()
+                            "citea", "sam" -> vehicle.vehicle.label.toASCIIDecimal()
                         "irigo", "astuce", "bibus" -> vehicle.vehicle.id.toIntOrNull() ?: 0
                         "tbk" -> vehicle.vehicle.label.replace(" ", "").toASCIIDecimal()
                         else -> 0
