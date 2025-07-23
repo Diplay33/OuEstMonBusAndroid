@@ -169,6 +169,7 @@ fun computeNetworkDescription(network: Network): String {
         "citea" -> return "VALENCE ROMANS MOBILITÉS"
         "tbk" -> return "QUIMPERLÉ COMMUNAUTÉ"
         "sam" -> return "SÈTE AGGLOPÔLE MÉDITERRANÉE"
+        "tic" -> return "AGGLO. DE LA RÉGION DE COMPIÈGNE"
     }
     return ""
 }
@@ -198,6 +199,7 @@ fun computeNetworkImage(network: Network): Int {
         "citea" -> return R.drawable.citea
         "tbk" -> return R.drawable.tbk
         "sam" -> return R.drawable.sam
+        "tic" -> return R.drawable.tic
     }
     return R.drawable.question_mark_box
 }
