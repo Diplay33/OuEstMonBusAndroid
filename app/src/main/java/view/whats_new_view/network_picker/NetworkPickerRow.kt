@@ -170,6 +170,7 @@ fun computeNetworkDescription(network: Network): String {
         "tbk" -> return "QUIMPERLÉ COMMUNAUTÉ"
         "sam" -> return "SÈTE AGGLOPÔLE MÉDITERRANÉE"
         "tic" -> return "AGGLO. DE LA RÉGION DE COMPIÈGNE"
+        "moova" -> return "VESOUL AGGLO."
     }
     return ""
 }
@@ -200,6 +201,7 @@ fun computeNetworkImage(network: Network): Int {
         "tbk" -> return R.drawable.tbk
         "sam" -> return R.drawable.sam
         "tic" -> return R.drawable.tic
+        "moova" -> return R.drawable.moova
     }
     return R.drawable.question_mark_box
 }

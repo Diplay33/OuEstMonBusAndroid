@@ -27,4 +27,5 @@ val networks = listOf(
     Network(24, "tbk", "Tro Bro Kemperlé", 47.875776, -3.551320, "#009FE3", "#009FE3"),
     Network(25, "sam", "Sète Agglopôle Mobilité", 43.4078758, 3.7008219, "#477FB2", "#477FB2"),
     Network(26, "tic", "Transports Intercommunaux du Compiégnois", 49.417816, 2.826145, "#95CCE4", "#95CCE4"),
+    Network(27, "moova", "Moova", 47.619788, 6.154280, "#662483", "#662483"),
 )
