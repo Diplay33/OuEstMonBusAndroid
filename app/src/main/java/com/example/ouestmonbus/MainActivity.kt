@@ -2,17 +2,24 @@ package com.diplay.ouestmonbus
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
+import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawingPadding
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -26,8 +33,11 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavHost
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -35,7 +45,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.diplay.ouestmonbus.ui.theme.OùEstMonBusTheme
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.android.ump.ConsentForm
 import com.google.android.ump.ConsentInformation
 import com.google.android.ump.ConsentRequestParameters
@@ -98,6 +107,19 @@ class MainActivity : ComponentActivity() {
             consentInformation = UserMessagingPlatform.getConsentInformation(this)
             requestConsent()
         }
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        enableEdgeToEdge(
+            statusBarStyle = SystemBarStyle.auto(
+                Color.Green.toArgb(),
+                Color(0xff18191A).toArgb()
+            ),
+            navigationBarStyle = SystemBarStyle.auto(
+                Color.White.toArgb(),
+                Color(0xff18191A).toArgb()
+            )
+        )
+
         setContent {
             val context = LocalContext.current
             val scope = rememberCoroutineScope()
@@ -130,15 +152,18 @@ class MainActivity : ComponentActivity() {
             )
 
             val colorScheme = !isSystemInDarkTheme()
-            val systemUiController = rememberSystemUiController()
-            if(colorScheme){
-                systemUiController.setSystemBarsColor(
-                    color = Color.White
+            if(colorScheme) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color.White)
                 )
             }
-            else{
-                systemUiController.setSystemBarsColor(
-                    color = Color(0xff18191A)
+            else {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(Color(0xff18191A))
                 )
             }
 
@@ -167,7 +192,7 @@ class MainActivity : ComponentActivity() {
 
             if(showSplashScreen.value) {
                 //Splash screen
-                Scaffold { padding ->
+                Scaffold(modifier = Modifier.safeDrawingPadding()) { padding ->
                     NavHost(
                         navController = navController,
                         startDestination = SplashScreens.WhatsNew.route,
@@ -201,7 +226,7 @@ class MainActivity : ComponentActivity() {
                 }
             }
             else {
-                Scaffold(bottomBar = { BottomNavigationBar(navController, bottomNavigationItems) } ) {
+                Scaffold(bottomBar = { BottomNavigationBar(navController, bottomNavigationItems) }, modifier = Modifier.safeDrawingPadding()) {
                     NavHost(
                         navController = navController,
                         startDestination = BottomNavigationScreens.Cartes.route,
