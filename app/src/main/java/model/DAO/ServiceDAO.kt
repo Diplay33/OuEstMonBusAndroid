@@ -36,6 +36,7 @@ const val TBK_GTFS_RT_VEHICLE_POSITIONS_URL = "https://pysae.com/api/v2/groups/q
 const val SAM_GTFS_RT_VEHICLE_POSITIONS_URL = "https://sete.ceccli.com/gtfs/VehiclePositions.pb"
 const val TIC_GTFS_RT_VEHICLE_POSITIONS_URL = "https://api.oisemob.cityway.fr/dataflow/vehicule-tc-tr/download?provider=TIC_URB&dataFormat=gtfs-rt"
 const val MOOVA_GTFS_RT_VEHICLE_POSITIONS_URL = "https://proxy.transport.data.gouv.fr/resource/moova-vesoul-gtfs-rt-vehicle-position"
+const val MISTRAL_GTFS_RT_VEHICLE_POSITIONS_URL = "https://feed-rdtpm-toulon.ratpdev.com/VehiclePosition/GTFS-RT"
 
 class ServiceDAO {
     companion object {
@@ -113,6 +114,7 @@ class ServiceDAO {
                 "sam" -> SAM_GTFS_RT_VEHICLE_POSITIONS_URL
                 "tic" -> TIC_GTFS_RT_VEHICLE_POSITIONS_URL
                 "moova" -> MOOVA_GTFS_RT_VEHICLE_POSITIONS_URL
+                "mistral" -> MISTRAL_GTFS_RT_VEHICLE_POSITIONS_URL
                 else -> ""
             }
             CallAPI.runGTFSRT(urlToCall) { response ->
@@ -164,6 +166,7 @@ class ServiceDAO {
                 "sam" -> SAM_GTFS_RT_VEHICLE_POSITIONS_URL
                 "tic" -> TIC_GTFS_RT_VEHICLE_POSITIONS_URL
                 "moova" -> MOOVA_GTFS_RT_VEHICLE_POSITIONS_URL
+                "mistral" -> MISTRAL_GTFS_RT_VEHICLE_POSITIONS_URL
                 else -> ""
             }
             CallAPI.runGTFSRT(urlToCall) { response ->
@@ -223,7 +226,7 @@ class ServiceDAO {
                     val processedLineId = when(network) {
                         "ametis", "corolis", "met", "irigo", "astuce", "palmbus", "tango", "vib",
                             "surf", "capcotentin", "bibus", "axo", "zest", "tcat", "citea", "sam",
-                            "tic", "moova" -> it.vehicle.trip.routeId.toASCIIDecimal()
+                            "tic", "moova", "mistral" -> it.vehicle.trip.routeId.toASCIIDecimal()
                         "star", "tam", "divia" -> (it.vehicle.trip.routeId ?: "").drop(2).toASCIIDecimal()
                         "kiceo" -> {
                             val routeId = it.vehicle.trip.routeId
@@ -252,7 +255,7 @@ class ServiceDAO {
                     val id = when(network) {
                         "ametis", "star", "tam", "met", "kiceo", "irigo", "filbleu", "palmbus",
                             "tango", "vib", "surf", "capcotentin", "bibus", "zest", "tcat", "divia",
-                            "citea", "tbk", "sam", "moova" -> feedEntity.id.toIntOrNull() ?: 0
+                            "citea", "tbk", "sam", "moova", "mistral" -> feedEntity.id.toIntOrNull() ?: 0
                         "corolis", "astuce", "axo", "tic" -> feedEntity.id.removeRange(0..2).toIntOrNull() ?: 0
                         else -> 0
                     }
@@ -269,7 +272,7 @@ class ServiceDAO {
                     val serviceLineId = when(network) {
                         "ametis", "corolis", "met", "irigo", "astuce", "palmbus", "tango", "vib",
                             "surf", "capcotentin", "bibus", "axo", "zest", "tcat", "citea", "sam",
-                            "tic", "moova" -> trip.routeId.toASCIIDecimal()
+                            "tic", "moova", "mistral" -> trip.routeId.toASCIIDecimal()
                         "star", "tam", "divia" -> (trip.routeId ?: "").drop(2).toASCIIDecimal()
                         "kiceo" -> {
                             val routeId = trip.routeId
@@ -283,7 +286,7 @@ class ServiceDAO {
                         "ametis", "star", "tam", "met", "palmbus", "tango" -> feedEntity.id.toIntOrNull() ?: 0
                         "corolis", "axo", "tic" -> vehicle.vehicle.id.removeRange(0..2).toIntOrNull() ?: 0
                         "kiceo", "filbleu", "vib", "surf", "capcotentin", "zest", "tcat", "divia",
-                            "citea", "sam", "moova" -> vehicle.vehicle.label.toASCIIDecimal()
+                            "citea", "sam", "moova", "mistral" -> vehicle.vehicle.label.toASCIIDecimal()
                         "irigo", "astuce", "bibus" -> vehicle.vehicle.id.toIntOrNull() ?: 0
                         "tbk" -> vehicle.vehicle.label.replace(" ", "").toASCIIDecimal()
                         else -> 0
