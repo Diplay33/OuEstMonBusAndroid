@@ -6,7 +6,7 @@ import model.DTO.Network
 class NetworkDAO {
     companion object {
         fun getAllNetworks(): List<Network> {
-            return networks
+            return networks.sortedBy { it.fullName }
         }
 
         fun getNetwork(shortName: String): Network? {
