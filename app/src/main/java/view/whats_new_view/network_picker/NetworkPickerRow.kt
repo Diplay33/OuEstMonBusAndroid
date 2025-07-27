@@ -146,12 +146,12 @@ fun NetworkPickerRow(selection: MutableState<String>, network: Network) {
 
 fun computeNetworkDescription(network: Network): String {
     when(network.shortName) {
-        "tbm" -> return "MÉTROPOLE BORDELAISE"
-        "ametis" -> return "COMMUNAUTÉ D'AGGLO. AMIÉNOISE"
-        "star" -> return "MÉTROPOLE RENNAISE"
+        "tbm" -> return "BORDEAUX MÉTROPOLE"
+        "ametis" -> return "AMIENS MÉTROPOLE"
+        "star" -> return "RENNES MÉTROPOLE"
         "corolis" -> return "COMMUNAUTÉ D'AGGLO. DU BEAUVAISIS"
-        "tam" -> return "MÉTROPOLE MONTPELLIÉRAINE"
-        "met" -> return "MÉTROPOLE MESSINE"
+        "tam" -> return "MONTPELLIER MEDITERRANÉE MÉTROPOLE"
+        "met" -> return "EUROMÉTROPOLE DE METZ"
         "kiceo" -> return "COMMUNAUTÉ D'AGGLO. VANNETAISE"
         "irigo" -> return "ANGERS LOIRE MÉTROPOLE"
         "filbleu" -> return "TOURS MÉTROPOLE VAL DE LOIRE"
