@@ -101,7 +101,7 @@ fun NetworkPickerRow(selection: MutableState<String>, network: Network) {
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             Image(
-                painter = painterResource(id = computeNetworkImage(network)),
+                painter = painterResource(id = computeNetworkImage(network, !colorScheme)),
                 contentDescription = null,
                 colorFilter = if (!colorScheme) ColorFilter.tint(Color.White) else null,
                 modifier = Modifier
@@ -176,34 +176,43 @@ fun computeNetworkDescription(network: Network): String {
     return ""
 }
 
-fun computeNetworkImage(network: Network): Int {
-    when(network.shortName) {
-        "tbm" -> return R.drawable.tbm
-        "ametis" -> return R.drawable.ametis
-        "star" -> return R.drawable.star
-        "corolis" -> return R.drawable.corolis
-        "tam" -> return R.drawable.tam
-        "met" -> return R.drawable.met
-        "kiceo" -> return R.drawable.kiceo
-        "irigo" -> return R.drawable.irigo
-        "filbleu" -> return R.drawable.filbleu
-        "astuce" -> return R.drawable.astuce
-        "palmbus" -> return R.drawable.palmbus
-        "tango" -> return R.drawable.tango
-        "vib" -> return R.drawable.vib
-        "surf" -> return R.drawable.surf
-        "capcotentin" -> return R.drawable.capcotentin
-        "bibus" -> return R.drawable.bibus
-        "axo" -> return R.drawable.axo
-        "zest" -> return R.drawable.zest
-        "tcat" -> return R.drawable.tcat
-        "divia" -> return R.drawable.divia
-        "citea" -> return R.drawable.citea
-        "tbk" -> return R.drawable.tbk
-        "sam" -> return R.drawable.sam
-        "tic" -> return R.drawable.tic
-        "moova" -> return R.drawable.moova
-        "mistral" -> return R.drawable.mistral
+fun computeNetworkImage(network: Network, darkMode: Boolean): Int {
+    if(darkMode && (network.shortName == "kiceo" || network.shortName == "tango" || network.shortName == "capcotentin")) {
+        when(network.shortName) {
+            "kiceo" -> return R.drawable.kiceo_dark
+            "tango" -> return R.drawable.tango_dark
+            "capcotentin" -> return R.drawable.capcotentin_dark
+        }
+    }
+    else {
+        when(network.shortName) {
+            "tbm" -> return R.drawable.tbm
+            "ametis" -> return R.drawable.ametis
+            "star" -> return R.drawable.star
+            "corolis" -> return R.drawable.corolis
+            "tam" -> return R.drawable.tam
+            "met" -> return R.drawable.met
+            "kiceo" -> return R.drawable.kiceo
+            "irigo" -> return R.drawable.irigo
+            "filbleu" -> return R.drawable.filbleu
+            "astuce" -> return R.drawable.astuce
+            "palmbus" -> return R.drawable.palmbus
+            "tango" -> return R.drawable.tango
+            "vib" -> return R.drawable.vib
+            "surf" -> return R.drawable.surf
+            "capcotentin" -> return R.drawable.capcotentin
+            "bibus" -> return R.drawable.bibus
+            "axo" -> return R.drawable.axo
+            "zest" -> return R.drawable.zest
+            "tcat" -> return R.drawable.tcat
+            "divia" -> return R.drawable.divia
+            "citea" -> return R.drawable.citea
+            "tbk" -> return R.drawable.tbk
+            "sam" -> return R.drawable.sam
+            "tic" -> return R.drawable.tic
+            "moova" -> return R.drawable.moova
+            "mistral" -> return R.drawable.mistral
+        }
     }
     return R.drawable.question_mark_box
 }

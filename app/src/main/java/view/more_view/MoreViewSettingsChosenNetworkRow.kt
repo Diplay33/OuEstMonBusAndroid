@@ -76,7 +76,7 @@ fun MoreViewSettingsChosenNetworkRow(navController: NavController) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 chosenNetwork.value?.let { network ->
                     Image(
-                        painter = painterResource(id = computeNetworkImage(network)),
+                        painter = painterResource(id = computeNetworkImage(network, !colorScheme)),
                         contentDescription = null,
                         colorFilter = if (!colorScheme) ColorFilter.tint(Color.White) else null,
                         modifier = Modifier
