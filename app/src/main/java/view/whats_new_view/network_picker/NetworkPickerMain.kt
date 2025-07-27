@@ -69,6 +69,7 @@ fun NetworkPickerMain(
     val searchString = remember {
         mutableStateOf("")
     }
+    val networkResults = if (searchString.value.isEmpty()) Networks.getAllNetworks() else Networks.getNetworksBySearchString(searchString.value)
 
     LaunchedEffect(Unit) {
         chosenNetworkDataStore.chosenNetwork.collect { selection.value = it ?: "" }
@@ -149,8 +150,19 @@ fun NetworkPickerMain(
                     .size(25.dp)
                 )
 
+                if(searchString.value.isNotEmpty()) {
+                    Text(
+                        text = if (networkResults.isEmpty()) "Aucun résultat pour \"${searchString.value}\"" else "Résultat${if (networkResults.size == 1) "" else "s"} pour \"${searchString.value}\"",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .padding(bottom = 8.dp)
+                            .padding(horizontal = 16.dp)
+                    )
+                }
+
                 Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
-                    Networks.getAllNetworks().forEach { network ->
+                    networkResults.forEach { network ->
                         NetworkPickerRow(selection, network)
                     }
                 }
