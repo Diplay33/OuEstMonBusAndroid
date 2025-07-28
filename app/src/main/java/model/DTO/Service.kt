@@ -8,7 +8,7 @@ import java.util.Date
 class Service (val id: Int,
                val vehicleId: Int,
                val lineId: Int,
-               val currentSpeed: Int,
+               val currentSpeed: Int?,
                val state: String,
                val stateTime: Int,
                val destination: String,

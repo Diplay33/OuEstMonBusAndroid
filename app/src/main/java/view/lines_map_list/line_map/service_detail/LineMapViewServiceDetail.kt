@@ -36,7 +36,7 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>, line: Line
         id = 0,
         vehicleId = 0,
         lineId = 0,
-        currentSpeed = 0,
+        currentSpeed = null,
         state = "",
         stateTime = 0,
         destination = "",
@@ -127,7 +127,9 @@ fun LineMapViewServiceDetail(selectedService: MutableState<Service?>, line: Line
                 )
             }
 
-            ServiceDetailSpeedRow(service.currentSpeed)
+            service.currentSpeed?.let {
+                ServiceDetailSpeedRow(it)
+            }
 
             if(network.value == "tbm") {
                 Spacer(modifier = Modifier

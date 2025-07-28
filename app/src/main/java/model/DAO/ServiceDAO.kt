@@ -297,7 +297,7 @@ class ServiceDAO {
                             id = id,
                             vehicleId = vehicleId,
                             lineId = serviceLineId,
-                            currentSpeed = position.speed.toInt(),
+                            currentSpeed = if (position.hasSpeed()) position.speed.toInt() else null,
                             state = "UNKNOWN",
                             stateTime = 0,
                             destination = headsigns.firstOrNull { it["trip_id"] == tripId }?.get("trip_headsign") ?: "Destination inconnue",

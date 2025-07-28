@@ -88,11 +88,13 @@ fun ServiceDetailMain(
                 pathId = pathId
             )
 
-            Spacer(modifier = Modifier
-                .height(30.dp)
-            )
+            if((currentSpeed ?: " ") != " ") {
+                Spacer(modifier = Modifier
+                    .height(30.dp)
+                )
 
-            ServiceDetailSpeedRow(currentSpeed?.toInt() ?: 0)
+                ServiceDetailSpeedRow(currentSpeed?.toInt() ?: 0)
+            }
 
             if(network.value == "tbm") {
                 Spacer(modifier = Modifier
