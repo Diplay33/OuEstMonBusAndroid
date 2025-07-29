@@ -44,7 +44,7 @@ fun ServiceDetailTopBar(vehicleParkId: String, navController: NavController) {
                 .align(Alignment.CenterVertically)
             ) {
                 Text(
-                    text = "Véhicule n°$vehicleParkId",
+                    text = if (vehicleParkId == "0") "Informations du véhicule" else "Véhicule n°$vehicleParkId",
                     style = MaterialTheme.typography.h5,
                     textAlign = TextAlign.Center,
                     color = if (colorScheme) Color.Black else Color.White,

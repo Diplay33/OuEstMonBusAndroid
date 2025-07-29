@@ -166,18 +166,20 @@ fun AllServicesListRow(service: Service, navController: NavController) {
             Row(modifier = Modifier
                 .align(Alignment.CenterVertically)
             ) {
-                Text(
-                    text = service.vehicle.parkId,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = if (colorScheme) Color.Black else Color.White,
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                )
+                if(service.vehicle.parkId != "0") {
+                    Text(
+                        text = service.vehicle.parkId,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = if (colorScheme) Color.Black else Color.White,
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                    )
 
-                Spacer(modifier = Modifier
-                    .width(7.dp)
-                )
+                    Spacer(modifier = Modifier
+                        .width(7.dp)
+                    )
+                }
 
                 Icon(
                     imageVector = Icons.Rounded.ArrowForward,
