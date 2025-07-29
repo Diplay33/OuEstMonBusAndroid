@@ -112,7 +112,9 @@ private fun setCustomMapServiceIcon(parkId: String, colorScheme: Boolean, contex
     // Dessinez le texte centré horizontalement en haut
     val xText = width / 2f
     val yText = textPaint.textSize // Placez le texte en haut de la canvas
-    canvas.drawText(parkId, xText, yText, textPaint)
+    if(parkId != "0") {
+        canvas.drawText(parkId, xText, yText, textPaint)
+    }
     drawable.draw(canvas)
     return BitmapDescriptorFactory.fromBitmap(bm)
 }

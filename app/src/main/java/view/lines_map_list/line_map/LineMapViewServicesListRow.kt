@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
@@ -16,11 +17,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.Circle
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.CameraPositionState
 import model.DTO.Destination
@@ -72,15 +75,25 @@ fun LineMapViewServicesListRow(
             }
         ) {
             Row {
-                Text(
-                    text = service.vehicle.parkId,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = if (colorScheme) Color.Black else Color.White,
-                    modifier = Modifier
-                        .width(if (service.vehicle.parkId.count() <= 4) 46.dp else 68.dp)
+                if(service.vehicle.parkId == "0") {
+                    Box(modifier = Modifier
+                        .clip(CircleShape)
+                        .background(if (colorScheme) Color.Black else Color.White)
+                        .size(10.dp)
                         .align(Alignment.CenterVertically)
-                )
+                    )
+                }
+                else {
+                    Text(
+                        text = service.vehicle.parkId,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = if (colorScheme) Color.Black else Color.White,
+                        modifier = Modifier
+                            .width(if (service.vehicle.parkId.count() <= 4) 46.dp else 68.dp)
+                            .align(Alignment.CenterVertically)
+                    )
+                }
 
                 Spacer(modifier = Modifier
                     .width(15.dp)
