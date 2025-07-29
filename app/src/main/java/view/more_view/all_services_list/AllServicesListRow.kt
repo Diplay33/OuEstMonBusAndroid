@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -86,7 +87,9 @@ fun AllServicesListRow(service: Service, navController: NavController) {
                 )
             }
         ) {
-            Column {
+            Column(modifier = Modifier
+                .weight(1f)
+            ) {
                 Row {
                     if(line.value.name == "Ligne inconnue") {
                         Image(
@@ -151,6 +154,8 @@ fun AllServicesListRow(service: Service, navController: NavController) {
                             text = destination?.destination ?: service.destination,
                             fontSize = 18.sp,
                             color = if (colorScheme) Color.Black else Color.White,
+                            maxLines = 2,
+                            overflow = TextOverflow.Ellipsis,
                             modifier = Modifier
                                 .offset(y = if (destination == null) 0.dp else (-2).dp)
                         )
