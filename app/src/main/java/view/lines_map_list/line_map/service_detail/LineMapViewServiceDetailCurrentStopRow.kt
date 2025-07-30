@@ -29,7 +29,7 @@ fun LineMapViewServiceDetailCurrentStopRow(stationId: String, network: String) {
     }
     val colorScheme = !isSystemInDarkTheme()
 
-    LaunchedEffect(network) {
+    LaunchedEffect(network, stationId) {
         if(network.isNotEmpty()) {
             station.value = Station(id = "", stationId = "", name = "", latitude = 0.0, longitude = 0.0)
             Stations.getStationById(stationId, network) {
