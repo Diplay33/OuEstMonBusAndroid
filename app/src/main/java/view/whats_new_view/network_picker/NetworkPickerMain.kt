@@ -1,7 +1,10 @@
 package view.whats_new_view.network_picker
 
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -9,6 +12,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -36,7 +40,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
@@ -52,6 +59,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import model.DTO.Networks
+import model.DTO.Paths
 import model.SupabaseManager
 import model.preferences_data_store.StoreChosenNetwork
 
@@ -72,6 +80,7 @@ fun NetworkPickerMain(
         mutableStateOf("")
     }
     val networkResults = if (searchString.value.isEmpty()) Networks.getAllNetworks() else Networks.getNetworksBySearchString(searchString.value)
+    val searchFocus = remember { FocusRequester() }
 
     LaunchedEffect(Unit) {
         chosenNetworkDataStore.chosenNetwork.collect { selection.value = it ?: "" }
@@ -113,6 +122,14 @@ fun NetworkPickerMain(
                         .padding(horizontal = 15.dp)
                         .clip(RoundedCornerShape(15.dp))
                         .height(50.dp)
+                        .pointerInput(Unit) {
+                            detectTapGestures(
+                                onPress = { },
+                                onDoubleTap = { },
+                                onLongPress = {  },
+                                onTap = { searchFocus.requestFocus() }
+                            )
+                        }
                 ) {
                     Box(
                         contentAlignment = Alignment.CenterStart,
@@ -144,7 +161,9 @@ fun NetworkPickerMain(
                             value = searchString.value,
                             onValueChange = { searchString.value = it },
                             textStyle = TextStyle(fontSize = 18.sp),
-                            keyboardOptions = KeyboardOptions(autoCorrectEnabled = false)
+                            keyboardOptions = KeyboardOptions(autoCorrectEnabled = false),
+                            modifier = Modifier
+                                .focusRequester(searchFocus)
                         )
                     }
                 }
