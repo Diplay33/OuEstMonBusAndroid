@@ -160,7 +160,7 @@ fun NetworkPickerMain(
                         BasicTextField(
                             value = searchString.value,
                             onValueChange = { searchString.value = it },
-                            textStyle = TextStyle(fontSize = 18.sp),
+                            textStyle = TextStyle(fontSize = 18.sp, color = if (colorScheme) Color(0xff757575) else Color.White),
                             keyboardOptions = KeyboardOptions(autoCorrectEnabled = false),
                             modifier = Modifier
                                 .focusRequester(searchFocus)
