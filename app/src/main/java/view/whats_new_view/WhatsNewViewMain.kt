@@ -18,6 +18,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.rounded.FormatListBulleted
+import androidx.compose.material.icons.rounded.FormatListBulleted
 import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.Language
 import androidx.compose.material.icons.rounded.PhonelinkRing
@@ -47,19 +49,14 @@ fun WhatsNewViewMain(navController: NavController, showSplashScreen: MutableStat
     val colorScheme = !isSystemInDarkTheme()
     val whatsNewElements = listOf(
         WhatsNewElement(
+            icon = Icons.Rounded.Language,
+            title = "Nouveaux réseaux",
+            bodyText = "Une multitude de nouveaux réseaux sont désormais disponibles !"
+        ),
+        WhatsNewElement(
             icon = Icons.Rounded.Search,
-            title = "Recherche par modèle",
-            bodyText = "Dans la liste de tous les véhicules en circulation, vous pouvez rechercher par modèle de véhicule."
-        ),
-        WhatsNewElement(
-            icon = Icons.Rounded.Stars,
-            title = "Ajout d'un nouveau réseau !",
-            bodyText = "Les habitants de la métropole de Montpellier peuvent désormais localiser leurs trams et bus !"
-        ),
-        WhatsNewElement(
-            icon = Icons.Rounded.PhonelinkRing,
-            title = "Navigation améliorée",
-            bodyText = "La navigation au sein de l'application a été améliorée, un retour en arrière ne recharge plus forcément la page."
+            title = "Rechercher un réseau",
+            bodyText = "Il est possible de rechercher votre réseau grâce à une barre de recherche !"
         )
     )
 
