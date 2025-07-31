@@ -191,7 +191,7 @@ class ServiceDAO {
             val filteredEntities = lineId?.let {
                 gtfsEntities.filter {
                     val processedLineId = when(network) {
-                        "star", "tam", "divia" -> (it.vehicle.trip.routeId ?: "").drop(2).toASCIIDecimal()
+                        "star", "divia" -> (it.vehicle.trip.routeId ?: "").drop(2).toASCIIDecimal()
                         "kiceo" -> {
                             val routeId = it.vehicle.trip.routeId
                             if (routeId == "MOBICEO") 999 else routeId.filter { !it.isWhitespace() && it.isLetterOrDigit() }.replace("SAEIV", "").toASCIIDecimal()
@@ -231,7 +231,7 @@ class ServiceDAO {
                         else -> trip.tripId
                     }
                     val serviceLineId = when(network) {
-                        "star", "tam", "divia" -> (trip.routeId ?: "").drop(2).toASCIIDecimal()
+                        "star", "divia" -> (trip.routeId ?: "").drop(2).toASCIIDecimal()
                         "kiceo" -> {
                             val routeId = trip.routeId
                             if (routeId == "MOBICEO") 999 else routeId.filter { !it.isWhitespace() && it.isLetterOrDigit() }.replace("SAEIV", "").toASCIIDecimal()
