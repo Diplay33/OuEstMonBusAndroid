@@ -1,0 +1,15 @@
+default_platform(:android)
+
+platform :android do
+  lane :beta do
+    gradle(task: "bundle", build_type: "Release")
+
+    supply(
+      aab: "app/build/outputs/bundle/release/app-release.aab",
+      package_name: ENV['APP_PACKAGE_NAME'],
+      json_key: ENV['PLAY_SERVICE_ACCOUNT_JSON_PATH'],
+      track: "internal",                    # ou "beta" / "production"
+      skip_upload_changelogs: true
+    )
+  end
+end
