@@ -178,7 +178,7 @@ class ServiceDAO {
             }
         }
 
-        private fun rawGTFSToServices(
+        fun rawGTFSToServices(
             feedMessage: FeedMessage,
             network: String,
             lineId: Int? = null,
