@@ -30,45 +30,44 @@ jobs:
         run: ./gradlew assembleDebug
 
   unit-tests:
-  name: Unit Tests
-  runs-on: ubuntu-latest
-  needs: build
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    needs: build
 
-  steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Set up JDK 17
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'temurin'
-        java-version: 17
-        cache: gradle
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
+          cache: gradle
 
-    - name: Grant execution rights to gradlew
-      run: chmod +x ./gradlew
+      - name: Grant execution rights to gradlew
+        run: chmod +x ./gradlew
 
-    - name: Run ServiceDAOTests on emulator
-      uses: reactivecircus/android-emulator-runner@v2
-      with:
-        api-level: 34
-        arch: x86_64
-        profile: pixel_6
-        script: >
-          ./gradlew connectedDebugAndroidTest
-          -Pandroid.testInstrumentationRunnerArguments.class=com.example.ouestmonbus.ServiceDAOTests
-          --stacktrace --no-daemon
+      - name: Run ServiceDAOTests on emulator
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          arch: x86_64
+          profile: pixel_6
+          script: >
+            ./gradlew connectedDebugAndroidTest
+            -Pandroid.testInstrumentationRunnerArguments.class=com.example.ouestmonbus.ServiceDAOTests
+            --stacktrace --no-daemon
 
-    - name: Upload androidTest reports
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: androidTest-report
-        path: |
-          app/build/reports/androidTests/connected/
-          app/build/outputs/androidTest-results/connected/
+      - name: Upload androidTest reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: androidTest-report
+          path: |
+            app/build/reports/androidTests/connected/
+            app/build/outputs/androidTest-results/connected/
 
-  # --- CD : déploiement sur Google Play quand un tag est poussé ---
   deploy:
     name: Deploy Release to Google Play
     runs-on: ubuntu-latest
