@@ -20,7 +20,7 @@ android {
         applicationId "com.diplay.ouestmonbus"
         minSdk 26
         targetSdk 36
-        versionCode 41
+        versionCode 42
         versionName "3.10.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
