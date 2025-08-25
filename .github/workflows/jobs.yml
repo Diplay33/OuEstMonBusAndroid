@@ -94,9 +94,13 @@ jobs:
 
       - name: Deploy with Fastlane
         env:
-          KEYSTORE_PATH: ${{ github.workspace }}/keystore.jks
-          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-          SUPPLY_JSON_KEY: ${{ secrets.GOOGLE_PLAY_JSON }}
-        run: fastlane beta
+          ANDROID_KEYSTORE_PATH: ${{ github.workspace }}/keystore.jks
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+
+          APP_PACKAGE_NAME: "com.diplay.ouestmonbus"
+          PLAY_SERVICE_ACCOUNT_JSON_PATH: ${{ github.workspace }}/gplay.json
+        run: |
+          echo "${{ secrets.GOOGLE_PLAY_JSON }}" > gplay.json
+          fastlane beta
